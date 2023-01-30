@@ -1,2 +1,2 @@
-# cmmsAPI
-small cmms rest api for plant automation
+# SensorsAPI
+Sensors API for plant automation measurement
