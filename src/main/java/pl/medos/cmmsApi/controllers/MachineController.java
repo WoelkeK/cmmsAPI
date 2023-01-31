@@ -18,12 +18,12 @@ public class MachineController {
     public MachineController(MachineService machineService) {
         this.machineService = machineService;
     }
-
-    @GetMapping("/test")
-    public String apiTest() {
-        LOGGER.info("test()");
-        return "test ok! :Response 200";
-    }
+//
+//    @GetMapping("/test")
+//    public String apiTest() {
+//        LOGGER.info("test()");
+//        return "test ok! :Response 200";
+//    }
 
     @GetMapping("/machine")
     public List allMachineList() {
