@@ -9,7 +9,7 @@ services:
       MYSQL_DATABASE: cmms_db
       MYSQL_ALLOW_EMPTY_PASSWORD: true
 
-  sensors_api_service:
+  cmms_api_service:
     build: .
     restart: always
     ports:

@@ -1,5 +1,5 @@
 FROM openjdk:20-ea-31-jdk-oracle
-VOLUME /cmmsApi
-ADD target/cmmsApi-0.0.1-SNAPSHOT.jar cmmsApi.jar
+VOLUME /cmmsAPI
+ADD target/cmmsAPI-0.0.1-SNAPSHOT.jar cmmsAPI.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar","/cmmsApi.jar"]
+ENTRYPOINT ["java", "-jar","/cmmsAPI.jar"]
