@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.utility;
+package pl.medos.cmmsApi.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

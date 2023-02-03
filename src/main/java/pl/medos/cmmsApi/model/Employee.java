@@ -1,7 +1,5 @@
 package pl.medos.cmmsApi.model;
 
-import pl.medos.cmmsApi.utility.Contact;
-
 import javax.persistence.*;
 
 @Entity
