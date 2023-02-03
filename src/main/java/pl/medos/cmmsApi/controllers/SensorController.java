@@ -19,22 +19,16 @@ public class SensorController {
         this.sensorService = sensorService;
     }
 
-    @GetMapping("/test")
-    public String apiTest() {
-        LOGGER.info("test()");
-        return "test ok! :Response 200";
-    }
-
-    @GetMapping("/sensors")
-    public List allSensorsList() {
-        LOGGER.info("allSensorsList()");
-        List allSensors = sensorService.listAll();
-        LOGGER.info("allSensorsList(...)" + allSensors);
-        return allSensors;
+    @GetMapping("/sensor")
+    public List list() {
+        LOGGER.info("sensorList()");
+        List sensors = sensorService.listAll();
+        LOGGER.info("sensorList(...)" + sensors);
+        return sensors;
     }
 
     @PostMapping("/sensor")
-    public Sensor createSensor(@RequestBody Sensor sensor) {
+    public Sensor create(@RequestBody Sensor sensor) {
         LOGGER.info("createSensor(" + sensor + ")");
         Sensor createdSensor = sensorService.create(sensor);
         LOGGER.info("createSensor(...)");
@@ -42,7 +36,7 @@ public class SensorController {
     }
 
     @GetMapping("/sensor/{id}")
-    public Sensor readSensor(@PathVariable(name = "id") Long id) {
+    public Sensor read(@PathVariable(name = "id") Long id) {
         LOGGER.info("readSensor(" + id + ")");
         Sensor readedSensor = sensorService.read(id);
         LOGGER.info("readSensor(...) " + readedSensor);
@@ -50,16 +44,15 @@ public class SensorController {
     }
 
     @PutMapping("/sensor")
-    public Sensor updateSensor(@RequestBody Sensor sensor) {
+    public Sensor update(@RequestBody Sensor sensor) {
         LOGGER.info("updateSensor(" + sensor + ")");
         Sensor updatedSensor = sensorService.update(sensor);
         LOGGER.info("updateSensor(...) " + updatedSensor);
         return updatedSensor;
-
     }
 
     @DeleteMapping("/sensor/{id}")
-    public String deleteSensor(@PathVariable(name = "id") Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteSensor(" + id + ")");
         String deleteMessage = sensorService.delete(id);
         LOGGER.info("deleteSensor(...)");

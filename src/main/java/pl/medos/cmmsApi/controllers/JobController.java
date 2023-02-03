@@ -27,15 +27,15 @@ public class JobController {
     }
 
     @GetMapping("/job")
-    public List allJobList() {
-        LOGGER.info("allJobList()");
-        List allJob = jobService.listAll();
-        LOGGER.info("allJobList(...)" + allJob);
-        return allJob;
+    public List list() {
+        LOGGER.info("jobList()");
+        List jobs = jobService.listAll();
+        LOGGER.info("jobList(...)" + jobs);
+        return jobs;
     }
 
     @PostMapping("/job")
-    public Job createJob(@RequestBody Job job) {
+    public Job create(@RequestBody Job job) {
         LOGGER.info("createJob(" + job + ")");
         Job createdJob = jobService.create(job);
         LOGGER.info("createJob(...)");
@@ -43,7 +43,7 @@ public class JobController {
     }
 
     @GetMapping("/job/{id}")
-    public Job readJob(@PathVariable(name = "id") Long id) {
+    public Job read(@PathVariable(name = "id") Long id) {
         LOGGER.info("readJob(" + id + ")");
         Job readedJob = jobService.read(id);
         LOGGER.info("readJob(...) " + readedJob);
@@ -51,7 +51,7 @@ public class JobController {
     }
 
     @PutMapping("/job")
-    public Job updateJob(@RequestBody Job job) {
+    public Job update(@RequestBody Job job) {
         LOGGER.info("updateJob(" + job + ")");
         Job updatedJob = jobService.update(job);
         LOGGER.info("updateJob(...) " + updatedJob);
@@ -59,7 +59,7 @@ public class JobController {
     }
 
     @DeleteMapping("/job/{id}")
-    public String deleteJob(@PathVariable(name = "id") Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteJob(" + id + ")");
         String deleteMessage = jobService.delete(id);
         LOGGER.info("deleteJob(...)");

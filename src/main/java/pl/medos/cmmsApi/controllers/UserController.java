@@ -10,22 +10,24 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/api")
 public class UserController {
+
     private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
     private UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/user")
-    public List allMachineList() {
-        LOGGER.info("allUserList()");
-        List allUser = userService.listAll();
-        LOGGER.info("allUserList(...)" + allUser);
-        return allUser;
+    public List list() {
+        LOGGER.info("userList()");
+        List users = userService.listAll();
+        LOGGER.info("userList(...)" + users);
+        return users;
     }
 
     @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
+    public User create(@RequestBody User user) {
         LOGGER.info("createUser(" + user + ")");
         User createdUser = userService.create(user);
         LOGGER.info("createUser(...)");
@@ -33,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User readUser(@PathVariable(name = "id") Long id) {
+    public User read(@PathVariable(name = "id") Long id) {
         LOGGER.info("readUser(" + id + ")");
         User readedUser = userService.read(id);
         LOGGER.info("readUser(...) " + readedUser);
@@ -41,20 +43,18 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public User updateMachine(@RequestBody User user) {
+    public User update(@RequestBody User user) {
         LOGGER.info("updateUser(" + user + ")");
         User updatedUser = userService.update(user);
         LOGGER.info("updateUser(...) " + updatedUser);
         return updatedUser;
-
     }
 
     @DeleteMapping("/user/{id}")
-    public String deleteUser(@PathVariable(name = "id") Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteUser(" + id + ")");
         String deleteMessage = userService.delete(id);
         LOGGER.info("deleteUser(...)");
         return deleteMessage;
     }
-
 }

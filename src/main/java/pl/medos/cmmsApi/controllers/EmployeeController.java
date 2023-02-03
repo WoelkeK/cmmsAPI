@@ -19,7 +19,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/employee")
     public List<Employee> list() {
         LOGGER.info("list()");
         List<Employee> employeeList = employeeService.list();
@@ -33,6 +33,14 @@ public class EmployeeController {
         Employee createdEmployee = employeeService.create(employee);
         LOGGER.info("create(...)" + createdEmployee);
         return createdEmployee;
+    }
+
+    @GetMapping("/employee/{id}")
+    public Employee read(Long id) {
+        LOGGER.info("read(" + id + ")");
+        Employee readedEmployee = employeeService.read(id);
+        LOGGER.info("read(...)" + readedEmployee);
+        return readedEmployee;
     }
 
     @PutMapping("/employee")

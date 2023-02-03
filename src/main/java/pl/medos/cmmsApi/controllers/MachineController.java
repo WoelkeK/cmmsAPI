@@ -20,15 +20,15 @@ public class MachineController {
     }
 
     @GetMapping("/machine")
-    public List allMachineList() {
-        LOGGER.info("allMachineList()");
-        List allMachine = machineService.listAll();
-        LOGGER.info("allMachineList(...)" + allMachine);
-        return allMachine;
+    public List list() {
+        LOGGER.info("machineList()");
+        List machines = machineService.listAll();
+        LOGGER.info("machineList(...)" + machines);
+        return machines;
     }
 
     @PostMapping("/machine")
-    public Machine createMachine(@RequestBody Machine machine) {
+    public Machine create(@RequestBody Machine machine) {
         LOGGER.info("createMachine(" + machine + ")");
         Machine createdMachine = machineService.create(machine);
         LOGGER.info("createMachine(...)");
@@ -36,7 +36,7 @@ public class MachineController {
     }
 
     @GetMapping("/machine/{id}")
-    public Machine readMachine(@PathVariable(name = "id") Long id) {
+    public Machine read(@PathVariable(name = "id") Long id) {
         LOGGER.info("readMachine(" + id + ")");
         Machine readedMachine = machineService.read(id);
         LOGGER.info("readMachine(...) " + readedMachine);
@@ -44,7 +44,7 @@ public class MachineController {
     }
 
     @PutMapping("/machine")
-    public Machine updateMachine (@RequestBody Machine machine) {
+    public Machine update(@RequestBody Machine machine) {
         LOGGER.info("updateMachine(" + machine + ")");
         Machine updatedMachine = machineService.update(machine);
         LOGGER.info("updateMachine(...) " + updatedMachine);
@@ -53,7 +53,7 @@ public class MachineController {
     }
 
     @DeleteMapping("/machine/{id}")
-    public String deleteMachine(@PathVariable(name = "id") Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteMachine(" + id + ")");
         String deleteMessage = machineService.delete(id);
         LOGGER.info("deleteMachine(...)");

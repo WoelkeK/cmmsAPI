@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+
 @Entity
 public class Job {
 
@@ -28,6 +29,22 @@ public class Job {
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
+
+    public Job() {
+    }
+
+    public Job(Long id, LocalDateTime requestTime, User user, Department department, Machine machine, String message, Boolean directContact, String solution, LocalDateTime jobStartTime, LocalDateTime jobStopTime) {
+        this.id = id;
+        this.requestTime = requestTime;
+        this.user = user;
+        this.department = department;
+        this.machine = machine;
+        this.message = message;
+        this.directContact = directContact;
+        this.solution = solution;
+        this.jobStartTime = jobStartTime;
+        this.jobStopTime = jobStopTime;
+    }
 
     public Machine getMachine() {
         return machine;
@@ -108,6 +125,7 @@ public class Job {
     public void setJobStopTime(LocalDateTime jobStopTime) {
         this.jobStopTime = jobStopTime;
     }
+
 
     @Override
     public String toString() {
