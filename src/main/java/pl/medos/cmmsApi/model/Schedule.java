@@ -8,5 +8,5 @@ public class Schedule {
     private LocalDate lastService;
     private LocalDate plannedService;
     private Stock stock;
-    private SparePart sparePart;
+    private Material material;
 }
