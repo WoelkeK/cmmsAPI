@@ -47,7 +47,6 @@ public class EmployeeService {
         editedEmployee.setLastName(employee.getLastName());
         editedEmployee.setPosition(employee.getPosition());
         editedEmployee.setOccupation(employee.getOccupation());
-        editedEmployee.setContact(employee.getContact());
         Employee updatedEmployee = employeeRepository.save(editedEmployee);
         LOGGER.info("Employee(...)" + updatedEmployee);
         return updatedEmployee;

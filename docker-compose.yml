@@ -7,6 +7,9 @@ services:
       - "3307:3306"
     environment:
       MYSQL_DATABASE: cmms_db
+      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_USER: root
+      MYSQL_PASSWORD: root
       MYSQL_ALLOW_EMPTY_PASSWORD: true
 
   cmms_api_service:

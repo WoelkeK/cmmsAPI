@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1>Upss coś poszło nie tak</h1>
+    <p th:if="${url}">
+        <b>Exception:</b> <span th:text="${exception}">Page URL</span>
+        <b>Page:</b> <span th:text="${url}">Page URL</span>
+    </p>
+</div>
+</body>
+</html>

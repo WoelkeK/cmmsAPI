@@ -11,29 +11,25 @@ public class Employee {
     private String lastName;
     private String position;
     private String occupation;
+    private String userName;
+    private String phone;
+    private String email;
+    private String department;
+    private String comments;
+    private String jobs;
+    private String raports;
+    private String message;
+    private String pushNothing;
+    private String pushEmail;
+    private String pushEverythink;
+    private String about;
 
-    @OneToOne
-    @JoinColumn(name = "contact_id")
-    private Contact contact;
+
+//    @OneToOne
+//    @JoinColumn(name = "contact_id")
+//    private Contact contact;
 
     public Employee() {
-    }
-
-    public Employee(Long id, String firstName, String lastName, String position, String occupation, Contact contact) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
-        this.occupation = occupation;
-        this.contact = contact;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
     }
 
     public Long getId() {
@@ -76,6 +72,102 @@ public class Employee {
         this.occupation = occupation;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(String jobs) {
+        this.jobs = jobs;
+    }
+
+    public String getRaports() {
+        return raports;
+    }
+
+    public void setRaports(String raports) {
+        this.raports = raports;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPushNothing() {
+        return pushNothing;
+    }
+
+    public void setPushNothing(String pushNothing) {
+        this.pushNothing = pushNothing;
+    }
+
+    public String getPushEmail() {
+        return pushEmail;
+    }
+
+    public void setPushEmail(String pushEmail) {
+        this.pushEmail = pushEmail;
+    }
+
+    public String getPushEverythink() {
+        return pushEverythink;
+    }
+
+    public void setPushEverythink(String pushEverythink) {
+        this.pushEverythink = pushEverythink;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -84,7 +176,18 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", position='" + position + '\'' +
                 ", occupation='" + occupation + '\'' +
-                ", contact=" + contact +
+                ", userName='" + userName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", department='" + department + '\'' +
+                ", comments='" + comments + '\'' +
+                ", jobs='" + jobs + '\'' +
+                ", raports='" + raports + '\'' +
+                ", message='" + message + '\'' +
+                ", pushNothing='" + pushNothing + '\'' +
+                ", pushEmail='" + pushEmail + '\'' +
+                ", pushEverythink='" + pushEverythink + '\'' +
+                ", about='" + about + '\'' +
                 '}';
     }
 }

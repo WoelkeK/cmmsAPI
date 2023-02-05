@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create-account</title>
+</head>
+<body>
+<h1>create Account</h1>
+<div>
+    <form action="#" th:action="@{/accounts/create}" th:object="${account}" method="post">
+        <div>
+            <label for="number">Numer konta</label>
+            <!--            <input id="number" type="text" name="number">-->
+            <input id="number" th:field="${account.number}">
+        </div>
+        <div>
+            <label for="balance">Saldo</label>
+            <input id="balance" type="text" name="balance">
+        </div>
+        <div>
+            <label for="currency">Waluta</label>
+            <input id="currency" type="text" name="currency">
+        </div>
+        <div>
+            <select th:field="${account.client.id}">
+                <option th:each="client,status: ${clients}"
+                        th:text="${client.firstName}"
+                        th:value="${client.id}">
+
+                </option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">add</button>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>
