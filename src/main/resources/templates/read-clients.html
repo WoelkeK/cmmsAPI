@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients details</title>
+</head>
+<body>
+<h1>Clients details</h1>
+<div>
+    <div>
+        <span for="firstName">Imię</span>
+        <span th:text="${client.firstName}"></span>
+
+    </div>
+    <div>
+        <span for="lastName">Nazwisko</span>
+        <span th:text="${client.lastName}"></span>
+    </div>
+
+</div>
+
+</body>
+</html>

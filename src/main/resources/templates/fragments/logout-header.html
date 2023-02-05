@@ -1,0 +1,17 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+</head>
+<body>
+<div th:fragment="logout-header">
+    <div>
+        <span>Witaj, </span>
+        <span sec:authentication="name"></span>
+        <span><a th:href="@{/logout}">Logout</a></span>
+    </div>
+</div>
+</body>
+</html>

@@ -27,7 +27,7 @@ public class EmployeeController {
         return employeeList;
     }
 
-    @PostMapping
+    @PostMapping("/employee")
     public Employee create(@RequestBody Employee employee) {
         LOGGER.info("create()");
         Employee createdEmployee = employeeService.create(employee);

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update-client</title>
+</head>
+<body>
+<h1>update Client</h1>
+<div>
+    <form action="#" th:action="@{/clients/update}" th:object="${client}" method="post">
+        <div>
+            <label for="firstName">Imię</label>
+            <!--            <input id="number" type="text" name="number">-->
+            <input id="firstName" th:field="${client.firstName}">
+        </div>
+        <div>
+            <label for="lastName">Nazwisko</label>
+            <input id="lastName" th:field="${client.lastName}">
+        </div>
+        <div>
+            <input type="hidden" id="id" th:field="${client.id}">
+        </div>
+        <div>
+            <button type="submit">add</button>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>
