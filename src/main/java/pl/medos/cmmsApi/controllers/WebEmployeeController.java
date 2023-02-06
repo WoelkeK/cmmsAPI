@@ -2,13 +2,11 @@ package pl.medos.cmmsApi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.EmployeeService;
@@ -18,21 +16,15 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping(value = "/employees")
-public class IndexController {
+public class WebEmployeeController {
 
-    private static final Logger LOGGER = Logger.getLogger(IndexController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
     private EmployeeService employeeService;
 
     @Autowired
-    public IndexController(EmployeeService employeeService) {
+    public WebEmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-
-//    @GetMapping()
-//    public String getHomepage(Model model) {
-//        model.addAttribute("employees", employeeService.list());
-//        return "index";
-//    }
 
     @GetMapping
     public String listView(ModelMap modelMap) {
@@ -42,7 +34,6 @@ public class IndexController {
 
         return "list-employeesTW.html";
     }
-
 
     @GetMapping(value = "/update/{id}")
     public String updateView(
@@ -54,15 +45,14 @@ public class IndexController {
         return "update-employeeTW.html";
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/update/")
     public String update(
             @ModelAttribute(name = "employee") Employee employee) {
         LOGGER.info("update()");
         employeeService.update(employee);
+        LOGGER.info("update(...)");
         return "redirect:/employees";
-
     }
-
 
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
@@ -99,5 +89,4 @@ public class IndexController {
         employeeService.delete(id);
         return "redirect:/employees";
     }
-
 }

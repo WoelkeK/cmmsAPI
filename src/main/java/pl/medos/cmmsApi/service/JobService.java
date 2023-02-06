@@ -18,10 +18,10 @@ public class JobService {
         this.jobRepository = jobRepository;
     }
 
-    public List listAll() {
-        LOGGER.info("listAll()");
+    public List list() {
+        LOGGER.info("list()");
         List<Job> jobList = jobRepository.findAll();
-        LOGGER.info("ListAll(...)");
+        LOGGER.info("List(...)");
         return jobList;
 
     }
