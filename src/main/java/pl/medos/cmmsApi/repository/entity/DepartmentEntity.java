@@ -1,15 +1,21 @@
-package pl.medos.cmmsApi.model;
+package pl.medos.cmmsApi.repository.entity;
 
-public class Department {
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+@Entity
+public class DepartmentEntity {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String location;
 
-    public Department() {
+    public DepartmentEntity() {
     }
 
-    public Department(Long id, String name, String location) {
+    public DepartmentEntity(Long id, String name, String location) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -41,7 +47,7 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
+        return "DepartmentEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +

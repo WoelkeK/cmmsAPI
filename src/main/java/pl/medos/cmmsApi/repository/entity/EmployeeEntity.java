@@ -1,9 +1,14 @@
-package pl.medos.cmmsApi.model;
+package pl.medos.cmmsApi.repository.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class Employee {
-
+@Entity
+public class EmployeeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -23,7 +28,11 @@ public class Employee {
     private String about;
 
 
-    public Employee() {
+//    @OneToOne
+//    @JoinColumn(name = "contact_id")
+//    private Contact contact;
+
+    public EmployeeEntity() {
     }
 
     public Long getId() {
@@ -164,7 +173,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "EmployeeEntity{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
