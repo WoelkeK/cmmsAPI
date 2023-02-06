@@ -1,60 +1,60 @@
-package pl.medos.cmmsApi.model;
+package pl.medos.cmmsApi.repository.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
-public class Job {
+@Entity
+public class JobEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime requestTime;
-    private User user;
-    private Department department;
-    private Machine machine;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private DepartmentEntity departmentEntity;
+    @ManyToOne
+    @JoinColumn(name = "machine_id")
+    private MachineEntity machineEntity;
     private String message;
     private Boolean directContact;
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
 
-    public Job() {
+    public JobEntity() {
     }
 
-    public Job(Long id, LocalDateTime requestTime, User user, Department department, Machine machine, String message, Boolean directContact, String solution, LocalDateTime jobStartTime, LocalDateTime jobStopTime) {
-        this.id = id;
-        this.requestTime = requestTime;
-        this.user = user;
-        this.department = department;
-        this.machine = machine;
-        this.message = message;
-        this.directContact = directContact;
-        this.solution = solution;
-        this.jobStartTime = jobStartTime;
-        this.jobStopTime = jobStopTime;
+    public MachineEntity getMachine() {
+        return machineEntity;
     }
 
-    public Machine getMachine() {
-        return machine;
+    public void setMachine(MachineEntity machineEntity) {
+        this.machineEntity = machineEntity;
     }
 
-    public void setMachine(Machine machine) {
-        this.machine = machine;
+    public DepartmentEntity getDepartment() {
+        return departmentEntity;
     }
 
-    public Department getDepartment() {
-        return department;
+    public void setDepartment(DepartmentEntity departmentEntity) {
+        this.departmentEntity = departmentEntity;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public Long getId() {
@@ -116,12 +116,12 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Jobs{" +
+        return "JobEntity{" +
                 "id=" + id +
                 ", requestTime=" + requestTime +
-                ", user=" + user +
-                ", department=" + department +
-                ", machine=" + machine +
+                ", userEntity=" + userEntity +
+                ", departmentEntity=" + departmentEntity +
+                ", machineEntity=" + machineEntity +
                 ", message='" + message + '\'' +
                 ", directContact=" + directContact +
                 ", solution='" + solution + '\'' +

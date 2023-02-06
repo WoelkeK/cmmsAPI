@@ -1,31 +1,24 @@
-package pl.medos.cmmsApi.model;
+package pl.medos.cmmsApi.repository.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+@Entity
+public class MachineEntity {
 
-public class Machine {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String model;
     private int manufactureYear;
     private String location;
     private String status;
+
     private String serialNumber;
 
-    public Machine() {
-    }
-
-    public Machine(Long id, String name, String model, int manufactureYear, String location, String status, String serialNumber) {
-        this.id = id;
-        this.name = name;
-        this.model = model;
-        this.manufactureYear = manufactureYear;
-        this.location = location;
-        this.status = status;
-        this.serialNumber = serialNumber;
+    public MachineEntity() {
     }
 
     public Long getId() {
