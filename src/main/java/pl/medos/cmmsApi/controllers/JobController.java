@@ -29,7 +29,7 @@ public class JobController {
     @GetMapping("/job")
     public List list() {
         LOGGER.info("jobList()");
-        List jobs = jobService.listAll();
+        List jobs = jobService.list();
         LOGGER.info("jobList(...)" + jobs);
         return jobs;
     }
