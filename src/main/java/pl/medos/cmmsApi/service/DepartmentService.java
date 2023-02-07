@@ -24,7 +24,7 @@ public class DepartmentService {
         this.departmentMapper = departmentMapper;
     }
 
-    public List list() {
+    public List<Department> list() {
         LOGGER.info("list()");
         List<DepartmentEntity> departmentEntities = departmentRepository.findAll();
         List<Department> departmentModels = departmentMapper.listModels(departmentEntities);
