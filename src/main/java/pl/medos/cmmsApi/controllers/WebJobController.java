@@ -58,13 +58,11 @@ public class WebJobController {
     }
 
     @PostMapping(value = "/create")
-//    public String create(String firstName, String lastName) {
     public String create(
             @ModelAttribute(name = "job") Job job) {
         LOGGER.info("create(" + job + ")");
-//        LOGGER.info("create(" + lastName + ")");
-//        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
-        jobService.create(job);
+        Job savedJobModel = jobService.create(job);
+        LOGGER.info("create(...)" + savedJobModel);
         return "redirect:/jobs";
     }
 

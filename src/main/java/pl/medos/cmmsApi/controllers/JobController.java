@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.service.JobService;
 
@@ -43,7 +44,7 @@ public class JobController {
     }
 
     @GetMapping("/job/{id}")
-    public Job read(@PathVariable(name = "id") Long id) {
+    public Job read(@PathVariable(name = "id") Long id) throws JobNotFoundException {
         LOGGER.info("readJob(" + id + ")");
         Job readedJob = jobService.read(id);
         LOGGER.info("readJob(...) " + readedJob);

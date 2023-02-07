@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.service.DepartmentService;
 
@@ -29,7 +30,7 @@ public class DepartmentController {
     @GetMapping("/department")
     public List list() {
         LOGGER.info("departmentList()");
-        List departments = departmentService.listAll();
+        List departments = departmentService.list();
         LOGGER.info("departmentList(...)" + departments);
         return departments;
     }
@@ -43,7 +44,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/department/{id}")
-    public Department read(@PathVariable(name = "id") Long id) {
+    public Department read(@PathVariable(name = "id") Long id) throws DepartmentNotFoundException {
         LOGGER.info("readDepartment(" + id + ")");
         Department readedMachine = departmentService.read(id);
         LOGGER.info("readDepartment(...) " + readedMachine);

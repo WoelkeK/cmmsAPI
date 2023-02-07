@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.SensorNotFoundException;
 import pl.medos.cmmsApi.model.Sensor;
 import pl.medos.cmmsApi.service.SensorService;
 
@@ -22,7 +23,7 @@ public class SensorController {
     @GetMapping("/sensor")
     public List list() {
         LOGGER.info("sensorList()");
-        List sensors = sensorService.listAll();
+        List sensors = sensorService.list();
         LOGGER.info("sensorList(...)" + sensors);
         return sensors;
     }
@@ -36,7 +37,7 @@ public class SensorController {
     }
 
     @GetMapping("/sensor/{id}")
-    public Sensor read(@PathVariable(name = "id") Long id) {
+    public Sensor read(@PathVariable(name = "id") Long id) throws SensorNotFoundException {
         LOGGER.info("readSensor(" + id + ")");
         Sensor readedSensor = sensorService.read(id);
         LOGGER.info("readSensor(...) " + readedSensor);

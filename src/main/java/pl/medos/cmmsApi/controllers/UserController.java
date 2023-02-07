@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.UserNotFoundException;
 import pl.medos.cmmsApi.model.User;
 import pl.medos.cmmsApi.service.UserService;
 
@@ -21,7 +22,7 @@ public class UserController {
     @GetMapping("/user")
     public List list() {
         LOGGER.info("userList()");
-        List users = userService.listAll();
+        List users = userService.list();
         LOGGER.info("userList(...)" + users);
         return users;
     }
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User read(@PathVariable(name = "id") Long id) {
+    public User read(@PathVariable(name = "id") Long id) throws UserNotFoundException {
         LOGGER.info("readUser(" + id + ")");
         User readedUser = userService.read(id);
         LOGGER.info("readUser(...) " + readedUser);

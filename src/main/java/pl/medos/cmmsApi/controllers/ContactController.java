@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.medos.cmmsApi.exception.ContactNotFoundException;
 import pl.medos.cmmsApi.model.Contact;
 import pl.medos.cmmsApi.service.ContactService;
 
@@ -42,7 +43,7 @@ public class ContactController {
     }
 
     @GetMapping("/contact/{id}")
-    public Contact read(Long id) {
+    public Contact read(Long id) throws ContactNotFoundException {
         LOGGER.info("read(" + id + ")");
         Contact readedContact = contactService.read(id);
         LOGGER.info("read(...)" + readedContact);
