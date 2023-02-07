@@ -25,7 +25,7 @@ public class JobEntity {
     @JoinColumn(name = "machine_id")
     private MachineEntity machine;
     private String message;
-    private Boolean directContact;
+    private boolean directContact;
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
@@ -81,11 +81,11 @@ public class JobEntity {
         this.message = message;
     }
 
-    public Boolean getDirectContact() {
+    public boolean getDirectContact() {
         return directContact;
     }
 
-    public void setDirectContact(Boolean directContact) {
+    public void setDirectContact(boolean directContact) {
         this.directContact = directContact;
     }
 

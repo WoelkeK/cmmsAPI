@@ -8,7 +8,8 @@
 </head>
 <body class="bg-gray-300">
 
-<form action="#" th:action="@{/jobs/create}" th:object="${job}" method="post" class="space-y-8 divide-y divide-gray-200">
+<form action="#" th:action="@{/jobs/create}" th:object="${job}" method="post"
+      class="space-y-8 divide-y divide-gray-200">
     <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
         <div class="space-y-6 sm:space-y-6">
             <div>
@@ -42,187 +43,159 @@
 
 
         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
-            <label for="employeeList"
+            <label for="employeeId"
                    class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik</label>
             <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-
-
-<!--                <select th:field="${job.employee.id}" id="employee" name="employee" autocomplete="employee-name"-->
-                <select th:field="${job.employeeList}" id="employeeList" name="employeeList" autocomplete="employee"
+                <select th:field="${job.employee.id}" id="employeeId" name="employeeId" autocomplete="employee"
                         class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
 
-                    <option th:each="employeeList.id: ${employees}"
-                             th:text="${employeeList.firstName}"
-                             th:value="${employeeList.id}">
+                    <option th:each="employee : ${employees}"
+                            th:text="${employee.firstName}"
+                            th:value="${employee.id}">
                     </option>
                 </select>
             </div>
         </div>
 
         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
-            <label for="department"
-                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Wydział</label>
+            <label for="machineId"
+                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Maszyna / Przedmiot</label>
             <div class="mt-1 sm:col-span-2 sm:mt-0">
-                <select id="department" name="department" autocomplete="department-name"
+                <select th:field="${job.machine.id}" id="machineId" name="machineId" autocomplete="machine"
                         class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
-                    <option>Utrzymanie Ruchu</option>
-                    <option>CNC</option>
-                    <option>Lakiernia</option>
-                    <option>Magazyn</option>
+
+                    <option th:each="machine : ${machines}"
+                            th:text="${machine.model}"
+                            th:value="${machine.id}">
+                    </option>
                 </select>
             </div>
         </div>
 
+        <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+            <label for="departmentId"
+                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Wydział</label>
+            <div class="mt-1 sm:col-span-2 sm:mt-0">
+                <select th:field="${job.department.id}" id="departmentId" name="departmentId" autocomplete="department"
+                        class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
 
-<!--        <div class="space-y-6 sm:space-y-5">-->
-<!--            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">-->
-<!--                <label for="employee" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik</label>-->
+                    <option th:each="department : ${departments}"
+                            th:text="${department.name}"
+                            th:value="${department.id}">
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
 
 
-<!--                <div>-->
-<!--                    <select th:field="${job.employee.id}">-->
-<!--                        <option th:each="employee,status: ${employees}"-->
-<!--                                th:text="${employee.login}"-->
-<!--                                th:value="${employee.id}">-->
+    </div>
 
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-<!--                    <input type="text" name="employee" id="employee" autocomplete="given-name"-->
-<!--                           class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
-<!--                </div>-->
-<!--            </div>-->
+    <!--            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">-->
+    <!--                <label for="phone" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Telefon</label>-->
+    <!--                <div class="mt-1 sm:col-span-2 sm:mt-0">-->
+    <!--                    <input type="text" name="phone" id="phone" autocomplete="address-level2"-->
+    <!--                           class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
+    <!--                </div>-->
+    <!--            </div>-->
 
-<!--            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">-->
-<!--                <label for="department.occupation"-->
-<!--                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Wydział</label>-->
-<!--                <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-<!--                    <select id="department.occupation" name="department.occupation" autocomplete="department"-->
-<!--                            class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
-<!--                        <option>Utrzymanie Ruchu</option>-->
-<!--                        <option>CNC</option>-->
-<!--                        <option>Lakiernia</option>-->
-<!--                        <option>Magazyn</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
+    </div>
 
-<!--&lt;!&ndash;            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">&ndash;&gt;-->
-<!--&lt;!&ndash;                <label for="phone" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Telefon</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="mt-1 sm:col-span-2 sm:mt-0">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <input type="text" name="phone" id="phone" autocomplete="address-level2"&ndash;&gt;-->
-<!--&lt;!&ndash;                           class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-
-<!--            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">-->
-<!--                <label for="machine.model"-->
-<!--                       class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Maszyna / Przedmiot</label>-->
-<!--                <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-<!--                    <input type="text" name="machine.model" id="machine.model" autocomplete="machine"-->
-<!--                           class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="space-y-6 divide-y divide-gray-200 pt-8 sm:space-y-5 sm:pt-10">-->
-<!--        <div>-->
-<!--            <h3 class="text-lg font-medium leading-6 text-gray-900">Powiadomienia</h3>-->
-<!--            <p class="mt-1 max-w-2xl text-sm text-gray-500">W przypadku awarii powiadomienie wysłac do:.</p>-->
-<!--        </div>-->
-<!--        <div class="space-y-6 divide-y divide-gray-200 sm:space-y-5">-->
-<!--            <div class="pt-6 sm:pt-5">-->
-<!--                <div role="group" aria-labelledby="label-email">-->
-<!--                    <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">-->
-<!--                        <div>-->
-<!--                            <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"-->
-<!--                                 id="label-email">przez email-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="mt-4 sm:col-span-2 sm:mt-0">-->
-<!--                            <div class="max-w-lg space-y-4">-->
-<!--                                <div class="relative flex items-start">-->
-<!--                                    <div class="flex h-5 items-center">-->
-<!--                                        <input id="comments" name="comments" type="checkbox"-->
-<!--                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
-<!--                                    </div>-->
-<!--                                    <div class="ml-3 text-sm">-->
-<!--                                        <label for="comments" class="font-medium text-gray-700">Kierownik-->
-<!--                                            produkcji</label>-->
-<!--                                        <p class="text-gray-500">Powiadomienie o pojawieniu się awarii na wydziale.</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="relative flex items-start">-->
-<!--                                    <div class="flex h-5 items-center">-->
-<!--                                        <input id="jobs" name="jobs" type="checkbox"-->
-<!--                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
-<!--                                    </div>-->
-<!--                                    <div class="ml-3 text-sm">-->
-<!--                                        <label for="jobs" class="font-medium text-gray-700">Kierownik utrzymania-->
-<!--                                            ruchu</label>-->
-<!--                                        <p class="text-gray-500">Powiadomienie o konieczności wezwania technika.</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="relative flex items-start">-->
-<!--                                    <div class="flex h-5 items-center">-->
-<!--                                        <input id="raports" name="raports" type="checkbox"-->
-<!--                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
-<!--                                    </div>-->
-<!--                                    <div class="ml-3 text-sm">-->
-<!--                                        <label for="raports" class="font-medium text-gray-700">Dyrektor zakładu</label>-->
-<!--                                        <p class="text-gray-500">Powiadomienie w sprawach pilnych dyrektora zakładu.</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="pt-6 sm:pt-5">-->
-<!--                <div role="group" aria-labelledby="label-notifications">-->
-<!--                    <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">-->
-<!--                        <div>-->
-<!--                            <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"-->
-<!--                                 id="label-notifications">Kontakt i Wysyłanie Alertów Mobilnych-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="sm:col-span-2">-->
-<!--                            <div class="max-w-lg">-->
-<!--                                <p class="text-sm text-gray-500">Dostarczenie wiadomości SMS na telefon-->
-<!--                                    służbowy.</p>-->
-<!--                                <div class="mt-4 space-y-4">-->
-<!--                                    <div class="flex items-center">-->
-<!--                                        <input id="pushEverything" name="pushNotifications" type="radio"-->
-<!--                                               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
-<!--                                        <label for="pushEverything"-->
-<!--                                               class="ml-3 block text-sm font-medium text-gray-700">Wszystko</label>-->
-<!--                                    </div>-->
-<!--                                    <div class="flex items-center">-->
-<!--                                        <input id="pushEmail" name="pushNotifications" type="radio"-->
-<!--                                               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
-<!--                                        <label for="pushEmail"-->
-<!--                                               class="ml-3 block text-sm font-medium text-gray-700">Identycznie jak-->
-<!--                                            w opcji email</label>-->
-<!--                                    </div>-->
-<!--                                    <div class="flex items-center">-->
-<!--                                        <input id="pushNothing" name="pushNotifications" type="radio"-->
-<!--                                               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
-<!--                                        <label for="pushNothing"-->
-<!--                                               class="ml-3 block text-sm font-medium text-gray-700">Brak wysyłania-->
-<!--                                            powiadomień</label>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    </div>-->
+    <div class="space-y-6 divide-y divide-gray-200 pt-8 sm:space-y-5 sm:pt-10">
+        <div>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Powiadomienia</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">W przypadku awarii powiadomienie wysłac do:.</p>
+        </div>
+        <div class="space-y-6 divide-y divide-gray-200 sm:space-y-5">
+            <div class="pt-6 sm:pt-5">
+                <div role="group" aria-labelledby="label-email">
+                    <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
+                        <div>
+                            <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
+                                 id="label-email">przez email
+                            </div>
+                        </div>
+                        <div class="mt-4 sm:col-span-2 sm:mt-0">
+                            <div class="max-w-lg space-y-4">
+                                <div class="relative flex items-start">
+                                    <div class="flex h-5 items-center">
+                                        <input id="comments" name="comments" type="checkbox"
+                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="comments" class="font-medium text-gray-700">Kierownik
+                                            produkcji</label>
+                                        <p class="text-gray-500">Powiadomienie o pojawieniu się awarii na wydziale.</p>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start">
+                                    <div class="flex h-5 items-center">
+                                        <input id="jobs" name="jobs" type="checkbox"
+                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="jobs" class="font-medium text-gray-700">Kierownik utrzymania
+                                            ruchu</label>
+                                        <p class="text-gray-500">Powiadomienie o konieczności wezwania technika.</p>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start">
+                                    <div class="flex h-5 items-center">
+                                        <input id="raports" name="raports" type="checkbox"
+                                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="raports" class="font-medium text-gray-700">Dyrektor zakładu</label>
+                                        <p class="text-gray-500">Powiadomienie w sprawach pilnych dyrektora zakładu.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-6 sm:pt-5">
+                <div role="group" aria-labelledby="label-notifications">
+                    <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
+                        <div>
+                            <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
+                                 id="label-notifications">Kontakt i Wysyłanie Alertów Mobilnych
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <div class="max-w-lg">
+                                <p class="text-sm text-gray-500">Dostarczenie wiadomości SMS na telefon
+                                    służbowy.</p>
+                                <div class="mt-4 space-y-4">
+                                    <div class="flex items-center">
+                                        <input id="pushEverything" name="pushNotifications" type="radio"
+                                               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                        <label for="pushEverything"
+                                               class="ml-3 block text-sm font-medium text-gray-700">Wszystko</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="pushEmail" name="pushNotifications" type="radio"
+                                               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                        <label for="pushEmail"
+                                               class="ml-3 block text-sm font-medium text-gray-700">Identycznie jak
+                                            w opcji email</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="pushNothing" name="pushNotifications" type="radio"
+                                               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                        <label for="pushNothing"
+                                               class="ml-3 block text-sm font-medium text-gray-700">Brak wysyłania
+                                            powiadomień</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <div class="pt-5">
         <div class="flex justify-end">

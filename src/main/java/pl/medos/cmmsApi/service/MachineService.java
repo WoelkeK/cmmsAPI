@@ -24,7 +24,7 @@ public class MachineService {
         this.machineMapper = machineMapper;
     }
 
-    public List list() {
+    public List<Machine> list() {
 
         LOGGER.info("list()");
         List<MachineEntity> mechineEntities = machineRepository.findAll();

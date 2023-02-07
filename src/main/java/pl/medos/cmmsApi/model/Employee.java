@@ -25,6 +25,12 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Long getId() {
         return id;
     }
