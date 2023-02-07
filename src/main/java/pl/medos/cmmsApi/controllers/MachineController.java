@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.MachineService;
 
@@ -22,7 +23,7 @@ public class MachineController {
     @GetMapping("/machine")
     public List list() {
         LOGGER.info("machineList()");
-        List machines = machineService.listAll();
+        List machines = machineService.list();
         LOGGER.info("machineList(...)" + machines);
         return machines;
     }
@@ -36,7 +37,7 @@ public class MachineController {
     }
 
     @GetMapping("/machine/{id}")
-    public Machine read(@PathVariable(name = "id") Long id) {
+    public Machine read(@PathVariable(name = "id") Long id) throws MachineNotFoundException {
         LOGGER.info("readMachine(" + id + ")");
         Machine readedMachine = machineService.read(id);
         LOGGER.info("readMachine(...) " + readedMachine);

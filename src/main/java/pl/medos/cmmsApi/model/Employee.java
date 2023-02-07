@@ -22,7 +22,6 @@ public class Employee {
     private String pushEverythink;
     private String about;
 
-
     public Employee() {
     }
 

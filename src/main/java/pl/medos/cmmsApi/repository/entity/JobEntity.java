@@ -1,12 +1,12 @@
 package pl.medos.cmmsApi.repository.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Machine;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class JobEntity {
@@ -16,14 +16,14 @@ public class JobEntity {
     private Long id;
     private LocalDateTime requestTime;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    @JoinColumn(name = "employee_id")
+    private EmployeeEntity employee;
     @ManyToOne
     @JoinColumn(name = "department_id")
-    private DepartmentEntity departmentEntity;
+    private DepartmentEntity department;
     @ManyToOne
     @JoinColumn(name = "machine_id")
-    private MachineEntity machineEntity;
+    private MachineEntity machine;
     private String message;
     private Boolean directContact;
     private String solution;
@@ -31,30 +31,6 @@ public class JobEntity {
     private LocalDateTime jobStopTime;
 
     public JobEntity() {
-    }
-
-    public MachineEntity getMachine() {
-        return machineEntity;
-    }
-
-    public void setMachine(MachineEntity machineEntity) {
-        this.machineEntity = machineEntity;
-    }
-
-    public DepartmentEntity getDepartment() {
-        return departmentEntity;
-    }
-
-    public void setDepartment(DepartmentEntity departmentEntity) {
-        this.departmentEntity = departmentEntity;
-    }
-
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
-
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
     }
 
     public Long getId() {
@@ -71,6 +47,30 @@ public class JobEntity {
 
     public void setRequestTime(LocalDateTime requestTime) {
         this.requestTime = requestTime;
+    }
+
+    public EmployeeEntity getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeEntity employee) {
+        this.employee = employee;
+    }
+
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+
+    public MachineEntity getMachine() {
+        return machine;
+    }
+
+    public void setMachine(MachineEntity machine) {
+        this.machine = machine;
     }
 
     public String getMessage() {
@@ -113,15 +113,14 @@ public class JobEntity {
         this.jobStopTime = jobStopTime;
     }
 
-
     @Override
     public String toString() {
         return "JobEntity{" +
                 "id=" + id +
                 ", requestTime=" + requestTime +
-                ", userEntity=" + userEntity +
-                ", departmentEntity=" + departmentEntity +
-                ", machineEntity=" + machineEntity +
+                ", employee=" + employee +
+                ", department=" + department +
+                ", machine=" + machine +
                 ", message='" + message + '\'' +
                 ", directContact=" + directContact +
                 ", solution='" + solution + '\'' +

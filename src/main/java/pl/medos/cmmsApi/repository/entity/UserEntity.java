@@ -10,8 +10,9 @@ import javax.persistence.Id;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(unique = true)
+    private Long id;
+
     private String login;
     private String role;
 

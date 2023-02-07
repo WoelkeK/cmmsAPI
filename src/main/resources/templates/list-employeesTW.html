@@ -3,16 +3,16 @@
       xmlns:th="http://www.thymeleaf.org"
 <head>
     <meta charset="UTF-8">
-    <title>Manager Produktów</title>
+    <title>Moduł Pracowników</title>
     <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-400">
 
 <div class="px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
-            <h1 class="text-4xl font-semibold text-gray-900">Pracownicy</h1>
-            <p class="mt-2 text-sm text-gray-700">Lista pracowników firmy Medos z podziałem na imię, nazwisko,
+            <h1 class="text-6xl font-semibold text-gray-900">Pracownicy</h1>
+            <p class="mt-2 text-lm text-gray-700">Lista pracowników firmy Medos z podziałem na imię, nazwisko,
                 stanowisko, wydział i kontakt.</p>
         </div>
         <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
@@ -27,29 +27,29 @@
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table class="min-w-full">
-                        <thead class="bg-gray-300">
+                        <thead class="bg-gray-800">
                         <tr>
                             <th scope="col"
-                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Imię
+                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">Imię
                             </th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nazwisko
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Nazwisko
                             </th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
                                 Stanowisko
                             </th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dział</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Telefon
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Dział</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Telefon
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Email
                             </th>
-                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
                                 <span class="sr-only">Edit</span>
                             </th>
                         </tr>
                         </thead>
-                        <tbody class="bg-white">
-                        <tr class="border-t border-gray-200">
-                            <th colspan="5" scope="colgroup"
-                                class="bg-red-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
+                        <tbody class="bg-gray">
+                        <tr class="border-t border-gray-600">
+                            <th colspan="7" scope="colgroup"
+                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
                                 Dział Utrzymania Ruchu
                             </th>
                         </tr>
@@ -60,19 +60,19 @@
                                 Lindsay Walton
                             </td>
                             <td th:text="${employee.lastName}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Nazwisko
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Nazwisko
                             </td>
                             <td th:text="${employee.position}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Stanowisko
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Stanowisko
                             </td>
                             <td th:text="${employee.occupation}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Dział
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Dział
                             </td>
                             <td th:text="${employee.phone}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Telefon
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Telefon
                             </td>
                             <td th:text="${employee.email}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Email
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Email
                             </td>
 
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
@@ -88,8 +88,8 @@
                         </tbody>
                         <tbody class="bg-white">
                         <tr class="border-t border-gray-200">
-                            <th colspan="5" scope="colgroup"
-                                class="bg-red-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
+                            <th colspan="7" scope="colgroup"
+                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
                                 Dział Kadr
                             </th>
                         </tr>

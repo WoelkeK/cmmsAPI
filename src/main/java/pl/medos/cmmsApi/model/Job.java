@@ -1,14 +1,14 @@
 package pl.medos.cmmsApi.model;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Job {
 
     private Long id;
     private LocalDateTime requestTime;
     private User user;
+    private Employee employee;
     private Department department;
     private Machine machine;
     private String message;
@@ -18,43 +18,6 @@ public class Job {
     private LocalDateTime jobStopTime;
 
     public Job() {
-    }
-
-    public Job(Long id, LocalDateTime requestTime, User user, Department department, Machine machine, String message, Boolean directContact, String solution, LocalDateTime jobStartTime, LocalDateTime jobStopTime) {
-        this.id = id;
-        this.requestTime = requestTime;
-        this.user = user;
-        this.department = department;
-        this.machine = machine;
-        this.message = message;
-        this.directContact = directContact;
-        this.solution = solution;
-        this.jobStartTime = jobStartTime;
-        this.jobStopTime = jobStopTime;
-    }
-
-    public Machine getMachine() {
-        return machine;
-    }
-
-    public void setMachine(Machine machine) {
-        this.machine = machine;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Long getId() {
@@ -71,6 +34,38 @@ public class Job {
 
     public void setRequestTime(LocalDateTime requestTime) {
         this.requestTime = requestTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Machine getMachine() {
+        return machine;
+    }
+
+    public void setMachine(Machine machine) {
+        this.machine = machine;
     }
 
     public String getMessage() {
@@ -113,13 +108,13 @@ public class Job {
         this.jobStopTime = jobStopTime;
     }
 
-
     @Override
     public String toString() {
-        return "Jobs{" +
+        return "Job{" +
                 "id=" + id +
                 ", requestTime=" + requestTime +
                 ", user=" + user +
+                ", employee=" + employee +
                 ", department=" + department +
                 ", machine=" + machine +
                 ", message='" + message + '\'' +

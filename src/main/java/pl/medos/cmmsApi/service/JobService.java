@@ -24,10 +24,6 @@ public class JobService {
         this.jobMapper = jobMapper;
     }
 
-    public JobService(JobRepository jobRepository) {
-        this.jobRepository = jobRepository;
-    }
-
     public List list() {
 
         LOGGER.info("list()");

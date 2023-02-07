@@ -1,7 +1,14 @@
-package pl.medos.cmmsApi.model;
+package pl.medos.cmmsApi.repository.entity;
 
-public class Sensor {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class SensorEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String type;
@@ -9,10 +16,10 @@ public class Sensor {
     private String status;
     private Boolean isConnected;
 
-    public Sensor() {
+    public SensorEntity() {
     }
 
-    public Sensor(Long id, String name, String type, Double readings, String status, Boolean isConnected) {
+    public SensorEntity(Long id, String name, String type, Double readings, String status, Boolean isConnected) {
         this.id = id;
         this.name = name;
         this.type = type;

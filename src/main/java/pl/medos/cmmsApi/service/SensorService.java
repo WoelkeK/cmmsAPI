@@ -1,58 +1,61 @@
 package pl.medos.cmmsApi.service;
 
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.exception.SensorNotFoundException;
 import pl.medos.cmmsApi.model.Sensor;
 import pl.medos.cmmsApi.repository.SensorRepository;
+import pl.medos.cmmsApi.repository.entity.SensorEntity;
+import pl.medos.cmmsApi.service.mapper.SensorMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
 public class SensorService {
 
     private static final Logger LOGGER = Logger.getLogger(SensorService.class.getName());
-
     private SensorRepository sensorRepository;
+    private SensorMapper sensorMapper;
 
-    public SensorService(SensorRepository sensorRepository) {
+    public SensorService(SensorRepository sensorRepository, SensorMapper sensorMapper) {
         this.sensorRepository = sensorRepository;
+        this.sensorMapper = sensorMapper;
     }
 
-    public List listAll() {
-        LOGGER.info("listAll()");
-        List<Sensor> sensorList = sensorRepository.findAll();
-        LOGGER.info("ListAll(...)");
-        return sensorList;
-
+    public List list() {
+        LOGGER.info("list()");
+        List<SensorEntity> sensorEntities = sensorRepository.findAll();
+        List<Sensor> sensorModels = sensorMapper.listModels(sensorEntities);
+        LOGGER.info("list(...)");
+        return sensorModels;
     }
 
     public Sensor create(Sensor sensor) {
         LOGGER.info("create(" + sensor + ")");
-        Sensor createdSensor = sensorRepository.save(sensor);
-        LOGGER.info("create(...)");
-        return createdSensor;
-
+        SensorEntity sensorEntity = sensorMapper.modelToEntity(sensor);
+        SensorEntity updatedSensorEntity = sensorRepository.save(sensorEntity);
+        Sensor updatedSensorModel = sensorMapper.entityToModel(updatedSensorEntity);
+        LOGGER.info("create(...)" + updatedSensorModel);
+        return updatedSensorModel;
     }
 
-    public Sensor read(Long id) {
-        LOGGER.info("read()");
-        Sensor readedSensor = sensorRepository.findById(id).orElseThrow();
-        LOGGER.info("read(...)");
-        return readedSensor;
-
+    public Sensor read(Long id) throws SensorNotFoundException {
+        LOGGER.info("read(" + id + ")");
+        Optional<SensorEntity> opotionalSensorEntity = sensorRepository.findById(id);
+        SensorEntity sensorEntity = opotionalSensorEntity.orElseThrow(() -> new SensorNotFoundException("Brak czujnika o podanym id " + id));
+        Sensor sensorModel = sensorMapper.entityToModel(sensorEntity);
+        LOGGER.info("read(...)" + sensorModel);
+        return sensorModel;
     }
 
     public Sensor update(Sensor sensor) {
-        LOGGER.info("update()");
-        Sensor editedSensor = sensorRepository.findById(sensor.getId()).orElseThrow();
-        editedSensor.setIsConnected(sensor.getIsConnected());
-        editedSensor.setName(sensor.getName());
-        editedSensor.setReadings(sensor.getReadings());
-        editedSensor.setStatus(sensor.getStatus());
-        editedSensor.setType(sensor.getType());
-        Sensor updatedSensor = sensorRepository.save(editedSensor);
-        LOGGER.info("update(...) " + updatedSensor);
-        return updatedSensor;
+        LOGGER.info("update()" + sensor);
+        SensorEntity sensorEntity = sensorMapper.modelToEntity(sensor);
+        SensorEntity updatedSensorEntity = sensorRepository.save(sensorEntity);
+        Sensor updatedSensorModel = sensorMapper.entityToModel(updatedSensorEntity);
+        LOGGER.info("update(...) " + updatedSensorModel);
+        return updatedSensorModel;
     }
 
     public String delete(Long id) {

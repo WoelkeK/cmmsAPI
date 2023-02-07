@@ -39,26 +39,61 @@
             <p class="mt-1 max-w-2xl text-sm text-gray-500">Należy wprowadzić wszystkie dane, w celu poprawnej
                 identyfikacji.</p>
         </div>
-        <div class="space-y-6 sm:space-y-5">
-            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="user.login" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik</label>
-                <div>
-                    <select th:field="${job.user.id}">
-                        <option th:each="user,status: ${users}"
-                                th:text="${user.login}"
-                                th:value="${user.id}">
 
-                        </option>
-                    </select>
-                </div>
+
+        <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+            <label for="employeeList"
+                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik</label>
+            <div class="mt-1 sm:col-span-2 sm:mt-0">
 
 
 
-                <div class="mt-1 sm:col-span-2 sm:mt-0">
-                    <input type="text" name="user.login" id="user.login" autocomplete="given-name"
-                           class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
-                </div>
+<!--                <select th:field="${job.employee.id}" id="employee" name="employee" autocomplete="employee-name"-->
+                <select th:field="${job.employeeList}" id="employeeList" name="employeeList" autocomplete="employee"
+                        class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+
+                    <option th:each="employeeList.id: ${employees}"
+                             th:text="${employeeList.firstName}"
+                             th:value="${employeeList.id}">
+                    </option>
+                </select>
             </div>
+        </div>
+
+        <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+            <label for="department"
+                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Wydział</label>
+            <div class="mt-1 sm:col-span-2 sm:mt-0">
+                <select id="department" name="department" autocomplete="department-name"
+                        class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+                    <option>Utrzymanie Ruchu</option>
+                    <option>CNC</option>
+                    <option>Lakiernia</option>
+                    <option>Magazyn</option>
+                </select>
+            </div>
+        </div>
+
+
+<!--        <div class="space-y-6 sm:space-y-5">-->
+<!--            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">-->
+<!--                <label for="employee" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik</label>-->
+
+
+<!--                <div>-->
+<!--                    <select th:field="${job.employee.id}">-->
+<!--                        <option th:each="employee,status: ${employees}"-->
+<!--                                th:text="${employee.login}"-->
+<!--                                th:value="${employee.id}">-->
+
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="mt-1 sm:col-span-2 sm:mt-0">-->
+<!--                    <input type="text" name="employee" id="employee" autocomplete="given-name"-->
+<!--                           class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
+<!--                </div>-->
+<!--            </div>-->
 
 <!--            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">-->
 <!--                <label for="department.occupation"-->
