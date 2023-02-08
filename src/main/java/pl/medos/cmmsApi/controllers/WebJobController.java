@@ -3,15 +3,17 @@ package pl.medos.cmmsApi.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Job;
-import pl.medos.cmmsApi.model.Machine;
+import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.JobService;
 import pl.medos.cmmsApi.service.MachineService;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -38,7 +40,7 @@ public class WebJobController {
         LOGGER.info("listView()");
         List<Job> jobs = jobService.list();
         modelMap.addAttribute("jobs", jobs);
-
+        LOGGER.info("listView(...)" + jobs);
         return "list-jobsTW.html";
     }
 
@@ -76,11 +78,11 @@ public class WebJobController {
 
     @PostMapping(value = "/create")
     public String create(
-            String employeeId, String machineId, String departmentId,
+            String employeeId, String jobStartTime, String jobStopTime,
             @ModelAttribute(name = "job") Job job) {
         LOGGER.info("create(" + employeeId + ")");
-        LOGGER.info("create(" + machineId + ")");
-        LOGGER.info("create(" + departmentId + ")");
+        LOGGER.info("create(" + jobStartTime+ ")");
+        LOGGER.info("create(" + jobStopTime + ")");
         LOGGER.info("create(" + job + ")");
         Job savedJobModel = jobService.create(job);
         LOGGER.info("create(...)" + savedJobModel);
@@ -101,7 +103,7 @@ public class WebJobController {
     public String delete(
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
-       jobService.delete(id);
+        jobService.delete(id);
         return "redirect:/jobs";
     }
 }

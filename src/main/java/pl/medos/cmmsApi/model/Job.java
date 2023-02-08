@@ -1,12 +1,12 @@
 package pl.medos.cmmsApi.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
+
+import java.util.Date;
 
 public class Job {
 
     private Long id;
-    private LocalDateTime requestTime;
+    private Date requestTime;
     private User user;
     private Employee employee;
     private Department department;
@@ -14,8 +14,8 @@ public class Job {
     private String message;
     private Boolean directContact;
     private String solution;
-    private LocalDateTime jobStartTime;
-    private LocalDateTime jobStopTime;
+    private String jobStartTime;
+    private String jobStopTime;
 
     public Job() {
     }
@@ -28,11 +28,11 @@ public class Job {
         this.id = id;
     }
 
-    public LocalDateTime getRequestTime() {
+    public Date getRequestTime() {
         return requestTime;
     }
 
-    public void setRequestTime(LocalDateTime requestTime) {
+    public void setRequestTime(Date requestTime) {
         this.requestTime = requestTime;
     }
 
@@ -92,19 +92,19 @@ public class Job {
         this.solution = solution;
     }
 
-    public LocalDateTime getJobStartTime() {
+    public String getJobStartTime() {
         return jobStartTime;
     }
 
-    public void setJobStartTime(LocalDateTime jobStartTime) {
+    public void setJobStartTime(String jobStartTime) {
         this.jobStartTime = jobStartTime;
     }
 
-    public LocalDateTime getJobStopTime() {
+    public String getJobStopTime() {
         return jobStopTime;
     }
 
-    public void setJobStopTime(LocalDateTime jobStopTime) {
+    public void setJobStopTime(String jobStopTime) {
         this.jobStopTime = jobStopTime;
     }
 
@@ -120,8 +120,8 @@ public class Job {
                 ", message='" + message + '\'' +
                 ", directContact=" + directContact +
                 ", solution='" + solution + '\'' +
-                ", jobStartTime=" + jobStartTime +
-                ", jobStopTime=" + jobStopTime +
+                ", jobStartTime='" + jobStartTime + '\'' +
+                ", jobStopTime='" + jobStopTime + '\'' +
                 '}';
     }
 }

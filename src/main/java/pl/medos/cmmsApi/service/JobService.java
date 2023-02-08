@@ -24,12 +24,13 @@ public class JobService {
         this.jobMapper = jobMapper;
     }
 
-    public List list() {
+    public List<Job> list() {
 
         LOGGER.info("list()");
         List<JobEntity> jobEntities = jobRepository.findAll();
+        LOGGER.info("Logout requestTimeEntity " + jobEntities);
         List<Job> jobModels = jobMapper.listModels(jobEntities);
-        LOGGER.info("List(...)");
+        LOGGER.info("listOutOfService(...)" + jobModels);
         return jobModels;
     }
 
