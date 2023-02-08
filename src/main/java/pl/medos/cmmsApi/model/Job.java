@@ -6,6 +6,7 @@ import java.util.Date;
 public class Job {
 
     private Long id;
+    private Date requestDate;
     private Date requestTime;
     private User user;
     private Employee employee;
@@ -26,6 +27,14 @@ public class Job {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(Date requestDate) {
+        this.requestDate = requestDate;
     }
 
     public Date getRequestTime() {
@@ -112,6 +121,7 @@ public class Job {
     public String toString() {
         return "Job{" +
                 "id=" + id +
+                ", requestDate=" + requestDate +
                 ", requestTime=" + requestTime +
                 ", user=" + user +
                 ", employee=" + employee +

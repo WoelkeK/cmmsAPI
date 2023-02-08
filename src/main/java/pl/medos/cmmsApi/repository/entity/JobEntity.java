@@ -16,8 +16,12 @@ public class JobEntity {
     private Long id;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date requestTime;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.DATE)
+    private Date requestDate;
 
 //    @UpdateTimestamp
 //    @Temporal(TemporalType.TIMESTAMP)
@@ -127,11 +131,20 @@ public class JobEntity {
         this.requestTime = requestTime;
     }
 
+    public Date getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(Date requestDate) {
+        this.requestDate = requestDate;
+    }
+
     @Override
     public String toString() {
         return "JobEntity{" +
                 "id=" + id +
                 ", requestTime=" + requestTime +
+                ", requestDate=" + requestDate +
                 ", employee=" + employee +
                 ", department=" + department +
                 ", machine=" + machine +
