@@ -32,7 +32,7 @@ public class WebEmployeeController {
         List<Employee> employees = employeeService.list();
         modelMap.addAttribute("employees", employees);
 
-        return "list-employeesTW.html";
+        return "list-employees.html";
     }
 
     @GetMapping(value = "/update/{id}")

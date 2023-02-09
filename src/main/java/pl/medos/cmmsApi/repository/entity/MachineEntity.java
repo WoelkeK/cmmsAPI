@@ -1,5 +1,7 @@
 package pl.medos.cmmsApi.repository.entity;
 
+import pl.medos.cmmsApi.model.Department;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,11 +13,13 @@ public class MachineEntity {
     private Long id;
     private String name;
     private String model;
-    private int manufactureYear;
-    private String location;
+    private int manufactured;
+    private String serialNumber;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private DepartmentEntity department;
     private String status;
 
-    private String serialNumber;
 
     public MachineEntity() {
     }
@@ -44,28 +48,12 @@ public class MachineEntity {
         this.model = model;
     }
 
-    public int getManufactureYear() {
-        return manufactureYear;
+    public int getManufactured() {
+        return manufactured;
     }
 
-    public void setManufactureYear(int manufactureYear) {
-        this.manufactureYear = manufactureYear;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setManufactured(int manufactured) {
+        this.manufactured = manufactured;
     }
 
     public String getSerialNumber() {
@@ -76,16 +64,32 @@ public class MachineEntity {
         this.serialNumber = serialNumber;
     }
 
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Machine{" +
+        return "MachineEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", model='" + model + '\'' +
-                ", manufactureYear=" + manufactureYear +
-                ", location='" + location + '\'' +
-                ", status='" + status + '\'' +
+                ", manufactured=" + manufactured +
                 ", serialNumber='" + serialNumber + '\'' +
+                ", department=" + department +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
