@@ -12,7 +12,7 @@ public class Employee {
     private String userName;
     private String phone;
     private String email;
-    private String department;
+    private Department department;
     private String comments;
     private String jobs;
     private String raports;
@@ -95,11 +95,11 @@ public class Employee {
         this.email = email;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
@@ -178,7 +178,7 @@ public class Employee {
                 ", userName='" + userName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", department='" + department + '\'' +
+                ", department=" + department +
                 ", comments='" + comments + '\'' +
                 ", jobs='" + jobs + '\'' +
                 ", raports='" + raports + '\'' +

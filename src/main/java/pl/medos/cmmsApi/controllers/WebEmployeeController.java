@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 
 import java.util.List;
@@ -20,10 +22,11 @@ public class WebEmployeeController {
 
     private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
     private EmployeeService employeeService;
+    private DepartmentService departmentService;
 
-    @Autowired
-    public WebEmployeeController(EmployeeService employeeService) {
+    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
         this.employeeService = employeeService;
+        this.departmentService = departmentService;
     }
 
     @GetMapping
@@ -58,6 +61,8 @@ public class WebEmployeeController {
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
         modelMap.addAttribute("employee", new Employee());
+        List<Department> departments = departmentService.list();
+        modelMap.addAttribute("departments", departments);
         return "create-employeeForm.html";
     }
 
