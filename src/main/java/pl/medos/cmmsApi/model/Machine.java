@@ -5,20 +5,20 @@ public class Machine {
     private Long id;
     private String name;
     private String model;
-    private int manufactureYear;
-    private String location;
-    private String status;
+    private int manufactured;
     private String serialNumber;
+    private Department department;
+    private String status;
 
     public Machine() {
     }
 
-    public Machine(Long id, String name, String model, int manufactureYear, String location, String status, String serialNumber) {
+    public Machine(Long id, String name, String model, int manufactured, Department department, String status, String serialNumber) {
         this.id = id;
         this.name = name;
         this.model = model;
-        this.manufactureYear = manufactureYear;
-        this.location = location;
+        this.manufactured = manufactured;
+        this.department = department;
         this.status = status;
         this.serialNumber = serialNumber;
     }
@@ -47,20 +47,20 @@ public class Machine {
         this.model = model;
     }
 
-    public int getManufactureYear() {
-        return manufactureYear;
+    public int getManufactured() {
+        return manufactured;
     }
 
-    public void setManufactureYear(int manufactureYear) {
-        this.manufactureYear = manufactureYear;
+    public void setManufactured(int manufactured) {
+        this.manufactured = manufactured;
     }
 
-    public String getLocation() {
-        return location;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public String getStatus() {
@@ -85,8 +85,8 @@ public class Machine {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", model='" + model + '\'' +
-                ", manufactureYear=" + manufactureYear +
-                ", location='" + location + '\'' +
+                ", manufactured=" + manufactured +
+                ", department=" + department +
                 ", status='" + status + '\'' +
                 ", serialNumber='" + serialNumber + '\'' +
                 '}';

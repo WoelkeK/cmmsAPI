@@ -41,7 +41,7 @@ public class WebJobController {
         List<Job> jobs = jobService.list();
         modelMap.addAttribute("jobs", jobs);
         LOGGER.info("listView(...)" + jobs);
-        return "list-jobsTW.html";
+        return "list-jobs.html";
     }
 
     @GetMapping(value = "/update/{id}")
