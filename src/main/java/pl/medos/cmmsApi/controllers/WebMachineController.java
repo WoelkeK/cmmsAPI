@@ -92,6 +92,6 @@ public class WebMachineController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         machineService.delete(id);
-        return "redirect:/jobs";
+        return "redirect:/machines";
     }
 }
