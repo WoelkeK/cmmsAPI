@@ -1,9 +1,6 @@
 package pl.medos.cmmsApi.repository.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class EmployeeEntity {
@@ -17,7 +14,9 @@ public class EmployeeEntity {
     private String userName;
     private String phone;
     private String email;
-    private String department;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private DepartmentEntity department;
     private String comments;
     private String jobs;
     private String raports;
@@ -101,13 +100,6 @@ public class EmployeeEntity {
         this.email = email;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
 
     public String getComments() {
         return comments;
@@ -173,6 +165,14 @@ public class EmployeeEntity {
         this.about = about;
     }
 
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+
     @Override
     public String toString() {
         return "EmployeeEntity{" +
@@ -184,7 +184,7 @@ public class EmployeeEntity {
                 ", userName='" + userName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", department='" + department + '\'' +
+                ", department=" + department +
                 ", comments='" + comments + '\'' +
                 ", jobs='" + jobs + '\'' +
                 ", raports='" + raports + '\'' +

@@ -54,11 +54,12 @@ public class EmployeeService {
 
     public Employee update(Employee employee) {
 
-        LOGGER.info("update( " + employee + " )");
+        LOGGER.info("update( " + employee.getId() + " )");
         EmployeeEntity employeeEntity = employeeMapper.modelToEntity(employee);
+
         EmployeeEntity updatedEmployeeEntity = employeeRepository.save(employeeEntity);
         Employee updatedEmployeeModel = employeeMapper.entityToModel(updatedEmployeeEntity);
-        LOGGER.info("update()" + updatedEmployeeModel);
+        LOGGER.info("update(...)" + updatedEmployeeModel.getId());
         return updatedEmployeeModel;
     }
 

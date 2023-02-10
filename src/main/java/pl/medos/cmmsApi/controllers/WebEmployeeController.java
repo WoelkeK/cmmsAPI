@@ -1,13 +1,8 @@
 package pl.medos.cmmsApi.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.DepartmentService;
@@ -34,7 +29,6 @@ public class WebEmployeeController {
         LOGGER.info("listView()");
         List<Employee> employees = employeeService.list();
         modelMap.addAttribute("employees", employees);
-
         return "list-employees.html";
     }
 
@@ -45,15 +39,17 @@ public class WebEmployeeController {
         LOGGER.info("updateView()");
         Employee employee = employeeService.read(id);
         modelMap.addAttribute("employee", employee);
-        return "update-employeeTW.html";
+        List<Department> departments = departmentService.list();
+        modelMap.addAttribute("departments", departments);
+        return "update-employee-tmp.html";
     }
 
-    @PostMapping(value = "/update/")
+    @PostMapping(value = "/update")
     public String update(
             @ModelAttribute(name = "employee") Employee employee) {
-        LOGGER.info("update()");
-        employeeService.update(employee);
-        LOGGER.info("update(...)");
+        LOGGER.info("update()" + employee);
+        Employee updatedEmployee = employeeService.update(employee);
+        LOGGER.info("update(...)" + updatedEmployee);
         return "redirect:/employees";
     }
 
@@ -69,6 +65,7 @@ public class WebEmployeeController {
     @PostMapping(value = "/create")
 //    public String create(String firstName, String lastName) {
     public String create(
+            String department,
             @ModelAttribute(name = "employee") Employee employee) {
         LOGGER.info("create(" + employee + ")");
 //        LOGGER.info("create(" + lastName + ")");
