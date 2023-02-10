@@ -41,7 +41,7 @@ public class WebDepartmentController {
         return "update-department.html";
     }
 
-    @PostMapping(value = "/update/")
+    @PostMapping(value = "/update")
     public String update(
             @ModelAttribute(name = "department") Department department) {
         LOGGER.info("update()" + department);

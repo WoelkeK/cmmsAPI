@@ -1,0 +1,40 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Produktów</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<h1>update Employee</h1>
+<div>
+    <form action="#" th:action="@{/employees/update}" th:object="${employee}" method="post">
+        <div>
+            <label for="firstName">Imię</label>
+            <!--            <input id="number" type="text" name="number">-->
+            <input id="firstName" th:field="${employee.firstName}">
+        </div>
+        <div>
+            <label for="lastName">Nazwisko</label>
+            <input id="lastName" th:field="${employee.lastName}">
+        </div>
+        <div>
+            <label for="position">Stanowisko</label>
+            <input id="position" th:field="${employee.position}">
+        </div>
+        <div>
+            <label for="occupation">Dział</label>
+            <input id="occupation" th:field="${employee.occupation}">
+        </div>
+        <div>
+            <input type="hidden" id="id" th:field="${employee.id}">
+        </div>
+        <div>
+            <button type="submit">add</button>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>
