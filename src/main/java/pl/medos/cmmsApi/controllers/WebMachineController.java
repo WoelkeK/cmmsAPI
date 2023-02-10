@@ -45,10 +45,12 @@ public class WebMachineController {
         LOGGER.info("updateView()");
         Machine machine = machineService.read(id);
         modelMap.addAttribute("machine", machine);
+        List<Department> departments = departmentService.list();
+        modelMap.addAttribute("departments", departments);
         return "update-machine.html";
     }
 
-    @PostMapping(value = "/update/")
+    @PostMapping(value = "/update")
     public String update(
             @ModelAttribute(name = "machine") Machine machine) {
         LOGGER.info("update()" + machine);

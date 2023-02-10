@@ -47,53 +47,53 @@
                             </th>
                         </tr>
                         </thead>
-                        <tbody class="bg-gray">
-                        <tr class="border-t border-gray-600">
-                            <th colspan="7" scope="colgroup"
-                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                        <tbody class="bg-gray-500">
+                        <tr class="border-t border-gray-700">
+                            <th colspan="8" scope="colgroup"
+                                class="bg-green-800 px-4 py-2 text-left text-lm font-semibold text-gray-300 sm:px-6">
                                 Aktywne Maszyny
                             </th>
                         </tr>
 
                         <tr th:each="machine : ${machines}" class="border-t border-gray-300">
                             <td th:text="${machine.id}"
-                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
                                 Index
                             </td>
                             <td th:text="${machine.name}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Nazwa
+                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
                             </td>
                             <td th:text="${machine.model}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Typ/Model
+                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Typ/Model
                             </td>
                             <td th:text="${machine.manufactured}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Rok Produkcji
+                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Rok Produkcji
                             </td>
                             <td th:text="${machine.serialNumber}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Numer Seryjny
+                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Numer Seryjny
                             </td>
                             <td th:text="${machine.department.name}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Wydział
+                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wydział
                             </td>
                             <td th:text="${machine.status}"
-                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Status
+                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Status
                             </td>
 
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
                                 <a th:href="@{/machines/update/{id}(id=${machine.id})}"
-                                   class="text-indigo-600 hover:text-indigo-900">Edycja<span class="sr-only"></span></a>
+                                   class="text-indigo-800 hover:text-indigo-900">Edycja<span class="sr-only"></span></a>
                                 <a th:href="@{/machines/read/{id}(id=${machine.id})}"
-                                   class="text-indigo-600 hover:text-indigo-900">Pokaż<span class="sr-only"></span></a>
+                                   class="text-indigo-800 hover:text-indigo-900">Pokaż<span class="sr-only"></span></a>
                                 <a th:href="@{/machines/delete/{id}(id=${machine.id})}"
-                                   class="text-indigo-600 hover:text-indigo-900">Usuń<span class="sr-only"></span></a>
+                                   class="text-indigo-800 hover:text-indigo-900">Usuń<span class="sr-only"></span></a>
                             </td>
                         </tr>
                         <!-- More people... -->
                         </tbody>
                         <tbody class="bg-white">
                         <tr class="border-t border-gray-200">
-                            <th colspan="7" scope="colgroup"
-                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                            <th colspan="8" scope="colgroup"
+                                class="bg-yellow-700 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
                                 Maszyny wycofane z eksploatacji
                             </th>
                         </tr>
