@@ -3,32 +3,32 @@
       xmlns:th="http://www.thymeleaf.org"
 <head>
     <meta charset="UTF-8">
-    <title>Panel Aktualizacji Pracownika</title>
+    <title>Panel Aktualizacji Maszyny</title>
     <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-400">
-<form action="#" th:action="@{/employees/update}" th:object="${employee}" method="post">
+<form action="#" th:action="@{/departments/update}" th:object="${department}" method="post">
 
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-6xl font-semibold text-gray-900">Pracownik</h1>
-                <p class="mt-2 text-lm text-gray-700">Aktualizacja danych osobowych pracownika</p>
+                <h1 class="text-6xl font-semibold text-gray-900">Maszyna</h1>
+                <p class="mt-2 text-lm text-gray-700">Aktualizacja danych przedmiotu / maszyny</p>
             </div>
 
         </div>
 
         <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Dane Pracownika</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Szczegółowe dane personalne.</p>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Opis techniczny</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Dane szczegółowe.</p>
             </div>
 
 <!--sprawdzić możliwość wyświetlenia samego id bez input-->
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500"></dt>
                 <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <input hidden="employeeId" id="employeeIdn" name = "employeeId" th:field="${employee.id}">
+                    <input hidden="departmentId" id="edepartmentId" name = "departmentId" th:field="${department.id}">
                     <span class="flex-grow"></span>
                     <span class="ml-4 flex-shrink-0">
           </span>
@@ -39,10 +39,10 @@
                 <dl class="sm:divide-y sm:divide-gray-300">
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
 
-                        <dt class="text-lm font-medium text-gray-500">Imię</dt>
+                        <dt class="text-lm font-medium text-gray-500">Nazwa</dt>
 
                         <dd class="mt-1 flex text-sm text-blue-900 sm:col-span-2 sm:mt-0">
-                            <input id="firstName" th:field="${employee.firstName}"
+                            <input id="name" th:field="${department.name}"
                                    class="text-lm font-medium text-blue-700">
                             <span class="flex-grow"></span>
                             <span class="ml-4 flex-shrink-0">
@@ -51,9 +51,9 @@
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                        <dt class="text-lm font-medium text-gray-500">Nazwisko</dt>
+                        <dt class="text-lm font-medium text-gray-500">Lokalizacja</dt>
                         <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <input id="lastName" th:field="${employee.lastName}"
+                            <input id="location" th:field="${department.location}"
                                    class="text-lm font-medium text-blue-700">
                             <span class="flex-grow"></span>
                             <span class="ml-4 flex-shrink-0">
@@ -61,57 +61,6 @@
                         </dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                        <dt class="text-lm font-medium text-gray-500">Stanowisko</dt>
-                        <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <input id="position" th:field="${employee.position}"
-                                   class="text-lm font-medium text-blue-700">
-                            <span class="flex-grow"></span>
-                            <span class="ml-4 flex-shrink-0">
-          </span>
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                        <dt class="text-lm font-medium text-gray-500">Telefon</dt>
-                        <dd class="mt-1 flex text-lm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <input id="phone" th:field="${employee.phone}" class="text-sm font-medium text-blue-700">
-                            <span class="flex-grow"></span>
-                            <span class="ml-4 flex-shrink-0">
-          </span>
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                        <dt class="text-lm font-medium text-gray-500">Email</dt>
-                        <dd class="mt-1 flex text-lm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <input id="email" th:field="${employee.email}" class="text-sm font-medium text-blue-700">
-                            <span class="flex-grow"></span>
-                            <span class="ml-4 flex-shrink-0">
-         </span>
-                        </dd>
-                    </div>
-
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                        <dt class="text-lm font-medium text-gray-500">Dział</dt>
-                        <dd class="mt-1 flex text-lm text-gray-900 sm:col-span-2 sm:mt-0">
-
-                            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
-                                <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                    <select th:field="${employee.department.id}" id="department" name="department"
-                                            autocomplete="occupation"
-                                            class="block w-full max-w-lg rounded-md border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-
-                                        <option th:each="department : ${departments}"
-                                                th:text="${department.name}"
-                                                th:value="${department.id}">
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <span class="flex-grow"></span>
-                            <span class="ml-4 flex-shrink-0">
-          </span>
-                        </dd>
-                    </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Załączniki</dt>
@@ -175,7 +124,7 @@
             <div class="flex justify-end">
                 <button type="button"
                         class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    <a th:href="@{/employees}">Anuluj</a>
+                    <a th:href="@{/departments}">Anuluj</a>
                 </button>
                 <button type="submit"
                         class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

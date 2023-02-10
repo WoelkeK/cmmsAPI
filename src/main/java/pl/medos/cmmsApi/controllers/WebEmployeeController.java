@@ -41,7 +41,7 @@ public class WebEmployeeController {
         modelMap.addAttribute("employee", employee);
         List<Department> departments = departmentService.list();
         modelMap.addAttribute("departments", departments);
-        return "update-employee-tmp.html";
+        return "update-employee.html";
     }
 
     @PostMapping(value = "/update")
