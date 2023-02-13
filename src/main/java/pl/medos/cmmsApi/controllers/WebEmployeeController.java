@@ -29,7 +29,7 @@ public class WebEmployeeController {
         LOGGER.info("listView()");
         List<Employee> employees = employeeService.list();
         modelMap.addAttribute("employees", employees);
-        return "list-employees.html";
+        return "list-employee.html";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -59,7 +59,7 @@ public class WebEmployeeController {
         modelMap.addAttribute("employee", new Employee());
         List<Department> departments = departmentService.list();
         modelMap.addAttribute("departments", departments);
-        return "create-employeeForm.html";
+        return "create-employee.html";
     }
 
     @PostMapping(value = "/create")
