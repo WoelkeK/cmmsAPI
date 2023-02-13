@@ -41,7 +41,7 @@ public class WebJobController {
         List<Job> jobs = jobService.list();
         modelMap.addAttribute("jobs", jobs);
         LOGGER.info("listView(...)" + jobs);
-        return "list-jobs.html";
+        return "list-job.html";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -73,7 +73,7 @@ public class WebJobController {
         modelMap.addAttribute("employees", employees);
         List<Machine> machines = machineService.list();
         modelMap.addAttribute("machines", machines);
-        return "create-jobForm.html";
+        return "create-job.html";
     }
 
     @PostMapping(value = "/create")

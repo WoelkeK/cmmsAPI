@@ -28,11 +28,11 @@
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500"></dt>
                 <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <input hidden="machineId" id="machineId" name = "machineId" th:field="${machine.id}">
-            <span class="flex-grow"></span>
-            <span class="ml-4 flex-shrink-0">
+                    <input hidden="machineId" id="machineId" name="machineId" th:field="${machine.id}">
+                    <span class="flex-grow"></span>
+                    <span class="ml-4 flex-shrink-0">
             </span>
-            </dd>
+                </dd>
             </div>
 
             <div class="border-t border-gray-400 px-4 py-5 sm:p-0">
@@ -42,34 +42,34 @@
                         <dt class="text-lm font-medium text-gray-500">Nazwa</dt>
 
                         <dd class="mt-1 flex text-sm text-blue-900 sm:col-span-2 sm:mt-0">
-                    <input id="name" th:field="${machine.name}"
-                    class="text-lm font-medium text-blue-700">
-                    <span class="flex-grow"></span>
-                    <span class="ml-4 flex-shrink-0">
+                            <input id="name" th:field="${machine.name}"
+                                   class="text-lm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
                     </span>
-                    </dd>
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-lm font-medium text-gray-500">Model</dt>
                         <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <input id="model" th:field="${machine.model}"
-                    class="text-lm font-medium text-blue-700">
-                    <span class="flex-grow"></span>
-                    <span class="ml-4 flex-shrink-0">
+                            <input id="model" th:field="${machine.model}"
+                                   class="text-lm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
                     </span>
-                    </dd>
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-lm font-medium text-gray-500">Rok Produkcji</dt>
                         <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <input id="manufactured" th:field="${machine.manufactured}"
-                    class="text-lm font-medium text-blue-700">
-                    <span class="flex-grow"></span>
-                    <span class="ml-4 flex-shrink-0">
+                            <input id="manufactured" th:field="${machine.manufactured}"
+                                   class="text-lm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
                     </span>
-                    </dd>
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -98,20 +98,21 @@
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-lm font-medium text-gray-500">Status</dt>
                         <dd class="mt-1 flex text-lm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <input id="status" th:field="${machine.status}" class="text-sm font-medium text-blue-700">
-                    <span class="flex-grow"></span>
-                    <span class="ml-4 flex-shrink-0">
+                            <input id="status" th:field="${machine.status}" class="text-sm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
                     </span>
-                    </dd>
+                        </dd>
                     </div>
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-lm font-medium text-gray-500">Numer Seryjny</dt>
                         <dd class="mt-1 flex text-lm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <input id="sieralNb" th:field="${machine.serialNumber}" class="text-sm font-medium text-blue-700">
-                    <span class="flex-grow"></span>
-                    <span class="ml-4 flex-shrink-0">
+                            <input id="sieralNb" th:field="${machine.serialNumber}"
+                                   class="text-sm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
                     </span>
-                    </dd>
+                        </dd>
                     </div>
 
 
@@ -133,13 +134,13 @@
                                     </div>
                                     <div class="ml-4 flex flex-shrink-0 space-x-4">
                                         <button type="button"
-                                                class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                            Update
+                                                class="rounded-md bg-gray-300 font-medium text-indigo-400 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Zmień
                                         </button>
-                                        <span class="text-gray-300" aria-hidden="true">|</span>
+                                        <span class="text-gray-800" aria-hidden="true">|</span>
                                         <button type="button"
-                                                class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                            Remove
+                                                class="rounded-md bg-gray-300 font-medium text-indigo-400 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Usuń
                                         </button>
                                     </div>
                                 </li>
@@ -157,13 +158,13 @@
                                     </div>
                                     <div class="ml-4 flex flex-shrink-0 space-x-4">
                                         <button type="button"
-                                                class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                            Update
+                                                class="rounded-md bg-gray-300 font-medium text-indigo-400 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Zmień
                                         </button>
-                                        <span class="text-gray-300" aria-hidden="true">|</span>
+                                        <span class="text-gray-800" aria-hidden="true">|</span>
                                         <button type="button"
-                                                class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                            Remove
+                                                class="rounded-md bg-gray-300 font-medium text-indigo-400 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Usuń
                                         </button>
                                     </div>
                                 </li>
@@ -177,7 +178,7 @@
             <div class="flex justify-end">
                 <button type="button"
                         class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    <a th:href="@{/machines}">Anuluj</a>
+                    <a th:href="@{/departments}">Anuluj</a>
                 </button>
                 <button type="submit"
                         class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -185,9 +186,6 @@
                 </button>
             </div>
         </div>
-
-    </div>
-    </div>
     </div>
 </form>
 </body>
