@@ -11,6 +11,7 @@
 <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
+
         <!--
           Off-canvas menu backdrop, show/hide based on off-canvas menu state.
 
@@ -46,22 +47,27 @@
                     To: "opacity-0"
                 -->
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
-                    <button type="button" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <button type="button"
+                            class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span class="sr-only">Close sidebar</span>
                         <!-- Heroicon name: outline/x-mark -->
-                        <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
                 </div>
 
                 <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto" src="https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500" alt="Medos">
+                        <img class="h-8 w-auto"
+                             src="https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500"
+                             alt="Medos">
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/" class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        <a href="/"
+                           class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!--
                               Heroicon name: outline/home
 
@@ -76,17 +82,20 @@
                             Panel Główny
                         </a>
 
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/users -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                                      d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
                             </svg>
                             Pracownicy
                         </a>
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/chart-bar -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -96,7 +105,9 @@
                             </svg>
                             Wydziały
                         </a>
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/calendar -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -107,7 +118,8 @@
                             Maszyny
                         </a>
 
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -118,7 +130,8 @@
                             Zlecenia
                         </a>
 
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/inbox -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -128,13 +141,17 @@
                             </svg>
                             Reporty
                         </a>
+
+
                     </nav>
                 </div>
                 <div class="flex flex-shrink-0 bg-gray-700 p-4">
                     <a href="#" class="group block flex-shrink-0">
                         <div class="flex items-center">
                             <div>
-                                <img class="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                <img class="inline-block h-10 w-10 rounded-full"
+                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                     alt="">
                             </div>
                             <div class="ml-3">
                                 <p class="text-base font-medium text-white">Tom Cook</p>
@@ -157,11 +174,15 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" src=" https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500" alt="Medos">
+                    <img class="h-8 w-auto"
+                         src=" https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500"
+                         alt="Your Company">
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
+
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/" class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a href="/"
+                       class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!--
                           Heroicon name: outline/home
 
@@ -176,7 +197,8 @@
                         Paneł Główny
                     </a>
 
-                    <a th:href="@{/employees}" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a th:href="@{/employees}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -186,7 +208,8 @@
                         </svg>
                         Pracownicy
                     </a>
-                    <a  th:href="@{/departments}" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a th:href="@{/departments}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/users -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -196,7 +219,9 @@
                         </svg>
                         Wydziały
                     </a>
-                    <a  th:href="@{/machines}" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+
+                    <a th:href="@{/machines}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/chart-bar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -206,18 +231,21 @@
                         </svg>
                         Maszyny
                     </a>
-                    <a  th:href="@{/jobs}"class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+
+                    <a th:href="@{/jobs}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
                         </svg>
                         Zlecenia
                     </a>
 
-                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a href="#"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -233,7 +261,9 @@
                 <a href="#" class="group block w-full flex-shrink-0">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full" src="https://media.licdn.com/dms/image/C4D03AQEJEio39iNw_Q/profile-displayphoto-shrink_800_800/0/1661529893600?e=2147483647&v=beta&t=V3TkCm9POhJxk4HNIqzG6VOnNXgWI75vekdusiDOpeQ" alt="">
+                            <img class="inline-block h-9 w-9 rounded-full"
+                                 src="https://media.licdn.com/dms/image/C4D03AQEJEio39iNw_Q/profile-displayphoto-shrink_800_800/0/1661529893600?e=2147483647&v=beta&t=V3TkCm9POhJxk4HNIqzG6VOnNXgWI75vekdusiDOpeQ"
+                                 alt="">
                         </div>
                         <div class="ml-3">
                             <p class="text-sm font-medium text-white">Krzysztof Woelke</p>
@@ -246,116 +276,27 @@
     </div>
     <div class="flex flex-1 flex-col md:pl-64">
         <div class="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
-            <button type="button" class="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+            <button type="button"
+                    class="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                 <span class="sr-only">Open sidebar</span>
                 <!-- Heroicon name: outline/bars-3 -->
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
                 </svg>
             </button>
         </div>
         <main class="flex-1">
             <div class="py-6">
-<!--                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
-<!--                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>-->
-<!--                </div>-->
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>
+                </div>
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                     <!-- Replace with your content -->
+                    <div class="py-4">
+                        <div class="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>
 
-                    <div class="px-4 sm:px-6 lg:px-8">
-                        <div class="sm:flex sm:items-center">
-                            <div class="sm:flex-auto">
-                                <h1 class="text-4xl font-semibold text-gray-900">Maszyny</h1>
-                                <p class="mt-2 text-lm text-gray-700">Lista maszyn znajdujących się na terenie firmy Medos.</p>
-                            </div>
-                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
-                                <button type="button"
-                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/machines/create}">Dodaj</a>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex flex-col">
-                            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                                        <table class="min-w-full">
-                                            <thead class="bg-gray-800">
-                                            <tr>
-                                                <th scope="col"
-                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">Index
-                                                </th>
-                                                <th scope="col"
-                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">Nazwa
-                                                </th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Typ/Model
-                                                </th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Rok produkcji
-                                                </th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Numer seryjny</th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Wydział</th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">Status
-                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
-                                                    <span class="sr-only">Edit</span>
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="bg-gray-500">
-                                            <tr class="border-t border-gray-700">
-                                                <th colspan="8" scope="colgroup"
-                                                    class="bg-green-400 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
-                                                    Aktywne Maszyny
-                                                </th>
-                                            </tr>
-
-                                            <tr th:each="machine : ${machines}" class="border-t border-gray-300">
-                                                <td th:text="${machine.id}"
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
-                                                    Index
-                                                </td>
-                                                <td th:text="${machine.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
-                                                </td>
-                                                <td th:text="${machine.model}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Typ/Model
-                                                </td>
-                                                <td th:text="${machine.manufactured}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Rok Produkcji
-                                                </td>
-                                                <td th:text="${machine.serialNumber}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Numer Seryjny
-                                                </td>
-                                                <td th:text="${machine.department.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wydział
-                                                </td>
-                                                <td th:text="${machine.status}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Status
-                                                </td>
-
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
-                                                    <a th:href="@{/machines/update/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-900">Edycja<span class="sr-only"></span></a>
-                                                    <a th:href="@{/machines/read/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-900">Pokaż<span class="sr-only"></span></a>
-                                                    <a th:href="@{/machines/delete/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-900">Usuń<span class="sr-only"></span></a>
-                                                </td>
-                                            </tr>
-                                            <!-- More people... -->
-                                            </tbody>
-                                            <tbody class="bg-grey">
-                                            <tr class="border-t border-gray-200">
-                                                <th colspan="8" scope="colgroup"
-                                                    class="bg-grey-700 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
-                                                    Maszyny wycofane z eksploatacji
-                                                </th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <!-- /End replace -->
                 </div>

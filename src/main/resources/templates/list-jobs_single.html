@@ -1,0 +1,152 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+<head>
+    <meta charset="UTF-8">
+    <title>Moduł Zleceń</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-400" >
+
+<div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+            <h1 class="text-6xl font-semibold text-gray-900">Zlecenia</h1>
+            <p class="mt-2 text-lm text-gray-700">Lista zadań zarejestrowanychw systemie</p>
+        </div>
+        <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
+            <button type="button"
+                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                <a th:href="@{/jobs/create}">Dodaj</a>
+            </button>
+        </div>
+
+
+    </div>
+    <div class="mt-4 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-fit py-2 align-middle md:px-6 lg:px-8">
+                <div class="overflow-hidden shadow ring-2 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-fit">
+                        <thead class="bg-gray-800">
+                        <tr>
+                            <th scope="col"
+                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">Index
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Data
+                                zgłoszenia
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Godzina
+                                zgłoszenia
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Osoba
+                                zgłaszająca
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Dział
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Nazwa
+                                Maszyny
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Opis
+                                usterki/miejsce
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
+                                Zgłszenie telefoniczne
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Podjęte
+                                działania
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Data
+                                podjęcia działań
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Data
+                                zakończenia naprawy
+
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">Osoba
+                                potwierdzająca
+                            </th>
+
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
+                                    <span class="sr-only">Edit</span>
+
+                                </th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-red">
+                        <tr class="border-t border-gray-600">
+                            <th colspan="13" scope="colgroup"
+                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                                Bieżące Awarie / Zgłoszenia
+                            </th>
+                        </tr>
+
+                        <tr th:each="job : ${jobs}" class="border-t border-gray-300">
+                            <td th:text="${job.id}"
+                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                Index
+                            </td>
+                            <td th:text="${job.requestDate}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-800">Data Zgłoszenia
+                            </td>
+                            <td th:text="${job.requestTime}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-800">Godzinna Zgłoszenia
+                            </td>
+                            <td th:text="${job.employee.firstName}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
+                            </td>
+                            <td th:text="${job.department.name}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Dział
+                            </td>
+                            <td th:text="${job.machine.model}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Maszyna
+                            </td>
+                            <td th:text="${job.message}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Opis usterki
+                            </td>
+                            <td th:text="${job.directContact}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Zgłoszenie telefoniczne
+                            </td>
+                            <td th:text="${job.solution}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Podjęte
+                                działania
+                            </td>
+                            <td th:text="${job.jobStartTime}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
+                                podjęcia działań
+                            </td>
+                            <td th:text="${job.jobStopTime}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
+                                zakończenia naprawy
+                            </td>
+                            <td th:text="${job.user}"
+                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
+                                potwierdzająca
+                            </td>
+
+                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                <a th:href="@{/jobs/update/{id}(id=${job.id})}"
+                                   class="text-indigo-600 hover:text-indigo-900">Edycja<span class="sr-only"></span></a>
+                                <a th:href="@{/jobs/read/{id}(id=${job.id})}"
+                                   class="text-indigo-600 hover:text-indigo-900">Pokaż<span class="sr-only"></span></a>
+                                <a th:href="@{/jobs/delete/{id}(id=${job.id})}"
+                                   class="text-indigo-600 hover:text-indigo-900">Usuń<span class="sr-only"></span></a>
+                            </td>
+
+                        </tr>
+                        <!-- More people... -->
+                        </tbody>
+                        <tbody class="bg-white">
+                        <tr class="border-t border-gray-200">
+                            <th colspan="13" scope="colgroup"
+                                class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
+                                Aktualne zlecenia
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
