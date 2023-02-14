@@ -86,7 +86,7 @@ public class WebJobController {
         LOGGER.info("create(" + job + ")");
         Job savedJobModel = jobService.create(job);
         LOGGER.info("create(...)" + savedJobModel);
-        return "redirect:/jobs";
+        return "redirect:/";
     }
 
     @GetMapping(value = "/read/{id}")
