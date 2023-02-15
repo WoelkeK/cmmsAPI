@@ -1,8 +1,6 @@
 package pl.medos.cmmsApi.repository.entity;
 
-import pl.medos.cmmsApi.model.Department;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class MachineEntity {

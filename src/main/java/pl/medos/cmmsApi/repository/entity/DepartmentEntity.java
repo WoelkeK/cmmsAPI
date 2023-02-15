@@ -1,6 +1,6 @@
 package pl.medos.cmmsApi.repository.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class DepartmentEntity {

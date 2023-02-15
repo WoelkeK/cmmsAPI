@@ -8,7 +8,7 @@ public class Job {
     private Long id;
     private Date requestDate;
     private Date requestTime;
-    private User user;
+    private UserOld userOld;
     private Employee employee;
     private Department department;
     private Machine machine;
@@ -45,12 +45,12 @@ public class Job {
         this.requestTime = requestTime;
     }
 
-    public User getUser() {
-        return user;
+    public UserOld getUser() {
+        return userOld;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserOld userOld) {
+        this.userOld = userOld;
     }
 
     public Employee getEmployee() {
@@ -123,7 +123,7 @@ public class Job {
                 "id=" + id +
                 ", requestDate=" + requestDate +
                 ", requestTime=" + requestTime +
-                ", user=" + user +
+                ", user=" + userOld +
                 ", employee=" + employee +
                 ", department=" + department +
                 ", machine=" + machine +

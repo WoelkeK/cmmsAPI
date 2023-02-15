@@ -2,7 +2,7 @@ package pl.medos.cmmsApi.service.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import pl.medos.cmmsApi.model.User;
+import pl.medos.cmmsApi.model.UserOld;
 import pl.medos.cmmsApi.repository.entity.UserEntity;
 
 import java.util.List;
@@ -16,29 +16,29 @@ public class UserMapper {
 
     private UserEntity userEntity;
 
-    public List<User> listModels(List<UserEntity> userEntities) {
+    public List<UserOld> listModels(List<UserEntity> userEntities) {
 
         LOGGER.info("list()" + userEntities);
-        List<User> userModels = userEntities.stream()
+        List<UserOld> userOldModels = userEntities.stream()
                 .map(this::entityToModel)
                 .collect(Collectors.toList());
-        return userModels;
+        return userOldModels;
     }
 
-    public User entityToModel(UserEntity userEntity) {
+    public UserOld entityToModel(UserEntity userEntity) {
 
         LOGGER.info("entityToModel" + userEntity);
         ModelMapper modelMapper = new ModelMapper();
-        User userModel = modelMapper.map(userEntity, User.class);
+        UserOld userOldModel = modelMapper.map(userEntity, UserOld.class);
 //        userModel.setPassword(null);
-        return userModel;
+        return userOldModel;
     }
 
-    public UserEntity modelToEntity(User userModel) {
+    public UserEntity modelToEntity(UserOld userOldModel) {
 
-        LOGGER.info("modelToEntity()" + userModel);
+        LOGGER.info("modelToEntity()" + userOldModel);
         ModelMapper modelMapper = new ModelMapper();
-        UserEntity userEntity = modelMapper.map(userModel, UserEntity.class);
+        UserEntity userEntity = modelMapper.map(userOldModel, UserEntity.class);
         return userEntity;
     }
 }

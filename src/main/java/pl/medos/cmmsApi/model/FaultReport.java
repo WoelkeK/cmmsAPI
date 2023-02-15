@@ -6,7 +6,7 @@ public class FaultReport {
 
     private Long id;
     private Machine machine;
-    private User user;
+    private UserOld userOld;
     private Department department;
     private String message;
     private String issueCode;
@@ -15,10 +15,10 @@ public class FaultReport {
     public FaultReport() {
     }
 
-    public FaultReport(Long id, Machine machine, User user, Department department, String message, String issueCode, LocalDateTime localDateTime) {
+    public FaultReport(Long id, Machine machine, UserOld userOld, Department department, String message, String issueCode, LocalDateTime localDateTime) {
         this.id = id;
         this.machine = machine;
-        this.user = user;
+        this.userOld = userOld;
         this.department = department;
         this.message = message;
         this.issueCode = issueCode;
@@ -33,12 +33,12 @@ public class FaultReport {
         this.department = department;
     }
 
-    public User getUser() {
-        return user;
+    public UserOld getUser() {
+        return userOld;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserOld userOld) {
+        this.userOld = userOld;
     }
 
     public Machine getMachine() {
@@ -86,7 +86,7 @@ public class FaultReport {
         return "FaultReport{" +
                 "id=" + id +
                 ", machine=" + machine +
-                ", user=" + user +
+                ", user=" + userOld +
                 ", department=" + department +
                 ", message='" + message + '\'' +
                 ", issueCode='" + issueCode + '\'' +

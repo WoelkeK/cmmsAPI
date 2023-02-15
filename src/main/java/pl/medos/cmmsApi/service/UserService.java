@@ -2,8 +2,8 @@ package pl.medos.cmmsApi.service;
 
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.UserNotFoundException;
-import pl.medos.cmmsApi.model.User;
-import pl.medos.cmmsApi.repository.UserRepository;
+import pl.medos.cmmsApi.model.UserOld;
+import pl.medos.cmmsApi.repository.UserRepositoryOld;
 import pl.medos.cmmsApi.repository.entity.UserEntity;
 import pl.medos.cmmsApi.service.mapper.UserMapper;
 
@@ -16,53 +16,53 @@ public class UserService {
 
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
-    private UserRepository userRepository;
+    private UserRepositoryOld userRepositoryOld;
     private UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
+    public UserService(UserRepositoryOld userRepositoryOld, UserMapper userMapper) {
+        this.userRepositoryOld = userRepositoryOld;
         this.userMapper = userMapper;
     }
 
     public List list() {
         LOGGER.info("list()");
-        List<UserEntity> userEntities = userRepository.findAll();
-        List<User> userModels = userMapper.listModels(userEntities);
+        List<UserEntity> userEntities = userRepositoryOld.findAll();
+        List<UserOld> userOldModels = userMapper.listModels(userEntities);
         LOGGER.info("list(...)");
-        return userModels;
+        return userOldModels;
     }
 
-    public User create(User user) {
-        LOGGER.info("create(" + user + ")");
-        UserEntity userEntity = userMapper.modelToEntity(user);
-        UserEntity savedUserEntity = userRepository.save(userEntity);
-        User savedUserModel = userMapper.entityToModel(savedUserEntity);
-        LOGGER.info("create(...)" + savedUserModel);
-        return savedUserModel;
+    public UserOld create(UserOld userOld) {
+        LOGGER.info("create(" + userOld + ")");
+        UserEntity userEntity = userMapper.modelToEntity(userOld);
+        UserEntity savedUserEntity = userRepositoryOld.save(userEntity);
+        UserOld savedUserModelOld = userMapper.entityToModel(savedUserEntity);
+        LOGGER.info("create(...)" + savedUserModelOld);
+        return savedUserModelOld;
     }
 
-    public User read(Long id) throws UserNotFoundException {
+    public UserOld read(Long id) throws UserNotFoundException {
         LOGGER.info("read()");
-        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        Optional<UserEntity> optionalUserEntity = userRepositoryOld.findById(id);
         UserEntity userEntity = optionalUserEntity.orElseThrow(
                 () -> new UserNotFoundException("Brak użytkownika o podanym id " + id));
-        User userModel = userMapper.entityToModel(userEntity);
-        LOGGER.info("read(...)" + userModel);
-        return userModel;
+        UserOld userOldModel = userMapper.entityToModel(userEntity);
+        LOGGER.info("read(...)" + userOldModel);
+        return userOldModel;
     }
 
-    public User update(User user) {
-        LOGGER.info("update()" + user);
-        UserEntity userEntity = userMapper.modelToEntity(user);
-        UserEntity updatedUserEntity = userRepository.save(userEntity);
-        User updatedUserModel = userMapper.entityToModel(updatedUserEntity);
-        LOGGER.info("update(...) " + updatedUserModel);
-        return updatedUserModel;
+    public UserOld update(UserOld userOld) {
+        LOGGER.info("update()" + userOld);
+        UserEntity userEntity = userMapper.modelToEntity(userOld);
+        UserEntity updatedUserEntity = userRepositoryOld.save(userEntity);
+        UserOld updatedUserModelOld = userMapper.entityToModel(updatedUserEntity);
+        LOGGER.info("update(...) " + updatedUserModelOld);
+        return updatedUserModelOld;
     }
 
     public String delete(Long id) {
         LOGGER.info("delete()");
-        userRepository.deleteById(id);
+        userRepositoryOld.deleteById(id);
         LOGGER.info("delete(...)");
         return "Record " + id + " deleted!";
     }

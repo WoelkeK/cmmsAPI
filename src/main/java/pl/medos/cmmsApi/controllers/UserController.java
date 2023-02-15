@@ -1,61 +1,34 @@
 package pl.medos.cmmsApi.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import pl.medos.cmmsApi.exception.UserNotFoundException;
-import pl.medos.cmmsApi.model.User;
-import pl.medos.cmmsApi.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import pl.medos.cmmsApi.model.UserModel;
+import pl.medos.cmmsApi.service.IUserService;
+    @Controller
+    public class UserController {
 
-import java.util.List;
-import java.util.logging.Logger;
+        @Autowired
+        private IUserService userService;
 
-@RestController
-@RequestMapping("/api")
-public class UserController {
+        // Go to Registration Page
+        @GetMapping("/register")
+        public String register() {
+            return "pages/registerUser";
+        }
 
-    private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
-    private UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
+        // Read Form data to save into DB
+        @PostMapping("/saveUser")
+        public String saveUser(
+                @ModelAttribute UserModel user,
+                Model model
+        ) {
+            Integer id = userService.saveUser(user);
+            String message = "User '" + id + "' saved successfully !";
+            model.addAttribute("msg", message);
+            return "pages/registerUser";
+        }
     }
-
-    @GetMapping("/user")
-    public List list() {
-        LOGGER.info("userList()");
-        List users = userService.list();
-        LOGGER.info("userList(...)" + users);
-        return users;
-    }
-
-    @PostMapping("/user")
-    public User create(@RequestBody User user) {
-        LOGGER.info("createUser(" + user + ")");
-        User createdUser = userService.create(user);
-        LOGGER.info("createUser(...)");
-        return createdUser;
-    }
-
-    @GetMapping("/user/{id}")
-    public User read(@PathVariable(name = "id") Long id) throws UserNotFoundException {
-        LOGGER.info("readUser(" + id + ")");
-        User readedUser = userService.read(id);
-        LOGGER.info("readUser(...) " + readedUser);
-        return readedUser;
-    }
-
-    @PutMapping("/user")
-    public User update(@RequestBody User user) {
-        LOGGER.info("updateUser(" + user + ")");
-        User updatedUser = userService.update(user);
-        LOGGER.info("updateUser(...) " + updatedUser);
-        return updatedUser;
-    }
-
-    @DeleteMapping("/user/{id}")
-    public String delete(@PathVariable(name = "id") Long id) {
-        LOGGER.info("deleteUser(" + id + ")");
-        String deleteMessage = userService.delete(id);
-        LOGGER.info("deleteUser(...)");
-        return deleteMessage;
-    }
-}
