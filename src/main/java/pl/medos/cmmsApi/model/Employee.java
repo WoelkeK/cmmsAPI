@@ -1,7 +1,5 @@
 package pl.medos.cmmsApi.model;
 
-import javax.persistence.*;
-
 public class Employee {
 
     private Long id;

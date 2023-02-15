@@ -1,11 +1,8 @@
 package pl.medos.cmmsApi.repository.entity;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
