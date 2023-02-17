@@ -11,6 +11,8 @@ public class InvoiceEntity {
     private Long id;
     private String number;
 
+    private double price;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private SupplierEntity supplier;
@@ -34,6 +36,14 @@ public class InvoiceEntity {
         this.number = number;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public SupplierEntity getSupplier() {
         return supplier;
     }
@@ -47,6 +57,7 @@ public class InvoiceEntity {
         return "InvoiceEntity{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
+                ", price=" + price +
                 ", supplier=" + supplier +
                 '}';
     }

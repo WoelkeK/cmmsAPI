@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.repository.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "EMPLOYEES")
 public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

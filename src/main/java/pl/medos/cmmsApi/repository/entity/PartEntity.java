@@ -3,22 +3,26 @@ package pl.medos.cmmsApi.repository.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "DEPARTMENTS")
-public class DepartmentEntity {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(unique = true)
+@Table(name = "PARTS")
+public class PartEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String location;
+    private int quantity;
 
-    public DepartmentEntity() {
+//    private Supplier supplier;
+//    private Material materials;
+//    private Process processes;
+//    private Cost cost;
+
+    public PartEntity() {
     }
 
-    public DepartmentEntity(Long id, String name, String location) {
+    public PartEntity(Long id, String name, int quantity) {
         this.id = id;
         this.name = name;
-        this.location = location;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -37,20 +41,20 @@ public class DepartmentEntity {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
     public String toString() {
-        return "DepartmentEntity{" +
+        return "Part{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
+                ", quantity=" + quantity +
                 '}';
     }
 }
