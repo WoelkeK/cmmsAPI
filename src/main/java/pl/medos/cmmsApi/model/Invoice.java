@@ -4,13 +4,17 @@ public class Invoice {
 
     private Long id;
     private String number;
+
+    private double price;
     private Supplier supplier;
+
     public Invoice() {
     }
 
-    public Invoice(Long id, String number, Supplier supplier) {
+    public Invoice(Long id, String number, double price, Supplier supplier) {
         this.id = id;
         this.number = number;
+        this.price = price;
         this.supplier = supplier;
     }
 
@@ -30,6 +34,14 @@ public class Invoice {
         this.number = number;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public Supplier getSupplier() {
         return supplier;
     }
@@ -43,6 +55,7 @@ public class Invoice {
         return "Invoice{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
+                ", price=" + price +
                 ", supplier=" + supplier +
                 '}';
     }

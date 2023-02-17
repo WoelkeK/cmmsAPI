@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.repository.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name="MACHINES")
 public class MachineEntity {
 
     @Id
