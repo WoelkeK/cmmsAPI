@@ -342,13 +342,13 @@
                         <td th:text="${resource.quantity}"
                             class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Ilość
                         </td>
-                        <td th:text="${invoices.price}"
+                        <td th:text="${resource.invoice.price}"
                             class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Cena
                         </td>
-                        <td th:text="${invoices.number}"
+                        <td th:text="${resource.invoice.number}"
                             class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Faktura
                         </td>
-                        <td th:text="${resource.quantity}"
+                        <td th:text="${resource.invoice.supplier.name}"
                             class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Dostawca
                         </td>
 

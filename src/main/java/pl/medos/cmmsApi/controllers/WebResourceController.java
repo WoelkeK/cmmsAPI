@@ -23,7 +23,6 @@ public class WebResourceController {
     private InvoiceService invoiceService;
 
 
-
     public WebResourceController(ResourceService resourceService, InvoiceService invoiceService) {
         this.resourceService = resourceService;
         this.invoiceService = invoiceService;
@@ -34,6 +33,8 @@ public class WebResourceController {
         LOGGER.info("listView()");
         List<Resource> resources = resourceService.list();
         modelMap.addAttribute("resources", resources);
+        List<Invoice> invoices = invoiceService.list();
+        modelMap.addAttribute("invoices", invoices);
         LOGGER.info("listView(...)");
         return "list-resource.html";
     }
