@@ -38,13 +38,13 @@ public class WebSupplierController {
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
-        modelMap.addAttribute("suppliers", new Supplier());
+        modelMap.addAttribute("supplier", new Supplier());
         LOGGER.info("createView(...)");
         return "create-supplier.html";
     }
 
     @PostMapping(value = "/create")
-    public String create(@ModelAttribute(name = "resource") Supplier supplier) {
+    public String create(@ModelAttribute(name = "supplier") Supplier supplier) {
         LOGGER.info("create()");
         Supplier savedSupplier = supplierService.create(supplier);
         LOGGER.info("create(...)" + savedSupplier);
@@ -57,7 +57,7 @@ public class WebSupplierController {
             ModelMap modelMap) throws SupplierNotFoundException {
         LOGGER.info("read(" + id + ")");
         Supplier supplierModel = supplierService.read(id);
-        modelMap.addAttribute("suppliers", supplierModel);
+        modelMap.addAttribute("supplier", supplierModel);
         LOGGER.info("read(...)" + supplierModel);
         return "read-supplier.html";
     }
@@ -68,14 +68,14 @@ public class WebSupplierController {
             ModelMap modelMap) throws SupplierNotFoundException {
         LOGGER.info("update()" + id);
        Supplier supplier = supplierService.read(id);
-        modelMap.addAttribute("suppliers", supplier);
+        modelMap.addAttribute("supplier", supplier);
         LOGGER.info("update(...)");
-        return "update-supplier.html";
+        return "create-supplier.html";
     }
 
     @PutMapping(value = "/update")
     public String update(
-            @ModelAttribute(name = "resource") Supplier supplier) throws SupplierNotFoundException {
+            @ModelAttribute(name = "supplier") Supplier supplier) throws SupplierNotFoundException {
         LOGGER.info("update()" + supplier);
         Supplier updatedsupplier = supplierService.update(supplier);
         LOGGER.info("update(...)" + updatedsupplier);
@@ -83,10 +83,10 @@ public class WebSupplierController {
     }
 
     @GetMapping(value = "/delete/{id}")
-    public String delete(Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("delete(" + id + ")");
         supplierService.delete(id);
         LOGGER.info("delete(...)");
-        return "Response 200: Record: " + id + " deleted";
+        return "redirect:/suppliers";
     }
 }
