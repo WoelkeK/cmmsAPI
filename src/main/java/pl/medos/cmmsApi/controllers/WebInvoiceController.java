@@ -21,9 +21,11 @@ public class WebInvoiceController {
     private static final Logger LOGGER = Logger.getLogger(WebInvoiceController.class.getName());
 
     private InvoiceService invoiceService;
+    private SupplierService supplierService;
 
-    public WebInvoiceController(InvoiceService invoiceService) {
+    public WebInvoiceController(InvoiceService invoiceService, SupplierService supplierService) {
         this.invoiceService = invoiceService;
+        this.supplierService = supplierService;
     }
 
     @GetMapping
@@ -31,6 +33,8 @@ public class WebInvoiceController {
         LOGGER.info("listView()");
         List<Invoice> invoices = invoiceService.list();
         modelMap.addAttribute("invoices", invoices);
+        List<Supplier> suppliers = supplierService.list();
+        modelMap.addAttribute("supplier", suppliers);
         LOGGER.info("listView(...)");
         return "list-invoice.html";
     }
@@ -38,7 +42,9 @@ public class WebInvoiceController {
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
-        modelMap.addAttribute("invoices", new Invoice());
+        modelMap.addAttribute("invoice", new Invoice());
+        List<Supplier> suppliers = supplierService.list();
+        modelMap.addAttribute("suppliers", suppliers);
         LOGGER.info("createView(...)");
         return "create-invoice.html";
     }
@@ -57,7 +63,7 @@ public class WebInvoiceController {
             ModelMap modelMap) throws InvoiceNotFoundException {
         LOGGER.info("read(" + id + ")");
         Invoice invoiceModel = invoiceService.read(id);
-        modelMap.addAttribute("invoices", invoiceModel);
+        modelMap.addAttribute("invoice", invoiceModel);
         LOGGER.info("read(...)" + invoiceModel);
         return "read-invoice.html";
     }
@@ -68,9 +74,11 @@ public class WebInvoiceController {
             ModelMap modelMap) throws InvoiceNotFoundException {
         LOGGER.info("update()" + id);
         Invoice invoice = invoiceService.read(id);
-        modelMap.addAttribute("invoices", invoice);
+        modelMap.addAttribute("invoice", invoice);
+        List<Supplier> suppliers = supplierService.list();
+        modelMap.addAttribute("suppliers", suppliers);
         LOGGER.info("update(...)");
-        return "update-invoice.html";
+        return "create-invoice.html";
     }
 
     @PutMapping(value = "/update")
@@ -83,10 +91,10 @@ public class WebInvoiceController {
     }
 
     @GetMapping(value = "/delete/{id}")
-    public String delete(Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("delete(" + id + ")");
         invoiceService.delete(id);
         LOGGER.info("delete(...)");
-        return "Response 200: Record: " + id + " deleted";
+        return "redirect:/invoices";
     }
 }
