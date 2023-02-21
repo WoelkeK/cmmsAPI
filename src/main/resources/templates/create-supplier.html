@@ -1,0 +1,102 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Wydział</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-400">
+<div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+            <h1 class="text-6xl font-semibold text-gray-900">Dostawca</h1>
+
+
+            <form action="#" th:action="@{/suppliers/create}" th:object="${supplier}" method="post"
+                  class="space-y-8 divide-y divide-gray-700">
+                <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
+                    <div class="space-y-6 sm:space-y-6">
+                        <div>
+                            <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Panel Rejestracji
+                               Dostawcy</h3>
+                            <p class="mt-2 max-w-2xl text-sm text-gray-500">Umożliwa zarejestrowanie dostawcy w systemie</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
+                    <div>
+                        <h3 class="text-xl font-medium leading-6 text-yellow-800">Dane Firmy</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-700">Należy wprowadzić wszystkie dane, w celu
+                            poprawnej identyfikacji.</p>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
+                        <label for="supplier-id"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2"></label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+
+                            <input type="hidden" th:field="${supplier.id}" id="supplier-id" name="supplier-id"
+                                   autocomplete="supplier"
+                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
+                        <label for="supplier-name"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Nazwa firmy</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+
+                            <input type="text" th:field="${supplier.name}" id="supplier-name"
+                                   name="supplier-name"
+                                   autocomplete="supplier"
+                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
+                        <label for="supplier-tax"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">NIP</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+
+                            <input type="text" th:field="${supplier.taxNb}" id="supplier-tax"
+                                   name="supplier-tax"
+                                   autocomplete="supplier"
+                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="space-y-6 sm:space-y-5">
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
+                        <label for="message"
+                               class="block text-xl font-medium text-gray-700 sm:mt-px sm:pt-2">Dodatkowe informacje o
+                            dostawcy</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                        <textarea id="message" name="message" rows="3"
+                                  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                            <p class="mt-2 text-sm text-gray-700">Wprowadź dodatkowe informacje na temat dostawcy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <div class="flex justify-end">
+                        <button type="button"
+                                class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+
+                            <a th:href="@{/suppliers}">Wstecz</a>
+                        </button>
+                        <button type="submit"
+                                class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Zapisz
+                        </button>
+                    </div>
+                </div>
+        </div>
+        </form>
+</body>
+</html>
