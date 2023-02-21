@@ -21,11 +21,14 @@ public class WebResourceController {
 
     private ResourceService resourceService;
     private InvoiceService invoiceService;
+    private final InvoiceRepository invoiceRepository;
 
 
-    public WebResourceController(ResourceService resourceService, InvoiceService invoiceService) {
+    public WebResourceController(ResourceService resourceService, InvoiceService invoiceService,
+                                 InvoiceRepository invoiceRepository) {
         this.resourceService = resourceService;
         this.invoiceService = invoiceService;
+        this.invoiceRepository = invoiceRepository;
     }
 
     @GetMapping
@@ -42,7 +45,9 @@ public class WebResourceController {
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
-        modelMap.addAttribute("resources", new Resource());
+        modelMap.addAttribute("resource", new Resource());
+        List<Invoice> invoices = invoiceService.list();
+        modelMap.addAttribute("invoices", invoices);
         LOGGER.info("createView(...)");
         return "create-resource.html";
     }
@@ -61,7 +66,7 @@ public class WebResourceController {
             ModelMap modelMap) throws ResourceNotFoundException {
         LOGGER.info("read(" + id + ")");
         Resource resourceModel = resourceService.read(id);
-        modelMap.addAttribute("resources", resourceModel);
+        modelMap.addAttribute("resource", resourceModel);
         LOGGER.info("read(...)" + resourceModel);
         return "read-resource.html";
     }
@@ -72,9 +77,11 @@ public class WebResourceController {
             ModelMap modelMap) throws ResourceNotFoundException {
         LOGGER.info("update()" + id);
         Resource resource = resourceService.read(id);
-        modelMap.addAttribute("resources", resource);
+        modelMap.addAttribute("resource", resource);
+        List<Invoice> invoices = invoiceService.list();
+        modelMap.addAttribute("invoices", invoices);
         LOGGER.info("update(...)");
-        return "update-resource.html";
+        return "create-resource.html";
     }
 
     @PutMapping(value = "/update")
@@ -87,10 +94,10 @@ public class WebResourceController {
     }
 
     @GetMapping(value = "/delete/{id}")
-    public String delete(Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("delete(" + id + ")");
         resourceService.delete(id);
         LOGGER.info("delete(...)");
-        return "Response 200: Record: " + id + " deleted";
+        return "redirect:/resources";
     }
 }
