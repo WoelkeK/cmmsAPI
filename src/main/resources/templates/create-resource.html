@@ -20,7 +20,8 @@
                         <div>
                             <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Panel Rejestracji
                                 Pozycji Magazynowej</h3>
-                            <p class="mt-2 max-w-2xl text-sm text-gray-500">Zestawienie wszystkich zasobów magazynowych.</p>
+                            <p class="mt-2 max-w-2xl text-sm text-gray-500">Zestawienie wszystkich zasobów
+                                magazynowych.</p>
                         </div>
 
                     </div>
@@ -34,63 +35,63 @@
                     </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="resourceName"
+                        <label for="resource-name"
                                class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Nazwa zasobu</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                            <input type="text" th:field="${resource.name}" id="resourceName" name="resource-name"
+                            <input type="text" th:field="${resource.name}" id="resource-name" name="resource-name"
                                    autocomplete="resource-name"
                                    class="block w-full max-w-lg rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="resourceQuantity"
+                        <label for="resource-quantity"
                                class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Ilość</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                            <input type="text" th:field="${resource.quantity}" id="resourceQuantity" name="resourceQuantity"
+                            <input type="text" th:field="${resource.quantity}" id="resource-quantity"
+                                   name="resource-quantity"
                                    autocomplete="resource-quantity"
                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineYear"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Index</label>
+                    <div>
+                        <label for="resource-id"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2"></label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                            <input type="text" th:field="${resource.id}" id="resourceId" name="resourceId"
-                                   autocomplete="resource-Id"
+                            <input type="hidden" th:field="${resource.id}" id="resource-id" name="resource-id"
+                                   autocomplete="resource-d"
                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
 
-<!--                    </div>-->
-<!--                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">-->
-<!--                        <label for="departmentId"-->
-<!--                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Wydział</label>-->
-<!--                        <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-<!--                            <select th:field="${machine.department.id}" id="departmentId" name="departmentId"-->
-<!--                                    autocomplete="department"-->
-<!--                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
+                        <label for="resource-invoice"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Faktura zakupu</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            <select th:field="${resource.invoice.id}" id="resource-invoice" name="resource-invoice"
+                                    autocomplete="resource-invoice"
+                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
 
-<!--                                <option th:each="department : ${departments}"-->
-<!--                                        th:text="${department.name}"-->
-<!--                                        th:value="${department.id}">-->
-<!--                                </option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                                <option th:each="invoice: ${invoices}"
+                                        th:text="${invoice.number}"
+                                        th:value="${invoice.id}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
-<!--                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">-->
-<!--                    <label for="machineStatus"-->
-<!--                           class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Status Maszyny</label>-->
-<!--                    <div class="mt-1 sm:col-span-2 sm:mt-0">-->
+                    <!--                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">-->
+                    <!--                    <label for="machineStatus"-->
+                    <!--                           class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Status Maszyny</label>-->
+                    <!--                    <div class="mt-1 sm:col-span-2 sm:mt-0">-->
 
-<!--                        <input type="text" th:field="${machine.status}" id="machineStatus" name="machineStatus"-->
-<!--                               autocomplete="machine-status"-->
-<!--                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
-<!--                    </div>-->
-<!--                </div>-->
+                    <!--                        <input type="text" th:field="${machine.status}" id="machineStatus" name="machineStatus"-->
+                    <!--                               autocomplete="machine-status"-->
+                    <!--                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
                 </div>
                 <div class="space-y-6 sm:space-y-5">
 
@@ -101,7 +102,8 @@
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                         <textarea id="message" name="message" rows="3"
                                   class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                            <p class="mt-2 text-sm text-gray-700">Wprowadź dodatkowe informacje dotyczące zasobu magazynowego.</p>
+                            <p class="mt-2 text-sm text-gray-700">Wprowadź dodatkowe informacje dotyczące zasobu
+                                magazynowego.</p>
                         </div>
                     </div>
                 </div>
@@ -152,8 +154,10 @@
                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                                                             </div>
                                                             <div class="ml-3 text-sm">
-                                                                <label for="comments" class="font-medium text-yellow-700">Ostrzeżenia</label>
-                                                                <p class="text-gray-500">Powiadomienie o pojawieniu się ostrzeżenia o nieprawidłowej ilości</p>
+                                                                <label for="comments"
+                                                                       class="font-medium text-yellow-700">Ostrzeżenia</label>
+                                                                <p class="text-gray-500">Powiadomienie o pojawieniu się
+                                                                    ostrzeżenia o nieprawidłowej ilości</p>
                                                             </div>
                                                         </div>
                                                         <div class="relative flex items-start">
@@ -162,8 +166,10 @@
                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                                                             </div>
                                                             <div class="ml-3 text-sm">
-                                                                <label for="jobs" class="font-medium text-red-600">Alert Krytyczny</label>
-                                                                <p class="text-gray-500">Powiadomienie o całkowitym braku.</p>
+                                                                <label for="jobs" class="font-medium text-red-600">Alert
+                                                                    Krytyczny</label>
+                                                                <p class="text-gray-500">Powiadomienie o całkowitym
+                                                                    braku.</p>
                                                             </div>
                                                         </div>
 
