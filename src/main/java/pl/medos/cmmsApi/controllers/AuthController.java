@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.medos.cmmsApi.dto.UserDto;
-import pl.medos.cmmsApi.repository.entity.User;
+import pl.medos.cmmsApi.repository.entity.UserEntity;
 import pl.medos.cmmsApi.service.UserService;
 
 import java.util.List;
@@ -49,9 +49,9 @@ public class AuthController {
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
                                Model model){
-        User existingUser = userService.findUserByEmail(userDto.getEmail());
+        UserEntity existingUserEntity = userService.findUserByEmail(userDto.getEmail());
 
-        if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
+        if(existingUserEntity != null && existingUserEntity.getEmail() != null && !existingUserEntity.getEmail().isEmpty()){
             result.rejectValue("email", null,
                     "There is already an account registered with the same email");
         }
