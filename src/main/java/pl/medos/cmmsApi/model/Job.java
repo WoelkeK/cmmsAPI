@@ -1,6 +1,8 @@
 package pl.medos.cmmsApi.model;
 
 
+import pl.medos.cmmsApi.dto.UserDto;
+
 import java.util.Date;
 
 public class Job {
@@ -8,7 +10,7 @@ public class Job {
     private Long id;
     private Date requestDate;
     private Date requestTime;
-    private UserOld userOld;
+    private User user;
     private Employee employee;
     private Department department;
     private Machine machine;
@@ -45,12 +47,12 @@ public class Job {
         this.requestTime = requestTime;
     }
 
-    public UserOld getUser() {
-        return userOld;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser(UserOld userOld) {
-        this.userOld = userOld;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Employee getEmployee() {
@@ -123,7 +125,7 @@ public class Job {
                 "id=" + id +
                 ", requestDate=" + requestDate +
                 ", requestTime=" + requestTime +
-                ", user=" + userOld +
+                ", user=" + user +
                 ", employee=" + employee +
                 ", department=" + department +
                 ", machine=" + machine +

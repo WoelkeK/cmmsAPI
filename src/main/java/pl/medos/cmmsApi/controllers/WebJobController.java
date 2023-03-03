@@ -101,4 +101,5 @@ public class WebJobController {
         jobService.delete(id);
         return "redirect:/jobs";
     }
+
 }

@@ -1,11 +1,11 @@
 package pl.medos.cmmsApi.model;
 
-public class UserOld {
+public class User {
     private Long id;
     private String login;
     private String role;
     private String password;
-    public UserOld() {
+    public User() {
     }
 
     public Long getId() {
