@@ -46,7 +46,7 @@ public class WebJobController {
         LOGGER.info("updateView()");
         Job job = jobService.read(id);
         modelMap.addAttribute("job", job);
-        return "update-jobTW.html";
+        return "update-job.html";
     }
 
     @PostMapping(value = "/update/")
