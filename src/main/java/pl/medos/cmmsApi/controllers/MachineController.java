@@ -20,7 +20,7 @@ public class MachineController {
         this.machineService = machineService;
     }
 
-    @GetMapping("/machine")
+    @GetMapping("/machines")
     public List list() {
         LOGGER.info("machineList()");
         List machines = machineService.list();

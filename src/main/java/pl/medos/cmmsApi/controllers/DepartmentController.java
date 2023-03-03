@@ -27,7 +27,7 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/department")
+    @GetMapping("/departments")
     public List list() {
         LOGGER.info("departmentList()");
         List departments = departmentService.list();

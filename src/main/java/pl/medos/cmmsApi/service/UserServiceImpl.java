@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.dto.UserDto;
 import pl.medos.cmmsApi.repository.RoleRepository;
 import pl.medos.cmmsApi.repository.UserRepository;
-import pl.medos.cmmsApi.repository.entity.Role;
-import pl.medos.cmmsApi.repository.entity.User;
+import pl.medos.cmmsApi.repository.entity.RoleEntity;
+import pl.medos.cmmsApi.repository.entity.UserEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,45 +30,45 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDto userDto) {
-        User user = new User();
-        user.setName(userDto.getFirstName() + " " + userDto.getLastName());
-        user.setEmail(userDto.getEmail());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(userDto.getFirstName() + " " + userDto.getLastName());
+        userEntity.setEmail(userDto.getEmail());
         // encrypt the password using spring security
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
-            role = checkRoleExist();
+        RoleEntity roleEntity = roleRepository.findByName("ROLE_ADMIN");
+        if(roleEntity == null){
+            roleEntity = checkRoleExist();
         }
-        user.setRoles(Arrays.asList(role));
-        userRepository.save(user);
+        userEntity.setRoleEntities(Arrays.asList(roleEntity));
+        userRepository.save(userEntity);
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public UserEntity findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     public List<UserDto> findAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream()
+        List<UserEntity> userEntities = userRepository.findAll();
+        return userEntities.stream()
                 .map((user) -> mapToUserDto(user))
                 .collect(Collectors.toList());
     }
 
-    private UserDto mapToUserDto(User user){
+    private UserDto mapToUserDto(UserEntity userEntity){
         UserDto userDto = new UserDto();
-        String[] str = user.getName().split(" ");
+        String[] str = userEntity.getName().split(" ");
         userDto.setFirstName(str[0]);
         userDto.setLastName(str[1]);
-        userDto.setEmail(user.getEmail());
+        userDto.setEmail(userEntity.getEmail());
         return userDto;
     }
 
-    private Role checkRoleExist(){
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
+    private RoleEntity checkRoleExist(){
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setName("ROLE_ADMIN");
+        return roleRepository.save(roleEntity);
     }
 }
