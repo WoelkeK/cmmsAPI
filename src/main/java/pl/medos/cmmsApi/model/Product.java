@@ -1,6 +1,15 @@
 package pl.medos.cmmsApi.model;
 
-import java.util.Arrays;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     private Long id;
@@ -8,9 +17,6 @@ public class Product {
     private int index;
     private Process[] processes;
     private Cost cost;
-
-    public Product() {
-    }
 
 }
 

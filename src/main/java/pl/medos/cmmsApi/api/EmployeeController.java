@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers;
+package pl.medos.cmmsApi.api;
 
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.model.Employee;
