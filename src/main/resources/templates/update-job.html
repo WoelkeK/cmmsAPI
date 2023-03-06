@@ -14,8 +14,9 @@
 
             <form role="form" th:action="@{/jobs/update/{id}(id=${job.id})}" th:object="${job}" method="post">
                 <input type="hidden" th:field="*{requestDate}">
-                <input type="hidden" th:field="*{department}">
-                <input type="hidden" th:field="*{machine}">
+                <input type="hidden" th:field="*{department.id}">
+                <input type="hidden" th:field="*{machine.id}">
+                <input type="hidden" th:field="*{message}">
 
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">
@@ -29,11 +30,11 @@
                         <div class="space-y-6 sm:space-y-5">
 
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
-                                <label for="message"
+                                <label for="solution"
                                        class="block text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Opis wykonanych
                                     czynności</label>
                                 <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                    <textarea id="message" name="message" rows="3"
+                                    <textarea id="solution" name="solution" rows="3"
                                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
                                     <p class="mt-2 text-sm text-gray-700">Wprowadź informację, czego dotyczy awaria lub
                                         zlecenie.</p>

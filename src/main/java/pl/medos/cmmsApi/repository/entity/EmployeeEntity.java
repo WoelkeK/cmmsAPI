@@ -1,7 +1,17 @@
 package pl.medos.cmmsApi.repository.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "EMPLOYEES")
 public class EmployeeEntity {
@@ -18,182 +28,5 @@ public class EmployeeEntity {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
-    private String comments;
-    private String jobs;
-    private String raports;
-    private String message;
-    private String pushNothing;
-    private String pushEmail;
-    private String pushEverythink;
-    private String about;
 
-
-
-
-//    @OneToOne
-//    @JoinColumn(name = "contact_id")
-//    private Contact contact;
-
-    public EmployeeEntity() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getOccupation() {
-        return occupation;
-    }
-
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public String getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(String jobs) {
-        this.jobs = jobs;
-    }
-
-    public String getRaports() {
-        return raports;
-    }
-
-    public void setRaports(String raports) {
-        this.raports = raports;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getPushNothing() {
-        return pushNothing;
-    }
-
-    public void setPushNothing(String pushNothing) {
-        this.pushNothing = pushNothing;
-    }
-
-    public String getPushEmail() {
-        return pushEmail;
-    }
-
-    public void setPushEmail(String pushEmail) {
-        this.pushEmail = pushEmail;
-    }
-
-    public String getPushEverythink() {
-        return pushEverythink;
-    }
-
-    public void setPushEverythink(String pushEverythink) {
-        this.pushEverythink = pushEverythink;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    public DepartmentEntity getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(DepartmentEntity department) {
-        this.department = department;
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeeEntity{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", position='" + position + '\'' +
-                ", occupation='" + occupation + '\'' +
-                ", userName='" + userName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", department=" + department +
-                ", comments='" + comments + '\'' +
-                ", jobs='" + jobs + '\'' +
-                ", raports='" + raports + '\'' +
-                ", message='" + message + '\'' +
-                ", pushNothing='" + pushNothing + '\'' +
-                ", pushEmail='" + pushEmail + '\'' +
-                ", pushEverythink='" + pushEverythink + '\'' +
-                ", about='" + about + '\'' +
-                '}';
-    }
 }

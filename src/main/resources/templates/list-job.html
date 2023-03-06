@@ -411,10 +411,10 @@
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-800">Data
                                                     Zgłoszenia
                                                 </td>
-                                                <td th:text="${job.employee.firstName}"
+                                                <td th:text="${job.employee.lastName}">
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
                                                 </td>
-                                                <td th:field="${department.name}"
+                                                <td th:text="${job?.department?.name}"
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Dział
                                                 </td>
                                                 <td th:text="${job.machine.model}"
@@ -440,7 +440,7 @@
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
                                                     zakończenia naprawy
                                                 </td>
-                                                <td th:text="${job.employee.userName}"
+                                                <td th:text="${job.employee.email}"
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
                                                     potwierdzająca
                                                 </td>

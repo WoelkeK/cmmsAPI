@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.model;
 
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Job {
     private Employee employee;
     private Department department;
     private Machine machine;
+    @NotEmpty
     private String message;
     private Boolean directContact;
     private String solution;

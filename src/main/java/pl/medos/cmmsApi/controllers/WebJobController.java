@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
+@SessionAttributes(names = {"departments"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -69,8 +70,8 @@ public class WebJobController {
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            List<Department> departments = departmentService.list();
-            model.addAttribute("departments", departments);
+//            List<Department> departments = departmentService.list();
+//            model.addAttribute("departments", departments);
             List<Employee> employees = employeeService.list();
             model.addAttribute("employees", employees);
             List<Machine> machines = machineService.list();
@@ -108,8 +109,8 @@ public class WebJobController {
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            List<Department> departments = departmentService.list();
-            model.addAttribute("departments", departments);
+//            List<Department> departments = departmentService.list();
+//            model.addAttribute("departments", departments);
             List<Employee> employees = employeeService.list();
             model.addAttribute("employees", employees);
             List<Machine> machines = machineService.list();
