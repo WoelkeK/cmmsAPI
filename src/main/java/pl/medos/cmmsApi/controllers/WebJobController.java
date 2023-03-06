@@ -1,7 +1,10 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.DepartmentService;
@@ -42,46 +45,82 @@ public class WebJobController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
-            ModelMap modelMap) throws Exception {
+            Model model) throws Exception {
         LOGGER.info("updateView()");
+        List<Department> departments = departmentService.list();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.list();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineService.list();
+        model.addAttribute("machines", machines);
         Job job = jobService.read(id);
-        modelMap.addAttribute("job", job);
+        model.addAttribute("job", job);
+        LOGGER.info("updateView(...)" + job.getRequestDate());
         return "update-job.html";
     }
 
-    @PostMapping(value = "/update/")
-    public String update(
-            @ModelAttribute(name = "job") Job job) {
-        LOGGER.info("update()");
+    @PostMapping(value = "/update/{id}")
+    public String update(@PathVariable(name = "id") Long id,
+                         @Valid @ModelAttribute(name = "job") Job job,
+                         BindingResult result,
+                         Model model) {
+        LOGGER.info("update()" + job.getId());
+
+        if (result.hasErrors()) {
+            LOGGER.info("update: result has erorr()" + result.getFieldError());
+            model.addAttribute("job", job);
+            List<Department> departments = departmentService.list();
+            model.addAttribute("departments", departments);
+            List<Employee> employees = employeeService.list();
+            model.addAttribute("employees", employees);
+            List<Machine> machines = machineService.list();
+            model.addAttribute("machines", machines);
+            return "update-job";
+        }
+
+        model.addAttribute("job", job);
+
         jobService.update(job);
         LOGGER.info("update(...)");
         return "redirect:/jobs";
     }
 
     @GetMapping(value = "/create")
-    public String createView(ModelMap modelMap) {
+    public String createView(Model model) {
         LOGGER.info("createView()");
-        modelMap.addAttribute("job", new Job());
+        model.addAttribute("job", new Job());
         List<Department> departments = departmentService.list();
-        modelMap.addAttribute("departments", departments);
+        model.addAttribute("departments", departments);
         List<Employee> employees = employeeService.list();
-        modelMap.addAttribute("employees", employees);
+        model.addAttribute("employees", employees);
         List<Machine> machines = machineService.list();
-        modelMap.addAttribute("machines", machines);
+        model.addAttribute("machines", machines);
         return "create-job.html";
     }
 
     @PostMapping(value = "/create")
     public String create(
-            String employeeId, String jobStartTime, String jobStopTime,
-            @ModelAttribute(name = "job") Job job) {
-        LOGGER.info("create(" + employeeId + ")");
-        LOGGER.info("create(" + jobStartTime+ ")");
-        LOGGER.info("create(" + jobStopTime + ")");
-        LOGGER.info("create(" + job + ")");
-        Job savedJobModel = jobService.create(job);
-        LOGGER.info("create(...)" + savedJobModel);
-        return "redirect:/";
+                         @Valid @ModelAttribute(name = "job") Job job,
+                         BindingResult result,
+                         Model model) {
+        LOGGER.info("create()" + job.getId());
+
+        if (result.hasErrors()) {
+            LOGGER.info("update: result has erorr()" + result.getFieldError());
+            model.addAttribute("job", job);
+            List<Department> departments = departmentService.list();
+            model.addAttribute("departments", departments);
+            List<Employee> employees = employeeService.list();
+            model.addAttribute("employees", employees);
+            List<Machine> machines = machineService.list();
+            model.addAttribute("machines", machines);
+            return "create-job";
+        }
+
+        model.addAttribute("job", job);
+        jobService.create(job);
+        LOGGER.info("create(...)");
+        return "redirect:/jobs";
     }
 
     @GetMapping(value = "/read/{id}")

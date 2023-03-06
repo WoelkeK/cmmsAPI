@@ -28,7 +28,7 @@ public class JobService {
 
         LOGGER.info("list()");
         List<JobEntity> jobEntities = jobRepository.findAll();
-        LOGGER.info("Logout requestTimeEntity " + jobEntities);
+        LOGGER.info("show requestTimeEntity " + jobEntities);
         List<Job> jobModels = jobMapper.listModels(jobEntities);
         LOGGER.info("listOutOfService(...)" + jobModels);
         return jobModels;
