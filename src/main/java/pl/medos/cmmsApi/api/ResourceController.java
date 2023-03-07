@@ -3,7 +3,7 @@ package pl.medos.cmmsApi.api;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.ResourceNotFoundException;
 import pl.medos.cmmsApi.model.Resource;
-import pl.medos.cmmsApi.service.ResourceService;
+import pl.medos.cmmsApi.service.impl.ResourceServiceImpl;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,16 +14,16 @@ public class ResourceController {
 
     private static final Logger LOGGER = Logger.getLogger(ResourceController.class.getName());
 
-    private ResourceService resourceService;
+    private ResourceServiceImpl resourceServiceImpl;
 
-    public ResourceController(ResourceService resourceService) {
-        this.resourceService = resourceService;
+    public ResourceController(ResourceServiceImpl resourceServiceImpl) {
+        this.resourceServiceImpl = resourceServiceImpl;
     }
 
     @GetMapping("/resources")
     public List<Resource> list() {
         LOGGER.info("lista()");
-        List<Resource> resources = resourceService.list();
+        List<Resource> resources = resourceServiceImpl.findAllResources();
         LOGGER.info("list(...)");
         return resources;
     }
@@ -31,7 +31,7 @@ public class ResourceController {
     @PostMapping("/resources")
     public Resource create(@RequestBody Resource resource) {
         LOGGER.info("create()" + resource);
-        Resource savedResource = resourceService.create(resource);
+        Resource savedResource = resourceServiceImpl.createResource(resource);
         LOGGER.info("create(...)" + savedResource);
         return savedResource;
     }
@@ -39,7 +39,7 @@ public class ResourceController {
     @GetMapping("/resources/{id}")
     public Resource read(@PathVariable(name = "id") Long id) throws ResourceNotFoundException {
         LOGGER.info("read()");
-        Resource resourceModel = resourceService.read(id);
+        Resource resourceModel = resourceServiceImpl.findResourceById(id);
         LOGGER.info("read(...)" + resourceModel);
         return resourceModel;
     }
@@ -47,7 +47,7 @@ public class ResourceController {
     @PutMapping("/resources")
     public Resource update(@RequestBody Resource resource) {
         LOGGER.info("update()" + resource);
-        Resource updatedResource = resourceService.update(resource);
+        Resource updatedResource = resourceServiceImpl.updateResource(resource);
         LOGGER.info("update(...)" + updatedResource);
         return updatedResource;
     }
@@ -55,7 +55,7 @@ public class ResourceController {
     @DeleteMapping("/resources/{id}")
     public String delete(Long id) {
         LOGGER.info("delete(" + id + ")");
-        resourceService.delete(id);
+        resourceServiceImpl.deleteResource(id);
         LOGGER.info("delete(...)");
         return "Response 200: Record: " + id + " deleted";
     }

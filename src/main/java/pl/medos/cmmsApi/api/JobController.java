@@ -10,7 +10,7 @@
 //import org.springframework.web.bind.annotation.RestController;
 //import pl.medos.cmmsApi.exception.JobNotFoundException;
 //import pl.medos.cmmsApi.model.Job;
-//import pl.medos.cmmsApi.service.JobService;
+//import pl.medos.cmmsApi.service.impl.JobService;
 //
 //import java.util.List;
 //import java.util.logging.Logger;

@@ -10,14 +10,14 @@ import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.JobService;
-import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.service.impl.MachineServiceImpl;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
-@SessionAttributes(names = {"departments"})
+@SessionAttributes(names = {"departments", "employees", "machines"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -25,19 +25,19 @@ public class WebJobController {
     private JobService jobService;
     private EmployeeService employeeService;
     private DepartmentService departmentService;
-    private MachineService machineService;
+    private MachineServiceImpl machineServiceImpl;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService) {
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineServiceImpl machineServiceImpl) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
-        this.machineService = machineService;
+        this.machineServiceImpl = machineServiceImpl;
     }
 
     @GetMapping
-    public String listView(ModelMap modelMap) {
+    public String listView(Model modelMap) {
         LOGGER.info("listView()");
-        List<Job> jobs = jobService.list();
+        List<Job> jobs = jobService.findAllJobs();
         modelMap.addAttribute("jobs", jobs);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
@@ -48,13 +48,13 @@ public class WebJobController {
             @PathVariable(name = "id") Long id,
             Model model) throws Exception {
         LOGGER.info("updateView()");
-        List<Department> departments = departmentService.list();
+        List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        List<Employee> employees = employeeService.list();
+        List<Employee> employees = employeeService.finadAllEmployees();
         model.addAttribute("employees", employees);
-        List<Machine> machines = machineService.list();
+        List<Machine> machines = machineServiceImpl.findAllMachines();
         model.addAttribute("machines", machines);
-        Job job = jobService.read(id);
+        Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
         LOGGER.info("updateView(...)" + job.getRequestDate());
         return "update-job.html";
@@ -70,18 +70,12 @@ public class WebJobController {
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-//            List<Department> departments = departmentService.list();
-//            model.addAttribute("departments", departments);
-            List<Employee> employees = employeeService.list();
-            model.addAttribute("employees", employees);
-            List<Machine> machines = machineService.list();
-            model.addAttribute("machines", machines);
             return "update-job";
         }
 
         model.addAttribute("job", job);
 
-        jobService.update(job);
+        jobService.updateJob(job);
         LOGGER.info("update(...)");
         return "redirect:/jobs";
     }
@@ -90,36 +84,24 @@ public class WebJobController {
     public String createView(Model model) {
         LOGGER.info("createView()");
         model.addAttribute("job", new Job());
-        List<Department> departments = departmentService.list();
-        model.addAttribute("departments", departments);
-        List<Employee> employees = employeeService.list();
-        model.addAttribute("employees", employees);
-        List<Machine> machines = machineService.list();
-        model.addAttribute("machines", machines);
         return "create-job.html";
     }
 
     @PostMapping(value = "/create")
     public String create(
-                         @Valid @ModelAttribute(name = "job") Job job,
-                         BindingResult result,
-                         Model model) {
+            @Valid @ModelAttribute(name = "job") Job job,
+            BindingResult result,
+            Model model) {
         LOGGER.info("create()" + job.getId());
 
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-//            List<Department> departments = departmentService.list();
-//            model.addAttribute("departments", departments);
-            List<Employee> employees = employeeService.list();
-            model.addAttribute("employees", employees);
-            List<Machine> machines = machineService.list();
-            model.addAttribute("machines", machines);
             return "create-job";
         }
 
         model.addAttribute("job", job);
-        jobService.create(job);
+        jobService.createJob(job);
         LOGGER.info("create(...)");
         return "redirect:/jobs";
     }
@@ -129,7 +111,7 @@ public class WebJobController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("read(" + id + ")");
-        Job job = jobService.read(id);
+        Job job = jobService.findJobById(id);
         modelMap.addAttribute("job", job);
         return "read-job.html";
     }
@@ -138,8 +120,7 @@ public class WebJobController {
     public String delete(
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
-        jobService.delete(id);
+        jobService.deleteJob(id);
         return "redirect:/jobs";
     }
-
 }

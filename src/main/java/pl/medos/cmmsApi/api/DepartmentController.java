@@ -30,7 +30,7 @@ public class DepartmentController {
     @GetMapping("/departments")
     public List list() {
         LOGGER.info("departmentList()");
-        List departments = departmentService.list();
+        List departments = departmentService.findAllDepartments();
         LOGGER.info("departmentList(...)" + departments);
         return departments;
     }
@@ -38,7 +38,7 @@ public class DepartmentController {
     @PostMapping("/department")
     public Department create(@RequestBody Department department) {
         LOGGER.info("createDepartment(" + department + ")");
-        Department createdDepartment = departmentService.create(department);
+        Department createdDepartment = departmentService.createDepartment(department);
         LOGGER.info("createDepartment(...)");
         return createdDepartment;
     }
@@ -46,7 +46,7 @@ public class DepartmentController {
     @GetMapping("/department/{id}")
     public Department read(@PathVariable(name = "id") Long id) throws DepartmentNotFoundException {
         LOGGER.info("readDepartment(" + id + ")");
-        Department readedMachine = departmentService.read(id);
+        Department readedMachine = departmentService.findDepartmentById(id);
         LOGGER.info("readDepartment(...) " + readedMachine);
         return readedMachine;
     }
@@ -54,16 +54,15 @@ public class DepartmentController {
     @PutMapping("/department")
     public Department update(@RequestBody Department department) {
         LOGGER.info("updateDepartment(" + department + ")");
-        Department updatedMachine = departmentService.update(department);
+        Department updatedMachine = departmentService.updateDepartment(department);
         LOGGER.info("updateDepartment(...) " + updatedMachine);
         return updatedMachine;
     }
 
     @DeleteMapping("/department/{id}")
-    public String delete(@PathVariable(name = "id") Long id) {
+    public void delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteDepartment(" + id + ")");
-        String deleteMessage = departmentService.delete(id);
+        departmentService.deleteDepartment(id);
         LOGGER.info("deleteDepartment(...)");
-        return deleteMessage;
     }
 }

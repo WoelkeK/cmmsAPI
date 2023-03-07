@@ -22,7 +22,7 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> list() {
         LOGGER.info("list()");
-        List<Employee> employeeList = employeeService.list();
+        List<Employee> employeeList = employeeService.finadAllEmployees();
         LOGGER.info("list(...)");
         return employeeList;
     }
@@ -30,7 +30,7 @@ public class EmployeeController {
     @PostMapping("/employee")
     public Employee create(@RequestBody Employee employee) {
         LOGGER.info("create()");
-        Employee createdEmployee = employeeService.create(employee);
+        Employee createdEmployee = employeeService.createEmployee(employee);
         LOGGER.info("create(...)" + createdEmployee);
         return createdEmployee;
     }
@@ -38,16 +38,15 @@ public class EmployeeController {
     @PutMapping("/employee")
     public Employee update(@RequestBody Employee employee) {
         LOGGER.info("update()");
-        Employee updatedEmployee = employeeService.update(employee);
+        Employee updatedEmployee = employeeService.updateEmployee(employee);
         LOGGER.info("update(...)" + updatedEmployee);
         return updatedEmployee;
     }
 
     @DeleteMapping("/employee/{id}")
-    public String delete(Long id) {
+    public void delete(Long id) {
         LOGGER.info("delete()");
-        String deleteMessage = employeeService.delete(id);
+        employeeService.deleteEmployee(id);
         LOGGER.info("delete(...)");
-        return deleteMessage;
     }
 }
