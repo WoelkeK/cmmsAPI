@@ -3,7 +3,7 @@ package pl.medos.cmmsApi.api;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Machine;
-import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.service.impl.MachineServiceImpl;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,16 +14,16 @@ public class MachineController {
 
     private static final Logger LOGGER = Logger.getLogger(MachineController.class.getName());
 
-    private MachineService machineService;
+    private MachineServiceImpl machineServiceImpl;
 
-    public MachineController(MachineService machineService) {
-        this.machineService = machineService;
+    public MachineController(MachineServiceImpl machineServiceImpl) {
+        this.machineServiceImpl = machineServiceImpl;
     }
 
     @GetMapping("/machines")
     public List list() {
         LOGGER.info("machineList()");
-        List machines = machineService.list();
+        List machines = machineServiceImpl.findAllMachines();
         LOGGER.info("machineList(...)" + machines);
         return machines;
     }
@@ -31,7 +31,7 @@ public class MachineController {
     @PostMapping("/machine")
     public Machine create(@RequestBody Machine machine) {
         LOGGER.info("createMachine(" + machine + ")");
-        Machine createdMachine = machineService.create(machine);
+        Machine createdMachine = machineServiceImpl.createMachine(machine);
         LOGGER.info("createMachine(...)");
         return createdMachine;
     }
@@ -39,7 +39,7 @@ public class MachineController {
     @GetMapping("/machine/{id}")
     public Machine read(@PathVariable(name = "id") Long id) throws MachineNotFoundException {
         LOGGER.info("readMachine(" + id + ")");
-        Machine readedMachine = machineService.read(id);
+        Machine readedMachine = machineServiceImpl.findMachineById(id);
         LOGGER.info("readMachine(...) " + readedMachine);
         return readedMachine;
     }
@@ -47,17 +47,16 @@ public class MachineController {
     @PutMapping("/machine")
     public Machine update(@RequestBody Machine machine) {
         LOGGER.info("updateMachine(" + machine + ")");
-        Machine updatedMachine = machineService.update(machine);
+        Machine updatedMachine = machineServiceImpl.updateMachine(machine);
         LOGGER.info("updateMachine(...) " + updatedMachine);
         return updatedMachine;
 
     }
 
     @DeleteMapping("/machine/{id}")
-    public String delete(@PathVariable(name = "id") Long id) {
+    public void delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteMachine(" + id + ")");
-        String deleteMessage = machineService.delete(id);
+        machineServiceImpl.deleteMachine(id);
         LOGGER.info("deleteMachine(...)");
-        return deleteMessage;
     }
 }

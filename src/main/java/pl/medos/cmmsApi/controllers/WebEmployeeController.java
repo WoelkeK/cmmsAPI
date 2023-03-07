@@ -1,10 +1,8 @@
 package pl.medos.cmmsApi.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import pl.medos.cmmsApi.dto.UserDto;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.DepartmentService;
@@ -15,6 +13,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping(value = "/employees")
+@SessionAttributes(names = {"departments"})
 public class WebEmployeeController {
 
     private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
@@ -29,8 +28,10 @@ public class WebEmployeeController {
     @GetMapping
     public String listView(ModelMap modelMap) {
         LOGGER.info("listView()");
-        List<Employee> employees = employeeService.list();
+        List<Employee> employees = employeeService.finadAllEmployees();
         modelMap.addAttribute("employees", employees);
+        List<Department> departments = departmentService.findAllDepartments();
+        modelMap.addAttribute("departments", departments);
         return "list-employee.html";
     }
 
@@ -39,10 +40,8 @@ public class WebEmployeeController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("updateView()");
-        Employee employee = employeeService.read(id);
+        Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
-        List<Department> departments = departmentService.list();
-        modelMap.addAttribute("departments", departments);
         return "update-employee.html";
     }
 
@@ -50,7 +49,7 @@ public class WebEmployeeController {
     public String update(
             @ModelAttribute(name = "employee") Employee employee) {
         LOGGER.info("update()" + employee);
-        Employee updatedEmployee = employeeService.update(employee);
+        Employee updatedEmployee = employeeService.updateEmployee(employee);
         LOGGER.info("update(...)" + updatedEmployee);
         return "redirect:/employees";
     }
@@ -59,20 +58,17 @@ public class WebEmployeeController {
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
         modelMap.addAttribute("employee", new Employee());
-        List<Department> departments = departmentService.list();
-        modelMap.addAttribute("departments", departments);
         return "create-employee.html";
     }
 
     @PostMapping(value = "/create")
-//    public String create(String firstName, String lastName) {
     public String create(
             String department,
             @ModelAttribute(name = "employee") Employee employee) {
         LOGGER.info("create(" + employee + ")");
 //        LOGGER.info("create(" + lastName + ")");
 //        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
-        employeeService.create(employee);
+        employeeService.createEmployee(employee);
         return "redirect:/employees";
     }
 
@@ -81,7 +77,7 @@ public class WebEmployeeController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("read(" + id + ")");
-        Employee employee = employeeService.read(id);
+        Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
         return "read-employee.html";
     }
@@ -90,7 +86,7 @@ public class WebEmployeeController {
     public String delete(
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
-        employeeService.delete(id);
+        employeeService.deleteEmployee(id);
         return "redirect:/employees";
     }
 }

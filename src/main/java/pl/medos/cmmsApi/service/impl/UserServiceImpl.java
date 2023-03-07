@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.service;
+package pl.medos.cmmsApi.service.impl;
 
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +8,7 @@ import pl.medos.cmmsApi.repository.RoleRepository;
 import pl.medos.cmmsApi.repository.UserRepository;
 import pl.medos.cmmsApi.repository.entity.RoleEntity;
 import pl.medos.cmmsApi.repository.entity.UserEntity;
+import pl.medos.cmmsApi.service.UserService;
 
 import java.util.Arrays;
 import java.util.List;
