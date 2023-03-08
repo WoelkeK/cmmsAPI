@@ -3,8 +3,10 @@ package pl.medos.cmmsApi.service.impl;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.DepartmentRepository;
 import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.mapper.DepartmentMapper;
 
@@ -32,7 +34,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         LOGGER.info("findAllDepartments(...)");
         return departmentModels;
     }
-
+    @Override
+    public Department findDepartmentByName(String name) {
+        LOGGER.info("findDeaprtmentsByName()" + name);
+        DepartmentEntity departmentEntity = departmentRepository.searchDepartmentByName(name);
+        Department department = departmentMapper.entityToModel(departmentEntity);
+        LOGGER.info("findDepartmentsByName(...)" + department.getName());
+        return department;
+    }
     @Override
     public Department createDepartment(Department department) {
         LOGGER.info("create(" + department + ")");

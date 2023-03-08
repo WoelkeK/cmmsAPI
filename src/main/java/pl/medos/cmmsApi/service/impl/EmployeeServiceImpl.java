@@ -2,8 +2,10 @@ package pl.medos.cmmsApi.service.impl;
 
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
+import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.repository.EmployeeRepository;
+import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.mapper.EmployeeMapper;
@@ -70,5 +72,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOGGER.info("delete(" + id + ")");
         employeeRepository.deleteById(id);
         LOGGER.info("delete(...)");
+    }
+
+    @Override
+    public Employee findEmployeeByName(String employeeName) {
+        LOGGER.info("findEmployeeByName()" + employeeName);
+        EmployeeEntity employeeEntity = employeeRepository.searchEmployeeByName(employeeName);
+        Employee employee = employeeMapper.entityToModel(employeeEntity);
+        LOGGER.info("findEmployeeByName(...)" + employee.getLastName());
+        return employee;
     }
 }

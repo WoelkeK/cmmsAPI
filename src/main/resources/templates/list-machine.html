@@ -293,6 +293,46 @@
                                 <h1 class="text-4xl font-semibold text-gray-900">Maszyny</h1>
                                 <p class="mt-2 text-lm text-gray-700">Lista maszyn znajdujących się na terenie firmy Medos.</p>
                             </div>
+
+
+
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <form class="form-inline" th:action="@{/machines/search/name}">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="machineName"/>
+                                                <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"> Szukaj po nazwie maszyny</button>
+                        </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <form class="form-inline" th:action="@{/machines/search/department}">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="machineDepartment"/>
+                                                <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"> Szukaj po lokalizacji</button>
+                        </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">

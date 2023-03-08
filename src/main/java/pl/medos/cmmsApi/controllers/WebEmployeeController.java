@@ -1,10 +1,12 @@
 package pl.medos.cmmsApi.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 
@@ -33,6 +35,15 @@ public class WebEmployeeController {
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
         return "list-employee.html";
+    }
+
+    @GetMapping("/search/name")
+    public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
+                                      Model model) {
+        LOGGER.info("search()");
+        Employee employeeByName = employeeService.findEmployeeByName(query);
+        model.addAttribute("employees", employeeByName);
+        return "list-employee";
     }
 
     @GetMapping(value = "/update/{id}")

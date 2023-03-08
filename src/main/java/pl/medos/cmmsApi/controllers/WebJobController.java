@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
@@ -35,10 +36,16 @@ public class WebJobController {
     }
 
     @GetMapping
-    public String listView(Model modelMap) {
+    public String listView(Model model) {
         LOGGER.info("listView()");
         List<Job> jobs = jobService.findAllJobs();
-        modelMap.addAttribute("jobs", jobs);
+        model.addAttribute("jobs", jobs);
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineServiceImpl.findAllMachines();
+        model.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
     }
@@ -48,12 +55,6 @@ public class WebJobController {
             @PathVariable(name = "id") Long id,
             Model model) throws Exception {
         LOGGER.info("updateView()");
-        List<Department> departments = departmentService.findAllDepartments();
-        model.addAttribute("departments", departments);
-        List<Employee> employees = employeeService.finadAllEmployees();
-        model.addAttribute("employees", employees);
-        List<Machine> machines = machineServiceImpl.findAllMachines();
-        model.addAttribute("machines", machines);
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
         LOGGER.info("updateView(...)" + job.getRequestDate());
@@ -74,7 +75,6 @@ public class WebJobController {
         }
 
         model.addAttribute("job", job);
-
         jobService.updateJob(job);
         LOGGER.info("update(...)");
         return "redirect:/jobs";
@@ -95,7 +95,7 @@ public class WebJobController {
         LOGGER.info("create()" + job.getId());
 
         if (result.hasErrors()) {
-            LOGGER.info("update: result has erorr()" + result.getFieldError());
+            LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
             return "create-job";
         }
@@ -122,5 +122,36 @@ public class WebJobController {
         LOGGER.info("delete()");
         jobService.deleteJob(id);
         return "redirect:/jobs";
+    }
+
+    @GetMapping("/search/message")
+    public String searchJobsByMessage(@RequestParam(value = "jobMessage") String query,
+                             Model model) {
+        LOGGER.info("search()");
+        List<Job> jobs = jobService.findJobsByMessage(query);
+        model.addAttribute("jobs", jobs);
+        return "list-job";
+    }
+
+    @GetMapping("/search/department")
+    public String searchJobsByDepartment(@RequestParam(value = "jobDepartment") String deaprtmentName,
+                                      Model model) {
+        LOGGER.info("search()");
+        Department departmentByName = departmentService.findDepartmentByName(deaprtmentName);
+
+        List<Job> jobs = jobService.findJobsByDepartment(departmentByName);
+        model.addAttribute("jobs", jobs);
+        return "list-job";
+    }
+
+    @GetMapping("/search/employee")
+    public String searchJobsByEmployee(@RequestParam(value = "jobEmployee") String employyeName,
+                                         Model model) {
+        LOGGER.info("search()");
+        Employee employeeByName = employeeService.findEmployeeByName(employyeName);
+
+        List<Job> jobs = jobService.findJobsByemployee(employeeByName);
+        model.addAttribute("jobs", jobs);
+        return "list-job";
     }
 }
