@@ -1,11 +1,15 @@
 package pl.medos.cmmsApi.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
+import pl.medos.cmmsApi.service.MachineService;
 import pl.medos.cmmsApi.service.impl.MachineServiceImpl;
 
 import java.util.List;
@@ -17,21 +21,40 @@ public class WebMachineController {
 
     private static final Logger LOGGER = Logger.getLogger(WebMachineController.class.getName());
 
-    private MachineServiceImpl machineServiceImpl;
+    private MachineService machineService;
     private DepartmentService departmentService;
 
-    public WebMachineController(MachineServiceImpl machineServiceImpl, DepartmentService departmentService) {
-        this.machineServiceImpl = machineServiceImpl;
+    public WebMachineController(MachineService machineService, DepartmentService departmentService) {
+        this.machineService = machineService;
         this.departmentService = departmentService;
     }
 
     @GetMapping
     public String listView(ModelMap modelMap) {
         LOGGER.info("listView()");
-        List<Machine> machines = machineServiceImpl.findAllMachines();
+        List<Machine> machines = machineService.findAllMachines();
         modelMap.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + machines);
         return "list-machine.html";
+    }
+
+    @GetMapping("/search/name")
+    public String searchMachineByName(@RequestParam(value = "machineName") String query,
+                             Model model) {
+        LOGGER.info("search()");
+        List<Machine> machines = machineService.findMachinesByName(query);
+        model.addAttribute("machines", machines);
+        return "list-machine";
+    }
+
+    @GetMapping("/search/department")
+    public String searchJMachineByDepartment(@RequestParam(value = "machineDepartment") String departmentName,
+                             Model model) throws DepartmentNotFoundException {
+        LOGGER.info("search()");
+        Department departmentByName = departmentService.findDepartmentByName(departmentName);
+        List<Machine> machines = machineService.findMachinesByDepartment(departmentByName);
+        model.addAttribute("machines", machines);
+        return "list-machine";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -39,7 +62,7 @@ public class WebMachineController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("updateView()");
-        Machine machine = machineServiceImpl.findMachineById(id);
+        Machine machine = machineService.findMachineById(id);
         modelMap.addAttribute("machine", machine);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
@@ -50,7 +73,7 @@ public class WebMachineController {
     public String update(
             @ModelAttribute(name = "machine") Machine machine) {
         LOGGER.info("update()" + machine);
-        Machine savedMachine = machineServiceImpl.updateMachine(machine);
+        Machine savedMachine = machineService.updateMachine(machine);
         LOGGER.info("update(...)" + savedMachine);
         return "redirect:/machines";
     }
@@ -70,7 +93,7 @@ public class WebMachineController {
             @ModelAttribute(name = "Machine") Machine machine) {
         LOGGER.info("create(" + departmentId + ")");
         LOGGER.info("create(" + machine + ")");
-        Machine savedMachine = machineServiceImpl.createMachine(machine);
+        Machine savedMachine = machineService.createMachine(machine);
         LOGGER.info("create(...)" + savedMachine);
         return "redirect:/machines";
     }
@@ -80,7 +103,7 @@ public class WebMachineController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("read(" + id + ")");
-        Machine machine = machineServiceImpl.findMachineById(id);
+        Machine machine = machineService.findMachineById(id);
         modelMap.addAttribute("machine", machine);
         return "read-machine.html";
     }
@@ -89,7 +112,7 @@ public class WebMachineController {
     public String delete(
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
-        machineServiceImpl.deleteMachine(id);
+        machineService.deleteMachine(id);
         return "redirect:/machines";
     }
 }

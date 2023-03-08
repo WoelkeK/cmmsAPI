@@ -2,8 +2,10 @@ package pl.medos.cmmsApi.service.impl;
 
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
+import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.MachineRepository;
+import pl.medos.cmmsApi.repository.entity.JobEntity;
 import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.MachineService;
 import pl.medos.cmmsApi.service.mapper.MachineMapper;
@@ -32,6 +34,24 @@ public class MachineServiceImpl implements MachineService {
         List<Machine> machineModels = machineMapper.listModels(mechineEntities);
         LOGGER.info("List(...)");
         return machineModels;
+    }
+
+    @Override
+    public List<Machine> findMachinesByName(String name) {
+        LOGGER.info("findMachinesByName()" + name);
+        List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
+        List<Machine> machines = machineMapper.listModels(machineEntities);
+        LOGGER.info("findMachinesByName(...)" + name);
+        return machines;
+    }
+
+    @Override
+    public List<Machine> findMachinesByDepartment(Department department) {
+        LOGGER.info("findMachinesByName()" + department);
+        List<MachineEntity> machineEntities = machineRepository.searchMachineByDepartment(department.getId());
+        List<Machine> machines = machineMapper.listModels(machineEntities);
+        LOGGER.info("findMachinesByName(...)" + department);
+        return machines;
     }
 
     public Machine createMachine(Machine machine) {
