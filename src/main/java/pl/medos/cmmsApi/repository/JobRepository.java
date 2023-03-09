@@ -22,4 +22,8 @@ public interface JobRepository extends JpaRepository<JobEntity, Long> {
     @Query("SELECT p from JobEntity p WHERE " +
             " p.employee.id LIKE CONCAT('%', :query, '%')")
     List<JobEntity> searchJobsByEmployee(Long query);
+
+    @Query("SELECT p from JobEntity p WHERE " +
+            " p.machine.id LIKE CONCAT('%', :query, '%')")
+    List<JobEntity> searchJobsByMachine(Long query);
 }
