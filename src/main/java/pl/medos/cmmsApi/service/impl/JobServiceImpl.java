@@ -8,7 +8,6 @@ import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.JobRepository;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.JobService;
 import pl.medos.cmmsApi.service.mapper.JobMapper;
 
@@ -41,10 +40,19 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<Job> findJobsByMessage(String query) {
-        LOGGER.info("findJobs()" + query);
+        LOGGER.info("findJobsByMessage()" + query);
         List<JobEntity> jobEntities = jobRepository.searchJobsByMessage(query);
         List<Job> jobs = jobMapper.listModels(jobEntities);
-        LOGGER.info("findJobs(...)" + query);
+        LOGGER.info("findJobsByMessage(...)" + query);
+        return jobs;
+    }
+
+    @Override
+    public List<Job> findJobsByMachine(Machine machineByName) {
+        LOGGER.info("findJobsByMachine()" + machineByName);
+        List<JobEntity> jobEntities = jobRepository.searchJobsByMachine(machineByName.getId());
+        List<Job> jobs = jobMapper.listModels(jobEntities);
+        LOGGER.info("findJobsByMachine(...)");
         return jobs;
     }
 

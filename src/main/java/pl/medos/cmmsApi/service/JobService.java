@@ -25,4 +25,6 @@ public interface JobService {
     Job updateJob(Job job);
 
     void deleteJob(Long id);
+
+    List<Job> findJobsByMachine(Machine machineByName);
 }
