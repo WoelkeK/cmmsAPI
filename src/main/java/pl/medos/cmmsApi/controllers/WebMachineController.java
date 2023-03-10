@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
+import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/machines")
+@SessionAttributes(names = {"departments", "machines"})
 public class WebMachineController {
 
     private static final Logger LOGGER = Logger.getLogger(WebMachineController.class.getName());
@@ -30,10 +32,12 @@ public class WebMachineController {
     }
 
     @GetMapping
-    public String listView(ModelMap modelMap) {
+    public String listView(Model model) {
         LOGGER.info("listView()");
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
         List<Machine> machines = machineService.findAllMachines();
-        modelMap.addAttribute("machines", machines);
+        model.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + machines);
         return "list-machine.html";
     }
@@ -47,11 +51,24 @@ public class WebMachineController {
         return "list-machine";
     }
 
+    @GetMapping("/search/machine")
+    public String searchJobsByMachine(@RequestParam(value = "machineName") String machineName,
+                                      Model model) throws MachineNotFoundException {
+        LOGGER.info("search()");
+        Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
+
+        model.addAttribute("machines", machineByName);
+        return "list-machine";
+    }
+
+
+
+
     @GetMapping("/search/department")
     public String searchJMachineByDepartment(@RequestParam(value = "machineDepartment") String departmentName,
                              Model model) throws DepartmentNotFoundException {
         LOGGER.info("search()");
-        Department departmentByName = departmentService.findDepartmentByName(departmentName);
+        Department departmentByName = departmentService.findDepartmentById(Long.parseLong(departmentName));
         List<Machine> machines = machineService.findMachinesByDepartment(departmentByName);
         model.addAttribute("machines", machines);
         return "list-machine";
