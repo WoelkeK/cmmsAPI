@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface MachineService {
 
     void deleteMachine(Long id);
 
+    List<MachineEntity> getThisListMachine();
 }
+

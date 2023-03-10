@@ -88,4 +88,11 @@ public class MachineServiceImpl implements MachineService {
         machineRepository.deleteById(id);
         LOGGER.info("delete(...)");
     }
+
+    @Override
+    public List<MachineEntity> getThisListMachine() {
+        LOGGER.info("getTheListMachine()");
+        List<MachineEntity> machineEntityList = machineRepository.findAll();
+        return machineEntityList;
+    }
 }

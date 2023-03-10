@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -7,12 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.DepartmentService;
+import pl.medos.cmmsApi.service.ExportService;
 import pl.medos.cmmsApi.service.MachineService;
-import pl.medos.cmmsApi.service.impl.MachineServiceImpl;
 
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,10 +30,12 @@ public class WebMachineController {
 
     private MachineService machineService;
     private DepartmentService departmentService;
+    private ExportService exportService;
 
-    public WebMachineController(MachineService machineService, DepartmentService departmentService) {
+    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService) {
         this.machineService = machineService;
         this.departmentService = departmentService;
+        this.exportService = exportService;
     }
 
     @GetMapping
@@ -44,7 +51,7 @@ public class WebMachineController {
 
     @GetMapping("/search/name")
     public String searchMachineByName(@RequestParam(value = "machineName") String query,
-                             Model model) {
+                                      Model model) {
         LOGGER.info("search()");
         List<Machine> machines = machineService.findMachinesByName(query);
         model.addAttribute("machines", machines);
@@ -56,17 +63,13 @@ public class WebMachineController {
                                       Model model) throws MachineNotFoundException {
         LOGGER.info("search()");
         Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
-
         model.addAttribute("machines", machineByName);
         return "list-machine";
     }
 
-
-
-
     @GetMapping("/search/department")
     public String searchJMachineByDepartment(@RequestParam(value = "machineDepartment") String departmentName,
-                             Model model) throws DepartmentNotFoundException {
+                                             Model model) throws DepartmentNotFoundException {
         LOGGER.info("search()");
         Department departmentByName = departmentService.findDepartmentById(Long.parseLong(departmentName));
         List<Machine> machines = machineService.findMachinesByDepartment(departmentByName);
@@ -131,5 +134,24 @@ public class WebMachineController {
         LOGGER.info("delete()");
         machineService.deleteMachine(id);
         return "redirect:/machines";
+    }
+
+    @GetMapping(value = "/export")
+    public void exportMachines(HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=machine" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+        List<MachineEntity> machineList = machineService.getThisListMachine();
+
+        exportService.excelGenerator(machineList);
+        exportService.generateExcelFile(response);
+        response.flushBuffer();
     }
 }
