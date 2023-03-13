@@ -10,6 +10,7 @@ import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.MachineService;
 import pl.medos.cmmsApi.service.mapper.MachineMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -22,9 +23,12 @@ public class MachineServiceImpl implements MachineService {
     private MachineRepository machineRepository;
     private MachineMapper machineMapper;
 
-    public MachineServiceImpl(MachineRepository machineRepository, MachineMapper machineMapper) {
+    private List<Machine> sortedMachines;
+
+    public MachineServiceImpl(MachineRepository machineRepository, MachineMapper machineMapper, List<Machine> sortedMachines) {
         this.machineRepository = machineRepository;
         this.machineMapper = machineMapper;
+        this.sortedMachines = sortedMachines;
     }
 
     public List<Machine> findAllMachines() {
@@ -40,18 +44,18 @@ public class MachineServiceImpl implements MachineService {
     public List<Machine> findMachinesByName(String name) {
         LOGGER.info("findMachinesByName()" + name);
         List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
-        List<Machine> machines = machineMapper.listModels(machineEntities);
+        sortedMachines = machineMapper.listModels(machineEntities);
         LOGGER.info("findMachinesByName(...)" + name);
-        return machines;
+        return sortedMachines;
     }
 
     @Override
     public List<Machine> findMachinesByDepartment(Department department) {
         LOGGER.info("findMachinesByName()" + department);
         List<MachineEntity> machineEntities = machineRepository.searchMachineByDepartment(department.getId());
-        List<Machine> machines = machineMapper.listModels(machineEntities);
+        sortedMachines = machineMapper.listModels(machineEntities);
         LOGGER.info("findMachinesByName(...)" + department);
-        return machines;
+        return sortedMachines;
     }
 
     public Machine createMachine(Machine machine) {
@@ -94,5 +98,10 @@ public class MachineServiceImpl implements MachineService {
         LOGGER.info("getTheListMachine()");
         List<MachineEntity> machineEntityList = machineRepository.findAll();
         return machineEntityList;
+    }
+
+    @Override
+    public List<Machine> exportMachines() {
+        return sortedMachines;
     }
 }

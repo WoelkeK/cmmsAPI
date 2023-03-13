@@ -9,7 +9,6 @@ import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ExportService;
 import pl.medos.cmmsApi.service.MachineService;
@@ -46,7 +45,7 @@ public class WebMachineController {
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + machines);
-        return "list-machine.html";
+        return "list-machine";
     }
 
     @GetMapping("/search/name")
@@ -148,9 +147,9 @@ public class WebMachineController {
         String headerValue = "attachment;filename=machine" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
-        List<MachineEntity> machineList = machineService.getThisListMachine();
 
-        exportService.excelGenerator(machineList);
+        List<Machine> machines = machineService.exportMachines();
+        exportService.excelModelGenerator(machines);
         exportService.generateExcelFile(response);
         response.flushBuffer();
     }
