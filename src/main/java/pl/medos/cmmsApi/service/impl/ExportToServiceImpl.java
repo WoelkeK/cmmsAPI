@@ -2,28 +2,27 @@ package pl.medos.cmmsApi.service.impl;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.ExportService;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
+
 @Service
 public class ExportToServiceImpl implements ExportService {
 
-    private List<MachineEntity> machineEntities;
+    private List<Machine> machines;
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
 
     @Override
-    public void excelGenerator(List<MachineEntity> machineEntities) {
-        this.machineEntities = machineEntities;
+    public void excelModelGenerator(List<Machine> machines) {
+        this.machines = machines;
         workbook = new XSSFWorkbook();
     }
 
@@ -75,7 +74,7 @@ public class ExportToServiceImpl implements ExportService {
         XSSFFont font = workbook.createFont();
         font.setFontHeight(14);
         style.setFont(font);
-        for (MachineEntity record : machineEntities) {
+        for (Machine record : machines) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
             createCell(row, columnCount++, record.getId(), style);

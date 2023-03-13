@@ -15,4 +15,6 @@ public class Cost {
     private double netCost;
     private double grossCost;
 
+
+
 }
