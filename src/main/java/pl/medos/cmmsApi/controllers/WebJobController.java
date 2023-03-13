@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
-@SessionAttributes(names = {"departments", "employees", "machines","costs"})
+@SessionAttributes(names = {"departments", "employees", "machines", "costs"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -62,6 +63,8 @@ public class WebJobController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
+        List<Cost> costs = costService.findAllCosts();
+        model.addAttribute("costs", costs);
         LOGGER.info("updateView(...)" + job.getRequestDate());
         return "update-job.html";
     }
@@ -70,15 +73,14 @@ public class WebJobController {
     public String update(@PathVariable(name = "id") Long id,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
-                         Model model) {
-        LOGGER.info("update()" + job.getId());
+                         Model model) throws CostNotFoundException {
+        LOGGER.info("update()" + job.getId() + " " + job.getCost().getId());
 
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
             return "update-job";
         }
-
         model.addAttribute("job", job);
         jobService.updateJob(job);
         LOGGER.info("update(...)");
@@ -131,8 +133,8 @@ public class WebJobController {
 
     @GetMapping("/search/message")
     public String searchJobsByMessage(@RequestParam(value = "jobMessage") String query,
-                             Model model) {
-        LOGGER.info("search()" +query);
+                                      Model model) {
+        LOGGER.info("search()" + query);
         List<Job> jobs = jobService.findJobsByMessage(query);
         model.addAttribute("jobs", jobs);
         return "list-job";
@@ -140,7 +142,7 @@ public class WebJobController {
 
     @GetMapping("/search/department")
     public String searchJobsByDepartment(@RequestParam(value = "jobDepartment") String deaprtmentName,
-                                      Model model) throws DepartmentNotFoundException {
+                                         Model model) throws DepartmentNotFoundException {
         LOGGER.info("search()" + deaprtmentName);
         Department departmentByName = departmentService.findDepartmentById(Long.parseLong(deaprtmentName));
         List<Job> jobs = jobService.findJobsByDepartment(departmentByName);
@@ -150,7 +152,7 @@ public class WebJobController {
 
     @GetMapping("/search/employee")
     public String searchJobsByEmployee(@RequestParam(value = "jobEmployee") String employyeName,
-                                         Model model) throws EmployeeNotFoundException {
+                                       Model model) throws EmployeeNotFoundException {
         LOGGER.info("search()");
         Employee employeeByName = employeeService.findEmployeeById(Long.parseLong(employyeName));
         List<Job> jobs = jobService.findJobsByemployee(employeeByName);
@@ -160,7 +162,7 @@ public class WebJobController {
 
     @GetMapping("/search/machine")
     public String searchJobsByMachine(@RequestParam(value = "jobMachine") String machineName,
-                                       Model model) throws MachineNotFoundException {
+                                      Model model) throws MachineNotFoundException {
         LOGGER.info("search()");
         Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
         List<Job> jobs = jobService.findJobsByMachine(machineByName);

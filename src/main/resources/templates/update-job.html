@@ -18,6 +18,7 @@
                 <input type="hidden" th:field="*{machine.id}">
                 <input type="hidden" th:field="*{message}">
 
+
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">
                         <div>
@@ -145,7 +146,7 @@
                                             class="block w-full max-w-lg rounded-md border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
 
                                         <option th:each="cost : ${costs}"
-                                                th:text="$cost.unit}"
+                                                th:text="${cost.netCost}"
                                                 th:value="${cost.id}">
                                         </option>
                                     </select>

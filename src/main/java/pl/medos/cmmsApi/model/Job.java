@@ -30,5 +30,6 @@ public class Job {
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
+    private double calcCost;
 
 }

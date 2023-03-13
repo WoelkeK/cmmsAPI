@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service;
 
+import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
@@ -22,7 +23,7 @@ public interface JobService {
 
     Job findJobById(Long id) throws JobNotFoundException;
 
-    Job updateJob(Job job);
+    Job updateJob(Job job) throws CostNotFoundException;
 
     void deleteJob(Long id);
 
