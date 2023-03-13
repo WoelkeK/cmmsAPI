@@ -11,10 +11,7 @@ import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
-import pl.medos.cmmsApi.service.DepartmentService;
-import pl.medos.cmmsApi.service.EmployeeService;
-import pl.medos.cmmsApi.service.JobService;
-import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.service.*;
 import pl.medos.cmmsApi.service.impl.MachineServiceImpl;
 
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
-@SessionAttributes(names = {"departments", "employees", "machines"})
+@SessionAttributes(names = {"departments", "employees", "machines","costs"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -31,12 +28,14 @@ public class WebJobController {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private MachineService machineService;
+    private CostService costService;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService) {
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, CostService costService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
+        this.costService = costService;
     }
 
     @GetMapping
@@ -50,6 +49,8 @@ public class WebJobController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
+        List<Cost> costs = costService.findAllCosts();
+        model.addAttribute("costs", costs);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
     }
