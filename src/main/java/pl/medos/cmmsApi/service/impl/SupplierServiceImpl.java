@@ -5,6 +5,7 @@ import pl.medos.cmmsApi.exception.SupplierNotFoundException;
 import pl.medos.cmmsApi.model.Supplier;
 import pl.medos.cmmsApi.repository.SupplierRepository;
 import pl.medos.cmmsApi.repository.entity.SupplierEntity;
+import pl.medos.cmmsApi.service.SupplierService;
 import pl.medos.cmmsApi.service.mapper.SupplierMapper;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-public class SupplierServiceImpl {
+public class SupplierServiceImpl implements SupplierService {
 
     private static final Logger LOGGER = Logger.getLogger(SupplierServiceImpl.class.getName());
 
