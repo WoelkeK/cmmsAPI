@@ -23,7 +23,7 @@ public class Job {
     private Employee employee;
     private Department department;
     private Machine machine;
-    private Cost cost;
+//    private Cost cost;
     @NotEmpty
     private String message;
     private Boolean directContact;

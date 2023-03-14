@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
-@SessionAttributes(names = {"departments", "employees", "machines", "costs"})
+@SessionAttributes(names = {"departments", "employees", "machines"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -29,14 +29,12 @@ public class WebJobController {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private MachineService machineService;
-    private CostService costService;
 
     public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, CostService costService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
-        this.costService = costService;
     }
 
     @GetMapping
@@ -50,8 +48,6 @@ public class WebJobController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-        List<Cost> costs = costService.findAllCosts();
-        model.addAttribute("costs", costs);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
     }
@@ -63,8 +59,6 @@ public class WebJobController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
-        List<Cost> costs = costService.findAllCosts();
-        model.addAttribute("costs", costs);
         LOGGER.info("updateView(...)" + job.getRequestDate());
         return "update-job.html";
     }
@@ -74,7 +68,7 @@ public class WebJobController {
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
                          Model model) throws CostNotFoundException {
-        LOGGER.info("update()" + job.getId() + " " + job.getCost().getId());
+        LOGGER.info("update()" + job.getId());
 
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
@@ -106,7 +100,6 @@ public class WebJobController {
             model.addAttribute("job", job);
             return "create-job";
         }
-
         model.addAttribute("job", job);
         jobService.createJob(job);
         LOGGER.info("create(...)");

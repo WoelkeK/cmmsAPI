@@ -74,7 +74,6 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<Job> findJobsByemployee(Employee employeeByName) {
         LOGGER.info("findJobsByEmployee()" + employeeByName);
-
         List<JobEntity> jobEntities = jobRepository.searchJobsByEmployee(employeeByName.getId());
         List<Job> jobs = jobMapper.listModels(jobEntities);
         LOGGER.info("findJobsByEmployee(...)");
@@ -83,7 +82,6 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job createJob(Job job) {
-
         LOGGER.info("create(" + job + ")");
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
@@ -105,7 +103,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job updateJob(Job job) throws CostNotFoundException {
-        LOGGER.info("update()" + job.getCost().getId());
+        LOGGER.info("update()" + job);
         Job calcJob = costCalc(job);
         JobEntity jobEntity = jobMapper.modelToEntity(calcJob);
         JobEntity updatedJobEntity = jobRepository.save(jobEntity);
@@ -122,16 +120,12 @@ public class JobServiceImpl implements JobService {
     }
 
     private Job costCalc(Job job) throws CostNotFoundException {
-        LOGGER.info("costCalc()" + job.getCost().getId());
-
-        Cost cost = costService.findCostById(job.getCost().getId());
-        LOGGER.info("costCalc(id:" + cost.getId()+ ") netCost(" + cost.getNetCost()+")");
-
+        LOGGER.info("costCalc()" + job);
+        Cost cost = costService.searchCostByUnit("h");
         LocalDateTime jobStartTime = job.getJobStartTime();
         LocalDateTime jobStopTime = job.getJobStopTime();
-
-        long minutes = ChronoUnit.MINUTES.between(jobStartTime,jobStopTime);
-        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes)*100)/100;
+        long minutes = ChronoUnit.MINUTES.between(jobStartTime, jobStopTime);
+        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
         job.setCalcCost(jobTimeCost);
         LOGGER.info("costCalc(...)" + jobTimeCost);
         return job;
