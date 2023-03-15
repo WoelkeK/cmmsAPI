@@ -20,7 +20,7 @@ public class SpringSecurity {
     private UserDetailsService userDetailsService;
 
     @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -36,15 +36,14 @@ public class SpringSecurity {
                 .requestMatchers("/index/**").permitAll()
                 .requestMatchers("/export/**").permitAll()
                 .requestMatchers("/imports/**").permitAll()
-                .requestMatchers("/users").hasRole("ADMIN")
                 .requestMatchers("/welcome/**").permitAll()
-                .requestMatchers("/machines/**").hasRole("ADMIN")
-                .requestMatchers("/employees/**").hasRole("ADMIN")
-                .requestMatchers("/departments/**").hasRole("ADMIN")
+                .requestMatchers("/machines/**").permitAll()
+                .requestMatchers("/employees/**").permitAll()
+                .requestMatchers("/departments/**").permitAll()
                 .requestMatchers("/invoices/**").permitAll()
                 .requestMatchers("/jobs/**").permitAll()
                 .requestMatchers("/suppliers/**").permitAll()
-                .requestMatchers("/resources/**").hasRole("ADMIN")
+                .requestMatchers("/resources/**").permitAll()
                 .requestMatchers("/costs/**").permitAll()
 //                .requestMatchers("/users").hasRole("USER")
                 .and()
@@ -52,7 +51,7 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/index",true)
+                                .defaultSuccessUrl("/index", true)
                                 .permitAll()
                 ).logout(
                         logout -> logout

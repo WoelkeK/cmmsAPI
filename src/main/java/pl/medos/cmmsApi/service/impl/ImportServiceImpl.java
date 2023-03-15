@@ -1,59 +1,69 @@
 package pl.medos.cmmsApi.service.impl;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Person;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class ImportServiceImpl implements ImportService {
-    @Override
-    public void importExcel() throws IOException {
 
-        try {
+    private static final Logger LOGGER = Logger.getLogger(ImportServiceImpl.class.getName());
 
-            FileInputStream file = new FileInputStream("c:/XL/telefony.xlsx");
-            IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
+    private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
 
-            //Create Workbook instance holding reference to .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
+    public List<Employee> importExcelData() throws IOException {
 
-            //Get first/desired sheet from the workbook
-            XSSFSheet sheet = workbook.getSheetAt(0);
+        List<Employee> rawDataList = new ArrayList<>();
 
-            //Iterate through each rows one by one
-            Iterator<Row> rowIterator = sheet.iterator();
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                //For each row, iterate through all the columns
-                Iterator<Cell> cellIterator = row.cellIterator();
+        FileInputStream file = new FileInputStream("c:/XL/wykaz.xlsx");
+        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        Employee person = new Employee();
+        Iterator<Row> rowIterator = sheet.iterator();
 
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    //Check the cell type and format accordingly
+        while (rowIterator.hasNext()) {
+
+            Row row = rowIterator.next();
+            Map<String, String> rowDataMap = new HashMap<>();
+            Cell cell;
+            for (int k = 0; k < row.getLastCellNum(); k++) {
+                if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-                            System.out.print(cell.getNumericCellValue() + "\t");
+
+                            rowDataMap.put(persons.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             break;
                         case STRING:
-                            System.out.print(cell.getStringCellValue() + "\t");
+                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             break;
-                        default:
-                            throw new IllegalStateException("Unexpected value: " + cell.getCellType());
                     }
                 }
-                System.out.println("");
             }
-            file.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            ObjectMapper mapper = new ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+
+            Employee rawData = mapper.convertValue(rowDataMap, Employee.class);
+            rawDataList.add(rawData);
         }
+        return rawDataList;
     }
 }
+

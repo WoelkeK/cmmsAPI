@@ -12,12 +12,10 @@ import lombok.NoArgsConstructor;
 public class Employee {
 
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String position;
-    private String occupation;
+    private String name;
     private String phone;
     private String email;
+    private String position;
     private Department department;
 
 }
