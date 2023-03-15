@@ -9,7 +9,9 @@ import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
+import pl.medos.cmmsApi.service.ImportService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -21,14 +23,16 @@ public class WebEmployeeController {
     private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
     private EmployeeService employeeService;
     private DepartmentService departmentService;
+    private ImportService importService;
 
-    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
+    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportService importService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
+        this.importService = importService;
     }
 
     @GetMapping
-    public String listView(ModelMap modelMap) {
+    public String listView(ModelMap modelMap) throws IOException {
         LOGGER.info("listView()");
         List<Employee> employees = employeeService.finadAllEmployees();
         modelMap.addAttribute("employees", employees);

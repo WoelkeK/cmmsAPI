@@ -23,11 +23,13 @@ public class Job {
     private Employee employee;
     private Department department;
     private Machine machine;
+//    private Cost cost;
     @NotEmpty
     private String message;
     private Boolean directContact;
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
+    private double calcCost;
 
 }

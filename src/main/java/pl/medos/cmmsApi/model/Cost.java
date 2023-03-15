@@ -14,6 +14,7 @@ public class Cost {
     private Long id;
     private String unit;
     private String description;
+    private double calcCost;
     private double netCost;
     private double grossCost;
 

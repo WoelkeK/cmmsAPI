@@ -30,10 +30,14 @@ public class JobEntity {
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private MachineEntity machine;
+//    @ManyToOne
+//    @JoinColumn(name = "cost_id")
+//    private CostEntity cost;
     private String message;
     private boolean directContact;
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
+    private double calcCost;
 
 }

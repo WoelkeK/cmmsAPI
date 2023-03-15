@@ -13,8 +13,10 @@ import lombok.*;
 public class CostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private Long id;
     private String unit;
+    private double calcCost;
     private String description;
     private double netCost;
     private double grossCost;

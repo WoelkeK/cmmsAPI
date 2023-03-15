@@ -17,4 +17,6 @@ public interface CostService {
 
     void deleteCostById(Long id);
 
+    Cost searchCostByUnit(String unit);
+
 }

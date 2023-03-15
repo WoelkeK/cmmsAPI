@@ -79,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOGGER.info("findEmployeeByName()" + employeeName);
         EmployeeEntity employeeEntity = employeeRepository.searchEmployeeByName(employeeName);
         Employee employee = employeeMapper.entityToModel(employeeEntity);
-        LOGGER.info("findEmployeeByName(...)" + employee.getLastName());
+        LOGGER.info("findEmployeeByName(...)" + employee.getName());
         return employee;
     }
 }

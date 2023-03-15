@@ -71,4 +71,13 @@ public class CostServiceImpl implements CostService {
         costRepository.deleteById(id);
         LOGGER.info("deleteCostById(...)");
     }
+
+    @Override
+    public Cost searchCostByUnit(String unit) {
+        LOGGER.info("searchCostById()");
+        CostEntity costEntityByUnit = costRepository.searchCostByUnit(unit);
+        Cost cost = costMapper.entityToModel(costEntityByUnit);
+        LOGGER.info("searchCostById(...)" + cost);
+        return cost;
+    }
 }
