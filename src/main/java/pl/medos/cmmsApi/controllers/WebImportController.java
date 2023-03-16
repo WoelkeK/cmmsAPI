@@ -34,7 +34,6 @@ public class WebImportController {
     public String createView(Model model) throws IOException {
         LOGGER.info("import person)");
         List<Employee> employee = importService.importExcelData();
-
         LOGGER.info("Person from file: " + employee);
         return "import.html";
     }
