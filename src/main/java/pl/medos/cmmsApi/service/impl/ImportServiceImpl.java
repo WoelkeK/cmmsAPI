@@ -8,15 +8,20 @@ import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.model.Cost;
+import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Person;
+import pl.medos.cmmsApi.repository.entity.CostEntity;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class ImportServiceImpl implements ImportService {
@@ -27,13 +32,13 @@ public class ImportServiceImpl implements ImportService {
 
     public List<Employee> importExcelData() throws IOException {
 
-        List<Employee> rawDataList = new ArrayList<>();
+        List<Person> rawDataList = new ArrayList<>();
 
         FileInputStream file = new FileInputStream("c:/XL/wykaz.xlsx");
         IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
-        Employee person = new Employee();
+        Person person = new Person();
         Iterator<Row> rowIterator = sheet.iterator();
 
         while (rowIterator.hasNext()) {
@@ -60,10 +65,34 @@ public class ImportServiceImpl implements ImportService {
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
 
-            Employee rawData = mapper.convertValue(rowDataMap, Employee.class);
+           Person rawData = mapper.convertValue(rowDataMap, Person.class);
             rawDataList.add(rawData);
         }
-        return rawDataList;
+        List<Employee> employees = dataExcelConverter(rawDataList);
+        return employees;
+    }
+
+    private List<Employee> dataExcelConverter(List<Person> persons){
+        LOGGER.info("dataExcelConverter()");
+
+        List<Employee> employees =
+        persons.stream().map(m-> {
+                    Employee employee = new Employee();
+                    Department department = new Department();
+                    employee.setId(Long.parseLong(String.valueOf(m.getId())));
+                    employee.setName(String.valueOf(m.getName()));
+                    employee.setPhone(String.valueOf(m.getPhone()));
+                    employee.setEmail(String.valueOf(m.getEmail()));
+                    department.setId(Long.parseLong(String.valueOf(m.getDepartment())));
+                    employee.setDepartment(department);
+
+                            return employee;
+                        }
+                )
+                .toList();
+        LOGGER.info("dataExcelConverter(...)");
+        return  employees;
+
     }
 }
 
