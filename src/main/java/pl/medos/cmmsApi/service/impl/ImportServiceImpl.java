@@ -53,7 +53,8 @@ public class ImportServiceImpl implements ImportService {
                             rowDataMap.put(persons.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             break;
                         case STRING:
-                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
+//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
+                            rowDataMap.put(persons.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
                             break;
                     }
                 }
