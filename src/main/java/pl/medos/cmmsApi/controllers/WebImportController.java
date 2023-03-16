@@ -25,6 +25,8 @@ public class WebImportController {
     private ImportService importService;
     private EmployeeService employeeService;
 
+    private String fileName= "c:/XL/sheet2.xlsx";
+
     public WebImportController(ImportService importService, EmployeeService employeeService) {
         this.importService = importService;
         this.employeeService = employeeService;
@@ -33,7 +35,7 @@ public class WebImportController {
     @GetMapping(value = "/read")
     public String createView(Model model) throws IOException {
         LOGGER.info("import person)");
-        List<Employee> employee = importService.importExcelData();
+        List<Employee> employee = importService.importExcelData(fileName);
         LOGGER.info("Person from file: " + employee);
         return "import.html";
     }
@@ -41,7 +43,7 @@ public class WebImportController {
     @PostMapping(value = "/save")
     public String saveImportedEmployees(Model model) throws IOException {
         LOGGER.info("saveImportedEmployees()");
-        List<Employee> employees = importService.importExcelData();
+        List<Employee> employees = importService.importExcelData(fileName);
 
         employees.forEach((employee)->{
         employeeService.createEmployee(employee);

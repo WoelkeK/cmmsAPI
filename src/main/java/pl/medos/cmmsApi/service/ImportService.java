@@ -7,6 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ImportService {
-    List<Employee> importExcelData() throws IOException;
+    List<Employee> importExcelData(String fileName) throws IOException;
 
 }

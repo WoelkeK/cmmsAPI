@@ -30,11 +30,11 @@ public class ImportServiceImpl implements ImportService {
 
     private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
 
-    public List<Employee> importExcelData() throws IOException {
+    public List<Employee> importExcelData(String fileName) throws IOException {
 
         List<Person> rawDataList = new ArrayList<>();
 
-        FileInputStream file = new FileInputStream("c:/XL/wykaz.xlsx");
+        FileInputStream file = new FileInputStream(fileName);
         IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -50,7 +50,6 @@ public class ImportServiceImpl implements ImportService {
                 if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-
                             rowDataMap.put(persons.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             break;
                         case STRING:
@@ -82,6 +81,7 @@ public class ImportServiceImpl implements ImportService {
                     employee.setId(Long.parseLong(String.valueOf(m.getId())));
                     employee.setName(String.valueOf(m.getName()));
                     employee.setPhone(String.valueOf(m.getPhone()));
+                    employee.setPosition(String.valueOf(m.getPosition()));
                     employee.setEmail(String.valueOf(m.getEmail()));
                     department.setId(Long.parseLong(String.valueOf(m.getDepartment())));
                     employee.setDepartment(department);
