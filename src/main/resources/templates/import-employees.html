@@ -1,0 +1,183 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Import</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-400">
+<div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+            <h1 class="text-6xl font-semibold text-gray-900">Import</h1>
+            <form action="#" th:action="@{/employees/save}" th:object="${employees}" method="post"
+                  class="space-y-8 divide-y divide-gray-700">
+                <fieldset>
+                    <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
+                        <div class="space-y-6 sm:space-y-6">
+                            <div>
+                                <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Plik arkusza
+                                    kalkulacyjnego
+                                    Excel</h3>
+                                <p class="mt-2 max-w-2xl text-sm text-gray-500">Umożliwa import list pracowników z pliku
+                                    Excel</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="flex flex-1 flex-col md:pl-2">
+                        <div class="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
+                            <button type="button"
+                                    class="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                                <span class="sr-only">Open sidebar</span>
+                                <!-- Heroicon name: outline/bars-3 -->
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <main class="flex-1">
+                            <div class="py-6">
+
+                                <div class="mx-auto max-w-8xl px-4 sm:px-6 md:px-8">
+                                    <!--Opis tabeli-->
+                                    <div class="px-4 sm:px-6 lg:px-8">
+                                        <div class="sm:flex sm:items-center">
+                                            <div class="sm:flex-auto">
+                                                <h1 class="text-4xl font-semibold text-gray-900">Lista rekordów</h1>
+                                                <p class="mt-2 text-lm text-gray-700">Lista rekordów znajdujących się w
+                                                    pliku excel.</p>
+                                            </div>
+                                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
+                                                <button type="submit" th:value="${save}"
+                                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                                    <a th:href="@{/employees/save}" methods="post">Import</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 flex flex-col">
+                                            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                                                        <table class="min-w-full">
+                                                            <thead class="bg-gray-800">
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
+                                                                    Index
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
+                                                                    Imię i nazwisko
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                                    Telefon
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                                    Email
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                                    Stanowisko
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                                    Wydział
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="relative py-3.5 pl-3 pr-4 lm:pr-6">
+                                                                    <span class="sr-only">Edit</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody class="bg-gray">
+                                                            <tr class="border-t border-gray-600">
+                                                                <th colspan="8" scope="colgroup"
+                                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                                                                    Zestawienie osób
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr th:each="employee : ${employees}"
+                                                                class="border-t border-gray-300">
+                                                                <td th:text="${employee.id}"
+                                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                                    Index
+                                                                </td>
+                                                                <td th:text="${employee.name}"
+                                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                                    Nazwa
+                                                                </td>
+                                                                <td th:text="${employee.phone}"
+                                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                                    Telefon
+                                                                </td>
+                                                                <td th:text="${employee.email}"
+                                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                                    Email
+                                                                </td>
+                                                                <td th:text="${employee.position}"
+                                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                                    Stanowisko
+                                                                </td>
+                                                                <td th:text="${employee.department}"
+                                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                                    Lokalizacja
+                                                                </td>
+
+                                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                                    <a th:href="@{/employees/update/{id}(id=${employee.id})}"
+                                                                       class="text-indigo-600 hover:text-indigo-900">Edycja<span
+                                                                            class="sr-only"></span></a>
+                                                                    <a th:href="@{/employees/read/{id}(id=${employee.id})}"
+                                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span
+                                                                            class="sr-only"></span></a>
+                                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id})}"
+                                                                       class="text-indigo-600 hover:text-indigo-900">Usuń<span
+                                                                            class="sr-only"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- More people... -->
+                                                            </tbody>
+                                                            <tbody class="bg-white">
+                                                            <tr class="border-t border-gray-200">
+                                                                <th colspan="8" scope="colgroup"
+                                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                                                                    Wydziały magazynów
+                                                                </th>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5">
+                                    <div class="flex justify-end">
+                                        <button type="button"
+                                                class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+
+                                            <a th:href="@{/employees}">Wstecz</a>
+                                        </button>
+                                        <button type="submit"
+                                                class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Zapisz
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+</body>
+</html>
