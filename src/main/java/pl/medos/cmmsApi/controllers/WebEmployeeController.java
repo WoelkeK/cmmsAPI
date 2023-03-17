@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.ImportService;
@@ -17,10 +17,11 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping(value = "/employees")
-@SessionAttributes(names = {"departments"})
+@SessionAttributes(names = {"employees", "departments"})
 public class WebEmployeeController {
 
     private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
+    private String fileName = "c:/XL/sheet4.xlsx";
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private ImportService importService;
@@ -43,7 +44,7 @@ public class WebEmployeeController {
 
     @GetMapping("/search/name")
     public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
-                                      Model model) {
+                                       Model model) {
         LOGGER.info("search()");
         Employee employeeByName = employeeService.findEmployeeByName(query);
         model.addAttribute("employees", employeeByName);
@@ -102,6 +103,24 @@ public class WebEmployeeController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         employeeService.deleteEmployee(id);
+        return "redirect:/employees";
+    }
+
+    @GetMapping(value = "/save")
+    public String importEmployees() throws IOException {
+        LOGGER.info("importEmployees()");
+        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
+        List<Employee> readedEmployees = importService.importExcelEmployeesData(fileName);
+//        List<Department> readedDepartments = importService.importExcelDepartmentsData(fileName);
+//        LOGGER.info("departments import()" + readedDepartments);
+//        readedDepartments.forEach((department -> {
+//            departmentService.createDepartment(department);
+//             });
+
+        readedEmployees.forEach((employee) -> {
+                   employeeService.createEmployee(employee);
+        });
+        LOGGER.info("importEmployees() " + employeesImportDto);
         return "redirect:/employees";
     }
 }
