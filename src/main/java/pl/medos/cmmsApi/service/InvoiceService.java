@@ -8,11 +8,11 @@ public interface InvoiceService {
 
     List<Invoice> findAllInvoices();
 
-    Invoice createInvoice(Invoice invoice);
+    Invoice createInvoice();
 
     Invoice findInvoiceById(Long id) throws InvoiceNotFoundException;
 
-    Invoice updateInvoice(Invoice invoice);
+    Invoice updateInvoice(Invoice invoice, Long id);
 
     void deleteInvoice(Long id);
 }

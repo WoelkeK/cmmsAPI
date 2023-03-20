@@ -67,7 +67,7 @@ public class WebInvoiceController {
     @PostMapping(value = "/create")
     public String create(@ModelAttribute(name = "invoice") Invoice invoice) {
         LOGGER.info("create()");
-        Invoice savedInvoice = invoiceService.createInvoice(invoice);
+        Invoice savedInvoice = invoiceService.createInvoice();
         LOGGER.info("create(...)" + savedInvoice);
         return "redirect:/invoices";
     }
@@ -97,10 +97,10 @@ public class WebInvoiceController {
     }
 
     @PutMapping(value = "/update")
-    public String update(
-            @ModelAttribute(name = "invoice") Invoice invoice) throws InvoiceNotFoundException {
+    public String update(@PathVariable(name = "id") Long id,
+                         @ModelAttribute(name = "invoice") Invoice invoice) throws InvoiceNotFoundException {
         LOGGER.info("update()" + invoice);
-        Invoice updatedInvoice = invoiceService.updateInvoice(invoice);
+        Invoice updatedInvoice = invoiceService.updateInvoice(invoice, id);
         LOGGER.info("update(...)" + updatedInvoice);
         return "redirect:/invoices";
     }
