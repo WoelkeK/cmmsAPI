@@ -33,9 +33,9 @@ public class InvoiceServiceImpl implements InvoiceService{
         return invoiceModels;
     }
 
-    public Invoice createInvoice(Invoice invoice) {
-        LOGGER.info("createInvoice(" + invoice + ")");
-        InvoiceEntity invoiceEntity = invoiceMapper.modelToEntity(invoice);
+    public Invoice createInvoice() {
+        LOGGER.info("createInvoice()");
+        InvoiceEntity invoiceEntity = invoiceMapper.modelToEntity(new Invoice());
         InvoiceEntity savedInvoiceEntity = invoiceRepository.save(invoiceEntity);
         Invoice savedDepartmentModel = invoiceMapper.entityToModel(savedInvoiceEntity);
         LOGGER.info("createInvoice(...)" + savedDepartmentModel);
@@ -52,7 +52,7 @@ public class InvoiceServiceImpl implements InvoiceService{
         return invoiceModel;
     }
 
-    public Invoice updateInvoice(Invoice invoice) {
+    public Invoice updateInvoice(Invoice invoice, Long id) {
         LOGGER.info("updateInvoice()" + invoice);
         InvoiceEntity invoiceEntity = invoiceMapper.modelToEntity(invoice);
         InvoiceEntity updatedInvoiceEntity = invoiceRepository.save(invoiceEntity);
