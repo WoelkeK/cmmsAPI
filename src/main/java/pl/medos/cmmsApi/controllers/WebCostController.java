@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.model.Cost;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.service.CostService;
@@ -42,10 +43,10 @@ public class WebCostController {
     }
 
     @PostMapping(value = "/update")
-    public String update(
-            @ModelAttribute(name = "cost") Cost cost) {
+    public String update(@PathVariable (name="id")Long id,
+            @ModelAttribute(name = "cost") Cost cost) throws CostNotFoundException {
         LOGGER.info("update()" + cost);
-        Cost updatedCost = costServicee.updateCost(cost);
+        Cost updatedCost = costServicee.updateCost(cost, id);
         LOGGER.info("update(...)" + updatedCost);
         return "redirect:/costs";
     }

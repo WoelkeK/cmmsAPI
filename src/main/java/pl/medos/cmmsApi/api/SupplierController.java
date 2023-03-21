@@ -18,18 +18,19 @@ public class SupplierController {
 
     private final SupplierService supplierService;
 
-    @GetMapping("/suppliers")
-    public void getAllSuppliers() {
+    @GetMapping("/api/suppliers")
+    public List<Supplier> getAllSuppliers() {
         LOGGER.info("getAllSuppliers()");
         List<Supplier> allSuppliers = supplierService.findAllSuppliers();
         LOGGER.info("getAllSuppliers(...)");
+        return allSuppliers;
 
     }
 
     @PostMapping("/supplier")
-    public void createSupplier() {
+    public void createSupplier(@ModelAttribute Supplier supplier) {
         LOGGER.info("createSupplier)");
-        Supplier createdSupplier = supplierService.createSupplier();
+        Supplier createdSupplier = supplierService.createSupplier(supplier);
         LOGGER.info("createSupplier(...)" + createdSupplier);
 
     }

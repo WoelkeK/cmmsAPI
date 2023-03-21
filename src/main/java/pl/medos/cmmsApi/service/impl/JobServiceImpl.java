@@ -93,20 +93,30 @@ public class JobServiceImpl implements JobService {
     @Override
     public Job findJobById(Long id) throws JobNotFoundException {
         LOGGER.info("read()");
-        Optional<JobEntity> optionalJobEntity = jobRepository.findById(id);
-        JobEntity jobEntity = optionalJobEntity.orElseThrow(
-                () -> new JobNotFoundException("Brak zlecenia o podanym id" + id));
+        JobEntity jobEntity = getJobEntity(id);
         Job jobModel = jobMapper.entityToModel(jobEntity);
         LOGGER.info("read(...)" + jobModel);
         return jobModel;
     }
 
     @Override
-    public Job updateJob(Job job){
+    public Job updateJob(Job job, Long id) throws JobNotFoundException {
         LOGGER.info("update()" + job);
-        Job calcJob = costCalc(job);
-        JobEntity jobEntity = jobMapper.modelToEntity(calcJob);
-        JobEntity updatedJobEntity = jobRepository.save(jobEntity);
+        JobEntity readedJobEntity = getJobEntity(id);
+        JobEntity editedJobEntity = jobMapper.modelToEntity(job);
+        editedJobEntity.setId(readedJobEntity.getId());
+
+        LOGGER.info("editedJobentity()" + readedJobEntity.getId() + "in/out " + editedJobEntity.getId());
+        Cost cost = costService.searchCostByUnit("h");
+        LOGGER.info("cost" + cost.getUnit());
+        LocalDateTime jobStartTime = job.getJobStartTime();
+        LocalDateTime jobStopTime = job.getJobStopTime();
+        long minutes = ChronoUnit.MINUTES.between(jobStartTime, jobStopTime);
+        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
+        editedJobEntity.setCalcCost(jobTimeCost);
+
+        LOGGER.info("editedCostCalc " + editedJobEntity.getCalcCost());
+        JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);
         Job updatedJobModel = jobMapper.entityToModel(updatedJobEntity);
         LOGGER.info("update(...) " + updatedJobModel);
         return updatedJobModel;
@@ -119,15 +129,12 @@ public class JobServiceImpl implements JobService {
         LOGGER.info("delete(...)");
     }
 
-    private Job costCalc(Job job){
-        LOGGER.info("costCalc()" + job);
-        Cost cost = costService.searchCostByUnit("h");
-        LocalDateTime jobStartTime = job.getJobStartTime();
-        LocalDateTime jobStopTime = job.getJobStopTime();
-        long minutes = ChronoUnit.MINUTES.between(jobStartTime, jobStopTime);
-        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
-        job.setCalcCost(jobTimeCost);
-        LOGGER.info("costCalc(...)" + jobTimeCost);
-        return job;
+    private JobEntity getJobEntity(Long id) throws JobNotFoundException {
+        LOGGER.info("getJobEntity("+ id+")");
+        Optional<JobEntity> optionalJobEntity = jobRepository.findById(id);
+        JobEntity jobEntity = optionalJobEntity.orElseThrow(
+                () -> new JobNotFoundException("Brak zlecenia o podanym id" + id));
+        LOGGER.info("update()" + jobEntity);
+        return jobEntity;
     }
 }

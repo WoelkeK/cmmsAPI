@@ -25,16 +25,16 @@ public class JobController {
 
     private final JobService jobService;
 
-    @GetMapping("/job")
-    public List list() {
-        LOGGER.info("jobList()");
+    @GetMapping("/jobs")
+    public List findAllJobs() {
+        LOGGER.info("findAllJobs()");
         List jobs = jobService.findAllJobs();
-        LOGGER.info("jobList(...)" + jobs);
+        LOGGER.info("findAllJobs(...)" + jobs);
         return jobs;
     }
 
     @PostMapping("/job")
-    public Job create(@RequestBody Job job) {
+    public Job createJob(@RequestBody Job job) {
         LOGGER.info("createJob(" + job + ")");
         Job createdJob = jobService.createJob(job);
         LOGGER.info("createJob(...)");
@@ -42,18 +42,18 @@ public class JobController {
     }
 
     @GetMapping("/job/{id}")
-    public Job read(@PathVariable(name = "id") Long id) throws JobNotFoundException {
+    public Job findJobById(@PathVariable(name = "id") Long id) throws JobNotFoundException {
         LOGGER.info("readJob(" + id + ")");
         Job readedJob = jobService.findJobById(id);
         LOGGER.info("readJob(...) " + readedJob);
         return readedJob;
     }
 
-    @PutMapping("/job")
-    public Job update(@PathVariable(name = "id") Long id,
-                      @RequestBody Job job) {
-        LOGGER.info("updateJob(" + job + ")");
-        Job updatedJob = jobService.updateJob(job);
+    @PutMapping("/job/{id}")
+    public Job updateJob(@PathVariable(name = "id") Long id,
+                         @RequestBody Job job) throws JobNotFoundException {
+        LOGGER.info("updateJob(" + id + ")");
+        Job updatedJob = jobService.updateJob(job, id);
         LOGGER.info("updateJob(...) " + updatedJob);
         return updatedJob;
     }

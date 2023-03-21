@@ -418,7 +418,7 @@
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-800">Data
                                                     Zgłoszenia
                                                 </td>
-                                                <td th:text="${job.employee.lastName}">
+                                                <td th:text="${job.employee.name}">
                                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
                                                 </td>
                                                 <td th:text="${job?.department?.name}"
@@ -535,7 +535,7 @@
                                                     <select id="jobEmployee" name="jobEmployee"
                                                             class="form-control mt-2 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                         <option th:each="employee : ${employees}"
-                                                                th:text="${employee.lastName}"
+                                                                th:text="${employee.name}"
                                                                 th:value="${employee.id}">
                                                         </option>
                                                     </select>

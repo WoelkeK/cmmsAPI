@@ -8,7 +8,7 @@ public interface InvoiceService {
 
     List<Invoice> findAllInvoices();
 
-    Invoice createInvoice();
+    Invoice createInvoice(Invoice invoice);
 
     Invoice findInvoiceById(Long id) throws InvoiceNotFoundException;
 

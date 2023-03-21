@@ -56,9 +56,11 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public Cost updateCost(Cost cost) {
-        LOGGER.info("updateCost()");
-        CostEntity editedCostEntity = costMapper.modelToEntity(cost);
+    public Cost updateCost(Cost cost, Long id) throws CostNotFoundException {
+        LOGGER.info("updateCost()" + id);
+        Optional<CostEntity> optionalCostEntityById = costRepository.findById(id);
+        CostEntity editedCostEntity = optionalCostEntityById.orElseThrow(
+                () -> new CostNotFoundException("Nie istnieje obiekt o podanym id"));
         CostEntity updatedCostEntity = costRepository.save(editedCostEntity);
         Cost updateCost = costMapper.entityToModel(updatedCostEntity);
         LOGGER.info("updateCost(...)" + updateCost);

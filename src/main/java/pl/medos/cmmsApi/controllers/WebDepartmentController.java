@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.service.DepartmentService;
 
@@ -27,25 +28,6 @@ public class WebDepartmentController {
         modelMap.addAttribute("departments", departments);
         LOGGER.info("listView(...)" + departments);
         return "list-department.html";
-    }
-
-    @GetMapping(value = "/update/{id}")
-    public String updateView(
-            @PathVariable(name = "id") Long id,
-            ModelMap modelMap) throws Exception {
-        LOGGER.info("updateView()");
-        Department department = departmentService.findDepartmentById(id);
-        modelMap.addAttribute("department", department);
-        return "update-department.html";
-    }
-
-    @PostMapping(value = "/update")
-    public String update(
-            @ModelAttribute(name = "department") Department department) {
-        LOGGER.info("update()" + department);
-        Department updatedDepartment = departmentService.updateDepartment(department);
-        LOGGER.info("update(...)" + updatedDepartment);
-        return "redirect:/departments";
     }
 
     @GetMapping(value = "/create")
@@ -74,6 +56,25 @@ public class WebDepartmentController {
         Department department = departmentService.findDepartmentById(id);
         modelMap.addAttribute("department", department);
         return "read-department.html";
+    }
+
+    @GetMapping(value = "/update/{id}")
+    public String updateView(
+            @PathVariable(name = "id") Long id,
+            ModelMap modelMap) throws Exception {
+        LOGGER.info("updateView()");
+        Department department = departmentService.findDepartmentById(id);
+        modelMap.addAttribute("department", department);
+        return "update-department.html";
+    }
+
+    @PostMapping(value = "/update")
+    public String update(@PathVariable(name = "id") Long id,
+                         @ModelAttribute(name = "department") Department department) throws DepartmentNotFoundException {
+        LOGGER.info("update()" + department);
+        Department updatedDepartment = departmentService.updateDepartment(department, id);
+        LOGGER.info("update(...)" + updatedDepartment);
+        return "redirect:/departments";
     }
 
     @GetMapping(value = "/delete/{id}")

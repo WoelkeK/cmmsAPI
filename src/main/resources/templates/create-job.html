@@ -60,7 +60,7 @@
                                     class="block w-full max-w-lg rounded-md border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
 
                                 <option th:each="employee : ${employees}"
-                                        th:text="${employee.firstName}"
+                                        th:text="${employee.name}"
                                         th:value="${employee.id}">
                                 </option>
                             </select>

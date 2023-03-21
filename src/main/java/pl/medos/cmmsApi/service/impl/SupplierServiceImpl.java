@@ -33,9 +33,9 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierModels;
     }
 
-    public Supplier createSupplier() {
+    public Supplier createSupplier(Supplier supplier) {
         LOGGER.info("create()");
-        SupplierEntity supplierEntity = supplierMapper.modelToEntity(new Supplier());
+        SupplierEntity supplierEntity = supplierMapper.modelToEntity(supplier);
         SupplierEntity savedSupplierEntity = supplierRepository.save(supplierEntity);
         Supplier savedSupplierModel = supplierMapper.entityToModel(savedSupplierEntity);
         LOGGER.info("create(...)" + savedSupplierModel);
