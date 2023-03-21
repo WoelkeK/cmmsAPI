@@ -26,9 +26,9 @@ public class InvoiceController {
     }
 
     @PostMapping("/invoice")
-    public void createSupplier() {
+    public void createSupplier(@ModelAttribute Invoice invoice) {
         LOGGER.info("createInvoice)");
-        Invoice invoice = invoiceService.createInvoice();
+        Invoice saveInvoice = invoiceService.createInvoice(invoice);
         LOGGER.info("createInvoice(...)"+ invoice);
     }
 

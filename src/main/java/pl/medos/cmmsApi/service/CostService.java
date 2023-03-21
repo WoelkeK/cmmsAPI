@@ -13,7 +13,7 @@ public interface CostService {
 
     Cost findCostById(Long id) throws CostNotFoundException;
 
-    Cost updateCost(Cost cost);
+    Cost updateCost(Cost cost, Long id) throws CostNotFoundException;
 
     void deleteCostById(Long id);
 

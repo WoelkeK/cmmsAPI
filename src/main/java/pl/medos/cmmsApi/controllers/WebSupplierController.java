@@ -42,7 +42,7 @@ public class WebSupplierController {
     @PostMapping(value = "/create")
     public String create(@ModelAttribute(name = "supplier") Supplier supplier) {
         LOGGER.info("create()");
-        Supplier savedSupplier = supplierServiceImpl.createSupplier();
+        Supplier savedSupplier = supplierServiceImpl.createSupplier(supplier);
         LOGGER.info("create(...)" + savedSupplier);
         return "redirect:/suppliers";
     }
@@ -63,13 +63,13 @@ public class WebSupplierController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws SupplierNotFoundException {
         LOGGER.info("update()" + id);
-       Supplier supplier = supplierServiceImpl.findSupplierById(id);
+        Supplier supplier = supplierServiceImpl.findSupplierById(id);
         modelMap.addAttribute("supplier", supplier);
         LOGGER.info("update(...)");
         return "create-supplier.html";
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "/update/{id}")
     public String update(
             @PathVariable(name = "id") Long id,
             @ModelAttribute(name = "supplier") Supplier supplier) throws SupplierNotFoundException {

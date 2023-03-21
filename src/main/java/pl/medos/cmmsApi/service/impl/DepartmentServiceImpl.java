@@ -64,9 +64,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department updateDepartment(Department department) {
+    public Department updateDepartment(Department department, Long id) throws DepartmentNotFoundException {
         LOGGER.info("update()" + department);
-        DepartmentEntity departmentEntity = departmentMapper.modelToEntity(department);
+        Optional<DepartmentEntity> optionalDepartmentEntity = departmentRepository.findById(id);
+        DepartmentEntity departmentEntity = optionalDepartmentEntity.orElseThrow(
+                () -> new DepartmentNotFoundException("Brak działu o podanym id " + id));
+
         DepartmentEntity updatedDepartmentEntity = departmentRepository.save(departmentEntity);
         Department updatedDepartmentModel = departmentMapper.entityToModel(updatedDepartmentEntity);
         LOGGER.info("update(...) " + updatedDepartmentModel);

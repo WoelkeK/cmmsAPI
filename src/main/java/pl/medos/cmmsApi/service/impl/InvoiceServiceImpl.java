@@ -33,9 +33,10 @@ public class InvoiceServiceImpl implements InvoiceService{
         return invoiceModels;
     }
 
-    public Invoice createInvoice() {
+
+    public Invoice createInvoice(Invoice invoice) {
         LOGGER.info("createInvoice()");
-        InvoiceEntity invoiceEntity = invoiceMapper.modelToEntity(new Invoice());
+        InvoiceEntity invoiceEntity = invoiceMapper.modelToEntity(invoice);
         InvoiceEntity savedInvoiceEntity = invoiceRepository.save(invoiceEntity);
         Invoice savedDepartmentModel = invoiceMapper.entityToModel(savedInvoiceEntity);
         LOGGER.info("createInvoice(...)" + savedDepartmentModel);

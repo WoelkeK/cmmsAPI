@@ -51,10 +51,11 @@ public class DepartmentController {
         return readedMachine;
     }
 
-    @PutMapping("/department")
-    public Department update(@RequestBody Department department) {
+    @PutMapping("/department/{id}")
+    public Department update(@PathVariable (name = "id") Long id,
+            @RequestBody Department department) throws DepartmentNotFoundException {
         LOGGER.info("updateDepartment(" + department + ")");
-        Department updatedMachine = departmentService.updateDepartment(department);
+        Department updatedMachine = departmentService.updateDepartment(department, id);
         LOGGER.info("updateDepartment(...) " + updatedMachine);
         return updatedMachine;
     }

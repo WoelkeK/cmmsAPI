@@ -8,7 +8,7 @@ import java.util.List;
 public interface SupplierService {
     List<Supplier> findAllSuppliers();
 
-    Supplier createSupplier();
+    Supplier createSupplier(Supplier supplier);
 
     Supplier findSupplierById(Long id) throws SupplierNotFoundException;
 

@@ -67,7 +67,7 @@ public class WebJobController {
     public String update(@PathVariable(name = "id") Long id,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
-                         Model model) throws CostNotFoundException {
+                         Model model) throws CostNotFoundException, JobNotFoundException {
         LOGGER.info("update()" + job.getId());
 
         if (result.hasErrors()) {
@@ -76,7 +76,7 @@ public class WebJobController {
             return "update-job";
         }
         model.addAttribute("job", job);
-        jobService.updateJob(job);
+        jobService.updateJob(job, id);
         LOGGER.info("update(...)");
         return "redirect:/jobs";
     }
