@@ -1,23 +1,18 @@
 package pl.medos.cmmsApi.controllers;
 
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.InvoiceNotFoundException;
 import pl.medos.cmmsApi.model.Invoice;
-import pl.medos.cmmsApi.model.Part;
 import pl.medos.cmmsApi.model.Resource;
 import pl.medos.cmmsApi.model.Supplier;
 import pl.medos.cmmsApi.repository.ResourceRepository;
 import pl.medos.cmmsApi.service.InvoiceService;
 import pl.medos.cmmsApi.service.ResourceService;
 import pl.medos.cmmsApi.service.SupplierService;
-import pl.medos.cmmsApi.service.impl.InvoiceServiceImpl;
-import pl.medos.cmmsApi.service.impl.SupplierServiceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -47,7 +42,7 @@ public class WebInvoiceController {
         LOGGER.info("listView()");
         List<Invoice> invoices = invoiceService.findAllInvoices();
         modelMap.addAttribute("invoices", invoices);
-        List<Supplier> suppliers = supplierService.list();
+        List<Supplier> suppliers = supplierService.findAllSuppliers();
         modelMap.addAttribute("supplier", suppliers);
         List<Resource> resources = resourceService.findAllResources();
         modelMap.addAttribute("resources", resources);
@@ -58,7 +53,7 @@ public class WebInvoiceController {
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
         modelMap.addAttribute("invoice", new Invoice());
-        List<Supplier> suppliers = supplierService.list();
+        List<Supplier> suppliers = supplierService.findAllSuppliers();
         modelMap.addAttribute("suppliers", suppliers);
         LOGGER.info("createView(...)");
         return "create-invoice.html";
@@ -90,7 +85,7 @@ public class WebInvoiceController {
         LOGGER.info("update()" + id);
         Invoice invoice = invoiceService.findInvoiceById(id);
         modelMap.addAttribute("invoice", invoice);
-        List<Supplier> suppliers = supplierService.list();
+        List<Supplier> suppliers = supplierService.findAllSuppliers();
         modelMap.addAttribute("suppliers", suppliers);
         LOGGER.info("update(...)");
         return "create-invoice.html";

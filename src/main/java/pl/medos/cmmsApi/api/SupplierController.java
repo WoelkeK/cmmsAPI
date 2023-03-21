@@ -21,7 +21,7 @@ public class SupplierController {
     @GetMapping("/suppliers")
     public void getAllSuppliers() {
         LOGGER.info("getAllSuppliers()");
-        List<Supplier> allSuppliers = supplierService.list();
+        List<Supplier> allSuppliers = supplierService.findAllSuppliers();
         LOGGER.info("getAllSuppliers(...)");
 
     }
@@ -29,7 +29,7 @@ public class SupplierController {
     @PostMapping("/supplier")
     public void createSupplier() {
         LOGGER.info("createSupplier)");
-        Supplier createdSupplier = supplierService.create();
+        Supplier createdSupplier = supplierService.createSupplier();
         LOGGER.info("createSupplier(...)" + createdSupplier);
 
     }
@@ -37,14 +37,14 @@ public class SupplierController {
     @GetMapping("/supplier/{id}")
     public void findSupplierById(@PathVariable(name = "id") Long id) throws SupplierNotFoundException {
         LOGGER.info("findSupplierById()");
-        Supplier supplierById = supplierService.read(id);
+        Supplier supplierById = supplierService.findSupplierById(id);
         LOGGER.info("findSupplierById(...)");
     }
 
     @PutMapping("/supplier/{id}")
     public void updateSupplier(@ModelAttribute Supplier supplier, @PathVariable(name = "id") Long id) {
         LOGGER.info("updatesupplier()" + id);
-        Supplier updatedsupplier = supplierService.update(supplier, id);
+        Supplier updatedsupplier = supplierService.updateSupplier(supplier, id);
         LOGGER.info("updatesupplier(...)");
 
     }
@@ -52,7 +52,7 @@ public class SupplierController {
     @DeleteMapping("/supplier/{id}")
     public void deleteSupplier(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteSupplier()");
-        supplierService.delete(id);
+        supplierService.deleteSupplier(id);
         LOGGER.info("deleteSupplier(...)");
 
     }

@@ -25,7 +25,7 @@ public class SupplierServiceImpl implements SupplierService {
         this.supplierMapper = supplierMapper;
     }
 
-    public List<Supplier> list() {
+    public List<Supplier> findAllSuppliers() {
         LOGGER.info("list()");
         List<SupplierEntity> supplierEntities = supplierRepository.findAll();
         List<Supplier> supplierModels = supplierMapper.list(supplierEntities);
@@ -33,7 +33,7 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierModels;
     }
 
-    public Supplier create() {
+    public Supplier createSupplier() {
         LOGGER.info("create()");
         SupplierEntity supplierEntity = supplierMapper.modelToEntity(new Supplier());
         SupplierEntity savedSupplierEntity = supplierRepository.save(supplierEntity);
@@ -42,7 +42,7 @@ public class SupplierServiceImpl implements SupplierService {
         return savedSupplierModel;
     }
 
-    public Supplier read(Long id) throws SupplierNotFoundException {
+    public Supplier findSupplierById(Long id) throws SupplierNotFoundException {
         LOGGER.info("read(" + id + ")");
         Optional<SupplierEntity> optionalSupplierEntity = supplierRepository.findById(id);
         SupplierEntity supplierEntity = optionalSupplierEntity.orElseThrow(
@@ -52,7 +52,7 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierModel;
     }
 
-    public Supplier update(Supplier supplier, Long id) {
+    public Supplier updateSupplier(Supplier supplier, Long id) {
         LOGGER.info("update()" + supplier);
         SupplierEntity supplierEntity = supplierMapper.modelToEntity(supplier);
         SupplierEntity updatedSupplierEntity = supplierRepository.save(supplierEntity);
@@ -61,7 +61,7 @@ public class SupplierServiceImpl implements SupplierService {
         return updatedSupplierModel;
     }
 
-    public void delete(Long id) {
+    public void deleteSupplier(Long id) {
         LOGGER.info("delete()");
         supplierRepository.deleteById(id);
         LOGGER.info("delete(...)");

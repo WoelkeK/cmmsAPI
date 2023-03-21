@@ -25,7 +25,7 @@ public class WebSupplierController {
     @GetMapping
     public String listView(ModelMap modelMap) {
         LOGGER.info("listView()");
-        List<Supplier> suppliers = supplierServiceImpl.list();
+        List<Supplier> suppliers = supplierServiceImpl.findAllSuppliers();
         modelMap.addAttribute("suppliers", suppliers);
         LOGGER.info("listView(...)");
         return "list-supplier.html";
@@ -42,7 +42,7 @@ public class WebSupplierController {
     @PostMapping(value = "/create")
     public String create(@ModelAttribute(name = "supplier") Supplier supplier) {
         LOGGER.info("create()");
-        Supplier savedSupplier = supplierServiceImpl.create(supplier);
+        Supplier savedSupplier = supplierServiceImpl.createSupplier();
         LOGGER.info("create(...)" + savedSupplier);
         return "redirect:/suppliers";
     }
@@ -52,7 +52,7 @@ public class WebSupplierController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws SupplierNotFoundException {
         LOGGER.info("read(" + id + ")");
-        Supplier supplierModel = supplierServiceImpl.read(id);
+        Supplier supplierModel = supplierServiceImpl.findSupplierById(id);
         modelMap.addAttribute("supplier", supplierModel);
         LOGGER.info("read(...)" + supplierModel);
         return "read-supplier.html";
@@ -63,7 +63,7 @@ public class WebSupplierController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws SupplierNotFoundException {
         LOGGER.info("update()" + id);
-       Supplier supplier = supplierServiceImpl.read(id);
+       Supplier supplier = supplierServiceImpl.findSupplierById(id);
         modelMap.addAttribute("supplier", supplier);
         LOGGER.info("update(...)");
         return "create-supplier.html";
@@ -71,9 +71,10 @@ public class WebSupplierController {
 
     @PutMapping(value = "/update")
     public String update(
+            @PathVariable(name = "id") Long id,
             @ModelAttribute(name = "supplier") Supplier supplier) throws SupplierNotFoundException {
         LOGGER.info("update()" + supplier);
-        Supplier updatedsupplier = supplierServiceImpl.update(supplier);
+        Supplier updatedsupplier = supplierServiceImpl.updateSupplier(supplier, id);
         LOGGER.info("update(...)" + updatedsupplier);
         return "redirect:/suppliers";
     }
@@ -81,7 +82,7 @@ public class WebSupplierController {
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("delete(" + id + ")");
-        supplierServiceImpl.delete(id);
+        supplierServiceImpl.deleteSupplier(id);
         LOGGER.info("delete(...)");
         return "redirect:/suppliers";
     }
