@@ -102,7 +102,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job updateJob(Job job) throws CostNotFoundException {
+    public Job updateJob(Job job){
         LOGGER.info("update()" + job);
         Job calcJob = costCalc(job);
         JobEntity jobEntity = jobMapper.modelToEntity(calcJob);
@@ -119,7 +119,7 @@ public class JobServiceImpl implements JobService {
         LOGGER.info("delete(...)");
     }
 
-    private Job costCalc(Job job) throws CostNotFoundException {
+    private Job costCalc(Job job){
         LOGGER.info("costCalc()" + job);
         Cost cost = costService.searchCostByUnit("h");
         LocalDateTime jobStartTime = job.getJobStartTime();

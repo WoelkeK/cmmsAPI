@@ -23,7 +23,7 @@ public interface JobService {
 
     Job findJobById(Long id) throws JobNotFoundException;
 
-    Job updateJob(Job job) throws CostNotFoundException;
+    Job updateJob(Job job);
 
     void deleteJob(Long id);
 
