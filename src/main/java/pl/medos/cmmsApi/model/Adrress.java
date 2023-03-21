@@ -17,4 +17,6 @@ public class Adrress {
     private String street;
     private int number;
 
+    private double code;
+
 }
