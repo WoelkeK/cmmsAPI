@@ -14,34 +14,31 @@
 
 
             <form action="#" th:action="@{/invoices/create}" th:object="${invoice}" method="post"
-                  class="space-y-8 divide-y divide-gray-700">
-                <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
-                    <div class="space-y-6 sm:space-y-6">
+                  class="space-y-4 divide-y divide-gray-300">
+                <div class="space-y-2 divide-y divide-gray-700 sm:space-y-5">
+                    <div class="space-y-2 sm:space-y-6">
                         <div>
                             <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Panel Rejestracji
                                 Faktury</h3>
                             <p class="mt-2 max-w-2xl text-sm text-gray-500">Umożliwa zarejestrowanie faktury w
                                 systemie</p>
                         </div>
-
                     </div>
                 </div>
 
-                <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
+                <div class="space-y-2 pt-8 sm:space-y-5 sm:pt-2">
                     <div>
                         <h3 class="text-xl font-medium leading-6 text-yellow-800">Dane Faktury</h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-700">Należy wprowadzić wszystkie dane, w celu
-                            poprawnej identyfikacji.</p>
+<!--                        <p class="mt-1 max-w-2xl text-sm text-gray-700">Należy wprowadzić wszystkie dane, w celu-->
+<!--                            poprawnej identyfikacji.</p>-->
                     </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
                         <label for="invoice-id"
                                class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2"></label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
-
                             <input type="hidden" th:field="${invoice.id}" id="invoice-id" name="invoice-id"
-                                   autocomplete="invoice"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                                   autocomplete="invoice">
                         </div>
                     </div>
 
@@ -85,75 +82,21 @@
                         </div>
                     </div>
 
-
                     <div class="hidden sm:block" aria-hidden="true">
-                        <div class="py-5">
+                        <div class="py-1">
                             <div class="border-t border-gray-600"></div>
                         </div>
                     </div>
-
-<!--                    <div class="mt-10 sm:mt-0">-->
-<!--                        <div class="md:grid md:grid-cols-3 md:gap-6">-->
-<!--                            <div class="md:col-span-1">-->
-<!--                                <div class="px-4 sm:px-0">-->
-<!--                                    <h3 class="text-base font-semibold leading-6 text-blue-800 ">Wprowadzanie pozycji zakupowych</h3>-->
-<!--                                    <p class="mt-1 text-sm text-gray-600">Nalezy wprowadzić kolejne pozycje z faktury</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="mt-5 md:col-span-2 md:mt-0">-->
-<!--                                <form action="#" th:action="@{/resources/create}" th:object="${resource}" method="post">-->
-<!--                                    <div class="overflow-hidden shadow sm:rounded-md">-->
-<!--                                        <div class="bg-gray-700 px-4 py-5 sm:p-6">-->
-<!--                                            <div class="grid grid-cols-6 gap-6">-->
-
-<!--                                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">-->
-<!--                                                    <label for="resource-name"-->
-<!--                                                           class="block text-lm font-medium leading-6 text-yellow-500">Nazwa</label>-->
-<!--                                                    <input type="text" th:field="${resource.name}" id="invoice-name" name="resource-name" id="resource-name"-->
-<!--                                                           autocomplete="address-level2"-->
-<!--                                                           class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-<!--                                                </div>-->
-
-<!--                                                <div class="col-span-6 sm:col-span-3 lg:col-span-2">-->
-<!--                                                    <label for="region"-->
-<!--                                                           class="block text-lm font-medium leading-6 text-yellow-500">Ilość-->
-<!--                                                    </label>-->
-<!--                                                    <input type="text" name="region" id="region"-->
-<!--                                                           autocomplete="address-level1"-->
-<!--                                                           class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-<!--                                                </div>-->
-
-<!--                                                <div class="col-span-6 sm:col-span-3 lg:col-span-2">-->
-<!--                                                    <label for="postal-code"-->
-<!--                                                           class="block text-lm font-medium leading-6 text-yellow-500">Cena-->
-<!--                                                    </label>-->
-<!--                                                    <input type="text" name="postal-code" id="postal-code"-->
-<!--                                                           autocomplete="postal-code"-->
-<!--                                                           class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="bg-yellow-500 px-4 py-3 text-right sm:px-6">-->
-<!--                                            <button type="submit"-->
-<!--                                                    class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">-->
-<!--                                                Dodaj-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </form>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
                     <div class="hidden sm:block" aria-hidden="true">
-                        <div class="py-5">
+                        <div class="py-1">
                             <div class="border-t border-gray-200"></div>
                         </div>
                     </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
                         <label for="invoice-supplier"
-                               class="block text-lm font-medium text-gray-800 sm:mt-px sm:pt-2">Zestawienie dodanych pozycji</label>
+                               class="block text-lm font-medium text-gray-800 sm:mt-px sm:pt-2">Zestawienie dodanych
+                            pozycji</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
 
 
@@ -161,128 +104,169 @@
                                 <div class="sm:flex sm:items-center">
                                     <div class="sm:flex-auto">
                                         <h1 class="text-base font-semibold leading-6 text-gray-900">Lista pozycji</h1>
-                                        <p class="mt-2 text-sm text-gray-700">Lista pozycji na wprowadzonych z obecnej faktury do systemu.</p>
+                                        <p class="mt-2 text-sm text-gray-700">Lista pozycji na wprowadzonych z obecnej
+                                            faktury do systemu.</p>
 
                                     </div>
                                 </div>
                             </div>
 
-
                             <div class="inline-block min-w-fit py-2">
-                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                                    <table class="min-w-fit divide-y divide-gray-300 ">
-                                        <thead class="bg-gray-50">
-                                        <tr>
-                                            <th scope="col"
-                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                                Index
-                                            </th>
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                Nazwa
-                                            </th>
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                ilość
-                                            </th>
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                Cena
-                                                netto
-                                            </th>
-                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                                <span class="sr-only">Edytuj</span>
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="divide-y divide-gray-200 bg-white">
-                                        <tr>
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                1
-                                            </td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Sterownik
-                                                PLC
-                                                Siemens S1200
-                                            </td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">2</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">3488.22
-                                            </td>
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                <a href="#"
-                                                   class="text-indigo-600 hover:text-indigo-900">Edytuj<span
-                                                        class="sr-only">, Lindsay Walton</span></a>
-                                            </td>
-                                        </tr>
 
-                                        <!-- More people... -->
-                                        </tbody>
-
-                                    </table>
+                                <div class="flex flex-col mt-4">
+                                    <div class="overflow-x-auto">
+                                        <table id="myTable" class="table-auto border-collapse border border-gray-500">
+                                            <thead>
+                                            <tr>
+                                                <th class="px-4 py-2 border border-gray-500">Nazwa</th>
+                                                <th class="px-4 py-2 border border-gray-500">Ilość</th>
+                                                <th class="px-4 py-2 border border-gray-500">Cena</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="myTableBody">
+                                            <tr th:each="row, rowStat : ${rows}">
+                                                <td><input type="text" th:field="*{__${rowStat.index}__}.name"
+                                                           class="px-2 py-1 border border-gray-500"></td>
+                                                <td><input type="number" th:field="*{__${rowStat.index}__}.quantity"
+                                                           class="px-2 py-1 border border-gray-500"></td>
+                                                <td><input type="text" th:field="*{__${rowStat.index}__}.price"
+                                                           class="px-2 py-1 border border-gray-500"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" id="addRowBtn"
+                                            class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        Kliknij, aby dodać następna pozycję
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
 
-                    <!--                    <form action="#" th:action="@{/resources/create}" th:object="${form}"-->
-                    <!--                          method="post">-->
-                    <!--                        <fieldset>-->
-                    <!--                            <input type="submit" id="submitButton" th:value="Save">-->
-                    <!--                            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>-->
-                    <!--                            <table>-->
-                    <!--                                <thead>-->
-                    <!--                                <tr>-->
-                    <!--                                    <th> Nazwa</th>-->
-                    <!--                                    <th> Ilość</th>-->
+                <div class="space-y-6 sm:space-y-5">
 
-                    <!--                                </tr>-->
-                    <!--                                </thead>-->
-                    <!--                                <tbody>-->
-                    <!--                                <tr th:each="resource, itemStat : ${resources}">-->
-                    <!--                                    <td><input th:field="*{resource[__${itemStat.index}__]resource.name}" /></td>-->
-                    <!--                                    <td><input th:field="*{resource[__${itemStat.index}__]resource.quantity" /></td>-->
-
-                    <!--                                </tr>-->
-                    <!--                                </tbody>-->
-                    <!--                            </table>-->
-                    <!--                        </fieldset>-->
-                    <!--                    </form>-->
-
-
-                    <div class="space-y-6 sm:space-y-5">
-
-                        <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
-                            <label for="message"
-                                   class="block text-xl font-medium text-gray-700 sm:mt-px sm:pt-2">Dodatkowe
-                                informacje
-                                o
-                                dostawcy</label>
-                            <div class="mt-1 sm:col-span-2 sm:mt-0">
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
+                        <label for="message"
+                               class="block text-xl font-medium text-gray-700 sm:mt-px sm:pt-2">Dodatkowe
+                            informacje
+                            o
+                            dostawcy</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
                         <textarea id="message" name="message" rows="3"
                                   class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                                <p class="mt-2 text-sm text-gray-700">Wprowadź dodatkowe informacje na temat
-                                    dostawcy.</p>
-                            </div>
+                            <p class="mt-2 text-sm text-gray-700">Wprowadź dodatkowe informacje na temat
+                                dostawcy.</p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="pt-5">
-                        <div class="flex justify-end">
-                            <button type="button"
-                                    class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <div class="pt-5">
+                    <div class="flex justify-end">
+                        <button type="button"
+                                class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
 
-                                <a th:href="@{/invoices}">Wstecz</a>
-                            </button>
-                            <button type="submit"
-                                    class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                Zapisz
-                            </button>
-                        </div>
+                            <a th:href="@{/invoices}">Wstecz</a>
+                        </button>
+                        <button type="submit"
+                                class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Zapisz
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+  const data = [
+    { name: "", quantity: "", price: "" }
+  ];
+
+  const tableBody = document.getElementById("myTableBody");
+  data.forEach(rowData => {
+    const row = document.createElement("tr");
+
+    Object.values(rowData).forEach(value => {
+      const cell = document.createElement("td");
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = value;
+      input.classList.add("px-2", "py-1", "border", "border-gray-500");
+      cell.appendChild(input);
+      row.appendChild(cell);
+    });
+
+    tableBody.appendChild(row);
+  });
+
+  const addRowBtn = document.getElementById("addRowBtn");
+  addRowBtn.addEventListener("click", () => {
+    const newRow = { name: "", quantity: "", price: "" };
+    data.push(newRow);
+
+    const row = document.createElement("tr");
+
+    Object.values(newRow).forEach(value => {
+      const cell = document.createElement("td");
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = value;
+      input.classList.add("px-2", "py-1", "border", "border-gray-500");
+      cell.appendChild(input);
+      row.appendChild(cell);
+    });
+
+    tableBody.appendChild(row);
+  });
+
+
+
+
+
+
+
+</script>
+
+
+
+<!--<div class="flex flex-col">-->
+<!--    <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">-->
+<!--        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">-->
+<!--            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">-->
+<!--                <table class="min-w-full divide-y divide-gray-200">-->
+<!--                    <thead class="bg-gray-50">-->
+<!--                    <tr>-->
+<!--                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">-->
+<!--                            Item Name-->
+<!--                        </th>-->
+<!--                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">-->
+<!--                            Quantity-->
+<!--                        </th>-->
+<!--                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">-->
+<!--                            Price-->
+<!--                        </th>-->
+<!--                        <th scope="col" class="relative px-6 py-3">-->
+<!--                            <span class="sr-only">Edit</span>-->
+<!--                        </th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody class="bg-white divide-y divide-gray-200" id="item-list">-->
+<!--                    &lt;!&ndash; Table data will be dynamically generated here &ndash;&gt;-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="my-2">-->
+<!--        <button class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">-->
+<!--            Submit-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+
 </body>
 </html>
