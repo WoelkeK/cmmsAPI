@@ -9,7 +9,6 @@ import pl.medos.cmmsApi.exception.InvoiceNotFoundException;
 import pl.medos.cmmsApi.model.Invoice;
 import pl.medos.cmmsApi.model.Resource;
 import pl.medos.cmmsApi.model.Supplier;
-import pl.medos.cmmsApi.repository.ResourceRepository;
 import pl.medos.cmmsApi.service.InvoiceService;
 import pl.medos.cmmsApi.service.ResourceService;
 import pl.medos.cmmsApi.service.SupplierService;

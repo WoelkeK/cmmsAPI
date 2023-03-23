@@ -18,7 +18,7 @@ public class SupplierController {
 
     private final SupplierService supplierService;
 
-    @GetMapping("/api/suppliers")
+    @GetMapping("/suppliers")
     public List<Supplier> getAllSuppliers() {
         LOGGER.info("getAllSuppliers()");
         List<Supplier> allSuppliers = supplierService.findAllSuppliers();
