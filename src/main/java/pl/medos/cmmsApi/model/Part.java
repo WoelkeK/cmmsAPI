@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Part {
 
-    private Long id;
+    private long id;
     private String name;
     private int quantity;
 }

@@ -45,6 +45,7 @@ public class SpringSecurity {
                 .requestMatchers("/suppliers/**").hasRole("ADMIN")
                 .requestMatchers("/resources/**").hasRole("ADMIN")
                 .requestMatchers("/costs/**").hasRole("ADMIN")
+                .requestMatchers("/parts/**").hasRole("ADMIN")
 //                .requestMatchers("/users").hasRole("USER")
                 .and()
                 .formLogin(

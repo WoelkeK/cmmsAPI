@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Parts</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1> Add Parts </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-info" href="#" th:href="@{/parts/all}"> Back to All Parts </a>
+      <form action="#" class="form-horizontal"
+            th:action="@{/parts/save}"
+            th:object="${form}"
+            method="post">
+        <fieldset>
+					<span class="pull-right">
+						    <input type="submit" id="submitButton" class="btn btn-success" th:value="Save">
+						    <input type="reset" id="resetButton" class="btn btn-danger" th:value="Reset"/>
+					</span>
+          <table class="table">
+            <thead>
+            <tr>
+              <th></th>
+              <th> Nazwa</th>
+              <th> Ilość</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="part, itemStat : ${form.parts}">
+              <td><input hidden th:name="|parts[${itemStat.index}].id|" th:value="${part.getId()}"/></td>
+              <td><input th:placeholder="Nazwa + ' ' + ${itemStat.count}" th:name="|parts[${itemStat.index}].name|" th:value="${part.getName()}"
+                         required/></td>
+              <td><input th:placeholder="Ilość + ' ' + ${itemStat.count}" th:name="|parts[${itemStat.index}].quantity|"
+                         th:value="${part.getQuantity()}" required/></td>
+            </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
