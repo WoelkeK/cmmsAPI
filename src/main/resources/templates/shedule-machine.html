@@ -19,8 +19,7 @@
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">
                         <div>
-                            <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Panel Rejestracji
-                                Maszyny</h3>
+                            <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Harmonogram przeglądów</h3>
                             <p class="mt-1 max-w-2xl text-sm text-gray-500">Zestawienie wszystkich maszyn.</p>
                         </div>
 
@@ -29,21 +28,11 @@
 
                 <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
                     <div>
-                        <h3 class="text-xl font-medium leading-6 text-yellow-800">Dane Maszyny</h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-700">Należy wprowadzić wszystkie dane, w celu
-                            poprawnej identyfikacji.</p>
+                        <h3 class="text-xl font-medium leading-6 text-yellow-800">Ustawienie przeglądów</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-700">Możliwe opcje przeglądów okresowych.</p>
                     </div>
 
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineName"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Nazwa maszyny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                            <input type="text" th:field="${machine.name}" id="machineName" name="machine-name"
-                                   autocomplete="machine-name"
-                                   class="block w-full max-w-lg rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
                         <label for="machineModel"
                                class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Model/Typ
@@ -55,27 +44,7 @@
                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineYear"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Rok produkcji</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                            <input type="text" th:field="${machine.manufactured}" id="machineYear" name="machineYear"
-                                   autocomplete="machine-year"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineSerial"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Numer seryjny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                            <input type="text" th:field="${machine.serialNumber}" id="machineSerial"
-                                   name="machineSerial"
-                                   autocomplete="machine-serial"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
                         <label for="departmentId"

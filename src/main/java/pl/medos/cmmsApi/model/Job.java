@@ -2,10 +2,7 @@ package pl.medos.cmmsApi.model;
 
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -13,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 @Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Job {

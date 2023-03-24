@@ -1,7 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
 import org.springframework.stereotype.Service;
-import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.Cost;
 import pl.medos.cmmsApi.model.Department;
