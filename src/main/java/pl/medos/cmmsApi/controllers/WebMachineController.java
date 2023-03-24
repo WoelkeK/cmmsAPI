@@ -135,6 +135,21 @@ public class WebMachineController {
         return "redirect:/machines";
     }
 
+    @GetMapping(value = "/shedule/{id}")
+    public String sheduleView(
+            @PathVariable(name = "id") Long id,
+            ModelMap modelMap) throws Exception {
+        LOGGER.info("sheduleView()");
+        Machine machine = machineService.findMachineById(id);
+        modelMap.addAttribute("machine", machine);
+        List<Department> departments = departmentService.findAllDepartments();
+        modelMap.addAttribute("departments", departments);
+        return "shedule-machine.html";
+    }
+
+
+
+
     @GetMapping(value = "/export")
     public void exportMachines(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");

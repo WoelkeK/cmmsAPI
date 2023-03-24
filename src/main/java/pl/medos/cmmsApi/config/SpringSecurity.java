@@ -33,6 +33,7 @@ public class SpringSecurity {
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/swagger-resources/**", "/swagger-resources", "/v3/api-docs/**", "/proxy/**").permitAll()
                 .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
+                .requestMatchers("/cron/**").permitAll()
                 .requestMatchers("/index/**").hasRole("ADMIN")
                 .requestMatchers("/export/**").hasRole("ADMIN")
                 .requestMatchers("/imports/**").hasRole("ADMIN")

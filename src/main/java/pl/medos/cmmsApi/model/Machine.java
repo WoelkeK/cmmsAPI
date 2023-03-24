@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,5 +21,7 @@ public class Machine {
     private String serialNumber;
     private Department department;
     private String status;
+    private LocalDateTime installDate;
+
 
 }

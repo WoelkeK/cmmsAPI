@@ -634,5 +634,17 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            setInterval(function() {
+                $.get('/jobs', function(data) {
+                    console.log(data);
+                    window.location.reload(2);
+                });
+            }, 5000); // send GET request every 5 seconds
+        });
+    </script>
 </body>
 </html>

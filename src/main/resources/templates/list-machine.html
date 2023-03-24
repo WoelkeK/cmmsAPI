@@ -9,42 +9,11 @@
 <body class="bg-gray-400">
 
 <div>
-    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
-        <!--
-          Off-canvas menu backdrop, show/hide based on off-canvas menu state.
 
-          Entering: "transition-opacity ease-linear duration-300"
-            From: "opacity-0"
-            To: "opacity-100"
-          Leaving: "transition-opacity ease-linear duration-300"
-            From: "opacity-100"
-            To: "opacity-0"
-        -->
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
-
         <div class="fixed inset-0 z-40 flex">
-            <!--
-              Off-canvas menu, show/hide based on off-canvas menu state.
-
-              Entering: "transition ease-in-out duration-300 transform"
-                From: "-translate-x-full"
-                To: "translate-x-0"
-              Leaving: "transition ease-in-out duration-300 transform"
-                From: "translate-x-0"
-                To: "-translate-x-full"
-            -->
             <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800">
-                <!--
-                  Close button, show/hide based on off-canvas menu state.
-
-                  Entering: "ease-in-out duration-300"
-                    From: "opacity-0"
-                    To: "opacity-100"
-                  Leaving: "ease-in-out duration-300"
-                    From: "opacity-100"
-                    To: "opacity-0"
-                -->
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                     <button type="button"
                             class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -62,14 +31,9 @@
                         <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="/"
                            class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                            <!--
-                              Heroicon name: outline/home
 
-                              Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
-                            -->
                             <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                                  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                  aria-hidden="true">
@@ -302,11 +266,7 @@
         </div>
         <main class="flex-1 overflow-y-scroll">
             <div class="py-6">
-                <!--                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
-                <!--                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>-->
-                <!--                </div>-->
                 <div class="mx-auto max-w-8xl px-4 sm:px-6 md:px-8">
-                    <!-- Replace with your content -->
 
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
@@ -359,6 +319,11 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
                                                     Status
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    Instalacja
+                                                </th>
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
                                                     <span class="sr-only">Edit</span>
                                                 </th>
@@ -366,7 +331,7 @@
                                             </thead>
                                             <tbody class="bg-gray-500">
                                             <tr class="border-t border-gray-700">
-                                                <th colspan="8" scope="colgroup"
+                                                <th colspan="9" scope="colgroup"
                                                     class="bg-green-400 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
                                                     Aktywne Maszyny
                                                 </th>
@@ -397,16 +362,24 @@
                                                 <td th:text="${machine.status}"
                                                     class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Status
                                                 </td>
+                                                <td th:text="${#temporals.format(machine.installDate, 'dd MMMM yyyy')}"
+                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data instalacji
+                                                </td>
 
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
-                                                    <a th:href="@{/machines/update/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-900">Edycja<span
+
+                                                    <a th:href="@{/machines/shedule/{id}(id=${machine.id})}"
+                                                       class="text-indigo-800 hover:text-indigo-300">Przeglądy<span
+                                                            class="sr-only"></span></a>
+
+                                                    <a th:href="@{/machines/shedule/{id}(id=${machine.id})}"
+                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
                                                     <a th:href="@{/machines/read/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-900">Pokaż<span
+                                                       class="text-indigo-800 hover:text-indigo-300">Pokaż<span
                                                             class="sr-only"></span></a>
                                                     <a th:href="@{/machines/delete/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-900">Usuń<span
+                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
                                             </tr>
@@ -414,7 +387,7 @@
                                             </tbody>
                                             <tbody class="bg-grey">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="8" scope="colgroup"
+                                                <th colspan="9" scope="colgroup"
                                                     class="bg-grey-700 px-4 py-2 text-center text-lm font-semibold text-gray-500 sm:px-6">
                                                     Koniec zestawienia
                                                 </th>

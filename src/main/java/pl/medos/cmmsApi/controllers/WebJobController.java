@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.validation.Valid;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -13,8 +14,9 @@ import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
-import pl.medos.cmmsApi.service.impl.MachineServiceImpl;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,12 +32,53 @@ public class WebJobController {
     private DepartmentService departmentService;
     private MachineService machineService;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, CostService costService) {
+
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
     }
+
+//    @Scheduled(fixedDelay = 100000)
+    public void createJob() {
+
+        Department department = new Department();
+        department.setId(1L);
+        department.setName("department");
+        department.setLocation("location");
+
+        Machine machine = new Machine();
+        machine.setId(1L);
+        machine.setName("name");
+        machine.setModel("model");
+        machine.setManufactured(1234);
+        machine.setDepartment(department);
+
+        Employee employee = new Employee();
+        employee.setId(1L);
+        employee.setName("fullName");
+        employee.setPhone("1234567890");
+        employee.setEmail("aaaa@bbbb.cc");
+        employee.setDepartment(department);
+
+        Job job = new Job();
+        job.setRequestDate(LocalDateTime.now());
+        job.setUser(new User());
+        job.setEmployee(employee);
+        job.setDepartment(department);
+        job.setMachine(machine);
+        job.setMessage("message");
+        job.setDirectContact(true);
+        job.setSolution("solution");
+        job.setJobStartTime(LocalDateTime.now());
+        job.setJobStopTime(LocalDateTime.now());
+        job.setCalcCost(123.33);
+
+        jobService.createJob(job);
+
+    }
+
 
     @GetMapping
     public String listView(Model model) {

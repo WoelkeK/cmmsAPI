@@ -4,10 +4,11 @@ import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
+
 import pl.medos.cmmsApi.repository.MachineRepository;
-import pl.medos.cmmsApi.repository.entity.JobEntity;
 import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.MachineService;
+
 import pl.medos.cmmsApi.service.mapper.MachineMapper;
 
 import java.util.ArrayList;
@@ -16,12 +17,13 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-public class MachineServiceImpl implements MachineService {
+public class MachineServiceImpl implements MachineService{
 
     private static final Logger LOGGER = Logger.getLogger(MachineServiceImpl.class.getName());
 
     private MachineRepository machineRepository;
     private MachineMapper machineMapper;
+
 
     private List<Machine> sortedMachines;
 
