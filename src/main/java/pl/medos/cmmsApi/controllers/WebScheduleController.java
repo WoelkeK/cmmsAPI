@@ -121,6 +121,6 @@ public class WebScheduleController {
         LOGGER.info("search()" + query);
         Schedule scheduleByName = scheduleService.findScheduleByName(query);
         model.addAttribute("schedule", scheduleByName);
-        return "list-schedule";
+        return "list-schedules";
     }
 }
