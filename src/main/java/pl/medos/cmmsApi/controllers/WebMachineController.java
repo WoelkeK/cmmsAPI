@@ -88,11 +88,11 @@ public class WebMachineController {
         return "update-machine.html";
     }
 
-    @PostMapping(value = "/update")
-    public String update(
-            @ModelAttribute(name = "machine") Machine machine) {
+    @PostMapping(value = "/update/{id}")
+    public String update(@PathVariable (name = "id") Long id,
+            @ModelAttribute(name = "machine") Machine machine) throws MachineNotFoundException {
         LOGGER.info("update()" + machine);
-        Machine savedMachine = machineService.updateMachine(machine);
+        Machine savedMachine = machineService.updateMachine(machine, id);
         LOGGER.info("update(...)" + savedMachine);
         return "redirect:/machines";
     }

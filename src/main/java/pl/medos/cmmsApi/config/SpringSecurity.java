@@ -34,6 +34,7 @@ public class SpringSecurity {
                 .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/cron/**").permitAll()
+                .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/index/**").hasRole("ADMIN")
                 .requestMatchers("/export/**").hasRole("ADMIN")
                 .requestMatchers("/imports/**").hasRole("ADMIN")
