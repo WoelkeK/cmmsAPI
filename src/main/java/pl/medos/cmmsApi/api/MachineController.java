@@ -44,10 +44,11 @@ public class MachineController {
         return readedMachine;
     }
 
-    @PutMapping("/machine")
-    public Machine update(@RequestBody Machine machine) {
+    @PutMapping("/machine/{id}")
+    public Machine update(@PathVariable (name = "id") Long id,
+            @RequestBody Machine machine) throws MachineNotFoundException {
         LOGGER.info("updateMachine(" + machine + ")");
-        Machine updatedMachine = machineServiceImpl.updateMachine(machine);
+        Machine updatedMachine = machineServiceImpl.updateMachine(machine, id);
         LOGGER.info("updateMachine(...) " + updatedMachine);
         return updatedMachine;
 

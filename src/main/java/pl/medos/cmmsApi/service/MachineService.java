@@ -18,7 +18,7 @@ public interface MachineService {
 
     Machine findMachineById(Long id) throws MachineNotFoundException;
 
-    Machine updateMachine(Machine machine);
+    Machine updateMachine(Machine machine, Long id) throws MachineNotFoundException;
 
     void deleteMachine(Long id);
 

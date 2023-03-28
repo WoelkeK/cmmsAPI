@@ -80,10 +80,14 @@ public class MachineServiceImpl implements MachineService{
         return machineModel;
     }
 
-    public Machine updateMachine(Machine machine) {
+    public Machine updateMachine(Machine machine, Long id) throws MachineNotFoundException {
         LOGGER.info("update()" + machine);
-        MachineEntity machineEntity = machineMapper.modelToEntity(machine);
-        MachineEntity updatedMachineEntity = machineRepository.save(machineEntity);
+        Optional<MachineEntity> optionalMachineEntity = machineRepository.findById(id);
+        MachineEntity machineEntity = optionalMachineEntity.orElseThrow(
+                () -> new MachineNotFoundException("Brak maszyny o podanym id " + id));
+
+        MachineEntity editedMachineEntity = machineMapper.modelToEntity(machine);
+        MachineEntity updatedMachineEntity = machineRepository.save(editedMachineEntity);
         Machine updatedMachineModel = machineMapper.entityToModel(updatedMachineEntity);
         LOGGER.info("update(...) " + updatedMachineModel);
         return updatedMachineModel;
