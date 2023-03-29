@@ -21,9 +21,6 @@ public class ResourceEntity {
     private Long id;
     private String name;
     private double quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "invoice_id")
-    private InvoiceEntity invoice;
+    private double price;
 
 }

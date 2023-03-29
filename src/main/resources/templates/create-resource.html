@@ -1,6 +1,6 @@
 <!DOCTYPE html >
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Panel Magazyn</title>
@@ -34,6 +34,17 @@
                             poprawnej identyfikacji.</p>
                     </div>
 
+                    <div>
+                        <label for="resource-id"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2"></label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+
+                            <input type="hidden" th:field="${resource.id}" id="resource-id" name="resource-id"
+                                   autocomplete="resource-d"
+                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                        </div>
+                    </div>
+
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
                         <label for="resource-name"
                                class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Nazwa zasobu</label>
@@ -55,32 +66,34 @@
                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
-                    <div>
-                        <label for="resource-id"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2"></label>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
+                        <label for="resource-price"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Cena</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                            <input type="hidden" th:field="${resource.id}" id="resource-id" name="resource-id"
-                                   autocomplete="resource-d"
+                            <input type="text" th:field="${resource.price}" id="resource-price"
+                                   name="resource-price"
+                                   autocomplete="resource-price"
                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
 
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="resource-invoice"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Faktura zakupu</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-                            <select th:field="${resource.invoice.id}" id="resource-invoice" name="resource-invoice"
-                                    autocomplete="resource-invoice"
-                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                    <!--                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">-->
+                    <!--                        <label for="resource-invoice"-->
+                    <!--                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Faktura zakupu</label>-->
+                    <!--                        <div class="mt-1 sm:col-span-2 sm:mt-0">-->
+                    <!--                            <select th:field="${resource.invoice.id}" id="resource-invoice" name="resource-invoice"-->
+                    <!--                                    autocomplete="resource-invoice"-->
+                    <!--                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
 
-                                <option th:each="invoice: ${invoices}"
-                                        th:text="${invoice.number}"
-                                        th:value="${invoice.id}">
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+                    <!--                                <option th:each="invoice: ${invoices}"-->
+                    <!--                                        th:text="${invoice.number}"-->
+                    <!--                                        th:value="${invoice.id}">-->
+                    <!--                                </option>-->
+                    <!--                            </select>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                     <!--                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">-->
                     <!--                    <label for="machineStatus"-->
