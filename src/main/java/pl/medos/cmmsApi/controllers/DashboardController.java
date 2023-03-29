@@ -97,8 +97,14 @@ public class DashboardController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineService.findAllMachines();
+        model.addAttribute("machines", machines);
         LOGGER.info("updateView(...)" + job.getRequestDate());
-        return "update-service.html";
+        return "dashboard-edit.html";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -116,7 +122,7 @@ public class DashboardController {
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
         LOGGER.info("update(...)");
-        return "redirect:/jobs";
+        return "redirect:/dashboard";
     }
 
     @GetMapping(value = "/create")
