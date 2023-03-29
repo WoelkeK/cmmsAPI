@@ -40,7 +40,7 @@ public class WebJobController {
         this.machineService = machineService;
     }
 
-//    @Scheduled(fixedDelay = 100000)
+    //    @Scheduled(fixedDelay = 100000)
     public void createJob() {
 
         Department department = new Department();
@@ -78,7 +78,6 @@ public class WebJobController {
         jobService.createJob(job);
 
     }
-
 
     @GetMapping
     public String listView(Model model) {
