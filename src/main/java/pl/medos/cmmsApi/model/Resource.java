@@ -14,6 +14,6 @@ public class Resource {
     private Long id;
     private String name;
     private double quantity;
-    private Invoice invoice;
+    private double price;
 
 }
