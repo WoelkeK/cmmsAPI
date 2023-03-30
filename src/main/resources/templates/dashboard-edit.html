@@ -10,225 +10,237 @@
 <div class="min-h-full">
     <div class="bg-gray-800 pb-32">
         <nav class="bg-gray-800">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="border-b border-gray-700">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-18">
+                <div class="border-b border-blue-800">
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
-                                <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                                <img class="h-14 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+
+                                <div class="hidden md:block">
+                                    <div class="ml-24 flex items-baseline space-x-4">
+                                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                                        <a href="#"
+                                           class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                           aria-current="page">Panel Główny</a>
+
+                                        <a href="#"
+                                           class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Kadry</a>
+
+                                        <a href="#"
+                                           class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Zgłoszenia</a>
+
+                                    </div>
+                                </div>
                             </div>
                             <div class="hidden md:block">
-                                <div class="ml-10 flex items-baseline space-x-4">
-                                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    <a href="#"
-                                       class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                                       aria-current="page">Panel Główny</a>
-
-                                    <a href="#"
-                                       class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Kadry</a>
-
-                                    <a href="#"
-                                       class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Zgłoszenia</a>
+                                <div class="ml-4 flex items-center md:ml-6">
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="hidden md:block">
-                            <div class="ml-4 flex items-center md:ml-6">
-
+                            <div class="-mr-2 flex md:hidden">
+                                <!-- Mobile menu button -->
+                                <button type="button"
+                                        class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <!-- Menu open: "hidden", Menu closed: "block" -->
+                                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                         stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                                    </svg>
+                                    <!-- Menu open: "block", Menu closed: "hidden" -->
+                                    <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                         stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
                             </div>
-                        </div>
-                        <div class="-mr-2 flex md:hidden">
-                            <!-- Mobile menu button -->
-                            <button type="button"
-                                    class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                    aria-controls="mobile-menu" aria-expanded="false">
-                                <span class="sr-only">Open main menu</span>
-                                <!-- Menu open: "hidden", Menu closed: "block" -->
-                                <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                     stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-                                </svg>
-                                <!-- Menu open: "block", Menu closed: "hidden" -->
-                                <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                     stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Mobile menu, show/hide based on menu state. -->
-            <div class="border-b border-gray-700 md:hidden" id="mobile-menu">
-                <div class="space-y-1 px-2 py-3 sm:px-3">
-                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="#" class="bg-yellow-700 text-white block rounded-md px-3 py-2 text-base font-medium"
-                       aria-current="page">Panel główny</a>
+                <!-- Mobile menu, show/hide based on menu state. -->
+                <div class="border-b border-gray-700 md:hidden" id="mobile-menu">
+                    <div class="space-y-1 px-2 py-3 sm:px-3">
+                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                        <a href="#" class="bg-yellow-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+                           aria-current="page">Panel główny</a>
 
-                    <a href="#"
-                       class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Kadry</a>
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Kadry</a>
 
-                    <a href="#"
-                       class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Zgłoszenia</a>
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Zgłoszenia</a>
+                    </div>
+
                 </div>
-
-            </div>
         </nav>
         <header class="py-10">
+
+
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-yellow-600">Podsumowanie zlecenia</h1>
+                <div class="grid grid-cols-1 gap-x-2 gap-y-8 sm:grid-cols-2">
+                    <div>
+                        <h1 th:text="'Zamknięcie zlecenia nr: ' + ${job.id}"  class="sm:col-span-1 text-3xl font-bold tracking-tight text-yellow-600"></h1>
+                    </div>
+                </div>
             </div>
+
         </header>
+    </div>
 
-        <form role="form" th:action="@{/dashboard/update/{id}(id=${job.id})}" th:object="${job}" method="post">
+
+    <form role="form" th:action="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="post">
 
 
-            <main class="-mt-32">
-                <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+        <main class="-mt-32">
+            <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
 
-                    <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
-                        <div class="px-4 py-5 sm:px-6">
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">Podsumowanie zlecenia</h3>
-                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Szczegóły zadania</p>
-                        </div>
-                        <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
-                            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-4">
+                <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-base font-semibold leading-6 text-gray-900">Podsumowanie zlecenia</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Szczegółowe zestawienie informacji o aktualnym
+                            zleceniu</p>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                        <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-4">
 
-                                <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-400">Imię i nazwisko pracownika</dt>
-                                    <dd th:text="${job.employee.name}" id="employee-name" name="employee-name"
-                                        class="mt-1 text-sm text-gray-900">Imię i nazwisko
-                                    </dd>
-                                </div>
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Imię i nazwisko pracownika</dt>
+                                <dd th:text="${job.employee.name}" id="employee-name" name="employee-name"
+                                    class="mt-1 text-sm text-gray-900">Imię i nazwisko
+                                </dd>
+                            </div>
 
-                                <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-400">Nazwa Maszyny</dt>
-                                    <dd th:text="${job.machine.model}" id="machine-model" name="machine-model"
-                                        class="mt-1 text-sm text-gray-900">Model Maszyny
-                                    </dd>
-                                </div>
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Nazwa Maszyny</dt>
+                                <dd th:text="${job.machine.model}" id="machine-model" name="machine-model"
+                                    class="mt-1 text-sm text-gray-900">Model Maszyny
+                                </dd>
+                            </div>
 
-                                <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-400">Wydział</dt>
-                                    <dd th:text="${job.department.name}" id="department-name" name="department-name"
-                                        class="mt-1 text-sm text-gray-900">Wydział
-                                    </dd>
-                                </div>
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Wydział</dt>
+                                <dd th:text="${job.department.name}" id="department-name" name="department-name"
+                                    class="mt-1 text-sm text-gray-900">Wydział
+                                </dd>
+                            </div>
 
-                                <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-400">Data rozpoczęcia zlecenia</dt>
-                                    <dd th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
-                                        id="job-requestDate" name="job-requestDate" class="mt-1 text-sm text-gray-900">
-                                        Data
-                                    </dd>
-                                </div>
-                            </dl>
-                        </div>
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Data rozpoczęcia zlecenia</dt>
+                                <dd th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
+                                    id="job-requestDate" name="job-requestDate" class="mt-1 text-sm text-gray-900">
+                                    Data
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
 
-                        <input type="hidden" th:field="*{requestDate}">
-                        <input type="hidden" th:field="*{department.id}">
-                        <input type="hidden" th:field="*{machine.id}">
-                        <input type="hidden" th:field="*{message}">
-                        <input type="hidden" th:field="*{employee.id}">
+                    <input type="hidden" th:field="*{requestDate}">
+                    <input type="hidden" th:field="*{department.id}">
+                    <input type="hidden" th:field="*{machine.id}">
+                    <input type="hidden" th:field="*{message}">
+                    <input type="hidden" th:field="*{employee.id}">
 
-                        <div class="px-4 py-5 sm:px-6">
-                            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                <div class="sm:col-span-2">
-                                    <div class="pace-y-6 sm:space-y-5">
+                    <div class="px-4 py-5 sm:px-6">
+                        <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                            <div class="sm:col-span-2">
+                                <div class="pace-y-6 sm:space-y-5">
 
-                                        <div class="bg-light-blue sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
-                                            <label for="solution"
-                                                   class="block text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Opis
-                                                wykonanych
-                                                czynności</label>
-                                            <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                    <textarea th:utext="solution" id="solution" name="solution" rows="3"
+                                    <div class="bg-light-blue sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
+                                        <label for="solution"
+                                               class="block text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Opis
+                                            wykonanych
+                                            czynności</label>
+                                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                                    <textarea th:utext="${solution}" id="solution" name="solution" rows="3"
                                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                                                <p class="mt-2 text-sm text-gray-700">Wprowadź informację, czego dotyczy
-                                                    awaria
-                                                    lub
-                                                    zlecenie.</p>
+                                            <p class="mt-2 text-sm text-gray-500">Wprowadź informację, czego dotyczy
+                                                awaria
+                                                lub
+                                                zlecenie.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class=" mt-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-100 sm:pt-5">
+                                    <label for="jobStartTime"
+                                           class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data
+                                        rozpoczęcia
+                                        zlecenia</label>
+                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
+
+                                        <input type="datetime-local" th:field="${job.jobStartTime}" id="jobStartTime"
+                                               name="jobStartTime"
+                                               autocomplete="datetime-local"
+                                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                                    </div>
+                                </div>
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+                                    <label for="jobStartTime"
+                                           class="block text-lm font-medium text-blue-700 sm:mt-px sm:pt-2">Data
+                                        zakończenia
+                                        zlecenia</label>
+                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
+
+                                        <input type="datetime-local" th:field="${job.jobStopTime}" id="jobStopTime"
+                                               name="jobStopTime" autocomplete="date"
+                                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="sm:col-span-2">
+                                <dt class="text-sm font-medium text-gray-500">Załączniki</dt>
+                                <dd class="mt-1 text-sm text-gray-900">
+                                    <ul role="list"
+                                        class="divide-y divide-gray-200 rounded-md border border-gray-200">
+                                        <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                                            <div class="flex w-0 flex-1 items-center">
+                                                <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20"
+                                                     fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                          d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
+                                                          clip-rule="evenodd"/>
+                                                </svg>
+                                                <span class="ml-2 w-0 flex-1 truncate">dokumentacja_fotograficzna.pdf</span>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
-                                        <label for="jobStartTime"
-                                               class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data rozpoczęcia
-                                            zlecenia</label>
-                                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                                            <input type="datetime-local" th:field="${job.jobStartTime}" id="jobStartTime"
-                                                   name="jobStartTime"
-                                                   autocomplete="datetime-local"
-                                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                                        </div>
-                                    </div>
-                                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
-                                        <label for="jobStartTime"
-                                               class="block text-lm font-medium text-blue-700 sm:mt-px sm:pt-2">Data zakończenia
-                                            zlecenia</label>
-                                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                                            <input type="datetime-local" th:field="${job.jobStopTime}" id="jobStopTime"
-                                                   name="jobStopTime" autocomplete="date"
-                                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                                        </div>
-                                    </div>
-
-                                </div>
+                                            <div class="ml-4 flex-shrink-0">
+                                                <a href="#"
+                                                   class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
 
 
-                                <div class="sm:col-span-2">
-                                    <dt class="text-sm font-medium text-gray-500">Załączniki</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        <ul role="list"
-                                            class="divide-y divide-gray-200 rounded-md border border-gray-200">
-                                            <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                                                <div class="flex w-0 flex-1 items-center">
-                                                    <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20"
-                                                         fill="currentColor" aria-hidden="true">
-                                                        <path fill-rule="evenodd"
-                                                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                              clip-rule="evenodd"/>
-                                                    </svg>
-                                                    <span class="ml-2 w-0 flex-1 truncate">dokumentacja_fotograficzna.pdf</span>
-                                                </div>
-                                                <div class="ml-4 flex-shrink-0">
-                                                    <a href="#"
-                                                       class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </div>
-                            </dl>
-
-
-                            <div class="pt-5">
-                                <div class="flex justify-end">
-                                    <button type="button"
-                                            class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <a th:href="@{/dashboard}">Wstecz</a>
-                                    </button>
-                                    <button type="submit"
-                                            class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        Zapisz
-                                    </button>
-                                </div>
+                        <div class="pt-5">
+                            <div class="flex justify-end">
+                                <button type="button"
+                                        class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    <a th:href="@{/dashboards}">Wstecz</a>
+                                </button>
+                                <button type="submit"
+                                        class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    Zapisz
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            </main>
-        </form>
-    </div>
+        </main>
+    </form>
 </div>
-    <!-- Your content -->
+</div>
+<!-- Your content -->
 </body>
 </html>
 
