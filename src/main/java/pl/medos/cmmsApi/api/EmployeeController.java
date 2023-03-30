@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.api;
 
 import org.springframework.web.bind.annotation.*;
+import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.EmployeeService;
 
@@ -36,9 +37,10 @@ public class EmployeeController {
     }
 
     @PutMapping("/employee")
-    public Employee update(@RequestBody Employee employee) {
+    public Employee update(@PathVariable (name = "id")Long id,
+            @RequestBody Employee employee) throws EmployeeNotFoundException {
         LOGGER.info("update()");
-        Employee updatedEmployee = employeeService.updateEmployee(employee);
+        Employee updatedEmployee = employeeService.updateEmployee(employee, id);
         LOGGER.info("update(...)" + updatedEmployee);
         return updatedEmployee;
     }

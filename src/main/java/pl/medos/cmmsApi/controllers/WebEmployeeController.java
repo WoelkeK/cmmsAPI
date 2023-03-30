@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.dto.EmployeesImportDto;
+import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.DepartmentService;
@@ -61,11 +62,12 @@ public class WebEmployeeController {
         return "update-employee.html";
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/update/{id}")
     public String update(
-            @ModelAttribute(name = "employee") Employee employee) {
+            @PathVariable(name = "id") Long id,
+            @ModelAttribute(name = "employee") Employee employee) throws EmployeeNotFoundException {
         LOGGER.info("update()" + employee);
-        Employee updatedEmployee = employeeService.updateEmployee(employee);
+        Employee updatedEmployee = employeeService.updateEmployee(employee, id);
         LOGGER.info("update(...)" + updatedEmployee);
         return "redirect:/employees";
     }

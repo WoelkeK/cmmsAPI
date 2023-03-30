@@ -57,15 +57,23 @@ public class DashboardController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-        model.addAttribute("job", job);
-        List<Department> departments = departmentService.findAllDepartments();
-        model.addAttribute("departments", departments);
-        List<Employee> employees = employeeService.finadAllEmployees();
-        model.addAttribute("employees", employees);
-        List<Machine> machines = machineService.findAllMachines();
-        model.addAttribute("machines", machines);
-        LOGGER.info("updateView(...)" + job.getRequestDate());
-        return "dashboard-edit.html";
+
+        if(job.getStatus().equals("Zgłoszono")) {
+
+            job.setStatus("Zakończono");
+            model.addAttribute("job", job);
+            List<Department> departments = departmentService.findAllDepartments();
+            model.addAttribute("departments", departments);
+            List<Employee> employees = employeeService.finadAllEmployees();
+            model.addAttribute("employees", employees);
+            List<Machine> machines = machineService.findAllMachines();
+            model.addAttribute("machines", machines);
+            LOGGER.info("updateView(...)" + job.getStatus());
+            return "dashboard-edit.html";
+        }else{
+
+            return "redirect:/dashboards";
+        }
     }
 
     @PostMapping(value = "/update/{id}")
@@ -89,7 +97,9 @@ public class DashboardController {
     @GetMapping(value = "/create")
     public String createView(Model model) {
         LOGGER.info("createView()");
-        model.addAttribute("job", new Job());
+        Job job = new Job();
+        job.setStatus("Zgłoszono");
+        model.addAttribute("job", job);
         return "dashboard-create.html";
     }
 

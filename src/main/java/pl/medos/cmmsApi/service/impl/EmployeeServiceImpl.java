@@ -57,11 +57,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
+    public Employee updateEmployee(Employee employee, Long id) throws EmployeeNotFoundException {
         LOGGER.info("update( " + employee.getId() + " )");
-        EmployeeEntity employeeEntity = employeeMapper.modelToEntity(employee);
+        Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findById(id);
+        EmployeeEntity employeeEntity = optionalEmployeeEntity.orElseThrow(
+                () -> new EmployeeNotFoundException("Brak pracownika o podanym id " + id));
 
-        EmployeeEntity updatedEmployeeEntity = employeeRepository.save(employeeEntity);
+        EmployeeEntity editedEmployeeEntity = employeeMapper.modelToEntity(employee);
+        editedEmployeeEntity.setId(employeeEntity.getId());
+        EmployeeEntity updatedEmployeeEntity = employeeRepository.save(editedEmployeeEntity);
         Employee updatedEmployeeModel = employeeMapper.entityToModel(updatedEmployeeEntity);
         LOGGER.info("update(...)" + updatedEmployeeModel.getId());
         return updatedEmployeeModel;
