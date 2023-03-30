@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 @Controller
-@RequestMapping("/dashboard")
+@RequestMapping("/dashboards")
 @SessionAttributes(names = {"departments", "employees", "machines"})
 public class DashboardController {
 
@@ -33,45 +33,6 @@ public class DashboardController {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
-    }
-
-    //    @Scheduled(fixedDelay = 100000)
-    public void createJob() {
-
-        Department department = new Department();
-        department.setId(1L);
-        department.setName("department");
-        department.setLocation("location");
-
-        Machine machine = new Machine();
-        machine.setId(1L);
-        machine.setName("name");
-        machine.setModel("model");
-        machine.setManufactured(1234);
-        machine.setDepartment(department);
-
-        Employee employee = new Employee();
-        employee.setId(1L);
-        employee.setName("fullName");
-        employee.setPhone("1234567890");
-        employee.setEmail("aaaa@bbbb.cc");
-        employee.setDepartment(department);
-
-        Job job = new Job();
-        job.setRequestDate(LocalDateTime.now());
-        job.setUser(new User());
-        job.setEmployee(employee);
-        job.setDepartment(department);
-        job.setMachine(machine);
-        job.setMessage("message");
-        job.setDirectContact(true);
-        job.setSolution("solution");
-        job.setJobStartTime(LocalDateTime.now());
-        job.setJobStopTime(LocalDateTime.now());
-        job.setCalcCost(123.33);
-
-        jobService.createJob(job);
-
     }
 
 
@@ -122,14 +83,14 @@ public class DashboardController {
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
         LOGGER.info("update(...)");
-        return "redirect:/dashboard";
+        return "redirect:/dashboards";
     }
 
     @GetMapping(value = "/create")
     public String createView(Model model) {
         LOGGER.info("createView()");
         model.addAttribute("job", new Job());
-        return "create-job.html";
+        return "dashboard-create.html";
     }
 
     @PostMapping(value = "/create")
@@ -147,7 +108,7 @@ public class DashboardController {
         model.addAttribute("job", job);
         jobService.createJob(job);
         LOGGER.info("create(...)");
-        return "redirect:/jobs";
+        return "redirect:/dashboards";
     }
 
     @GetMapping(value = "/read/{id}")
