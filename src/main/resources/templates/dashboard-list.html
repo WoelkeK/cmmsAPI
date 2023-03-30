@@ -88,7 +88,7 @@
                 <div class="flex items-center justify-between">
                   <p th:text="${job.message} " class="truncate text-sm font-medium text-indigo-600">Uszkodzona pompa oleju</p>
                   <div class="ml-2 flex flex-shrink-0">
-                    <p class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">Status</p>
+                    <p th:text="${job.status}" class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">Status</p>
                   </div>
                 </div>
                 <div class="mt-2 sm:flex sm:justify-between">
@@ -110,9 +110,10 @@
                     <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                       <path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z" clip-rule="evenodd" />
                     </svg>
-                    <p>
-                      Rozpoczęto
-                      <time datetime="2020-01-07">January 7, 2020</time>
+                    <p th:switch ="${job.status}">
+
+                     <time th:case="'Zgłoszono'" datetime="date"  th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"></time>
+                     <time th:case="'Zakończono'" datetime="date"  th:text="${#temporals.format(job.jobStopTime, 'dd MMMM yyyy HH:mm')}"></time>
                     </p>
                   </div>
                 </div>
@@ -126,6 +127,17 @@
     </div>
   </main>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            setInterval(function() {
+                $.get('/dashboards', function(data) {
+                    console.log(data);
+                    window.location.reload(2);
+                });
+            }, 5000); // send GET request every 5 seconds
+        });
+    </script>
 </body>
 </html>
 

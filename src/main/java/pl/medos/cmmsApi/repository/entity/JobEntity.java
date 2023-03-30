@@ -39,5 +39,5 @@ public class JobEntity {
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
     private double calcCost;
-
+    private String status;
 }

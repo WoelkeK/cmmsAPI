@@ -12,7 +12,7 @@ public interface EmployeeService {
 
     Employee findEmployeeById(Long id) throws EmployeeNotFoundException;
 
-    Employee updateEmployee(Employee employee);
+    Employee updateEmployee(Employee employee, Long id) throws EmployeeNotFoundException;
 
     void deleteEmployee(Long id);
 
