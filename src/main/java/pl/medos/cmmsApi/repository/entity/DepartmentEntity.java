@@ -15,9 +15,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "DEPARTMENTS")
 public class DepartmentEntity {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(unique = true)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String location;

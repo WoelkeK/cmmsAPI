@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 
@@ -8,8 +9,8 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ImportService {
-    List<Employee> importExcelEmployeesData(String fileName) throws IOException;
-    List<Department> importExcelDepartmentsData(String fileName) throws IOException;
+    List<Employee> importExcelEmployeesData(MultipartFile file) throws IOException;
+    List<Department> importExcelDepartmentsData(MultipartFile file) throws IOException;
 
 
 }
