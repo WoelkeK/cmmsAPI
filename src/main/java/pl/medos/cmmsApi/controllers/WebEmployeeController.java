@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
@@ -12,6 +13,8 @@ import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.ImportService;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,7 +25,7 @@ import java.util.logging.Logger;
 public class WebEmployeeController {
 
     private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
-    private String fileName = "c:/XL/sheet4.xlsx";
+    private String fileName = "c:/XL/sheet6.xlsx";
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private ImportService importService;
@@ -108,21 +111,51 @@ public class WebEmployeeController {
         return "redirect:/employees";
     }
 
-    @GetMapping(value = "/save")
-    public String importEmployees() throws IOException {
-        LOGGER.info("importEmployees()");
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Employee> readedEmployees = importService.importExcelEmployeesData(fileName);
+//    @GetMapping(value = "/file")
+//    public String importEmployees() throws IOException {
+//        LOGGER.info("importEmployees()");
+//
+//        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
 //        List<Department> readedDepartments = importService.importExcelDepartmentsData(fileName);
+//
 //        LOGGER.info("departments import()" + readedDepartments);
-//        readedDepartments.forEach((department -> {
+//        readedDepartments.forEach(department -> {
 //            departmentService.createDepartment(department);
-//             });
+//        });
+//
+//
+//        List<Employee> readedEmployees = importService.importExcelEmployeesData(fileName);
+//
+//        readedEmployees.forEach((employee) -> {
+//                   employeeService.createEmployee(employee);
+//        });
+//        LOGGER.info("importEmployees() " + employeesImportDto);
+//        return "redirect:/employees";
+//    }
+
+
+    @GetMapping("/file")
+    public String showUploadForm() {
+        return "uploadEmp-form";
+    }
+
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        LOGGER.info("importEmployees()");
+        if (file.isEmpty()) {
+            LOGGER.info("Please select file to upload");
+            return "redirect/employees";
+        }
+
+        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
+        List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
 
         readedEmployees.forEach((employee) -> {
-                   employeeService.createEmployee(employee);
+            employeeService.createEmployee(employee);
         });
-        LOGGER.info("importEmployees() " + employeesImportDto);
+        LOGGER.info("importEmployees(...) ");
+
         return "redirect:/employees";
     }
 }

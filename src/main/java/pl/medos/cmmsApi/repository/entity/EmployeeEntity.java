@@ -23,7 +23,7 @@ public class EmployeeEntity {
     private String userName;
     private String phone;
     private String email;
-    @ManyToOne
+@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
 

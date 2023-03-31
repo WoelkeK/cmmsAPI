@@ -3,10 +3,15 @@ package pl.medos.cmmsApi.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.DepartmentService;
+import pl.medos.cmmsApi.service.ImportService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,9 +21,11 @@ public class WebDepartmentController {
 
     private static final Logger LOGGER = Logger.getLogger(WebDepartmentController.class.getName());
     private DepartmentService departmentService;
+    private ImportService importService;
 
-    public WebDepartmentController(DepartmentService departmentService) {
+    public WebDepartmentController(DepartmentService departmentService, ImportService importService) {
         this.departmentService = departmentService;
+        this.importService = importService;
     }
 
     @GetMapping
@@ -82,6 +89,32 @@ public class WebDepartmentController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         departmentService.deleteDepartment(id);
+        return "redirect:/departments";
+    }
+
+
+    @GetMapping("/file")
+    public String showUploadForm() {
+        return "uploadDep-form";
+    }
+
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        LOGGER.info("importDepartments()");
+        if(file.isEmpty()){
+            LOGGER.info("Please select file to upload");
+            return "redirect/departments";
+        }
+
+        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
+        List<Department> departments = importService.importExcelDepartmentsData(file);
+
+        departments.forEach((department) -> {
+            departmentService.createDepartment(department);
+        });
+        LOGGER.info("importDepartments(...) ");
+
         return "redirect:/departments";
     }
 }
