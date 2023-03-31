@@ -7,7 +7,7 @@
     <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-400">
-<form action="#" th:action="@{/costs/update}" th:object="${cost}" method="post">
+<form action="#" th:action="@{/costs/update/{id}(id=${cost.id})}" th:object="${cost}" method="post">
 
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
