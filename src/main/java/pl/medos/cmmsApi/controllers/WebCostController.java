@@ -42,7 +42,7 @@ public class WebCostController {
         return "update-cost.html";
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/update/{id}")
     public String update(@PathVariable (name="id")Long id,
             @ModelAttribute(name = "cost") Cost cost) throws CostNotFoundException {
         LOGGER.info("update()" + cost);
