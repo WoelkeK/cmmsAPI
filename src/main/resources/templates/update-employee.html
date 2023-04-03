@@ -35,23 +35,8 @@
                 </dd>
             </div>
 
-            <div class="border-t border-gray-400 px-4 py-5 sm:p-0">
-                <dl class="sm:divide-y sm:divide-gray-300">
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-
-                        <dt class="text-lm font-medium text-gray-500">Imię</dt>
-
-                        <dd class="mt-1 flex text-sm text-blue-900 sm:col-span-2 sm:mt-0">
-                            <input id="firstName" th:field="${employee.name}"
-                                   class="text-lm font-medium text-blue-700">
-                            <span class="flex-grow"></span>
-                            <span class="ml-4 flex-shrink-0">
-         </span>
-                        </dd>
-                    </div>
-
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                        <dt class="text-lm font-medium text-gray-500">Nazwisko</dt>
+                        <dt class="text-lm font-medium text-gray-500">Imię i Nazwisko</dt>
                         <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <input id="lastName" th:field="${employee.name}"
                                    class="text-lm font-medium text-blue-700">
@@ -176,7 +161,7 @@
             <div class="flex justify-end">
                 <button type="button"
                         class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    <a th:href="@{/departments}">Anuluj</a>
+                    <a th:href="@{/employees}">Anuluj</a>
                 </button>
                 <button type="submit"
                         class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

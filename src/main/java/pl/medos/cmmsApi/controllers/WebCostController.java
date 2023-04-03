@@ -5,9 +5,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.model.Cost;
-import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.service.CostService;
-import pl.medos.cmmsApi.service.DepartmentService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,16 +15,16 @@ import java.util.logging.Logger;
 public class WebCostController {
 
     private static final Logger LOGGER = Logger.getLogger(WebCostController.class.getName());
-    private CostService costServicee;
+    private CostService costService;
 
-    public WebCostController(CostService costServicee) {
-        this.costServicee = costServicee;
+    public WebCostController(CostService costService) {
+        this.costService = costService;
     }
 
     @GetMapping
     public String listView(ModelMap modelMap) {
         LOGGER.info("listView()");
-        List<Cost> costs = costServicee.findAllCosts();
+        List<Cost> costs = costService.findAllCosts();
         modelMap.addAttribute("costs", costs);
         LOGGER.info("listView(...)" + costs);
         return "list-cost.html";
@@ -37,7 +35,7 @@ public class WebCostController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("updateView()");
-        Cost costById = costServicee.findCostById(id);
+        Cost costById = costService.findCostById(id);
         modelMap.addAttribute("cost", costById);
         return "update-cost.html";
     }
@@ -46,7 +44,7 @@ public class WebCostController {
     public String update(@PathVariable (name="id")Long id,
             @ModelAttribute(name = "cost") Cost cost) throws CostNotFoundException {
         LOGGER.info("update()" + cost);
-        Cost updatedCost = costServicee.updateCost(cost, id);
+        Cost updatedCost = costService.updateCost(cost, id);
         LOGGER.info("update(...)" + updatedCost);
         return "redirect:/costs";
     }
@@ -63,7 +61,7 @@ public class WebCostController {
     public String create(
             @ModelAttribute(name = "cost") Cost cost) {
         LOGGER.info("create(" + cost + ")");
-        Cost savedCost = costServicee.createCost(cost);
+        Cost savedCost = costService.createCost(cost);
         LOGGER.info("create(...)" + savedCost);
         return "redirect:/costs";
     }
@@ -73,7 +71,7 @@ public class WebCostController {
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
         LOGGER.info("read(" + id + ")");
-        Cost costById = costServicee.findCostById(id);
+        Cost costById = costService.findCostById(id);
         modelMap.addAttribute("cost", costById);
         return "read-cost.html";
     }
@@ -82,7 +80,7 @@ public class WebCostController {
     public String delete(
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
-        costServicee.deleteCostById(id);
+        costService.deleteCostById(id);
         return "redirect:/costs";
     }
 }
