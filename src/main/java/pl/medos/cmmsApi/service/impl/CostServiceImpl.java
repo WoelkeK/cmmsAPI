@@ -61,6 +61,8 @@ public class CostServiceImpl implements CostService {
         Optional<CostEntity> optionalCostEntityById = costRepository.findById(id);
         CostEntity editedCostEntity = optionalCostEntityById.orElseThrow(
                 () -> new CostNotFoundException("Nie istnieje obiekt o podanym id"));
+        editedCostEntity.setNetCost(cost.getNetCost());
+        editedCostEntity.setGrossCost(cost.getGrossCost());
         CostEntity updatedCostEntity = costRepository.save(editedCostEntity);
         Cost updateCost = costMapper.entityToModel(updatedCostEntity);
         LOGGER.info("updateCost(...)" + updateCost);
