@@ -60,8 +60,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         Optional<ScheduleEntity> optionalScheduleEntity = scheduleRepository.findById(id);
         ScheduleEntity scheduleEntity = optionalScheduleEntity.orElseThrow(
                 () -> new ScheduleNotFoundException("Brak jednostki o podanym id")
+
         );
-        ScheduleEntity updatedScheduleEntity = scheduleRepository.save(scheduleEntity);
+        ScheduleEntity editedScheduleEntity = scheduleMapper.mapModelToEntity(schedule);
+        editedScheduleEntity.setId(scheduleEntity.getId());
+        ScheduleEntity updatedScheduleEntity = scheduleRepository.save(editedScheduleEntity);
         Schedule updatedScheduleModel = scheduleMapper.mapEntitytoModel(updatedScheduleEntity);
         LOGGER.info("updateSchedules(...)");
         return updatedScheduleModel;
