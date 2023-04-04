@@ -75,7 +75,7 @@ public class WebDepartmentController {
         return "update-department.html";
     }
 
-    @PostMapping(value = "/update{id}")
+    @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
                          @ModelAttribute(name = "department") Department department) throws DepartmentNotFoundException {
         LOGGER.info("update()" + department);
