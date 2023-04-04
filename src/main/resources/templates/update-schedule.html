@@ -1,0 +1,92 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Aktualizacji Maszyny</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-400">
+<form action="#" th:action="@{/schedules/update/{id}(id=${schedule.id})}" th:object="${schedule}" method="post">
+
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-6xl font-semibold text-gray-900">Harmonogramy</h1>
+                <p class="mt-2 text-lm text-gray-700">Aktualizacja danych przeglądów okresowych</p>
+            </div>
+
+        </div>
+
+        <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Przegląd</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Dane szczegółowe</p>
+            </div>
+
+            <!--sprawdzić możliwość wyświetlenia samego id bez input-->
+            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500"></dt>
+                <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <input hidden="scheduleId" id="scheduleId" name="scheduleId" th:field="${schedule.id}">
+                    <span class="flex-grow"></span>
+                    <span class="ml-4 flex-shrink-0">
+          </span>
+                </dd>
+            </div>
+
+            <div class="border-t border-gray-400 px-4 py-5 sm:p-0">
+                <dl class="sm:divide-y sm:divide-gray-300">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+
+                        <dt class="text-lm font-medium text-gray-500">Nazwa</dt>
+
+                        <dd class="mt-1 flex text-sm text-blue-900 sm:col-span-2 sm:mt-0">
+                            <input id="name" th:field="${schedule.name}"
+                                   class="text-lm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
+         </span>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                        <dt class="text-lm font-medium text-gray-500">Kategoria</dt>
+                        <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <input id="category" th:field="${schedule.category}"
+                                   class="text-lm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
+          </span>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                        <dt class="text-lm font-medium text-gray-500">Przesunięcie</dt>
+                        <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <input id="offset" th:field="${schedule.offset}"
+                                   class="text-lm font-medium text-blue-700">
+                            <span class="flex-grow"></span>
+                            <span class="ml-4 flex-shrink-0">
+          </span>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+        <div class="pt-5">
+            <div class="flex justify-end">
+                <button type="button"
+                        class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <a th:href="@{/schedules}">Anuluj</a>
+                </button>
+                <button type="submit"
+                        class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Zapisz
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
