@@ -22,7 +22,5 @@ public interface MachineService {
 
     void deleteMachine(Long id);
 
-    List<MachineEntity> getThisListMachine();
-    List<Machine> exportMachines();
 }
 
