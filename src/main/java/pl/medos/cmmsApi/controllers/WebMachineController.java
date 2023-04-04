@@ -58,11 +58,11 @@ public class WebMachineController {
     }
 
     @GetMapping("/search/machine")
-    public String searchJobsByMachine(@RequestParam(value = "machineName") String machineName,
+    public String searchJobsByMachineId(@RequestParam(value = "machineName") String machineName,
                                       Model model) throws MachineNotFoundException {
         LOGGER.info("search()");
-        Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
-        model.addAttribute("machines", machineByName);
+        Machine machines = machineService.findMachineById(Long.parseLong(machineName));
+        model.addAttribute("machines", machines);
         return "list-machine";
     }
 
@@ -151,7 +151,8 @@ public class WebMachineController {
 
 
     @GetMapping(value = "/export")
-    public void exportMachines(HttpServletResponse response, Model model) throws Exception {
+    public void exportMachines(@ModelAttribute (name = "machines") List<Machine> machines,
+            HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
 
         response.setContentType("application/octet-stream");
@@ -162,10 +163,9 @@ public class WebMachineController {
         String headerValue = "attachment;filename=machine" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
-
-        List<Machine> machines = machineService.exportMachines();
         exportService.excelModelGenerator(machines);
         exportService.generateExcelFile(response);
         response.flushBuffer();
+        LOGGER.info("export(...)");
     }
 }

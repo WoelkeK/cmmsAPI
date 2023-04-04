@@ -99,15 +99,4 @@ public class MachineServiceImpl implements MachineService{
         LOGGER.info("delete(...)");
     }
 
-    @Override
-    public List<MachineEntity> getThisListMachine() {
-        LOGGER.info("getTheListMachine()");
-        List<MachineEntity> machineEntityList = machineRepository.findAll();
-        return machineEntityList;
-    }
-
-    @Override
-    public List<Machine> exportMachines() {
-        return sortedMachines;
-    }
 }
