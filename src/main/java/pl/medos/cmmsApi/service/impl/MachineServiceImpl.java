@@ -11,13 +11,12 @@ import pl.medos.cmmsApi.service.MachineService;
 
 import pl.medos.cmmsApi.service.mapper.MachineMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-public class MachineServiceImpl implements MachineService{
+public class MachineServiceImpl implements MachineService {
 
     private static final Logger LOGGER = Logger.getLogger(MachineServiceImpl.class.getName());
 
@@ -58,6 +57,15 @@ public class MachineServiceImpl implements MachineService{
         sortedMachines = machineMapper.listModels(machineEntities);
         LOGGER.info("findMachinesByName(...)" + department);
         return sortedMachines;
+    }
+
+    @Override
+    public List<Machine> findMachinesByQuery(String query) {
+        LOGGER.info("findMachinesByQuery()" + query);
+        List<MachineEntity> machineEntities = machineRepository.searchMachineByQuery(query);
+        List<Machine> machines = machineMapper.listModels(machineEntities);
+        LOGGER.info("findMachinesByQuery(...)");
+        return machines;
     }
 
     public Machine createMachine(Machine machine) {

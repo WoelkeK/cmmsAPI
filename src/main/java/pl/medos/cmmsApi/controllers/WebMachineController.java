@@ -48,11 +48,11 @@ public class WebMachineController {
         return "list-machine";
     }
 
-    @GetMapping("/search/name")
-    public String searchMachineByName(@RequestParam(value = "machineName") String query,
+    @GetMapping("/search/query")
+    public String searchMachineByQuery(@RequestParam(value = "machineQuery") String query,
                                       Model model) {
         LOGGER.info("search()");
-        List<Machine> machines = machineService.findMachinesByName(query);
+        List<Machine> machines = machineService.findMachinesByQuery(query);
         model.addAttribute("machines", machines);
         return "list-machine";
     }
