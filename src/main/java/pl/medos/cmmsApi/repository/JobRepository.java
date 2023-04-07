@@ -11,8 +11,7 @@ import java.util.List;
 
 public interface JobRepository extends JpaRepository<JobEntity, Long> {
 
-    @Query("SELECT p from JobEntity p WHERE " +
-            " p.message LIKE CONCAT('%', :query, '%')")
+    @Query("SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.engineer.name, ' ', p.department.name, ' ' , p.machine.name,' ' , p.message,' ' , p.solution) LIKE %?1%")
     List<JobEntity> searchJobsByMessage(String query);
 
     @Query("SELECT p from JobEntity p WHERE " +
@@ -27,7 +26,4 @@ public interface JobRepository extends JpaRepository<JobEntity, Long> {
             " p.machine.id LIKE CONCAT('%', :query, '%')")
     List<JobEntity> searchJobsByMachine(Long query);
 
-    @Query("SELECT p from JobEntity p WHERE " +
-            " p.status LIKE CONCAT('%', :query, '%')")
-    List<JobEntity> searchJobsByStatus(Long query);
 }

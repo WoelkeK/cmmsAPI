@@ -24,6 +24,10 @@ public class JobEntity {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
+
+    @ManyToOne
+    @JoinColumn(name = "engineer_id")
+    private EngineerEntity engineer;
     @ManyToOne
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
