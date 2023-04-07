@@ -8,17 +8,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
-import pl.medos.cmmsApi.service.DepartmentService;
-import pl.medos.cmmsApi.service.EmployeeService;
-import pl.medos.cmmsApi.service.JobService;
-import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.service.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 @Controller
 @RequestMapping("/dashboards")
-@SessionAttributes(names = {"departments", "employees", "machines"})
+@SessionAttributes(names = {"departments", "employees", "machines", "engineers"})
 public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
@@ -27,14 +24,15 @@ public class DashboardController {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private MachineService machineService;
+    private EngineerService engineerService;
 
-    public DashboardController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService) {
+    public DashboardController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
+        this.engineerService = engineerService;
     }
-
 
     @GetMapping
     public String listView(Model model) {
@@ -47,6 +45,8 @@ public class DashboardController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
+        List<Engineer> engineers = engineerService.finadAllEmployees();
+        model.addAttribute("engineers", engineers);
         LOGGER.info("listView(...)" + jobs);
         return "dashboard-list.html";
     }
@@ -62,12 +62,12 @@ public class DashboardController {
 
             job.setStatus("Zakończono");
             model.addAttribute("job", job);
-            List<Department> departments = departmentService.findAllDepartments();
-            model.addAttribute("departments", departments);
-            List<Employee> employees = employeeService.finadAllEmployees();
-            model.addAttribute("employees", employees);
-            List<Machine> machines = machineService.findAllMachines();
-            model.addAttribute("machines", machines);
+//            List<Department> departments = departmentService.findAllDepartments();
+//            model.addAttribute("departments", departments);
+//            List<Employee> employees = employeeService.finadAllEmployees();
+//            model.addAttribute("employees", employees);
+//            List<Machine> machines = machineService.findAllMachines();
+//            model.addAttribute("machines", machines);
             LOGGER.info("updateView(...)" + job.getStatus());
             return "dashboard-edit.html";
         }else{

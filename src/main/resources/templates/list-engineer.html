@@ -9,11 +9,15 @@
 <body class="bg-gray-400">
 
 <div>
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
 
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
+
         <div class="fixed inset-0 z-40 flex">
+
             <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800">
+
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                     <button type="button"
                             class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -28,12 +32,19 @@
 
                 <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                        <img class="h-8 w-auto"
+                             src="https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500"
+                             alt="Medos">
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
+                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="/"
                            class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                            <!--
+                              Heroicon name: outline/home
 
+                              Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
+                            -->
                             <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                                  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                  aria-hidden="true">
@@ -43,17 +54,30 @@
                             Panel Główny
                         </a>
 
-                        <a href="#"
-                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                            <!-- Heroicon name: outline/users -->
-                            <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <a th:href="@{/employees}"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <!-- Heroicon name: outline/folder -->
+                            <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
                             </svg>
-                            Pracownicy
+                            Kierownicy
                         </a>
+
+                        <a th:href="@{/engineers}"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <!-- Heroicon name: outline/folder -->
+                            <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                            </svg>
+                            Mechanicy
+                        </a>
+
                         <a href="#"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/chart-bar -->
@@ -65,6 +89,7 @@
                             </svg>
                             Wydziały
                         </a>
+
                         <a href="#"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/calendar -->
@@ -76,6 +101,7 @@
                             </svg>
                             Maszyny
                         </a>
+
 
                         <a href="#"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
@@ -186,6 +212,7 @@
                         </svg>
                         Wydziały
                     </a>
+
                     <a th:href="@{/machines}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/chart-bar -->
@@ -197,6 +224,7 @@
                         </svg>
                         Maszyny
                     </a>
+
                     <a th:href="@{/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
@@ -244,7 +272,6 @@
                         </svg>
                         Wyloguj
                     </a>
-
                 </nav>
             </div>
             <div class="flex flex-shrink-0 bg-gray-700 p-4">
@@ -255,10 +282,10 @@
                                  src="https://media.licdn.com/dms/image/C4D03AQEJEio39iNw_Q/profile-displayphoto-shrink_800_800/0/1661529893600?e=2147483647&v=beta&t=V3TkCm9POhJxk4HNIqzG6VOnNXgWI75vekdusiDOpeQ"
                                  alt="">
                         </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium text-white">Krzysztof Woelke</p>
-                            <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
-                        </div>
+<!--                        <div class="ml-3">-->
+<!--                            <p class="text-sm font-medium text-white">Krzysztof Woelke</p>-->
+<!--                            <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>-->
+<!--                        </div>-->
                     </div>
                 </a>
             </div>
@@ -277,27 +304,51 @@
                 </svg>
             </button>
         </div>
-        <main class="flex-1 overflow-y-scroll">
+        <main class="flex-1">
             <div class="py-6">
-                <div class="mx-auto max-w-8xl px-4 sm:px-6 md:px-8">
+                <!--                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
+                <!--                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>-->
+                <!--                </div>-->
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+                    <!-- Replace with your content -->
 
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-4xl font-semibold text-gray-900">Maszyny</h1>
-                                <p class="mt-2 text-lm text-gray-700">Lista maszyn znajdujących się na terenie firmy
-                                    Medos.</p>
+                                <h1 class="text-4xl font-semibold text-gray-900">Utrzymanie ruchu</h1>
+                                <p class="mt-2 text-lm text-gray-700">Lista pracowników działu utrzymiania ruchu.</p>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <form class="form-inline" th:action="@{/engineers/search/name}">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="employeeName"/>
+                                                <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"> Szukaj pracownika</button>
+                        </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
+                                <button type="button"
+                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                                    <a th:href="@{/engineers/create}">Dodaj</a>
+                                </button>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/machines/create}">Dodaj</a>
+                                    <a th:href="@{/engineers/file}">Import</a>
                                 </button>
                             </div>
                         </div>
-
-
-
                         <div class="mt-4 flex flex-col">
                             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -307,102 +358,74 @@
                                             <tr>
                                                 <th scope="col"
                                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
-                                                    Index
+                                                    Imię i Nazwisko
                                                 </th>
+
                                                 <th scope="col"
-                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
-                                                    Nazwa
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    Stanowisko
                                                 </th>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Typ/Model
+                                                    Dział
                                                 </th>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Rok produkcji
-                                                </th>
+                                                    Telefon
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Numer seryjny
-                                                </th>
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Wydział
-                                                </th>
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Status
-                                                </th>
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Instalacja
+                                                    Email
                                                 </th>
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
                                                     <span class="sr-only">Edit</span>
                                                 </th>
                                             </tr>
                                             </thead>
-                                            <tbody class="bg-gray-500">
-                                            <tr class="border-t border-gray-700">
-                                                <th colspan="9" scope="colgroup"
-                                                    class="bg-green-400 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
-                                                    Aktywne Maszyny
+                                            <tbody class="bg-gray">
+                                            <tr class="border-t border-gray-600">
+                                                <th colspan="7" scope="colgroup"
+                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                                                    Dział Utrzymania Ruchu
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="machine : ${machines}" class="border-t border-gray-300">
-                                                <td th:text="${machine.id}"
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
-                                                    Index
+                                            <tr th:each="engineer : ${engineers}" class="border-t border-gray-300">
+                                                <td th:text="${engineer.name}"
+                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                    Lindsay Walton
                                                 </td>
-                                                <td th:text="${machine.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
+                                                <td th:text="${engineer.position}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Stanowisko
                                                 </td>
-                                                <td th:text="${machine.model}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Typ/Model
+                                                <td th:text="${engineer.department.name}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Dział
                                                 </td>
-                                                <td th:text="${machine.manufactured}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Rok
-                                                    Produkcji
+                                                <td th:text="${engineer.phone}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Telefon
                                                 </td>
-                                                <td th:text="${machine.serialNumber}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Numer
-                                                    Seryjny
-                                                </td>
-                                                <td th:text="${machine.department.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wydział
-                                                </td>
-                                                <td th:text="${machine.status}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Status
-                                                </td>
-                                                <td th:text="${#temporals.format(machine.installDate, 'dd MMMM yyyy')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data instalacji
+                                                <td th:text="${engineer.email}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Email
                                                 </td>
 
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
-
-<!--                                                    <a th:href="@{/machines/shedule/{id}(id=${machine.id})}"-->
-<!--                                                       class="text-indigo-800 hover:text-indigo-300">Przeglądy<span-->
-<!--                                                            class="sr-only"></span></a>-->
-
-                                                    <a th:href="@{/machines/update/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span
+                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                    <a th:href="@{/engineers/update/{id}(id=${engineer.id})}"
+                                                       class="text-indigo-600 hover:text-indigo-900">Edycja<span
                                                             class="sr-only"></span></a>
-<!--                                                    <a th:href="@{/machines/read/{id}(id=${machine.id})}"-->
-<!--                                                       class="text-indigo-800 hover:text-indigo-300">Pokaż<span-->
+<!--                                                    <a th:href="@{/engineers/read/{id}(id=${engineerid})}"-->
+<!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
 <!--                                                            class="sr-only"></span></a>-->
-                                                    <a th:href="@{/machines/delete/{id}(id=${machine.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span
+                                                    <a th:href="@{/engineers/delete/{id}(id=${engineer.id})}"
+                                                       class="text-indigo-600 hover:text-indigo-900">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
                                             </tr>
                                             <!-- More people... -->
                                             </tbody>
-                                            <tbody class="bg-grey">
+                                            <tbody class="bg-white">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="9" scope="colgroup"
-                                                    class="bg-grey-700 px-4 py-2 text-center text-lm font-semibold text-gray-500 sm:px-6">
-                                                    Koniec zestawienia
+                                                <th colspan="7" scope="colgroup"
+                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                                                    Dział Kadr
                                                 </th>
                                             </tr>
                                         </table>
@@ -410,157 +433,11 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                     <!-- /End replace -->
                 </div>
             </div>
         </main>
-
-        <div class="overflow-hidden rounded-md bg-gray shadow">
-            <ul role="list" class="divide-y divide-gray-700">
-                <li class="px-6 py-2">
-
-                    <div>
-                        <h2 class="text-sm font-medium text-gray-500">Opcje sortowania</h2>
-                        <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4">
-
-                            <li class="col-span-1 flex rounded-md shadow-lm">
-                                <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-semibold text-yellow-500">
-                                    Tekst
-                                </div>
-                                <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">
-                                    <div class="flex-1 truncate px-4 py-2 text-sm">
-                                        <div class="form-group">
-                                            <form class="form-inline" th:action="@{/machines/search/query}">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="machineQuery"/>
-                                                    <button type="submit"
-                                                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                        <span class="sr-only">Open options</span>
-                                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                                             aria-hidden="true">
-                                                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-
-<!--                            <li class="col-span-1 flex rounded-md shadow-sm">-->
-<!--                                <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-medium text-yellow-500">-->
-<!--                                    Wydział-->
-<!--                                </div>-->
-<!--                                <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">-->
-<!--                                    <div class="flex-1 truncate px-4 py-2 text-sm">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <form class="form-inline" th:action="@{/machines/search/department}">-->
-<!--                                                <div class="input-group">-->
-<!--                                                    <select id="machineDepartment" name="machineDepartment"-->
-<!--                                                            class="form-control mt-2 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-<!--                                                        <option th:each="department : ${departments}"-->
-<!--                                                                th:text="${department.name}"-->
-<!--                                                                th:value="${department.id}">-->
-<!--                                                        </option>-->
-<!--                                                    </select>-->
-<!--                                                    <button type="submit"-->
-<!--                                                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-<!--                                                        <span class="sr-only">Open options</span>-->
-<!--                                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"-->
-<!--                                                             aria-hidden="true">-->
-<!--                                                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>-->
-<!--                                                        </svg>-->
-<!--                                                    </button>-->
-<!--                                                </div>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </li>-->
-
-
-<!--                            <li class="col-span-1 flex rounded-md shadow-sm">-->
-<!--                                <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-medium text-yellow-500">-->
-<!--                                    Maszyna-->
-<!--                                </div>-->
-<!--                                <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">-->
-<!--                                    <div class="flex-1 truncate px-4 py-2 text-sm">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <form class="form-inline" th:action="@{/machines/search/machine}">-->
-<!--                                                <div class="input-group">-->
-<!--                                                    <select id="machineName" name="machineName"-->
-<!--                                                            class="form-control mt-2 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-<!--                                                        <option th:each="machine : ${machines}"-->
-<!--                                                                th:text="${machine.name}"-->
-<!--                                                                th:value="${machine.id}">-->
-<!--                                                        </option>-->
-<!--                                                    </select>-->
-<!--                                                    <button type="submit"-->
-<!--                                                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-<!--                                                        <span class="sr-only">Open options</span>-->
-<!--                                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"-->
-<!--                                                             aria-hidden="true">-->
-<!--                                                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>-->
-<!--                                                        </svg>-->
-<!--                                                    </button>-->
-<!--                                                </div>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </li>-->
-
-
-                            <li class="col-span-1 flex rounded-md shadow-sm">
-                                <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-medium text-yellow-500">
-                                    Wydruk
-                                </div>
-                                <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-green-500">
-                                    <div class="flex-1 truncate px-4 py-2 text-sm">
-                                        <div class="form-group">
-                                            <form class="form-inline" th:action="@{/machines/export}">
-                                                <div class="input-group">
-                                                    <!--                                <select id="jobEmployee" name="jobEmployee"-->
-                                                    <!--                                        class="form-control mt-2 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-                                                    <!--                                    <option th:each="employee : ${employees}"-->
-                                                    <!--                                            th:text="${employee.lastName}"-->
-                                                    <!--                                            th:value="${employee.id}">-->
-                                                    <!--                                    </option>-->
-                                                    <!--                                </select>-->
-                                                    <button type="submit"
-                                                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                        <span class="sr-only">Open options</span>
-                                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
-                                                             aria-hidden="true">
-                                                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="relative">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center">
-                <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
-            </div>
-        </div>
     </div>
 </div>
 </body>

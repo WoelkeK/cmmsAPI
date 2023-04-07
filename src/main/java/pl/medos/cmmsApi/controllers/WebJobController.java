@@ -32,12 +32,14 @@ public class WebJobController {
     private DepartmentService departmentService;
     private MachineService machineService;
 
+    private EngineerService engineerService;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService) {
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
+        this.engineerService = engineerService;
     }
 
     //    @Scheduled(fixedDelay = 100000)
@@ -90,6 +92,8 @@ public class WebJobController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
+        List<Engineer> engineers = engineerService.finadAllEmployees();
+        model.addAttribute("engineers", engineers);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
     }

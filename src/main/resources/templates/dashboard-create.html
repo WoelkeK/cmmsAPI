@@ -15,22 +15,12 @@
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
-                                <img class="h-10 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                                <img class="h-12 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                             </div>
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">
                                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    <a th:href="@{/dashboards}"
-                                       class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                                       aria-current="page">Panel Główny</a>
-
-                                    <a href="#"
-                                       class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Kadry</a>
-
-                                    <a href="#"
-                                       class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Zgłoszenia</a>
-
-                                </div>
+                                      </div>
                             </div>
                         </div>
                         <div class="hidden md:block">
@@ -65,15 +55,7 @@
             <div class="border-b border-gray-700 md:hidden" id="mobile-menu">
                 <div class="space-y-1 px-2 py-3 sm:px-3">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a th:href="@{/dashboards}"class="bg-yellow-700 text-white block rounded-md px-3 py-2 text-base font-medium"
-                       aria-current="page">Panel główny</a>
-
-                    <a href="#"
-                       class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Kadry</a>
-
-                    <a href="#"
-                       class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Zgłoszenia</a>
-                </div>
+                     </div>
 
             </div>
         </nav>
@@ -121,10 +103,10 @@
 
 
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
-                                        <label for="employeeId"
+                                        <label for="engineerId"
                                                class="block text-lm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik</label>
                                         <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                            <select th:field="${job.employee.id}" id="employeeId" name="employeeId"
+                                            <select th:field="${job.employee.id}" id="engineerId" name="engineerId"
                                                     autocomplete="employee"
                                                     class="block w-full max-w-lg rounded-md border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
 
@@ -168,173 +150,6 @@
                                                         th:value="${department.id}">
                                                 </option>
                                             </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="sm:col-span-2">
-                                    <dt class="text-sm font-medium text-gray-500">Załączniki</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        <ul role="list"
-                                            class="divide-y divide-gray-200 rounded-md border border-gray-200">
-                                            <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                                                <div class="flex w-0 flex-1 items-center">
-                                                    <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20"
-                                                         fill="currentColor" aria-hidden="true">
-                                                        <path fill-rule="evenodd"
-                                                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                              clip-rule="evenodd"/>
-                                                    </svg>
-                                                    <span class="ml-2 w-0 flex-1 truncate">dokumentacja_fotograficzna.pdf</span>
-                                                </div>
-                                                <div class="ml-4 flex-shrink-0">
-                                                    <a href="#"
-                                                       class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </div>
-                            </dl>
-
-                            <div class="pt-6 sm:pt-5">
-                                <div role="group" aria-labelledby="date-register">
-                                    <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
-
-                                        <div>
-                                            <div class="block text-lm font-medium text-gray-800 sm:mt-px sm:pt-2"
-                                                 id="date-register">Opcje zgłoszenia
-                                            </div>
-                                        </div>
-
-                                        <div class="space-y-6 divide-y divide-gray-800 pt-8 sm:space-y-5 sm:pt-10">
-
-                                            <div>
-                                                <h3 class="text-lm font-medium leading-6 text-gray-800">
-                                                    Powiadomienia</h3>
-                                                <p class="mt-1 max-w-2xl text-sm text-gray-500">W przypadku awarii
-                                                    powiadomienie
-                                                    wysłac do:</p>
-                                            </div>
-
-                                            <div class="space-y-6 divide-y divide-gray-500 sm:space-y-5 m:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
-
-                                                <div class=" sm:col-span-1 pt-6 sm:pt-5">
-                                                    <div role="group" aria-labelledby="label-email">
-                                                        <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
-                                                            <div>
-                                                                <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
-                                                                     id="label-email">przez email
-                                                                </div>
-                                                            </div>
-                                                            <div class="mt-4 sm:col-span-2 sm:mt-0">
-                                                                <div class="max-w-lg space-y-4">
-                                                                    <div class="relative flex items-start">
-                                                                        <div class="flex h-5 items-center">
-                                                                            <input id="comments" name="comments"
-                                                                                   type="checkbox"
-                                                                                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                                        </div>
-                                                                        <div class="ml-3 text-sm">
-                                                                            <label for="comments"
-                                                                                   class="font-medium text-gray-700">Kierownik
-                                                                                produkcji</label>
-                                                                            <p class="text-gray-500">Powiadomienie o
-                                                                                pojawieniu się
-                                                                                awarii na
-                                                                                wydziale.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="relative flex items-start">
-                                                                        <div class="flex h-5 items-center">
-                                                                            <input id="jobs" name="jobs" type="checkbox"
-                                                                                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                                        </div>
-                                                                        <div class="ml-3 text-sm">
-                                                                            <label for="jobs"
-                                                                                   class="font-medium text-gray-700">Kierownik
-                                                                                utrzymania
-                                                                                ruchu</label>
-                                                                            <p class="text-gray-500">Powiadomienie o
-                                                                                konieczności
-                                                                                wezwania
-                                                                                technika.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="relative flex items-start">
-                                                                        <div class="flex h-5 items-center">
-                                                                            <input id="raports" name="raports"
-                                                                                   type="checkbox"
-                                                                                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                                        </div>
-                                                                        <div class="ml-3 text-sm">
-                                                                            <label for="raports"
-                                                                                   class="font-medium text-gray-700">Dyrektor
-                                                                                zakładu</label>
-                                                                            <p class="text-gray-500">Powiadomienie w
-                                                                                sprawach
-                                                                                pilnych dyrektora
-                                                                                zakładu.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                                <div class="sm:col-span-1 pt-6 sm:pt-5">
-                                                    <div role="group" aria-labelledby="label-notifications">
-                                                        <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
-                                                            <div>
-                                                                <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
-                                                                     id="label-notifications">Kontakt i Wysyłanie
-                                                                    Alertów Mobilnych
-                                                                </div>
-                                                            </div>
-                                                            <div class="sm:col-span-2">
-                                                                <div class="max-w-lg">
-                                                                    <p class="text-sm text-gray-500">Dostarczenie
-                                                                        wiadomości SMS na
-                                                                        telefon
-                                                                        służbowy.</p>
-                                                                    <div class="mt-4 space-y-4">
-                                                                        <div class="flex items-center">
-                                                                            <input id="pushEverythink"
-                                                                                   name="pushNotifications"
-                                                                                   type="radio"
-                                                                                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                                            <label for="pushEverythink"
-                                                                                   class="ml-3 block text-sm font-medium text-gray-700">Wszystko</label>
-                                                                        </div>
-                                                                        <div class="flex items-center">
-                                                                            <input id="pushEmail"
-                                                                                   name="pushNotifications"
-                                                                                   type="radio"
-                                                                                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                                            <label for="pushEmail"
-                                                                                   class="ml-3 block text-sm font-medium text-gray-700">Identycznie
-                                                                                jak
-                                                                                w opcji email</label>
-                                                                        </div>
-                                                                        <div class="flex items-center">
-                                                                            <input id="pushNothing"
-                                                                                   name="pushNotifications"
-                                                                                   type="radio"
-                                                                                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                                            <label for="pushNothing"
-                                                                                   class="ml-3 block text-sm font-medium text-gray-700">Brak
-                                                                                wysyłania
-                                                                                powiadomień</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

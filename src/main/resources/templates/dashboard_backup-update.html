@@ -15,12 +15,22 @@
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
-                                <img class="h-12 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                                <img class="h-14 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
 
                                 <div class="hidden md:block">
                                     <div class="ml-24 flex items-baseline space-x-4">
                                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                          </div>
+                                        <a href="#"
+                                           class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                           aria-current="page">Panel Główny</a>
+
+                                        <a href="#"
+                                           class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Kadry</a>
+
+                                        <a href="#"
+                                           class="bg-yellow-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Zgłoszenia</a>
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="hidden md:block">
@@ -55,6 +65,16 @@
                 <div class="border-b border-gray-700 md:hidden" id="mobile-menu">
                     <div class="space-y-1 px-2 py-3 sm:px-3">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                        <a href="#" class="bg-yellow-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+                           aria-current="page">Panel główny</a>
+
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Kadry</a>
+
+                        <a href="#"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Zgłoszenia</a>
+                    </div>
+
                 </div>
         </nav>
         <header class="py-10">
@@ -146,22 +166,6 @@
                                     </div>
                                 </div>
 
-                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
-                                    <label for="engineerId"
-                                           class="block text-lm font-medium text-gray-700 sm:mt-px sm:pt-2">Realizujący zlecenie</label>
-                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <select th:field="${job.engineer.id}" id="engineerId" name="engineerId"
-                                                autocomplete="engineer"
-                                                class="block w-full max-w-lg rounded-md border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-
-                                            <option th:each="engineer : ${engineers}"
-                                                    th:text="${engineer.name}"
-                                                    th:value="${engineer.id}">
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class=" mt-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-100 sm:pt-5">
                                     <label for="jobStartTime"
                                            class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data
@@ -175,8 +179,6 @@
                                                class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                                     </div>
                                 </div>
-
-
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
                                     <label for="jobStartTime"
                                            class="block text-lm font-medium text-blue-700 sm:mt-px sm:pt-2">Data
@@ -189,6 +191,7 @@
                                                class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                                     </div>
                                 </div>
+
                             </div>
 
 
