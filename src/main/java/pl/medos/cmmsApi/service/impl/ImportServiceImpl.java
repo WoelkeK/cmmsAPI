@@ -10,13 +10,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Person;
+import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -27,6 +26,7 @@ public class ImportServiceImpl implements ImportService {
 
     private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
+    private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department"));
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
@@ -114,6 +114,50 @@ public class ImportServiceImpl implements ImportService {
         return departments;
     }
 
+    @Override
+    public List<Machine> importExcelMachineData(MultipartFile fileName) throws IOException {
+        LOGGER.info("importExcelMAchinesData()");
+
+        List<MachineDep> rawDataList = new ArrayList<>();
+        InputStream file = new BufferedInputStream(fileName.getInputStream());
+
+        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        Person person = new Person();
+        Iterator<Row> rowIterator = sheet.iterator();
+
+        while (rowIterator.hasNext()) {
+
+            Row row = rowIterator.next();
+            Map<String, String> rowDataMap = new HashMap<>();
+            Cell cell;
+            for (int k = 0; k < row.getLastCellNum(); k++) {
+                if (null != (cell = row.getCell(k))) {
+                    switch (cell.getCellType()) {
+                        case NUMERIC:
+                            rowDataMap.put(machines.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
+                            break;
+                        case STRING:
+//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
+                            rowDataMap.put(machines.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
+                            break;
+                    }
+                }
+            }
+            ObjectMapper mapper = new ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+
+            MachineDep rawData = mapper.convertValue(rowDataMap, MachineDep.class);
+            rawDataList.add(rawData);
+            LOGGER.info("rawData " + rawData);
+        }
+        List<Machine> machines = machineDataExcelConverter(rawDataList);
+        return machines;
+    }
+
 
     private List<Employee> employeeDataExcelConverter(List<Person> persons) {
         LOGGER.info("employeeDataExcelConverter()");
@@ -156,6 +200,34 @@ public class ImportServiceImpl implements ImportService {
 
         LOGGER.info("employeeDataExcelConverter(...)");
         return departments;
+    }
+
+    private List<Machine> machineDataExcelConverter(List<MachineDep> machineDeps) {
+        LOGGER.info("employeeDataExcelConverter()");
+
+        List<Machine> convertedMachines =
+                machineDeps.stream().map(m -> {
+
+                                    Machine machine = new Machine();
+                                    machine.setId(Long.parseLong((String.valueOf(m.getId()))));
+                                    machine.setName(String.valueOf(m.getName()));
+                                    machine.setModel(String.valueOf(m.getModel()));
+                                    machine.setManufactured(Integer.valueOf(m.getManufactured()));
+                                    machine.setSerialNumber(String.valueOf(m.getSerialNumber()));
+                                    Department department = new Department();
+                                    department.setId(Long.valueOf(m.getDepartment()));
+                                    machine.setDepartment(department);
+                                    machine.setStatus(m.getStatus());
+                                    machine.setInstallDate(LocalDateTime.now());
+
+                                    LOGGER.info("departmentNameNull (...)");
+                                    return machine;
+                                }
+                        )
+                        .toList();
+
+        LOGGER.info("employeeDataExcelConverter(...)");
+        return convertedMachines;
     }
 }
 

@@ -5,15 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ExportService;
+import pl.medos.cmmsApi.service.ImportService;
 import pl.medos.cmmsApi.service.MachineService;
 
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,11 +34,13 @@ public class WebMachineController {
     private MachineService machineService;
     private DepartmentService departmentService;
     private ExportService exportService;
+    private ImportService importService;
 
-    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService) {
+    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService, ImportService importService) {
         this.machineService = machineService;
         this.departmentService = departmentService;
         this.exportService = exportService;
+        this.importService = importService;
     }
 
     @GetMapping
@@ -50,7 +56,7 @@ public class WebMachineController {
 
     @GetMapping("/search/query")
     public String searchMachineByQuery(@RequestParam(value = "machineQuery") String query,
-                                      Model model) {
+                                       Model model) {
         LOGGER.info("search()");
         List<Machine> machines = machineService.findMachinesByQuery(query);
         model.addAttribute("machines", machines);
@@ -59,7 +65,7 @@ public class WebMachineController {
 
     @GetMapping("/search/machine")
     public String searchJobsByMachineId(@RequestParam(value = "machineName") String machineName,
-                                      Model model) throws MachineNotFoundException {
+                                        Model model) throws MachineNotFoundException {
         LOGGER.info("search()");
         Machine machines = machineService.findMachineById(Long.parseLong(machineName));
         model.addAttribute("machines", machines);
@@ -89,8 +95,8 @@ public class WebMachineController {
     }
 
     @PostMapping(value = "/update/{id}")
-    public String update(@PathVariable (name = "id") Long id,
-            @ModelAttribute(name = "machine") Machine machine) throws MachineNotFoundException {
+    public String update(@PathVariable(name = "id") Long id,
+                         @ModelAttribute(name = "machine") Machine machine) throws MachineNotFoundException {
         LOGGER.info("update()" + machine);
         Machine savedMachine = machineService.updateMachine(machine, id);
         LOGGER.info("update(...)" + savedMachine);
@@ -148,11 +154,9 @@ public class WebMachineController {
     }
 
 
-
-
     @GetMapping(value = "/export")
-    public void exportMachines(@ModelAttribute (name = "machines") List<Machine> machines,
-            HttpServletResponse response, Model model) throws Exception {
+    public void exportMachines(@ModelAttribute(name = "machines") List<Machine> machines,
+                               HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
 
         response.setContentType("application/octet-stream");
@@ -167,5 +171,30 @@ public class WebMachineController {
         exportService.generateExcelFile(response);
         response.flushBuffer();
         LOGGER.info("export(...)");
+    }
+
+    @GetMapping("/file")
+    public String showUploadForm() {
+        return "uploadMach-form";
+    }
+
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        LOGGER.info("importMachines()");
+        if (file.isEmpty()) {
+            LOGGER.info("Please select file to upload");
+            return "redirect/machines";
+        }
+
+        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
+        List<Machine> machines = importService.importExcelMachineData(file);
+
+        machines.forEach((machine) -> {
+            machineService.createMachine(machine);
+        });
+        LOGGER.info("importMachines(...) ");
+
+        return "redirect:/machines";
     }
 }

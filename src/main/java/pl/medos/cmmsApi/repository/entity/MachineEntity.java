@@ -27,7 +27,7 @@ public class MachineEntity {
     private String model;
     private int manufactured;
     private String serialNumber;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
     private String status;
