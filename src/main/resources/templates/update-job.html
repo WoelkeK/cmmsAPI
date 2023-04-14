@@ -19,9 +19,6 @@
                 <input type="hidden" th:field="*{machine.id}">
                 <input type="hidden" th:field="*{message}">
 
-
-
-
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">
                         <div>
@@ -38,7 +35,7 @@
                                        class="block text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Opis wykonanych
                                     czynności</label>
                                 <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                    <textarea id="solution" name="solution" rows="3"
+                                    <textarea th:utext="*{solution}" id="solution" name="solution" rows="3"
                                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
                                     <p class="mt-2 text-sm text-gray-700">Wprowadź informację, czego dotyczy awaria lub
                                         zlecenie.</p>
@@ -112,19 +109,20 @@
                         zlecenia</label>
                     <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                        <input type="datetime-local" th:field="${job.jobStartTime}" id="jobStartTime"
+                        <input type="datetime-local" th:value="${job.jobStartTime}" id="jobStartTime"
                                name="jobStartTime"
-                               autocomplete="datetime-local"
-                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                                          class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+
                     </div>
                 </div>
+
                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
                     <label for="jobStartTime"
                            class="block text-lm font-medium text-blue-700 sm:mt-px sm:pt-2">Data zakończenia
                         zlecenia</label>
                     <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                        <input type="datetime-local" th:field="${job.jobStopTime}"  xc
+                        <input type="datetime-local" th:value="${job.jobStopTime}"
                                autocomplete="date"
                                class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                     </div>

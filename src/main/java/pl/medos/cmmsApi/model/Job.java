@@ -25,9 +25,10 @@ public class Job {
     private Department department;
     private Machine machine;
     //    private Cost cost;
-    @NotEmpty
+    @NotEmpty(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private String message;
     private Boolean directContact;
+    @NotEmpty(message = "Należy uzuzpełnić opis wykonanych czynności!")
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;

@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,8 +38,10 @@ public class JobEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "cost_id")
 //    private CostEntity cost;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String message;
     private boolean directContact;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
