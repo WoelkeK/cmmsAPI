@@ -132,16 +132,16 @@
 
                                     <div class="bg-light-blue sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
                                         <label for="solution"
-                                               class="block text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Opis
+                                               class="block text-xl font-medium text-green-600 sm:mt-px sm:pt-2">Opis
                                             wykonanych
                                             czynności</label>
                                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                                     <textarea th:utext="${solution}" id="solution" name="solution" rows="3"
                                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                                            <p class="mt-2 text-sm text-gray-500">Wprowadź informację, czego dotyczy
-                                                awaria
-                                                lub
-                                                zlecenie.</p>
+
+                                            <p th:errors = "*{solution}" class="text-danger mt-2 text-lm text-red-500"
+                                               th:if="${#fields.hasErrors('solution')}"></p>
+
                                         </div>
                                     </div>
                                 </div>
@@ -208,8 +208,9 @@
                                                 <span class="ml-2 w-0 flex-1 truncate">dokumentacja_fotograficzna.pdf</span>
                                             </div>
                                             <div class="ml-4 flex-shrink-0">
-                                                <a href="#"
-                                                   class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>
+<!--                                                <a href="#"-->
+<!--                                                   class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>-->
+                                                <input type="file" accept="image/*" class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz>
                                             </div>
                                         </li>
                                     </ul>

@@ -62,12 +62,6 @@ public class DashboardController {
 
             job.setStatus("Zakończono");
             model.addAttribute("job", job);
-//            List<Department> departments = departmentService.findAllDepartments();
-//            model.addAttribute("departments", departments);
-//            List<Employee> employees = employeeService.finadAllEmployees();
-//            model.addAttribute("employees", employees);
-//            List<Machine> machines = machineService.findAllMachines();
-//            model.addAttribute("machines", machines);
             LOGGER.info("updateView(...)" + job.getStatus());
             return "dashboard-edit.html";
         }else{
@@ -86,7 +80,7 @@ public class DashboardController {
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            return "update-job";
+            return "dashboard-edit";
         }
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
@@ -99,6 +93,7 @@ public class DashboardController {
         LOGGER.info("createView()");
         Job job = new Job();
         job.setStatus("Zgłoszono");
+        job.setSolution(" ");
         model.addAttribute("job", job);
         return "dashboard-create.html";
     }
@@ -113,7 +108,7 @@ public class DashboardController {
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            return "create-job";
+            return "dashboard-create";
         }
         model.addAttribute("job", job);
         jobService.createJob(job);
