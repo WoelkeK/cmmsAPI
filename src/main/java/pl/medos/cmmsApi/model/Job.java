@@ -34,5 +34,6 @@ public class Job {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
+    private String photo;
 
 }
