@@ -4,12 +4,17 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
+import pl.medos.cmmsApi.service.impl.FileUploadImplService;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
@@ -58,13 +63,13 @@ public class DashboardController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
 
-        if(job.getStatus().equals("Zgłoszono")) {
+        if (job.getStatus().equals("Zgłoszono")) {
 
             job.setStatus("Zakończono");
             model.addAttribute("job", job);
             LOGGER.info("updateView(...)" + job.getStatus());
             return "dashboard-edit.html";
-        }else{
+        } else {
 
             return "redirect:/dashboards";
         }
@@ -99,11 +104,14 @@ public class DashboardController {
     }
 
     @PostMapping(value = "/create")
-    public String create(
-            @Valid @ModelAttribute(name = "job") Job job,
-            BindingResult result,
-            Model model) {
+    public String create(@RequestParam(name = "image") MultipartFile file,
+                         @Valid @ModelAttribute(name = "job") Job job,
+                         BindingResult result,
+                         Model model) throws IOException {
         LOGGER.info("create()" + job.getId());
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        LOGGER.info("Image fileName: " + fileName);
+        job.setPhoto(fileName);
 
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
@@ -111,10 +119,14 @@ public class DashboardController {
             return "dashboard-create";
         }
         model.addAttribute("job", job);
-        jobService.createJob(job);
+        Job savedJob = jobService.createJob(job);
+        String uploadDir = System.getProperty("user.home") + File.separator + "krzysztof" + File.separator + "photos" +File.separator+ savedJob.getId();
+        FileUploadImplService.saveFile(uploadDir, fileName, file);
         LOGGER.info("create(...)");
         return "redirect:/dashboards";
     }
+
+
 
     @GetMapping(value = "/read/{id}")
     public String read(
