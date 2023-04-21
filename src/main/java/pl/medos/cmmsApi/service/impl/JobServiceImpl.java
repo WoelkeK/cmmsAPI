@@ -1,18 +1,17 @@
 package pl.medos.cmmsApi.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
-import pl.medos.cmmsApi.model.Cost;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Job;
-import pl.medos.cmmsApi.model.Machine;
+import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
 import pl.medos.cmmsApi.service.CostService;
+import pl.medos.cmmsApi.service.ImageService;
 import pl.medos.cmmsApi.service.JobService;
 import pl.medos.cmmsApi.service.mapper.JobMapper;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -27,10 +26,13 @@ public class JobServiceImpl implements JobService {
     private JobMapper jobMapper;
     private CostService costService;
 
-    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper, CostService costService) {
+    private ImageService imageService;
+
+    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper, CostService costService, ImageService imageService) {
         this.jobRepository = jobRepository;
         this.jobMapper = jobMapper;
         this.costService = costService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -80,11 +82,22 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job createJob(Job job) {
+    public Job createJob(Job job) throws IOException {
         LOGGER.info("create(" + job + ")");
+        MultipartFile multipartFile = job.getImage();
+        String originalFilename = multipartFile.getOriginalFilename();
+        job.setImageFileName(originalFilename);
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
         Job savedJobModel = jobMapper.entityToModel(savedJobEntity);
+
+        Image image = new Image();
+        image.setId(savedJobModel.getId());
+        image.setProfilePicture(multipartFile.getOriginalFilename());
+        image.setSize(multipartFile.getSize());
+        image.setContent(multipartFile.getBytes());
+        imageService.createImage(image);
+
         LOGGER.info("create(...)");
         return savedJobModel;
     }

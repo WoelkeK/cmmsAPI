@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -47,4 +48,7 @@ public class JobEntity {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
+    @Transient
+    private MultipartFile image;
+    private String imageFileName;
 }

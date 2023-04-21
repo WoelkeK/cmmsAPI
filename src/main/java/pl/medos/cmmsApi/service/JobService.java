@@ -7,6 +7,7 @@ import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface JobService {
@@ -19,7 +20,7 @@ public interface JobService {
 
     List<Job> findJobsByemployee(Employee employeeByName);
 
-    Job createJob(Job job);
+    Job createJob(Job job) throws IOException;
 
     Job findJobById(Long id) throws JobNotFoundException;
 

@@ -13,7 +13,12 @@
             <h1 class="text-6xl font-semibold text-gray-900">Zlecenia</h1>
 
 
-            <form th:action="@{/jobs/create}" th:object="${job}" method="post"
+            <form th:action="@{/jobs/create}" th:object="${job}" method="post">
+
+            <input type="hidden" th:field="*{solution}">
+            <input type="hidden" th:field="*{status}">
+            <input type="hidden" th:field="*{jobStopTime}">
+
                   class="space-y-8 divide-y divide-gray-700">
 
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">

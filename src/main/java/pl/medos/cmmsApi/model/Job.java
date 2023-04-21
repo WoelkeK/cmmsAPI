@@ -1,9 +1,11 @@
 package pl.medos.cmmsApi.model;
 
 
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.time.LocalDateTime;
@@ -34,6 +36,8 @@ public class Job {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
-    private String photo;
+    @Transient
+    private MultipartFile image;
+    private String imageFileName;
 
 }
