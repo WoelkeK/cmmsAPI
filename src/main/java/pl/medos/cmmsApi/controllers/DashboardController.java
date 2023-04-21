@@ -4,20 +4,16 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
-import pl.medos.cmmsApi.service.impl.FileUploadImplService;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
+
 @Controller
 @RequestMapping("/dashboards")
 @SessionAttributes(names = {"departments", "employees", "machines", "engineers"})
@@ -56,6 +52,33 @@ public class DashboardController {
         return "dashboard-list.html";
     }
 
+    @GetMapping(value = "/create")
+    public String createView(Model model) {
+        LOGGER.info("createView()");
+        Job job = new Job();
+        job.setStatus("Zgłoszono");
+        job.setSolution(" ");
+        model.addAttribute("job", job);
+        return "dashboard-create.html";
+    }
+
+    @PostMapping(value = "/create")
+    public String create(@Valid @ModelAttribute(name = "job") Job job,
+                         BindingResult result,
+                         Model model) throws IOException {
+        LOGGER.info("create()" + job.getId());
+
+        if (result.hasErrors()) {
+            LOGGER.info("create: result has erorr()" + result.getFieldError());
+            model.addAttribute("job", job);
+            return "dashboard-create";
+        }
+        model.addAttribute("job", job);
+        Job savedJob = jobService.createJob(job);
+        LOGGER.info("create(...)");
+        return "redirect:/dashboards";
+    }
+
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
@@ -70,9 +93,17 @@ public class DashboardController {
             LOGGER.info("updateView(...)" + job.getStatus());
             return "dashboard-edit.html";
         } else {
-
             return "redirect:/dashboards";
         }
+    }
+    @GetMapping(value = "/read/{id}")
+    public String read(
+            @PathVariable(name = "id") Long id,
+            ModelMap modelMap) throws Exception {
+        LOGGER.info("read(" + id + ")");
+        Job job = jobService.findJobById(id);
+        modelMap.addAttribute("job", job);
+        return "read-job.html";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -81,7 +112,6 @@ public class DashboardController {
                          BindingResult result,
                          Model model) throws CostNotFoundException, JobNotFoundException {
         LOGGER.info("update()" + job.getId());
-
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
@@ -91,51 +121,6 @@ public class DashboardController {
         jobService.updateJob(job, id);
         LOGGER.info("update(...)");
         return "redirect:/dashboards";
-    }
-
-    @GetMapping(value = "/create")
-    public String createView(Model model) {
-        LOGGER.info("createView()");
-        Job job = new Job();
-        job.setStatus("Zgłoszono");
-        job.setSolution(" ");
-        model.addAttribute("job", job);
-        return "dashboard-create.html";
-    }
-
-    @PostMapping(value = "/create")
-    public String create(@RequestParam(name = "image") MultipartFile file,
-                         @Valid @ModelAttribute(name = "job") Job job,
-                         BindingResult result,
-                         Model model) throws IOException {
-        LOGGER.info("create()" + job.getId());
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        LOGGER.info("Image fileName: " + fileName);
-        job.setPhoto(fileName);
-
-        if (result.hasErrors()) {
-            LOGGER.info("create: result has erorr()" + result.getFieldError());
-            model.addAttribute("job", job);
-            return "dashboard-create";
-        }
-        model.addAttribute("job", job);
-        Job savedJob = jobService.createJob(job);
-        String uploadDir = System.getProperty("user.home") + File.separator + "krzysztof" + File.separator + "photos" +File.separator+ savedJob.getId();
-        FileUploadImplService.saveFile(uploadDir, fileName, file);
-        LOGGER.info("create(...)");
-        return "redirect:/dashboards";
-    }
-
-
-
-    @GetMapping(value = "/read/{id}")
-    public String read(
-            @PathVariable(name = "id") Long id,
-            ModelMap modelMap) throws Exception {
-        LOGGER.info("read(" + id + ")");
-        Job job = jobService.findJobById(id);
-        modelMap.addAttribute("job", job);
-        return "read-job.html";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -151,36 +136,6 @@ public class DashboardController {
                                       Model model) {
         LOGGER.info("search()" + query);
         List<Job> jobs = jobService.findJobsByMessage(query);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
-
-    @GetMapping("/search/department")
-    public String searchJobsByDepartment(@RequestParam(value = "jobDepartment") String deaprtmentName,
-                                         Model model) throws DepartmentNotFoundException {
-        LOGGER.info("search()" + deaprtmentName);
-        Department departmentByName = departmentService.findDepartmentById(Long.parseLong(deaprtmentName));
-        List<Job> jobs = jobService.findJobsByDepartment(departmentByName);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
-
-    @GetMapping("/search/employee")
-    public String searchJobsByEmployee(@RequestParam(value = "jobEmployee") String employyeName,
-                                       Model model) throws EmployeeNotFoundException {
-        LOGGER.info("search()");
-        Employee employeeByName = employeeService.findEmployeeById(Long.parseLong(employyeName));
-        List<Job> jobs = jobService.findJobsByemployee(employeeByName);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
-
-    @GetMapping("/search/machine")
-    public String searchJobsByMachine(@RequestParam(value = "jobMachine") String machineName,
-                                      Model model) throws MachineNotFoundException {
-        LOGGER.info("search()");
-        Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
-        List<Job> jobs = jobService.findJobsByMachine(machineByName);
         model.addAttribute("jobs", jobs);
         return "list-job";
     }
