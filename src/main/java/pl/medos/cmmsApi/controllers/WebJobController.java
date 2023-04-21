@@ -15,6 +15,7 @@ import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +32,20 @@ public class WebJobController {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private MachineService machineService;
-
     private EngineerService engineerService;
+        private ImageService imageService;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService) {
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService, ImageService imageService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
         this.engineerService = engineerService;
+        this.imageService = imageService;
     }
 
     //    @Scheduled(fixedDelay = 100000)
-    public void createJob() {
+    public void createJob() throws IOException {
 
         Department department = new Department();
         department.setId(1L);
@@ -94,6 +96,8 @@ public class WebJobController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEmployees();
         model.addAttribute("engineers", engineers);
+        List<Image> images = imageService.findAllImage();
+        model.addAttribute("images", images);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
     }
@@ -130,7 +134,10 @@ public class WebJobController {
     @GetMapping(value = "/create")
     public String createView(Model model) {
         LOGGER.info("createView()");
-        model.addAttribute("job", new Job());
+        Job job = new Job();
+        job.setStatus("Zgłoszono");
+        job.setSolution(" ");
+        model.addAttribute("job", job);
         return "create-job.html";
     }
 
@@ -138,7 +145,7 @@ public class WebJobController {
     public String create(
             @Valid @ModelAttribute(name = "job") Job job,
             BindingResult result,
-            Model model) {
+            Model model) throws IOException {
         LOGGER.info("create()" + job.getId());
 
         if (result.hasErrors()) {

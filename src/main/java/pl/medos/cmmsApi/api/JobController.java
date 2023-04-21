@@ -13,6 +13,7 @@ import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.service.JobService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,7 +35,7 @@ public class JobController {
     }
 
     @PostMapping("/job")
-    public Job createJob(@RequestBody Job job) {
+    public Job createJob(@RequestBody Job job) throws IOException {
         LOGGER.info("createJob(" + job + ")");
         Job createdJob = jobService.createJob(job);
         LOGGER.info("createJob(...)");

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
@@ -74,7 +75,7 @@ public class DashboardController {
             return "dashboard-create";
         }
         model.addAttribute("job", job);
-        Job savedJob = jobService.createJob(job);
+          Job savedJob = jobService.createJob(job);
         LOGGER.info("create(...)");
         return "redirect:/dashboards";
     }
@@ -96,6 +97,7 @@ public class DashboardController {
             return "redirect:/dashboards";
         }
     }
+
     @GetMapping(value = "/read/{id}")
     public String read(
             @PathVariable(name = "id") Long id,
