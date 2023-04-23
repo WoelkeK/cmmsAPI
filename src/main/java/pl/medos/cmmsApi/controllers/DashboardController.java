@@ -22,12 +22,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/dashboards")
-@SessionAttributes(names = {"departments", "employees", "machines", "engineers"})
+@SessionAttributes(names = {"departments", "employees", "machines", "engineers", "images"})
 public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
@@ -61,6 +63,11 @@ public class DashboardController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEmployees();
         model.addAttribute("engineers", engineers);
+        Map<Long, String> jobBase64Images = new HashMap<>();
+        for(Job job: jobs){
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+        }
+        model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "dashboard-list.html";
     }

@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
-@SessionAttributes(names = {"departments", "employees", "machines", "engineers"})
+@SessionAttributes(names = {"departments", "employees", "machines", "engineers", "images"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -77,9 +77,6 @@ public class WebJobController {
         for(Job job: jobs){
             jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
                     }
-
-//
-//        List<Image> images = imageService.findAllImage();
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
