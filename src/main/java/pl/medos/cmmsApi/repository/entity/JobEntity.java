@@ -48,7 +48,10 @@ public class JobEntity {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
-    @Transient
-    private MultipartFile image;
-    private String imageFileName;
+    @Lob
+    @Column(name = "originalImage", columnDefinition = "LONGBLOB")
+    private byte[] originalImage;
+    @Lob
+    @Column(name = "resizedImage", columnDefinition = "BLOB")
+    private byte[] resizedImage;
 }

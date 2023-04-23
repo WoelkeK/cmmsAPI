@@ -36,8 +36,8 @@ public class Job {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
-    @Transient
-    private MultipartFile image;
-    private String imageFileName;
+
+    private byte[] originalImage;
+    private byte[] resizedImage;
 
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.medos.cmmsApi.repository.entity.MaintenenceEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +23,5 @@ public class Machine {
     private Department department;
     private String status;
     private LocalDateTime installDate;
-
-
+    private Maintenance maintenance;
 }

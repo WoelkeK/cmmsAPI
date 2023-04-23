@@ -1,29 +1,44 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.imgscalr.Scalr;
+import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
+import pl.medos.cmmsApi.exception.ImageNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/jobs")
-@SessionAttributes(names = {"departments", "employees", "machines"})
+@SessionAttributes(names = {"departments", "employees", "machines", "engineers"})
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
@@ -33,7 +48,7 @@ public class WebJobController {
     private DepartmentService departmentService;
     private MachineService machineService;
     private EngineerService engineerService;
-        private ImageService imageService;
+    private ImageService imageService;
 
     public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService, ImageService imageService) {
         this.jobService = jobService;
@@ -42,45 +57,6 @@ public class WebJobController {
         this.machineService = machineService;
         this.engineerService = engineerService;
         this.imageService = imageService;
-    }
-
-    //    @Scheduled(fixedDelay = 100000)
-    public void createJob() throws IOException {
-
-        Department department = new Department();
-        department.setId(1L);
-        department.setName("department");
-        department.setLocation("location");
-
-        Machine machine = new Machine();
-        machine.setId(1L);
-        machine.setName("name");
-        machine.setModel("model");
-        machine.setManufactured(1234);
-        machine.setDepartment(department);
-
-        Employee employee = new Employee();
-        employee.setId(1L);
-        employee.setName("fullName");
-        employee.setPhone("1234567890");
-        employee.setEmail("aaaa@bbbb.cc");
-        employee.setDepartment(department);
-
-        Job job = new Job();
-        job.setRequestDate(LocalDateTime.now());
-        job.setUser(new User());
-        job.setEmployee(employee);
-        job.setDepartment(department);
-        job.setMachine(machine);
-        job.setMessage("message");
-        job.setDirectContact(true);
-        job.setSolution("solution");
-        job.setJobStartTime(LocalDateTime.now());
-        job.setJobStopTime(LocalDateTime.now());
-        job.setCalcCost(123.33);
-
-        jobService.createJob(job);
-
     }
 
     @GetMapping
@@ -96,8 +72,15 @@ public class WebJobController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEmployees();
         model.addAttribute("engineers", engineers);
-        List<Image> images = imageService.findAllImage();
-        model.addAttribute("images", images);
+
+        Map<Long, String> jobBase64Images = new HashMap<>();
+        for(Job job: jobs){
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+                    }
+
+//
+//        List<Image> images = imageService.findAllImage();
+        model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
     }
@@ -145,9 +128,20 @@ public class WebJobController {
     public String create(
             @Valid @ModelAttribute(name = "job") Job job,
             BindingResult result,
-            Model model) throws IOException {
+            Model model,
+            MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
+        if(image!=null) {
 
+            byte[] orginalImage = imageService.multipartToByteArray(image);
+            job.setOriginalImage(orginalImage);
+            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
+            job.setResizedImage(resizeImage);
+        }else {
+            byte[] bytes = imageService.imageToByteArray();
+            job.setResizedImage(bytes);
+            job.setOriginalImage(bytes);
+        }
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
@@ -214,5 +208,17 @@ public class WebJobController {
         List<Job> jobs = jobService.findJobsByMachine(machineByName);
         model.addAttribute("jobs", jobs);
         return "list-job";
+    }
+
+    @GetMapping("/downloadfile")
+    public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
+        Job jobById = jobService.findJobById(id);
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename = " + jobById.getMachine().getName()+ jobById.getRequestDate()+".jpg";
+        response.setHeader(headerKey, headerValue);
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(jobById.getOriginalImage());
+        outputStream.close();
     }
 }

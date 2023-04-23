@@ -1,17 +1,14 @@
 package pl.medos.cmmsApi.service;
 
-import pl.medos.cmmsApi.exception.ImageNotFoundException;
-import pl.medos.cmmsApi.model.Image;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 public interface ImageService {
 
-    public void createImage(Image image);
+    byte[] simpleResizeImage(byte[] originalImage, int targetWidth) throws IOException;
 
-    public List<Image> findAllImage();
+    byte[] multipartToByteArray(MultipartFile multipartFile) throws IOException;
 
-    public Image findImageById(Long id) throws ImageNotFoundException;
-
+    byte[] imageToByteArray() throws IOException;
 
 }
