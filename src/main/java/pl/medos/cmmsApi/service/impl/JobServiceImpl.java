@@ -84,19 +84,19 @@ public class JobServiceImpl implements JobService {
     @Override
     public Job createJob(Job job) throws IOException {
         LOGGER.info("create(" + job + ")");
-        MultipartFile multipartFile = job.getImage();
-        String originalFilename = multipartFile.getOriginalFilename();
-        job.setImageFileName(originalFilename);
+//        MultipartFile multipartFile = job.getImage();
+//        String originalFilename = multipartFile.getOriginalFilename();
+//        job.setImageFileName(originalFilename);
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
         Job savedJobModel = jobMapper.entityToModel(savedJobEntity);
 
-        Image image = new Image();
-        image.setId(savedJobModel.getId());
-        image.setProfilePicture(multipartFile.getOriginalFilename());
-        image.setSize(multipartFile.getSize());
-        image.setContent(multipartFile.getBytes());
-        imageService.createImage(image);
+//        Image image = new Image();
+//        image.setId(savedJobModel.getId());
+//        image.setProfilePicture(multipartFile.getOriginalFilename());
+//        image.setSize(multipartFile.getSize());
+//        image.setContent(multipartFile.getBytes());
+//        imageService.createImage(image);
 
         LOGGER.info("create(...)");
         return savedJobModel;

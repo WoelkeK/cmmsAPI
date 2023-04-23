@@ -76,7 +76,7 @@
                 </div>
 
 
-                <form role="form" th:action="@{/dashboards/create}" th:object="${job}" method="post" enctype="multipart/form-data">
+                <form th:action="@{/dashboards/create}" th:object="${job}" method="post" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{solution}">
                     <input type="hidden" th:field="*{status}">
                     <input type="hidden" th:field="*{jobStopTime}">
@@ -176,7 +176,7 @@
                                             <div class="ml-4 flex-shrink-0">
                                                 <!--                                                <a href="#"-->
                                                 <!--                                                   class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>-->
-                                                <input type="file" th:field="*{image}" multiple="multiple" accept="image/*" id="image" name="image" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                                <input type="file" accept="image/*" id="image" name="image" class="font-medium text-indigo-600 hover:text-indigo-500">
                                             </div>
                                         </li>
                                     </ul>

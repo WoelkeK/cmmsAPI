@@ -1,6 +1,10 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.imgscalr.Scalr;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -11,7 +15,13 @@ import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,13 +37,15 @@ public class DashboardController {
     private DepartmentService departmentService;
     private MachineService machineService;
     private EngineerService engineerService;
+    private ImageService imageService;
 
-    public DashboardController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService) {
+    public DashboardController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService, ImageService imageService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
         this.engineerService = engineerService;
+        this.imageService = imageService;
     }
 
     @GetMapping
@@ -62,12 +74,17 @@ public class DashboardController {
         model.addAttribute("job", job);
         return "dashboard-create.html";
     }
-
     @PostMapping(value = "/create")
-    public String create(@Valid @ModelAttribute(name = "job") Job job,
-                         BindingResult result,
-                         Model model) throws IOException {
+    public String create(
+            @Valid @ModelAttribute(name = "job") Job job,
+            BindingResult result,
+            Model model,
+            MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
+        byte[] orginalImage = imageService.multipartToByteArray(image);
+        job.setOriginalImage(orginalImage);
+        byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
+        job.setResizedImage(resizeImage);
 
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
@@ -75,10 +92,27 @@ public class DashboardController {
             return "dashboard-create";
         }
         model.addAttribute("job", job);
-          Job savedJob = jobService.createJob(job);
+        jobService.createJob(job);
         LOGGER.info("create(...)");
         return "redirect:/dashboards";
     }
+
+//    @PostMapping(value = "/create")
+//    public String create(@Valid @ModelAttribute(name = "job") Job job,
+//                         BindingResult result,
+//                         Model model) throws IOException {
+//        LOGGER.info("create()" + job.getId());
+//
+//        if (result.hasErrors()) {
+//            LOGGER.info("create: result has erorr()" + result.getFieldError());
+//            model.addAttribute("job", job);
+//            return "dashboard-create";
+//        }
+//        model.addAttribute("job", job);
+//          Job savedJob = jobService.createJob(job);
+//        LOGGER.info("create(...)");
+//        return "redirect:/dashboards";
+//    }
 
     @GetMapping(value = "/update/{id}")
     public String updateView(

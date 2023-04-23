@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.api;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class DepartmentController {
 
     private static final Logger LOGGER = Logger.getLogger(DepartmentController.class.getName());

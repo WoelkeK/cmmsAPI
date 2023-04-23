@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="MACHINES")
+@Table(name = "MACHINES")
 public class MachineEntity {
 
     @Id
@@ -31,6 +32,10 @@ public class MachineEntity {
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "maintenance_id")
+    private MaintenenceEntity maintenence;
 
     @CreationTimestamp
     private LocalDateTime installDate;
