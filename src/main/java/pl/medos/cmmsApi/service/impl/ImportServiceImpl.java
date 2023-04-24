@@ -26,7 +26,7 @@ public class ImportServiceImpl implements ImportService {
 
     private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
-    private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department"));
+    private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department","status"));
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 

@@ -33,9 +33,9 @@ public class MachineEntity {
     private DepartmentEntity department;
     private String status;
 
-    @ManyToOne
-    @JoinColumn(name = "maintenance_id")
-    private MaintenenceEntity maintenence;
+//    @ManyToOne
+//    @JoinColumn(name = "maintenance_id")
+//    private MaintenenceEntity maintenence;
 
     @CreationTimestamp
     private LocalDateTime installDate;

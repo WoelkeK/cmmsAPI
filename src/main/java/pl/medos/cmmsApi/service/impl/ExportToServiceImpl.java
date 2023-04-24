@@ -11,6 +11,7 @@ import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.ExportService;
 
 import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -50,7 +51,9 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 2, "Model", style);
         createCell(row, 3, "Rok", style);
         createCell(row, 4, "S/N", style);
-        createCell(row, 5, "Stan.", style);
+        createCell(row, 5, "Data Instalacji.", style);
+        createCell(row, 6, "Stan.", style);
+        createCell(row, 7, "Wydział.", style);
     }
 
     private void createCell(Row row, int columnCount, Object valueOfCell, CellStyle style) {
@@ -82,7 +85,9 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getModel(), style);
             createCell(row, columnCount++, record.getManufactured(), style);
             createCell(row, columnCount++, record.getSerialNumber(), style);
+            createCell(row, columnCount++, record.getInstallDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
             createCell(row, columnCount++, record.getStatus(), style);
+            createCell(row, columnCount++, record.getDepartment().getName(), style);
         }
     }
 }

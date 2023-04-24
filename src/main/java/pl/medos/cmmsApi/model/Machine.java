@@ -23,5 +23,5 @@ public class Machine {
     private Department department;
     private String status;
     private LocalDateTime installDate;
-    private Maintenance maintenance;
+//    private Maintenance maintenance;
 }
