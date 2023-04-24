@@ -83,11 +83,11 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public Engineer findEmployeeByName(String employeeName) {
+    public List<Engineer> findEmployeeByName(String employeeName) {
         LOGGER.info("findEmployeeByName()" + employeeName);
-        EngineerEntity engineerEntity = engineerRepository.searchEmployeeByName(employeeName);
-        Engineer engineer = engineerMapper.entityToModel(engineerEntity);
-        LOGGER.info("findEmployeeByName(...)" + engineer.getName());
-        return engineer;
+        List<EngineerEntity> engineerEntities = engineerRepository.searchEmployeeByName(employeeName);
+        List<Engineer> engineers = engineerMapper.listModels(engineerEntities);
+        LOGGER.info("findEmployeeByName(...)");
+        return engineers;
     }
 }
