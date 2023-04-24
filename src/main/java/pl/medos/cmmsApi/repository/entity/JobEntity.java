@@ -48,8 +48,10 @@ public class JobEntity {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
+
     @Lob
-    @Column(name = "originalImage", columnDefinition = "BLOB")
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
     private byte[] originalImage;
     @Lob()
     @Basic(fetch = FetchType.LAZY)
