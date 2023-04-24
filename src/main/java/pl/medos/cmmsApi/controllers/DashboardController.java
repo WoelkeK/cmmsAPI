@@ -90,7 +90,7 @@ public class DashboardController {
         LOGGER.info("create()" + job.getId());
         byte[] orginalImage = imageService.multipartToByteArray(image);
         byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
-        byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 2000);
+        byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
         job.setResizedImage(resizeImage);
         job.setOriginalImage(resizeMaxImage);
 

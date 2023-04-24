@@ -49,7 +49,7 @@ public class JobEntity {
     private double calcCost;
     private String status;
     @Lob
-    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "originalImage", columnDefinition = "BLOB")
     private byte[] originalImage;
     @Lob()
     @Basic(fetch = FetchType.LAZY)
