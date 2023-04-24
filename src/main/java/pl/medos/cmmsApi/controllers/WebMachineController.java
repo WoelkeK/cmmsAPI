@@ -158,7 +158,6 @@ public class WebMachineController {
     public void exportMachines(@ModelAttribute(name = "machines") List<Machine> machines,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
