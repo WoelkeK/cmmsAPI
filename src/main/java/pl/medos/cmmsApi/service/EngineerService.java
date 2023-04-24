@@ -18,5 +18,5 @@ public interface EngineerService {
 
     void deleteEmployee(Long id);
 
-    Engineer findEmployeeByName(String employeeName);
+   List<Engineer> findEmployeeByName(String employeeName);
 }

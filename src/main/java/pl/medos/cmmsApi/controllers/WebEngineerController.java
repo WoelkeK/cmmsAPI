@@ -46,7 +46,7 @@ public class WebEngineerController {
     public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
                                        Model model) {
         LOGGER.info("search()");
-        Engineer employeeByName = engineerService.findEmployeeByName(query);
+        List<Engineer> employeeByName = engineerService.findEmployeeByName(query);
         model.addAttribute("engineers", employeeByName);
         return "list-engineer";
     }
