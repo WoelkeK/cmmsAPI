@@ -7,9 +7,11 @@ import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 
+import java.util.List;
+
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
     @Query("SELECT p from EmployeeEntity p WHERE " +
             " p.name LIKE CONCAT('%', :query, '%')")
-    EmployeeEntity searchEmployeeByName(String query);
+    List<EmployeeEntity> searchEmployeeByName(String query);
 }

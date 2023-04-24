@@ -50,7 +50,7 @@ public class WebEmployeeController {
     public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
                                        Model model) {
         LOGGER.info("search()");
-        Employee employeeByName = employeeService.findEmployeeByName(query);
+       List<Employee> employeeByName = employeeService.findEmployeeByName(query);
         model.addAttribute("employees", employeeByName);
         return "list-employee";
     }
