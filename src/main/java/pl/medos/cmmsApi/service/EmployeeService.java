@@ -16,5 +16,5 @@ public interface EmployeeService {
 
     void deleteEmployee(Long id);
 
-    Employee findEmployeeByName(String employeeName);
+    List<Employee> findEmployeeByName(String employeeName);
 }
