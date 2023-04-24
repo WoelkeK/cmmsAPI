@@ -131,9 +131,10 @@ public class WebJobController {
         if(image!=null) {
 
             byte[] orginalImage = imageService.multipartToByteArray(image);
-            job.setOriginalImage(orginalImage);
             byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
+            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
             job.setResizedImage(resizeImage);
+            job.setOriginalImage(resizeMaxImage);
         }else {
             byte[] bytes = imageService.imageToByteArray();
             job.setResizedImage(bytes);
@@ -212,7 +213,7 @@ public class WebJobController {
         Job jobById = jobService.findJobById(id);
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + jobById.getMachine().getName()+ jobById.getRequestDate()+".jpg";
+        String headerValue = "attachment; filename = " + jobById.getRequestDate()+".jpg";
         response.setHeader(headerKey, headerValue);
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(jobById.getOriginalImage());

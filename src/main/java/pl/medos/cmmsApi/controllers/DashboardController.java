@@ -89,9 +89,10 @@ public class DashboardController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
         byte[] orginalImage = imageService.multipartToByteArray(image);
-        job.setOriginalImage(orginalImage);
         byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
+        byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 2000);
         job.setResizedImage(resizeImage);
+        job.setOriginalImage(resizeMaxImage);
 
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
