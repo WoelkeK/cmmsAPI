@@ -32,6 +32,8 @@ public class ImageServiceImpl implements ImageService {
         InputStream inputStream = multipartFile.getInputStream();
         BufferedImage bfImage = ImageIO.read(inputStream);
         byte[] bytesImage = toByteArray(bfImage, "jpg");
+        inputStream.close();
+        bfImage.flush();
         return bytesImage;
     }
 
@@ -41,6 +43,7 @@ public class ImageServiceImpl implements ImageService {
         URL resource = getClass().getResource("/image.jpg");
         BufferedImage bf = ImageIO.read(resource);
         byte[] defaultImage = toByteArray(bf, "jpg");
+        bf.flush();
         return defaultImage;
     }
 
@@ -55,6 +58,7 @@ public class ImageServiceImpl implements ImageService {
     BufferedImage toBufferedImage(byte[] bytes) throws IOException {
         InputStream is = new ByteArrayInputStream(bytes);
         BufferedImage bi = ImageIO.read(is);
+        is.close();
         return bi;
     }
 }
