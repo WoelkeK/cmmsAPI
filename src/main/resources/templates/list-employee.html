@@ -436,15 +436,46 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="pt-5">
+                                <div class="flex justify-end">
+                                    <button type="button"
+                                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        <a th:if="${currentPage >1}"
+                                           th:href="@{'/employees/page/' + ${currentPage - 1}}">Poprzedni</a>
+                                        <span th:unless="${currentPage >1}">Poprzedni</span>
+                                    </button>
+                                    <button type="button"
+                                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        <a th:if="${currentPage < totalPages}"
+                                           th:href="@{'/employees/page/' + ${currentPage + 1}}">Następny</a>
+                                        <span th:unless="${currentPage < totalPages}">Następny</span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${totalPages > 1}">
+                            <div class="row col-sm-10">
+                                <div class="col-sm-2">
+                                    Wszystkich wpisów: [[${totalItems}]]
+                                </div>
+                                <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/employees/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </main>
     </div>
 </div>
-</div>
-</main>
-</div>
-</div>
+
 </body>
 </html>

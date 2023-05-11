@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service;
 
+import org.springframework.data.domain.Page;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
 import java.util.List;
@@ -17,4 +18,6 @@ public interface EmployeeService {
     void deleteEmployee(Long id);
 
     List<Employee> findEmployeeByName(String employeeName);
+
+    Page<Employee> findPageinated(int pageNo, int pagesize);
 }

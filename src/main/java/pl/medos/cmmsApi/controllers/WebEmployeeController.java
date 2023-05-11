@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.controllers;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -36,8 +37,8 @@ public class WebEmployeeController {
         this.importService = importService;
     }
 
-    @GetMapping
-    public String listView(ModelMap modelMap) throws IOException {
+    @GetMapping(value = "/list")
+    public String listView2(ModelMap modelMap) throws IOException {
         LOGGER.info("listView()");
         List<Employee> employees = employeeService.finadAllEmployees();
         modelMap.addAttribute("employees", employees);
@@ -46,11 +47,35 @@ public class WebEmployeeController {
         return "list-employee.html";
     }
 
+    @GetMapping
+    public String listView(Model model) throws IOException {
+        LOGGER.info("listView()");
+        return findPaginated(1, model);
+    }
+
+    @GetMapping(value = "/page/{pageNo}")
+    public String findPaginated(
+            @PathVariable(value = "pageNo") int pageNo,
+            Model model) throws IOException {
+        int pageSize = 10;
+        LOGGER.info("findPage()");
+        Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize);
+        List<Employee> employees = pageEmployees.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", pageEmployees.getTotalPages());
+        model.addAttribute("totalItems", pageEmployees.getTotalElements());
+        model.addAttribute("employees", employees);
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        return "list-employee.html";
+    }
+
+
     @GetMapping("/search/name")
     public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
                                        Model model) {
         LOGGER.info("search()");
-       List<Employee> employeeByName = employeeService.findEmployeeByName(query);
+        List<Employee> employeeByName = employeeService.findEmployeeByName(query);
         model.addAttribute("employees", employeeByName);
         return "list-employee";
     }
