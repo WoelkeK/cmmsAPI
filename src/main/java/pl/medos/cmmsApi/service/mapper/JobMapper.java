@@ -1,9 +1,11 @@
 package pl.medos.cmmsApi.service.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 public class JobMapper {
 
     private static final Logger LOGGER = Logger.getLogger(JobMapper.class.getName());
-      private JobEntity jobEntity;
+    private JobEntity jobEntity;
 
     public List<Job> listModels(List<JobEntity> jobEntities) {
 
@@ -22,6 +24,14 @@ public class JobMapper {
                 .map(this::entityToModel)
                 .collect(Collectors.toList());
         return jobModels;
+    }
+
+    public Page<Job> entitiesJobToModelsPage(Page<JobEntity> jobPageEntities) {
+        LOGGER.info("entitiesJobToModelPage()");
+        ModelMapper modelMapper = new ModelMapper();
+        Page<Job> jobPageModel = jobPageEntities.map(JobEntity -> modelMapper.map(JobEntity, Job.class));
+        LOGGER.info("entitiesJobToModelPage(...)");
+        return jobPageModel;
     }
 
     public Job entityToModel(JobEntity jobEntity) {

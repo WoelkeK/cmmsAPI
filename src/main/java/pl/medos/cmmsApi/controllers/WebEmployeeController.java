@@ -38,7 +38,7 @@ public class WebEmployeeController {
     }
 
     @GetMapping(value = "/list")
-    public String listView2(ModelMap modelMap) throws IOException {
+    public String listViewAll(ModelMap modelMap) throws IOException {
         LOGGER.info("listView()");
         List<Employee> employees = employeeService.finadAllEmployees();
         modelMap.addAttribute("employees", employees);
@@ -69,7 +69,6 @@ public class WebEmployeeController {
         model.addAttribute("departments", departments);
         return "list-employee.html";
     }
-
 
     @GetMapping("/search/name")
     public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
@@ -135,29 +134,6 @@ public class WebEmployeeController {
         employeeService.deleteEmployee(id);
         return "redirect:/employees";
     }
-
-//    @GetMapping(value = "/file")
-//    public String importEmployees() throws IOException {
-//        LOGGER.info("importEmployees()");
-//
-//        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-//        List<Department> readedDepartments = importService.importExcelDepartmentsData(fileName);
-//
-//        LOGGER.info("departments import()" + readedDepartments);
-//        readedDepartments.forEach(department -> {
-//            departmentService.createDepartment(department);
-//        });
-//
-//
-//        List<Employee> readedEmployees = importService.importExcelEmployeesData(fileName);
-//
-//        readedEmployees.forEach((employee) -> {
-//                   employeeService.createEmployee(employee);
-//        });
-//        LOGGER.info("importEmployees() " + employeesImportDto);
-//        return "redirect:/employees";
-//    }
-
 
     @GetMapping("/file")
     public String showUploadForm() {

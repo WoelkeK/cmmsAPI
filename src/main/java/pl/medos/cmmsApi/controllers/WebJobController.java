@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.imgscalr.Scalr;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -59,9 +60,9 @@ public class WebJobController {
         this.imageService = imageService;
     }
 
-    @GetMapping
-    public String listView(Model model) {
-        LOGGER.info("listView()");
+    @GetMapping(value = "/list")
+    public String listViewAll(Model model) {
+        LOGGER.info("listViewAll()");
         List<Job> jobs = jobService.findAllJobs();
         model.addAttribute("jobs", jobs);
         List<Department> departments = departmentService.findAllDepartments();
@@ -74,9 +75,44 @@ public class WebJobController {
         model.addAttribute("engineers", engineers);
 
         Map<Long, String> jobBase64Images = new HashMap<>();
-        for(Job job: jobs){
+        for (Job job : jobs) {
             jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-                    }
+        }
+        model.addAttribute("images", jobBase64Images);
+        LOGGER.info("listViewAll(...)" + jobs);
+        return "list-job.html";
+    }
+
+    @GetMapping
+    public String listView(Model model) throws IOException {
+        LOGGER.info("listView()");
+        return findJobsPages(1, model);
+    }
+
+    @GetMapping(value = "/page/{pageNo}")
+    public String findJobsPages(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        LOGGER.info("listView()");
+        int size = 10;
+        Page<Job> jobPages = jobService.findJobPages(pageNo, size);
+        List<Job> jobs = jobPages.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", jobPages.getTotalPages());
+        model.addAttribute("totalItems", jobPages.getTotalElements());
+        model.addAttribute("jobs", jobs);
+
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineService.findAllMachines();
+        model.addAttribute("machines", machines);
+        List<Engineer> engineers = engineerService.finadAllEmployees();
+        model.addAttribute("engineers", engineers);
+
+        Map<Long, String> jobBase64Images = new HashMap<>();
+        for (Job job : jobs) {
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+        }
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "list-job.html";
@@ -128,14 +164,14 @@ public class WebJobController {
             Model model,
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
-        if(image!=null) {
+        if (image != null) {
 
             byte[] orginalImage = imageService.multipartToByteArray(image);
             byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
             byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
             job.setResizedImage(resizeImage);
             job.setOriginalImage(resizeMaxImage);
-        }else {
+        } else {
             byte[] bytes = imageService.imageToByteArray();
             job.setResizedImage(bytes);
             job.setOriginalImage(bytes);
@@ -169,7 +205,7 @@ public class WebJobController {
         return "redirect:/jobs";
     }
 
-    @GetMapping("/search/message")
+    @GetMapping(value = "/search/message")
     public String searchJobsByMessage(@RequestParam(value = "jobMessage") String query,
                                       Model model) {
         LOGGER.info("search()" + query);
@@ -178,42 +214,42 @@ public class WebJobController {
         return "list-job";
     }
 
-    @GetMapping("/search/department")
-    public String searchJobsByDepartment(@RequestParam(value = "jobDepartment") String deaprtmentName,
-                                         Model model) throws DepartmentNotFoundException {
-        LOGGER.info("search()" + deaprtmentName);
-        Department departmentByName = departmentService.findDepartmentById(Long.parseLong(deaprtmentName));
-        List<Job> jobs = jobService.findJobsByDepartment(departmentByName);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
+//    @GetMapping(value = "/search/department")
+//    public String searchJobsByDepartment(@RequestParam(value = "jobDepartment") String deaprtmentName,
+//                                         Model model) throws DepartmentNotFoundException {
+//        LOGGER.info("search()" + deaprtmentName);
+//        Department departmentByName = departmentService.findDepartmentById(Long.parseLong(deaprtmentName));
+//        List<Job> jobs = jobService.findJobsByDepartment(departmentByName);
+//        model.addAttribute("jobs", jobs);
+//        return "list-job";
+//    }
 
-    @GetMapping("/search/employee")
-    public String searchJobsByEmployee(@RequestParam(value = "jobEmployee") String employyeName,
-                                       Model model) throws EmployeeNotFoundException {
-        LOGGER.info("search()");
-        Employee employeeByName = employeeService.findEmployeeById(Long.parseLong(employyeName));
-        List<Job> jobs = jobService.findJobsByemployee(employeeByName);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
+//    @GetMapping(value = "/search/employee")
+//    public String searchJobsByEmployee(@RequestParam(value = "jobEmployee") String employyeName,
+//                                       Model model) throws EmployeeNotFoundException {
+//        LOGGER.info("search()");
+//        Employee employeeByName = employeeService.findEmployeeById(Long.parseLong(employyeName));
+//        List<Job> jobs = jobService.findJobsByemployee(employeeByName);
+//        model.addAttribute("jobs", jobs);
+//        return "list-job";
+//    }
 
-    @GetMapping("/search/machine")
-    public String searchJobsByMachine(@RequestParam(value = "jobMachine") String machineName,
-                                      Model model) throws MachineNotFoundException {
-        LOGGER.info("search()");
-        Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
-        List<Job> jobs = jobService.findJobsByMachine(machineByName);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
+//    @GetMapping(value = "/search/machine")
+//    public String searchJobsByMachine(@RequestParam(value = "jobMachine") String machineName,
+//                                      Model model) throws MachineNotFoundException {
+//        LOGGER.info("search()");
+//        Machine machineByName = machineService.findMachineById(Long.parseLong(machineName));
+//        List<Job> jobs = jobService.findJobsByMachine(machineByName);
+//        model.addAttribute("jobs", jobs);
+//        return "list-job";
+//    }
 
-    @GetMapping("/downloadfile")
+    @GetMapping(value = "/downloadfile")
     public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
         Job jobById = jobService.findJobById(id);
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + jobById.getRequestDate()+".jpg";
+        String headerValue = "attachment; filename = " + jobById.getRequestDate() + ".jpg";
         response.setHeader(headerKey, headerValue);
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(jobById.getOriginalImage());

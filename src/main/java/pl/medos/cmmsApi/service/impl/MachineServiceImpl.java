@@ -1,14 +1,15 @@
 package pl.medos.cmmsApi.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
-
 import pl.medos.cmmsApi.repository.MachineRepository;
 import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.MachineService;
-
 import pl.medos.cmmsApi.service.mapper.MachineMapper;
 
 import java.util.List;
@@ -107,4 +108,13 @@ public class MachineServiceImpl implements MachineService {
         LOGGER.info("delete(...)");
     }
 
+    @Override
+    public Page<Machine> findPageinated(int pageNo, int size) {
+        LOGGER.info("findPaginated()");
+        Pageable pageable = PageRequest.of(pageNo-1, size);
+        Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
+        Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
+        LOGGER.info("findPaginated(...)");
+        return machines;
+    }
 }

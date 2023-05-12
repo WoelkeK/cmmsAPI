@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -43,9 +44,9 @@ public class WebMachineController {
         this.importService = importService;
     }
 
-    @GetMapping
-    public String listView(Model model) {
-        LOGGER.info("listView()");
+    @GetMapping(value = "/list")
+    public String listViewAll(Model model) {
+        LOGGER.info("listViewAll()");
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         List<Machine> machines = machineService.findAllMachines();
@@ -54,7 +55,29 @@ public class WebMachineController {
         return "list-machine";
     }
 
-    @GetMapping("/search/query")
+    @GetMapping
+    public String listView(Model model) throws IOException {
+        LOGGER.info("listView()");
+        return findPageinated(1, model);
+    }
+
+    @GetMapping(value = "/page/{pageNo}")
+    public String findPageinated(@PathVariable(value = "pageNo") int pageNo  ,Model model) {
+        LOGGER.info("findPage()");
+        int pageSize=10;
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize);
+        List<Machine> machines = machinePage.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", machinePage.getTotalPages());
+        model.addAttribute("totalItems", machinePage.getTotalElements());
+        model.addAttribute("machines", machines);
+        LOGGER.info("listView(...)" + machines);
+        return "list-machine";
+    }
+
+    @GetMapping(value = "/search/query")
     public String searchMachineByQuery(@RequestParam(value = "machineQuery") String query,
                                        Model model) {
         LOGGER.info("search()");
@@ -63,7 +86,7 @@ public class WebMachineController {
         return "list-machine";
     }
 
-    @GetMapping("/search/machine")
+    @GetMapping(value = "/search/machine")
     public String searchJobsByMachineId(@RequestParam(value = "machineName") String machineName,
                                         Model model) throws MachineNotFoundException {
         LOGGER.info("search()");
@@ -72,7 +95,7 @@ public class WebMachineController {
         return "list-machine";
     }
 
-    @GetMapping("/search/department")
+    @GetMapping(value = "/search/department")
     public String searchJMachineByDepartment(@RequestParam(value = "machineDepartment") String departmentName,
                                              Model model) throws DepartmentNotFoundException {
         LOGGER.info("search()");
@@ -172,12 +195,12 @@ public class WebMachineController {
         LOGGER.info("export(...)");
     }
 
-    @GetMapping("/file")
+    @GetMapping(value = "/file")
     public String showUploadForm() {
         return "uploadMach-form";
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
 
         LOGGER.info("importMachines()");

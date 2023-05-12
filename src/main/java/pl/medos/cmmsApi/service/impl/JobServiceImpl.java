@@ -1,7 +1,9 @@
 package pl.medos.cmmsApi.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
@@ -54,32 +56,43 @@ public class JobServiceImpl implements JobService {
         return jobs;
     }
 
+//    @Override
+//    public List<Job> findJobsByMachine(Machine machineByName) {
+//        LOGGER.info("findJobsByMachine()" + machineByName);
+//        List<JobEntity> jobEntities = jobRepository.searchJobsByMachine(machineByName.getId());
+//        List<Job> jobs = jobMapper.listModels(jobEntities);
+//        LOGGER.info("findJobsByMachine(...)");
+//        return jobs;
+//    }
+
     @Override
-    public List<Job> findJobsByMachine(Machine machineByName) {
-        LOGGER.info("findJobsByMachine()" + machineByName);
-        List<JobEntity> jobEntities = jobRepository.searchJobsByMachine(machineByName.getId());
-        List<Job> jobs = jobMapper.listModels(jobEntities);
-        LOGGER.info("findJobsByMachine(...)");
+    public Page<Job> findJobPages(int pageNo, int size) {
+        LOGGER.info("findJobPages()" + pageNo + "/" + size);
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<JobEntity> jobPages = jobRepository.findAll(pageable);
+        LOGGER.info("findJobPages(repo)" +jobPages.getNumberOfElements());
+        Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
+        LOGGER.info("findJobPages(...)" +jobs.getNumberOfElements());
         return jobs;
     }
 
-    @Override
-    public List<Job> findJobsByDepartment(Department department) {
-        LOGGER.info("findJobsByDepartment()" + department);
-        List<JobEntity> jobEntities = jobRepository.searchJobsByDepartment(department.getId());
-        List<Job> jobs = jobMapper.listModels(jobEntities);
-        LOGGER.info("findJobsByDepartment(...)");
-        return jobs;
-    }
+//    @Override
+//    public List<Job> findJobsByDepartment(Department department) {
+//        LOGGER.info("findJobsByDepartment()" + department);
+//        List<JobEntity> jobEntities = jobRepository.searchJobsByDepartment(department.getId());
+//        List<Job> jobs = jobMapper.listModels(jobEntities);
+//        LOGGER.info("findJobsByDepartment(...)");
+//        return jobs;
+//    }
 
-    @Override
-    public List<Job> findJobsByemployee(Employee employeeByName) {
-        LOGGER.info("findJobsByEmployee()" + employeeByName);
-        List<JobEntity> jobEntities = jobRepository.searchJobsByEmployee(employeeByName.getId());
-        List<Job> jobs = jobMapper.listModels(jobEntities);
-        LOGGER.info("findJobsByEmployee(...)");
-        return jobs;
-    }
+//    @Override
+//    public List<Job> findJobsByemployee(Employee employeeByName) {
+//        LOGGER.info("findJobsByEmployee()" + employeeByName);
+//        List<JobEntity> jobEntities = jobRepository.searchJobsByEmployee(employeeByName.getId());
+//        List<Job> jobs = jobMapper.listModels(jobEntities);
+//        LOGGER.info("findJobsByEmployee(...)");
+//        return jobs;
+//    }
 
     @Override
     public Job createJob(Job job) throws IOException {
@@ -142,7 +155,7 @@ public class JobServiceImpl implements JobService {
     }
 
     private JobEntity getJobEntity(Long id) throws JobNotFoundException {
-        LOGGER.info("getJobEntity("+ id+")");
+        LOGGER.info("getJobEntity(" + id + ")");
         Optional<JobEntity> optionalJobEntity = jobRepository.findById(id);
         JobEntity jobEntity = optionalJobEntity.orElseThrow(
                 () -> new JobNotFoundException("Brak zlecenia o podanym id" + id));

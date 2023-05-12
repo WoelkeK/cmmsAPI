@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service;
 
+import org.springframework.data.domain.Page;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
@@ -23,5 +24,7 @@ public interface MachineService {
     Machine updateMachine(Machine machine, Long id) throws MachineNotFoundException;
 
     void deleteMachine(Long id);
+
+    Page<Machine> findPageinated(int pageNo, int size);
 }
 
