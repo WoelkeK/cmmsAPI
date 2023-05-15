@@ -6,13 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
+import pl.medos.cmmsApi.repository.entity.JobEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 
 import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
-    @Query("SELECT p from EmployeeEntity p WHERE " +
-            " p.name LIKE CONCAT('%', :query, '%')")
-    List<EmployeeEntity> searchEmployeeByName(String query);
+    @Query("SELECT p from EmployeeEntity p WHERE CONCAT(p.name, ' ' , p.department.name) LIKE %?1%")
+    List<EmployeeEntity> searchEmployeeByQuery(String query);
+
     Page<EmployeeEntity> findAll(Pageable pageable);
 }

@@ -75,6 +75,7 @@ public class WebEmployeeController {
                                        Model model) {
         LOGGER.info("search()");
         List<Employee> employeeByName = employeeService.findEmployeeByName(query);
+        LOGGER.info("findEmployeeByName()" + employeeByName.get(0));
         model.addAttribute("employees", employeeByName);
         return "list-employee";
     }

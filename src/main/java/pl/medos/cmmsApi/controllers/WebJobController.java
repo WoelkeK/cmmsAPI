@@ -92,7 +92,7 @@ public class WebJobController {
     @GetMapping(value = "/page/{pageNo}")
     public String findJobsPages(@PathVariable(value = "pageNo") int pageNo, Model model) {
         LOGGER.info("listView()");
-        int size = 10;
+        int size = 5;
         Page<Job> jobPages = jobService.findJobPages(pageNo, size);
         List<Job> jobs = jobPages.getContent();
         model.addAttribute("currentPage", pageNo);

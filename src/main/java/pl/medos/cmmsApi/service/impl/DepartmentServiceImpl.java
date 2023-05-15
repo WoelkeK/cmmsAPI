@@ -1,12 +1,14 @@
 package pl.medos.cmmsApi.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.DepartmentRepository;
+import pl.medos.cmmsApi.repository.JobRepository;
 import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.mapper.DepartmentMapper;
 
@@ -20,10 +22,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private DepartmentRepository departmentRepository;
     private DepartmentMapper departmentMapper;
+    private final JobRepository jobRepository;
 
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentMapper departmentMapper) {
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentMapper departmentMapper,
+                                 JobRepository jobRepository) {
         this.departmentRepository = departmentRepository;
         this.departmentMapper = departmentMapper;
+        this.jobRepository = jobRepository;
     }
 
     @Override
@@ -42,6 +47,17 @@ public class DepartmentServiceImpl implements DepartmentService {
         LOGGER.info("findDepartmentsByName(...)" + department.getName());
         return department;
     }
+
+    @Override
+    public Page<Department> findDepartmentPage(int pageNo, int size) {
+        LOGGER.info("findDepartmentPage(" + pageNo + ")");
+        Pageable pageable = PageRequest.of(pageNo-1, size);
+        Page<DepartmentEntity> departmentEntities = departmentRepository.findAll(pageable);
+        Page<Department> departmentPage = departmentMapper.mapEntitiesToModelsPage(departmentEntities);
+        LOGGER.info("findDepartmentPage(...)");
+        return departmentPage;
+    }
+
     @Override
     public Department createDepartment(Department department) {
         LOGGER.info("create(" + department + ")");

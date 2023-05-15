@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface JobRepository extends JpaRepository<JobEntity, Long> {
 
+    Page<JobEntity> findAll(Pageable pageable);
+
     @Query("SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.engineer.name, ' ', p.department.name, ' ' , p.machine.name,' ' , p.message,' ' , p.solution) LIKE %?1%")
     List<JobEntity> searchJobsByMessage(String query);
 
@@ -28,5 +30,4 @@ public interface JobRepository extends JpaRepository<JobEntity, Long> {
 //    @Query("SELECT p from JobEntity p WHERE " +
 //            " p.machine.id LIKE CONCAT('%', :query, '%')")
 //    List<JobEntity> searchJobsByMachine(Long query);
-    Page<JobEntity> findAll(Pageable pageable);
 }

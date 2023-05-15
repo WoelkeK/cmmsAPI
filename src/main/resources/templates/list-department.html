@@ -403,9 +403,9 @@
                                                     <a th:href="@{/departments/update/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
-<!--                                                    <a th:href="@{/departments/read/{id}(id=${department.id})}"-->
-<!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
-<!--                                                            class="sr-only"></span></a>-->
+                                                    <!--                                                    <a th:href="@{/departments/read/{id}(id=${department.id})}"-->
+                                                    <!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
+                                                    <!--                                                            class="sr-only"></span></a>-->
                                                     <a th:href="@{/departments/delete/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
@@ -423,14 +423,40 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="pt-1">
+                                <div class="flex justify-end">
+                                    <button type="button"
+                                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        <a th:if="${currentPage >1}"
+                                           th:href="@{'/departments/page/' + ${currentPage - 1}}">Poprzedni</a>
+                                        <span th:unless="${currentPage >1}">Poprzedni</span>
+                                    </button>
+                                    <button type="button"
+                                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        <a th:if="${currentPage < totalPages}"
+                                           th:href="@{'/departments/page/' + ${currentPage + 1}}">Następny</a>
+                                        <span th:unless="${currentPage < totalPages}">Następny</span>
+                                    </button>
+
+                                </div>
+                            </div>
+
+                            <div th:if="${totalPages > 1}">
+                                <div class="row col-sm-10">
+                                    <div class="col-sm-2">
+                                        Wszystkich wpisów: [[${totalItems}]]
+                                    </div>
+                                    <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/departments/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Replace with your content -->
-                    <!--          <div class="py-4">-->
-                    <!--            <div class="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>-->
-                    <!--          </div>-->
-                    <!-- /End replace -->
                 </div>
             </div>
         </main>

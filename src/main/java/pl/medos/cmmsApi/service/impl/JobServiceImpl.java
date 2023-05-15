@@ -68,7 +68,8 @@ public class JobServiceImpl implements JobService {
     @Override
     public Page<Job> findJobPages(int pageNo, int size) {
         LOGGER.info("findJobPages()" + pageNo + "/" + size);
-        Pageable pageable = PageRequest.of(pageNo, size);
+        Pageable pageable = PageRequest.of(pageNo-1, size);
+        LOGGER.info("Pageable() " + pageable.getPageNumber()+ "/" + pageable.getPageSize());
         Page<JobEntity> jobPages = jobRepository.findAll(pageable);
         LOGGER.info("findJobPages(repo)" +jobPages.getNumberOfElements());
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);

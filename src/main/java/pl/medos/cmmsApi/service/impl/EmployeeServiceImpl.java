@@ -82,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> findEmployeeByName(String employeeName) {
         LOGGER.info("findEmployeeByName()" + employeeName);
-        List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByName(employeeName);
+        List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByQuery(employeeName);
 
         List<Employee> employees = employeeMapper.listModels(employeeEntities);
         LOGGER.info("findEmployeeByName(...)");
