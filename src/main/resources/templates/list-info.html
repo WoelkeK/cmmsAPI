@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -13,11 +13,8 @@
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
 
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
-
         <div class="fixed inset-0 z-40 flex">
-
             <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800">
-
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                     <button type="button"
                             class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -32,7 +29,9 @@
 
                 <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                        <img class="h-8 w-auto"
+                             src="https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500"
+                             alt="Medos">
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
@@ -52,16 +51,28 @@
                             Panel Główny
                         </a>
 
-                        <a href="#"
-                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                            <!-- Heroicon name: outline/users -->
-                            <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <a th:href="@{/info}"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <!-- Heroicon name: outline/folder -->
+                            <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
                             </svg>
                             Pracownicy
+                        </a>
+
+                        <a th:href="@{/engineers}"
+                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <!-- Heroicon name: outline/folder -->
+                            <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                            </svg>
+                            Mechanicy
                         </a>
 
                         <a href="#"
@@ -88,6 +99,7 @@
                             Maszyny
                         </a>
 
+
                         <a href="#"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
@@ -111,7 +123,6 @@
                             </svg>
                             Reporty
                         </a>
-
                     </nav>
                 </div>
                 <div class="flex flex-shrink-0 bg-gray-700 p-4">
@@ -163,7 +174,7 @@
                         Paneł Główny
                     </a>
 
-                    <a th:href="@{/employees}"
+                    <a th:href="@{/info}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -222,6 +233,7 @@
                         </svg>
                         Zlecenia
                     </a>
+
                     <a th:href="@{/resources}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
@@ -257,20 +269,17 @@
                         </svg>
                         Wyloguj
                     </a>
-
-
                 </nav>
             </div>
             <div class="flex flex-shrink-0 bg-gray-700 p-4">
                 <a href="#" class="group block w-full flex-shrink-0">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full"
-                                 src="https://media.licdn.com/dms/image/C4D03AQEJEio39iNw_Q/profile-displayphoto-shrink_800_800/0/1661529893600?e=2147483647&v=beta&t=V3TkCm9POhJxk4HNIqzG6VOnNXgWI75vekdusiDOpeQ"
-                                 alt="">
+                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/images/avatar.png}" alt="Avatar"/>
+
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-white">Krzysztof Woelke</p>
+                            <p class="text-sm font-medium text-white">Imię i Nazwisko</p>
                             <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
                         </div>
                     </div>
@@ -291,192 +300,135 @@
                 </svg>
             </button>
         </div>
+
         <main class="flex-1">
-            <div class="py-4">
+            <div class="py-6">
                 <!--                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
-                <!--&lt;!&ndash;                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>&ndash;&gt;-->
+                <!--                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>-->
                 <!--                </div>-->
-                <div class="mx-auto max-w-8xl px-4 sm:px-6 md:px-4">
+                <div class="mx-auto max-w-8xl px-4 sm:px-6 md:px-8">
                     <!-- Replace with your content -->
 
-                    <div class="px-4 sm:px-6 lg:px-2">
+                    <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-4xl font-semibold text-gray-900">Zlecenia</h1>
-                                <p class="mt-2 text-lm text-gray-700">Lista zadań zarejestrowanychw systemie</p>
-                            </div>
-
-                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
-
-                                <button type="button"
-                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/jobs/create}">Dodaj</a>
-                                </button>
+                                <h1 class="text-4xl font-semibold text-gray-900">Pracownicy</h1>
+                                <p class="mt-2 text-lm text-gray-700">Lista pracowników biurowych.</p>
                             </div>
 
 
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <form class="form-inline" th:action="@{/info/search/name}">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="employeeName"/>
+                                                <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"> Szukaj pracownika</button>
+                        </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+<!--                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">-->
+<!--                                <button type="button"-->
+<!--                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">-->
+<!--                                    <a th:href="@{/employees/create}">Dodaj</a>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">-->
+<!--                                <button type="button"-->
+<!--                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">-->
+<!--                                    <a th:href="@{/employees/file}">Import</a>-->
+<!--                                </button>-->
+<!--                            </div>-->
                         </div>
+
                         <div class="mt-4 flex flex-col">
                             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                <div class="inline-block min-w-fit py-2 align-middle md:px-6 lg:px-8">
-                                    <div class="overflow-hidden shadow ring-2 ring-black ring-opacity-5 md:rounded-lg">
-                                        <table class="min-w-fit">
+                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                                        <table class="min-w-full">
                                             <thead class="bg-gray-800">
                                             <tr>
                                                 <th scope="col"
                                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
-                                                    Index
+                                                    Imię i Nazwisko
+                                                </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Data i Godzina
-                                                    zgłoszenia
-
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    Stanowisko
+                                                </th>
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Osoba
-                                                    zgłaszająca
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
                                                     Dział
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Nazwa
-                                                    Maszyny
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Opis
-                                                    usterki/miejsce
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Zgłszenie telefoniczne
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Podjęte
-                                                    działania
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Data
-                                                    podjęcia działań
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Data
-                                                    zakończenia naprawy
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Osoba
-                                                    wykonująca
                                                 </th>
-
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Koszt
-                                                </th>
-
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    Telefon
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Zdjęcie
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    Email
                                                 </th>
-
-                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
+                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
                                                     <span class="sr-only">Edit</span>
-
                                                 </th>
                                             </tr>
                                             </thead>
-                                            <tbody class="bg-red">
+                                            <tbody class="bg-gray">
                                             <tr class="border-t border-gray-600">
-                                                <th colspan="14" scope="colgroup"
+                                                <th colspan="7" scope="colgroup"
                                                     class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
-                                                    Bieżące Awarie / Zgłoszenia
+                                                    Dział Utrzymania Ruchu
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="job : ${jobs}" class="border-t border-gray-300">
-                                                <td th:text="${job.id}"
+                                            <tr th:each="employee : ${employees}"
+                                                class="border-t border-gray-300">
+                                                <td th:text="${employee.name}"
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                    Index
+                                                    Lindsay Walton
                                                 </td>
-                                                <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-800">Data
-                                                    Zgłoszenia
+                                                <td th:text="${employee.position}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    Stanowisko
                                                 </td>
-                                                <td th:text="${job.employee.name}">
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
+                                                <td th:text="${employee.department.name}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    Dział
                                                 </td>
-                                                <td th:text="${job?.department?.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Dział
+                                                <td th:text="${employee.phone}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    Telefon
                                                 </td>
-                                                <td th:text="${job.machine.model}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Maszyna
-                                                </td>
-                                                <td th:text="${job.message}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Opis
-                                                    usterki
-                                                </td>
-                                                <td th:text="${job.directContact}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Zgłoszenie
-                                                    telefoniczne
-                                                </td>
-                                                <td th:text="${job.solution}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Podjęte
-                                                    działania
-                                                </td>
-                                                <td th:text="${#temporals.format(job.jobStartTime, 'dd MMMM yyyy HH:mm')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
-                                                    podjęcia działań
-                                                </td>
-                                                <td th:text="${#temporals.format(job.jobStopTime, 'dd MMMM yyyy HH:mm')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
-                                                    zakończenia naprawy
-                                                </td>
-                                                <td th:text="${job?.engineer?.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
-                                                    wykonująca
+                                                <td th:text="${employee.email}"
+                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    Email
                                                 </td>
 
-                                                <td th:text="${job.calcCost}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Koszt
-                                                </td>
-
-                                                <td>
-                                                    <div class="container mt-2 mb-2">
-                                                        <a th:href="@{'/jobs/downloadfile?id=' + ${job.id}}">
-                                                            <!--                                                    <img th:src="@{'/images/image?id='+ ${job.id}}" width="100px" height="50px">-->
-                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(job.id)}"
-                                                                 alt="">
-                                                        </a>
-                                                    </div>
-                                                </td>
-
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a th:href="@{/jobs/update/{id}(id=${job.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span
-                                                            class="sr-only"></span></a>
-                                                    <!--                                                    <a th:href="@{/jobs/read/{id}(id=${job.id})}"-->
-                                                    <!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
-                                                    <!--                                                            class="sr-only"></span></a>-->
-                                                    <a th:href="@{/jobs/delete/{id}(id=${job.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span
-                                                            class="sr-only"></span></a>
-                                                </td>
-
+<!--                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">-->
+<!--                                                    <a th:href="@{/employees/update/{id}(id=${employee.id})}"-->
+<!--                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span-->
+<!--                                                            class="sr-only"></span></a>-->
+<!--                                                    &lt;!&ndash;                                                    <a th:href="@{/employees/read/{id}(id=${employee.id})}"&ndash;&gt;-->
+<!--                                                    &lt;!&ndash;                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span&ndash;&gt;-->
+<!--                                                    &lt;!&ndash;                                                            class="sr-only"></span></a>&ndash;&gt;-->
+<!--                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id})}"-->
+<!--                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span-->
+<!--                                                            class="sr-only"></span></a>-->
+<!--                                                </td>-->
                                             </tr>
                                             <!-- More people... -->
                                             </tbody>
                                             <tbody class="bg-white">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="14" scope="colgroup"
-                                                    class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
-                                                    Aktualne zlecenia
+                                                <th colspan="7" scope="colgroup"
+                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
+                                                    Dział Kadr
                                                 </th>
                                             </tr>
                                         </table>
@@ -484,158 +436,45 @@
                                 </div>
                             </div>
 
-                            <div class="pt-1">
+
+                            <div class="pt-5">
                                 <div class="flex justify-end">
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/jobs/page/' + ${currentPage - 1}}">Poprzedni</a>
+                                           th:href="@{'/info/page/' + ${currentPage - 1}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/jobs/page/' + ${currentPage + 1}}">Następny</a>
+                                           th:href="@{'/info/page/' + ${currentPage + 1}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
                                 </div>
                             </div>
+                        </div>
 
-
-                            <div th:if="${totalPages > 1}">
-                                <div class="row col-sm-10">
-                                    <div class="col-sm-2">
-                                        Wszystkich wpisów: [[${totalItems}]]
-                                    </div>
-                                    <div class="col-sm-1">
+                        <div th:if="${totalPages > 1}">
+                            <div class="row col-sm-10">
+                                <div class="col-sm-2">
+                                    Wszystkich wpisów: [[${totalItems}]]
+                                </div>
+                                <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/jobs/page/' + ${i}}">[[${i}]]</a>
+      <a th:if="${currentPage != i}" th:href="@{'/info/page/' + ${i}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="overflow-hidden rounded-md bg-gray shadow">
-                        <ul role="list" class="divide-y divide-gray-700">
-                            <li class="px-6 py-2">
-
-                                <div>
-                                    <h2 class="text-sm font-medium text-gray-500">Wyszukaj...</h2>
-                                    <ul role="list"
-                                        class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-                                        <li class="col-span-1 flex rounded-md shadow-lm">
-                                            <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-semibold text-yellow-500">
-                                                Tekst
-                                            </div>
-                                            <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">
-                                                <div class="flex-1 truncate px-4 py-2 text-sm">
-                                                    <div class="form-group">
-                                                        <form class="form-inline" th:action="@{/jobs/search/message}">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control"
-                                                                       name="jobMessage"/>
-                                                                <button type="submit"
-                                                                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                                    <span class="sr-only">Open options</span>
-                                                                    <svg class="h-5 w-5" viewBox="0 0 20 20"
-                                                                         fill="currentColor"
-                                                                         aria-hidden="true">
-                                                                        <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
-                                                                    </svg>
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-
-                                        <!--                            <li class="col-span-1 flex rounded-md shadow-sm">-->
-                                        <!--                                <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-medium text-yellow-500">-->
-                                        <!--                                    Maszyna-->
-                                        <!--                                </div>-->
-                                        <!--                                <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">-->
-                                        <!--                                    <div class="flex-1 truncate px-4 py-2 text-sm">-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <form class="form-inline" th:action="@{/jobs/search/machine}">-->
-                                        <!--                                                <div class="input-group">-->
-                                        <!--                                                    <select id="jobMachine" name="jobMachine"-->
-                                        <!--                                                            class="form-control mt-2 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
-                                        <!--                                                        <option th:each="machine : ${machines}"-->
-                                        <!--                                                                th:text="${machine.name}"-->
-                                        <!--                                                                th:value="${machine.id}">-->
-                                        <!--                                                        </option>-->
-                                        <!--                                                    </select>-->
-                                        <!--                                                    <button type="submit"-->
-                                        <!--                                                            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-                                        <!--                                                        <span class="sr-only">Open options</span>-->
-                                        <!--                                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"-->
-                                        <!--                                                             aria-hidden="true">-->
-                                        <!--                                                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>-->
-                                        <!--                                                        </svg>-->
-                                        <!--                                                    </button>-->
-                                        <!--                                                </div>-->
-                                        <!--                                            </form>-->
-                                        <!--                                        </div>-->
-                                        <!--                                    </div>-->
-                                        <!--                                </div>-->
-                                        <!--                            </li>-->
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </main>
-
-
-        <div class="relative">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center">
-                <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
-            </div>
-        </div>
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="photoModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Photo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img id="employeePhoto" src="" width="90%" height="90%">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-        $(document).ready(function() {
-            setInterval(function() {
-                $.get('/jobs', function(data) {
-                    console.log(data);
-                    window.location.reload(2);
-                });
-            }, 100000); // send GET request every 5 seconds
-        });
-
-</script>
 </body>
 </html>
