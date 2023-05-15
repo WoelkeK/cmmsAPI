@@ -1,5 +1,7 @@
 package pl.medos.cmmsApi.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 
@@ -18,4 +20,6 @@ public interface DepartmentService {
     void deleteDepartment(Long id);
 
     Department findDepartmentByName(String departmentName);
+
+    Page<Department> findDepartmentPage(int pageNo, int size);
 }

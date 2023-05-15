@@ -1,11 +1,10 @@
 package pl.medos.cmmsApi.service.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
-import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -40,5 +39,13 @@ public class DepartmentMapper {
         ModelMapper modelMapper = new ModelMapper();
         DepartmentEntity departmentEntity = modelMapper.map(departmentModel, DepartmentEntity.class);
         return departmentEntity;
+    }
+
+    public Page<Department> mapEntitiesToModelsPage(Page<DepartmentEntity> departmentEntities) {
+        LOGGER.info("mapEntitiesToModelPage()");
+        ModelMapper modelMapper = new ModelMapper();
+        Page<Department> departmentPage = departmentEntities.map(DepartmentEntity -> modelMapper.map(DepartmentEntity, Department.class));
+        LOGGER.info("mapEntitiesToModelPage(...)");
+        return departmentPage;
     }
 }

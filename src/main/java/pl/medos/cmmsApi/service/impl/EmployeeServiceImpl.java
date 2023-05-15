@@ -5,10 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
-import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.repository.EmployeeRepository;
-import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.mapper.EmployeeMapper;
@@ -84,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> findEmployeeByName(String employeeName) {
         LOGGER.info("findEmployeeByName()" + employeeName);
-        List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByName(employeeName);
+        List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByQuery(employeeName);
 
         List<Employee> employees = employeeMapper.listModels(employeeEntities);
         LOGGER.info("findEmployeeByName(...)");

@@ -1,6 +1,10 @@
 package pl.medos.cmmsApi.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,6 +12,7 @@ import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
@@ -28,11 +33,31 @@ public class WebDepartmentController {
         this.importService = importService;
     }
 
-    @GetMapping
-    public String listView(ModelMap modelMap) {
+    @GetMapping(value = "/list")
+    public String listViewAll(ModelMap modelMap) {
         LOGGER.info("listView()");
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
+        LOGGER.info("listView(...)" + departments);
+        return "list-department.html";
+    }
+
+    @GetMapping
+    public String listView(Model model) throws IOException {
+        LOGGER.info("listView()");
+        return findPageinated(1, model);
+    }
+
+    @GetMapping(value = "/page/{pageNo}")
+    public String findPageinated(@PathVariable(value = "pageNo") int pageNo  ,Model model) {
+        LOGGER.info("findPage()");
+        int pageSize=10;
+        Page<Department> departmentPage = departmentService.findDepartmentPage(pageNo, pageSize);
+        List<Department> departments = departmentPage.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", departmentPage.getTotalPages());
+        model.addAttribute("totalItems", departmentPage.getTotalElements());
+        model.addAttribute("departments", departments);
         LOGGER.info("listView(...)" + departments);
         return "list-department.html";
     }

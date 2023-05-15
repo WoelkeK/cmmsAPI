@@ -4,6 +4,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.imgscalr.Scalr;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,8 +51,8 @@ public class DashboardController {
         this.imageService = imageService;
     }
 
-    @GetMapping
-    public String listView(Model model) {
+    @GetMapping(value = "/list")
+    public String listViewAll(Model model) {
         LOGGER.info("listView()");
         List<Job> jobs = jobService.findAllJobs();
         model.addAttribute("jobs", jobs);
@@ -65,6 +66,41 @@ public class DashboardController {
         model.addAttribute("engineers", engineers);
         Map<Long, String> jobBase64Images = new HashMap<>();
         for(Job job: jobs){
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+        }
+        model.addAttribute("images", jobBase64Images);
+        LOGGER.info("listView(...)" + jobs);
+        return "dashboard-list.html";
+    }
+
+    @GetMapping
+    public String listView(Model model) throws IOException {
+        LOGGER.info("listView()");
+        return findJobsPages(1, model);
+    }
+
+    @GetMapping(value = "/page/{pageNo}")
+    public String findJobsPages(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        LOGGER.info("listView()");
+        int size = 5;
+        Page<Job> jobPages = jobService.findJobPages(pageNo, size);
+        List<Job> jobs = jobPages.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", jobPages.getTotalPages());
+        model.addAttribute("totalItems", jobPages.getTotalElements());
+        model.addAttribute("jobs", jobs);
+
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineService.findAllMachines();
+        model.addAttribute("machines", machines);
+        List<Engineer> engineers = engineerService.finadAllEmployees();
+        model.addAttribute("engineers", engineers);
+
+        Map<Long, String> jobBase64Images = new HashMap<>();
+        for (Job job : jobs) {
             jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
         }
         model.addAttribute("images", jobBase64Images);
