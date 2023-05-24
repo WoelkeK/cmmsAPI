@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
@@ -66,9 +67,10 @@ public class JobServiceImpl implements JobService {
 //    }
 
     @Override
-    public Page<Job> findJobPages(int pageNo, int size) {
+    public Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findJobPages()" + pageNo + "/" + size);
-        Pageable pageable = PageRequest.of(pageNo-1, size);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         LOGGER.info("Pageable() " + pageable.getPageNumber()+ "/" + pageable.getPageSize());
         Page<JobEntity> jobPages = jobRepository.findAll(pageable);
         LOGGER.info("findJobPages(repo)" +jobPages.getNumberOfElements());

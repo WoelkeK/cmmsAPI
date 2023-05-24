@@ -83,21 +83,29 @@ public class WebJobController {
         return "list-job.html";
     }
 
-    @GetMapping
+    @GetMapping("")
     public String listView(Model model) throws IOException {
         LOGGER.info("listView()");
-        return findJobsPages(1, model);
+        return findJobsPages(1, "requestDate", "asc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
-    public String findJobsPages(@PathVariable(value = "pageNo") int pageNo, Model model) {
+    public String findJobsPages(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDirection,
+                                Model model) {
         LOGGER.info("listView()");
         int size = 5;
-        Page<Job> jobPages = jobService.findJobPages(pageNo, size);
+        Page<Job> jobPages = jobService.findJobPages(pageNo, size, sortField, sortDirection);
         List<Job> jobs = jobPages.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", jobPages.getTotalPages());
         model.addAttribute("totalItems", jobPages.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDirection);
+        model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("jobs", jobs);
 
         List<Department> departments = departmentService.findAllDepartments();
