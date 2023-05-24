@@ -20,7 +20,7 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
             " p.department.id LIKE CONCAT('%', :id, '%')")
     List<HardwareEntity> searchHardwareByDepartment(Long id);
 
-    @Query("SELECT p from HardwareEntity p WHERE CONCAT(p.name, ' ', p.serviceTag, ' ', p.serialNumber, ' ' , p.department.name) LIKE %?1%")
+    @Query("SELECT p from HardwareEntity p WHERE CONCAT(p.name, ' ', p.employee.name, ' ', p.serialNumber, ' ' , p.department.name) LIKE %?1%")
     List<HardwareEntity> searchHardwareByQuery(String query);
     Page<HardwareEntity> findAll(Pageable pageable);
 }

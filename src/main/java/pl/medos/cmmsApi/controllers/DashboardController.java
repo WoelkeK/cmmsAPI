@@ -65,7 +65,7 @@ public class DashboardController {
         List<Engineer> engineers = engineerService.finadAllEmployees();
         model.addAttribute("engineers", engineers);
         Map<Long, String> jobBase64Images = new HashMap<>();
-        for(Job job: jobs){
+        for (Job job : jobs) {
             jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
         }
         model.addAttribute("images", jobBase64Images);
@@ -117,29 +117,40 @@ public class DashboardController {
         model.addAttribute("job", job);
         return "dashboard-create.html";
     }
+
     @PostMapping(value = "/create")
     public String create(
             @Valid @ModelAttribute(name = "job") Job job,
             BindingResult result,
             Model model,
             MultipartFile image) throws Exception {
-        LOGGER.info("create()" + job.getId());
-        byte[] orginalImage = imageService.multipartToByteArray(image);
-        byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
-        byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
-        job.setResizedImage(resizeImage);
-        job.setOriginalImage(resizeMaxImage);
+        LOGGER.info("create()");
 
-        if (result.hasErrors()) {
-            LOGGER.info("create: result has erorr()" + result.getFieldError());
-            model.addAttribute("job", job);
-            return "dashboard-create";
+        if (!image.isEmpty()) {
+            LOGGER.info("image processing()");
+            byte[] orginalImage = imageService.multipartToByteArray(image);
+            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
+            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
+            job.setResizedImage(resizeImage);
+            job.setOriginalImage(resizeMaxImage);
+            LOGGER.info("image processing(...)");
+        } else {
+            LOGGER.info("default image processing()");
+            byte[] bytes = imageService.imageToByteArray();
+            job.setResizedImage(bytes);
+            job.setOriginalImage(bytes);
         }
-        model.addAttribute("job", job);
-        jobService.createJob(job);
-        LOGGER.info("create(...)");
-        return "redirect:/dashboards";
-    }
+
+            if (result.hasErrors()) {
+                LOGGER.info("create: result has erorr()" + result.getFieldError());
+                model.addAttribute("job", job);
+                return "dashboard-create";
+            }
+            model.addAttribute("job", job);
+            jobService.createJob(job);
+            LOGGER.info("create(...)");
+            return "redirect:/dashboards";
+        }
 
 //    @PostMapping(value = "/create")
 //    public String create(@Valid @ModelAttribute(name = "job") Job job,
@@ -158,65 +169,65 @@ public class DashboardController {
 //        return "redirect:/dashboards";
 //    }
 
-    @GetMapping(value = "/update/{id}")
-    public String updateView(
-            @PathVariable(name = "id") Long id,
-            Model model) throws Exception {
-        LOGGER.info("updateView()");
-        Job job = jobService.findJobById(id);
+        @GetMapping(value = "/update/{id}")
+        public String updateView (
+                @PathVariable(name = "id") Long id,
+                Model model) throws Exception {
+            LOGGER.info("updateView()");
+            Job job = jobService.findJobById(id);
 
-        if (job.getStatus().equals("Zgłoszono")) {
+            if (job.getStatus().equals("Zgłoszono")) {
 
-            job.setStatus("Zakończono");
+                job.setStatus("Zakończono");
+                model.addAttribute("job", job);
+                LOGGER.info("updateView(...)" + job.getStatus());
+                return "dashboard-edit.html";
+            } else {
+                return "redirect:/dashboards";
+            }
+        }
+
+        @GetMapping(value = "/read/{id}")
+        public String read (
+                @PathVariable(name = "id") Long id,
+                ModelMap modelMap) throws Exception {
+            LOGGER.info("read(" + id + ")");
+            Job job = jobService.findJobById(id);
+            modelMap.addAttribute("job", job);
+            return "read-job.html";
+        }
+
+        @PostMapping(value = "/update/{id}")
+        public String update (@PathVariable(name = "id") Long id,
+                @Valid @ModelAttribute(name = "job") Job job,
+                BindingResult result,
+                Model model) throws CostNotFoundException, JobNotFoundException {
+            LOGGER.info("update()" + job.getId());
+            if (result.hasErrors()) {
+                LOGGER.info("update: result has erorr()" + result.getFieldError());
+                model.addAttribute("job", job);
+                return "dashboard-edit";
+            }
             model.addAttribute("job", job);
-            LOGGER.info("updateView(...)" + job.getStatus());
-            return "dashboard-edit.html";
-        } else {
+            jobService.updateJob(job, id);
+            LOGGER.info("update(...)");
             return "redirect:/dashboards";
         }
-    }
 
-    @GetMapping(value = "/read/{id}")
-    public String read(
-            @PathVariable(name = "id") Long id,
-            ModelMap modelMap) throws Exception {
-        LOGGER.info("read(" + id + ")");
-        Job job = jobService.findJobById(id);
-        modelMap.addAttribute("job", job);
-        return "read-job.html";
-    }
-
-    @PostMapping(value = "/update/{id}")
-    public String update(@PathVariable(name = "id") Long id,
-                         @Valid @ModelAttribute(name = "job") Job job,
-                         BindingResult result,
-                         Model model) throws CostNotFoundException, JobNotFoundException {
-        LOGGER.info("update()" + job.getId());
-        if (result.hasErrors()) {
-            LOGGER.info("update: result has erorr()" + result.getFieldError());
-            model.addAttribute("job", job);
-            return "dashboard-edit";
+        @GetMapping(value = "/delete/{id}")
+        public String delete (
+                @PathVariable(name = "id") Long id){
+            LOGGER.info("delete()");
+            jobService.deleteJob(id);
+            return "redirect:/jobs";
         }
-        model.addAttribute("job", job);
-        jobService.updateJob(job, id);
-        LOGGER.info("update(...)");
-        return "redirect:/dashboards";
-    }
 
-    @GetMapping(value = "/delete/{id}")
-    public String delete(
-            @PathVariable(name = "id") Long id) {
-        LOGGER.info("delete()");
-        jobService.deleteJob(id);
-        return "redirect:/jobs";
+        @GetMapping("/search/message")
+        public String searchJobsByMessage (@RequestParam(value = "jobMessage") String query,
+                Model model){
+            LOGGER.info("search()" + query);
+            List<Job> jobs = jobService.findJobsByMessage(query);
+            model.addAttribute("jobs", jobs);
+            return "list-job";
+        }
     }
-
-    @GetMapping("/search/message")
-    public String searchJobsByMessage(@RequestParam(value = "jobMessage") String query,
-                                      Model model) {
-        LOGGER.info("search()" + query);
-        List<Job> jobs = jobService.findJobsByMessage(query);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
-}

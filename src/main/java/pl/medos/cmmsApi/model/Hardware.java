@@ -19,8 +19,7 @@ public class Hardware {
     private String systemNo;
     private String inventoryNo;
     private String  accountNo;
-    private String  serviceTag;
-    private String serialNumber;
+   private String serialNumber;
     private String description;
     private String macAddress;
     private String ipAddress;
@@ -28,7 +27,7 @@ public class Hardware {
     private String status;
     private Department department;
     private Employee employee;
-    private Software software;
+//type
     private LocalDateTime pickUpDate;
     private LocalDateTime returnDate;
     private LocalDateTime installDate;
