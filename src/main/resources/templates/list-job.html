@@ -313,9 +313,9 @@
                                     <a th:href="@{/jobs/create}">Dodaj</a>
                                 </button>
                             </div>
-
-
                         </div>
+
+
                         <div class="mt-4 flex flex-col">
                             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block min-w-fit py-2 align-middle md:px-6 lg:px-8">
@@ -326,20 +326,30 @@
                                                 <th scope="col"
                                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
                                                     Index
+                                                </th>
+
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Data i Godzina
-                                                    zgłoszenia
+                                                    <a th:href="@{'/jobs/page/' + ${currentPage} + '?sortField=requestDate&sortDir=' + ${reverseSortDir}}">
+                                                        Data i Godzina
+                                                        zgłoszenia</a>
+
+                                                </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Osoba
-                                                    zgłaszająca
+                                                    <a th:href="@{'/jobs/page/' + ${currentPage} + '?sortField=employee&sortDir=' + ${reverseSortDir}}">
+                                                        Osoba
+                                                        zgłaszająca</a>
+                                                </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
-                                                    Dział
+                                                    <a th:href="@{'/jobs/page/' + ${currentPage} + '?sortField=department&sortDir=' + ${reverseSortDir}}">
+                                                        Dział</a>
+                                                </th>
+
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
@@ -489,13 +499,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/jobs/page/' + ${currentPage - 1}}">Poprzedni</a>
+                                           th:href="@{'/jobs/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/jobs/page/' + ${currentPage + 1}}">Następny</a>
+                                           th:href="@{'/jobs/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -510,7 +520,7 @@
                                     </div>
                                     <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/jobs/page/' + ${i}}">[[${i}]]</a>
+      <a th:if="${currentPage != i}" th:href="@{'/jobs/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
@@ -635,6 +645,7 @@
                 });
             }, 100000); // send GET request every 5 seconds
         });
+
 
 </script>
 </body>

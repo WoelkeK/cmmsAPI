@@ -31,5 +31,5 @@ public interface JobService {
 //
 //    List<Job> findJobsByMachine(Machine machineByName);
 
-    Page<Job> findJobPages(int pageNo, int size);
+    Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection);
 }
