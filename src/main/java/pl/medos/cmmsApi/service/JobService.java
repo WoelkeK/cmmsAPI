@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.Department;
@@ -32,4 +33,5 @@ public interface JobService {
 //    List<Job> findJobsByMachine(Machine machineByName);
 
     Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection);
+    Page<Job> findByStatusWithPagination(String query, int pageNo, int size, String sortField, String sortDirection);
 }

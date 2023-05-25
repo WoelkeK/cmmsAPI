@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.imgscalr.Scalr;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/dashboards")
@@ -86,11 +88,17 @@ public class DashboardController {
                                 Model model) {
         LOGGER.info("listView()");
         int size = 5;
-        Page<Job> jobPages = jobService.findJobPages(pageNo, size, sortField, sortDirection);
-        List<Job> jobs = jobPages.getContent();
+        String query ="Zgłoszono";
+        Page<Job> jobPages = jobService.findByStatusWithPagination(query,pageNo, size, sortField, sortDirection);
+        List<Job> jobs =jobPages.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", jobPages.getTotalPages());
         model.addAttribute("totalItems", jobPages.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDirection);
+        model.addAttribute("reverseSortDir", sortDirection.equals("desc") ? "asc" : "desc");
+
         model.addAttribute("jobs", jobs);
 
         List<Department> departments = departmentService.findAllDepartments();
@@ -154,23 +162,6 @@ public class DashboardController {
             LOGGER.info("create(...)");
             return "redirect:/dashboards";
         }
-
-//    @PostMapping(value = "/create")
-//    public String create(@Valid @ModelAttribute(name = "job") Job job,
-//                         BindingResult result,
-//                         Model model) throws IOException {
-//        LOGGER.info("create()" + job.getId());
-//
-//        if (result.hasErrors()) {
-//            LOGGER.info("create: result has erorr()" + result.getFieldError());
-//            model.addAttribute("job", job);
-//            return "dashboard-create";
-//        }
-//        model.addAttribute("job", job);
-//          Job savedJob = jobService.createJob(job);
-//        LOGGER.info("create(...)");
-//        return "redirect:/dashboards";
-//    }
 
         @GetMapping(value = "/update/{id}")
         public String updateView (

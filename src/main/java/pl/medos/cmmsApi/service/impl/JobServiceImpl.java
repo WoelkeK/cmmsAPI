@@ -69,13 +69,26 @@ public class JobServiceImpl implements JobService {
     @Override
     public Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findJobPages()" + pageNo + "/" + size);
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         LOGGER.info("Pageable() " + pageable.getPageNumber()+ "/" + pageable.getPageSize());
         Page<JobEntity> jobPages = jobRepository.findAll(pageable);
         LOGGER.info("findJobPages(repo)" +jobPages.getNumberOfElements());
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
         LOGGER.info("findJobPages(...)" +jobs.getNumberOfElements());
+        return jobs;
+    }
+
+    @Override
+    public Page<Job> findByStatusWithPagination(String query, int pageNo, int size, String sortField, String sortDirection) {
+        LOGGER.info("findJobPagesWithStatus()" + pageNo + "/" + size);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
+        LOGGER.info("Pageable() " + pageable.getPageNumber()+ "/" + pageable.getPageSize());
+        Page<JobEntity> jobPages = jobRepository.findByStatus(query,pageable);
+        LOGGER.info("findJobPagesWithStatus(repo)" +jobPages.getNumberOfElements());
+        Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
+        LOGGER.info("findJobPagesWithStatus(...)" +jobs.getNumberOfElements());
         return jobs;
     }
 
