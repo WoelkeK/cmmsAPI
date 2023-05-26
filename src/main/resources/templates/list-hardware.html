@@ -381,24 +381,22 @@
                                                     class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Adres IP
                                                 </td>
 
-
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
-                                                    <!--                                                    <a th:href="@{/machines/shedule/{id}(id=${machine.id})}"-->
-                                                    <!--                                                       class="text-indigo-800 hover:text-indigo-300">Przeglądy<span-->
-                                                    <!--                                                            class="sr-only"></span></a>-->
+                                                    <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
+                                                       class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
+                                                            class="sr-only"></span></a>
 
                                                     <a th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span
+                                                       class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
-                                                    <!--                                                    <a th:href="@{/machines/read/{id}(id=${machine.id})}"-->
-                                                    <!--                                                       class="text-indigo-800 hover:text-indigo-300">Pokaż<span-->
-                                                    <!--                                                            class="sr-only"></span></a>-->
+
                                                     <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span
+                                                       class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
                                             </tr>
+
                                             <!-- More people... -->
                                             </tbody>
                                             <tbody class="bg-grey">

@@ -64,18 +64,20 @@ public class WebHardwareController {
     @PostMapping("/create")
     public String createHardware(
             @ModelAttribute(name = "hardware") Hardware hardware) {
-        LOGGER.info("createHardware()");
+        LOGGER.info("createHardware()" + hardware.getInstallDate());
         Hardware savedHardware = hardwareService.create(hardware);
         LOGGER.info("createHardware(...)" + savedHardware);
         return "redirect:/hardwares";
     }
 
     @GetMapping(value = "/read/{id}")
-    public String findHardware(@PathVariable(name = "id") Long id) throws HardwareNotFoundException {
+    public String findHardware(@PathVariable(name = "id") Long id,
+                               Model model) throws HardwareNotFoundException {
         LOGGER.info("findHardware(" + id + ")");
         Hardware findHardware = hardwareService.read(id);
+        model.addAttribute("hardware", findHardware);
         LOGGER.info("findHardware(...)" + findHardware);
-        return "read-hardware";
+        return "view-hardware";
     }
 
     @GetMapping("/update/{id}")

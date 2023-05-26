@@ -83,6 +83,7 @@ public class WebEmployeeController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
+            @RequestParam(name = "pageNo") int pageNo,
             ModelMap modelMap) throws Exception {
         LOGGER.info("updateView()");
         Employee employee = employeeService.findEmployeeById(id);

@@ -188,7 +188,7 @@ public class DashboardController {
             LOGGER.info("read(" + id + ")");
             Job job = jobService.findJobById(id);
             modelMap.addAttribute("job", job);
-            return "read-job.html";
+            return "dashboard-edit.html";
         }
 
         @PostMapping(value = "/update/{id}")
