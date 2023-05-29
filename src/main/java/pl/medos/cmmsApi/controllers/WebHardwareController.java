@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/hardwares")
-@SessionAttributes(names = {"employees", "departments"})
+@SessionAttributes(names = {"employees", "departments", "hardwares"})
 public class WebHardwareController {
 
     private static final Logger LOGGER = Logger.getLogger(WebHardwareController.class.getName());
