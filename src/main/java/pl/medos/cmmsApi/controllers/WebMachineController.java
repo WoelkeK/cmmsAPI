@@ -189,7 +189,7 @@ public class WebMachineController {
         String headerValue = "attachment;filename=machine" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
-        exportService.excelModelGenerator(machines);
+        exportService.excelMachineModelGenerator(machines);
         exportService.generateExcelFile(response);
         response.flushBuffer();
         LOGGER.info("export(...)");

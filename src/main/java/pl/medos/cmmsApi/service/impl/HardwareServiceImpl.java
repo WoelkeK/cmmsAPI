@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
 import pl.medos.cmmsApi.model.Hardware;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.repository.entity.HardwareEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.HardwareService;
 import pl.medos.cmmsApi.service.mapper.HardwareMapper;
 
@@ -42,6 +44,15 @@ public class HardwareServiceImpl implements HardwareService {
         Page<HardwareEntity> hardwareEntities = hardwareRepository.findAll(pageable);
         Page<Hardware> hardwares = hardwareMapper.pageEntityToModels(hardwareEntities);
         LOGGER.info("pagesHardware(...)");
+        return hardwares;
+    }
+
+    @Override
+    public List<Hardware> findHardwaresByQuery(String query) {
+        LOGGER.info("findHardwaresByQuery()" + query);
+        List<HardwareEntity> hardwareEntities = hardwareRepository.searchHardwareByQuery(query);
+        List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
+        LOGGER.info("findHardwaresByQuery(...)");
         return hardwares;
     }
 

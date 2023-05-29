@@ -15,4 +15,6 @@ public interface HardwareService {
     List<Hardware> listAll();
     Page<Hardware> pagesHardware(int pageNo, int size);
 
+    List<Hardware> findHardwaresByQuery(String query);
 }
+

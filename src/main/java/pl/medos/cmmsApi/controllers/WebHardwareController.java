@@ -1,17 +1,23 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.service.DepartmentService;
-import pl.medos.cmmsApi.service.EmployeeService;
-import pl.medos.cmmsApi.service.HardwareService;
+import pl.medos.cmmsApi.model.Machine;
+import pl.medos.cmmsApi.service.*;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -24,11 +30,15 @@ public class WebHardwareController {
     private HardwareService hardwareService;
     private DepartmentService departmentService;
     private EmployeeService employeeService;
+    private ExportService exportService;
+    private ImportService importService;
 
-    public WebHardwareController(HardwareService hardwareService, DepartmentService departmentService, EmployeeService employeeService) {
+    public WebHardwareController(HardwareService hardwareService, DepartmentService departmentService, EmployeeService employeeService, ExportService exportService, ImportService importService) {
         this.hardwareService = hardwareService;
         this.departmentService = departmentService;
         this.employeeService = employeeService;
+        this.exportService = exportService;
+        this.importService = importService;
     }
 
     @GetMapping
@@ -104,5 +114,57 @@ public class WebHardwareController {
         hardwareService.delete(id);
         LOGGER.info("deleteHardware(...)");
         return "redirect:/hardwares";
+    }
+
+
+    @GetMapping(value = "/export")
+    public void exportMachines(@ModelAttribute(name = "hardware") List<Hardware> hardwares,
+                               HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=hardware" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+        exportService.excelHardwaresModelGenerator(hardwares);
+        exportService.generateExcelFile(response);
+        response.flushBuffer();
+        LOGGER.info("export(...)");
+    }
+
+    @GetMapping(value = "/file")
+    public String showUploadForm() {
+        return "uploadMach-form";
+    }
+
+    @PostMapping(value = "/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        LOGGER.info("importHardwares()");
+        if (file.isEmpty()) {
+            LOGGER.info("Please select file to upload");
+            return "redirect/hardwares";
+        }
+
+        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
+        List<Hardware> hardwares = importService.importExcelHardwareeData(file);
+
+        hardwares.forEach((hardware) -> {
+            hardwareService.create(hardware);
+        });
+        LOGGER.info("importHardwares(...) ");
+        return "redirect:/hardwares";
+    }
+
+    @GetMapping(value = "/search/query")
+    public String searchHardwareByQuery(@RequestParam(value = "query") String query,
+                                       Model model) {
+        LOGGER.info("search()");
+        List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
+        model.addAttribute("hardwares", hardwares);
+        return "list-hardware";
     }
 }
