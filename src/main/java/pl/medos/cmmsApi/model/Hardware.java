@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.medos.cmmsApi.enums.Device;
 import pl.medos.cmmsApi.enums.Status;
 
@@ -34,8 +35,9 @@ public class Hardware {
     private Status status;
     private Department department;
     private Employee employee;
-    //type
-    private LocalDateTime pickUpDate;
-    private LocalDateTime returnDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate pickUpDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate returnDate;
     private LocalDate installDate;
 }

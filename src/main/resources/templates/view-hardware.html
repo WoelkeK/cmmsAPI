@@ -111,13 +111,15 @@
                             </div>
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Data zakupu</dt>
-                                <dd th:text="${#temporals.format(hardware.installDate, 'dd MMMM yyyy')}"
-                                    id="hardware-installDate" name="hardware-installDate"
-                                    class="mt-1 text-lm text-gray-900">
-                                    Data
+                                <dt class="text-sm font-medium text-gray-400">Numer inwentaryzacyjny</dt>
+                                <dd th:text="${hardware.inventoryNo}" id="inventoryNo"
+                                    name="inventoryNo"
+                                    class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
+
+
+
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Adres IP</dt>
@@ -152,15 +154,16 @@
                             </div>
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Numer inwentaryzacyjny</dt>
-                                <dd th:text="${hardware.inventoryNo}" id="inventoryNo"
-                                    name="inventoryNo"
-                                    class="mt-1 text-lm text-gray-900">XXXXXXXXXX
+                                <dt class="text-sm font-medium text-gray-400">Data zakupu</dt>
+                                <dd th:text="${#temporals.format(hardware.installDate, 'dd MMMM yyyy')}"
+                                    id="hardware-installDate" name="hardware-installDate"
+                                    class="mt-1 text-lm text-gray-900">
+                                    Data
                                 </dd>
                             </div>
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Numer księgowy</dt>
+                                <dt class="text-sm font-medium text-gray-400">Dokument zakupu</dt>
                                 <dd th:text="${hardware.invoiceNo}" id="invoiceNo"
                                     name="invoiceNo"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX

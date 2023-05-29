@@ -56,6 +56,8 @@
                     <div class="space-y-1 px-2 py-3 sm:px-3">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     </div>
+                </div>
+            </div>
         </nav>
         <header class="py-10">
 
@@ -78,12 +80,10 @@
         <input type="hidden" th:field="*{name}">
         <input type="hidden" th:field="*{department.id}">
         <input type="hidden" th:field="${hardware.id}">
+        <input type="hidden" th:field="*{employee.id}">
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
-        <input type="hidden" th:field="*{ipAddress}">
         <input type="hidden" th:field="*{installDate}">
-        <input type="hidden" th:field="*{macAddress}">
-        <input type="hidden" th:field="*{netBios}">
         <input type="hidden" th:field="*{inventoryNo}">
         <input type="hidden" th:field="*{status}">
         <input type="hidden" th:field="*{invoiceNo}">
@@ -109,55 +109,23 @@
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Nazwa</dt>
-                                <dd th:text="${hardware.name}" id="hardware-name" name="hardware-name"
+                                <dd th:text="${hardware.name}" id="view-name" name="view-name"
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">SN / ServiceTag</dt>
-                                <dd th:text="${hardware.serialNumber}" id="hardware-serialNumber"
-                                    name="hardware-serialNumber"
+                                <dd th:text="${hardware.serialNumber}" id="serialNumber"
+                                    name="serialNumber"
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
 
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Adres IP</dt>-->
-                            <!--                                <dd th:text="${hardware.ipAddress}" id="ipAddress"-->
-                            <!--                                    name="ipAddress"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">XXXXXXXXXX-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Adres MAC</dt>-->
-                            <!--                                <dd th:text="${hardware.macAddress}" id="macAddress"-->
-                            <!--                                    name="macAddress"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">XXXXXXXXXX-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">netBIOS</dt>-->
-                            <!--                                <dd th:text="${hardware.netBios}" id="netBios"-->
-                            <!--                                    name="netBios"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">XXXXXXXXXX-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Numer inwentaryzacyjny</dt>-->
-                            <!--                                <dd th:text="${hardware.inventoryNo}" id="inventoryNo"-->
-                            <!--                                    name="inventoryNo"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">XXXXXXXXXX-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
-
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Numer księgowy</dt>
-                                <dd th:text="${hardware.accountNo}" id="accountNo"
-                                    name="accountNo"
+                                <dt class="text-sm font-medium text-gray-400">Dokument zakupu</dt>
+                                <dd th:text="${hardware.invoiceNo}" id="invoiceNo"
+                                    name="invoiceNo"
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
@@ -173,7 +141,7 @@
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Data zakupu</dt>
                                 <dd th:text="${#temporals.format(hardware.installDate, 'dd MMMM yyyy')}"
-                                    id="hardware-installDate" name="hardware-installDate"
+                                    id="installDate" name="installDate"
                                     class="mt-1 text-sm text-gray-900">
                                     Data
                                 </dd>
@@ -182,7 +150,7 @@
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Data odbioru</dt>
                                 <dd th:text="${#temporals.format(hardware.pickUpDate, 'dd MMMM yyyy')}"
-                                    id="hardware-pickUpDate" name="hardware-pickUpDate"
+                                    id="view-pickUpDate" name="pickUpDate"
                                     class="mt-1 text-sm text-gray-900">
                                     Data
                                 </dd>
@@ -191,7 +159,7 @@
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Data zwrotu</dt>
                                 <dd th:text="${#temporals.format(hardware.returnDate, 'dd MMMM yyyy')}"
-                                    id="hardware-returnDate" name="hardware-returnDate"
+                                    id="view-returnDate" name="returnDate"
                                     class="mt-1 text-sm text-gray-900">
                                     Data
                                 </dd>
@@ -205,23 +173,7 @@
                             <div class="px-4 py-5 sm:px-6">
 
                                 <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
-                                    <!--                                    <div class="sm:col-span-1">-->
-                                    <!--                                        <label for="type" class="block text-sl font-medium leading-6 text-gray-500">Typ-->
-                                    <!--                                            Urządzenia</label>-->
-
-                                    <!--                                        <div class="mt-2">-->
-                                    <!--                                            <select name="type" id="type" autocomplete="type" th:field="*{type}" class="block w-fit rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1-->
-                                    <!--                                ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2-->
-                                    <!--                                sm:text-xl sm:leading-6">-->
-
-                                    <!--                                                <option th:each="type : ${T(pl.medos.cmmsApi.enums.Device).values()}"-->
-                                    <!--                                                        th:value="${type}" th:text="${type}">-->
-                                    <!--                                                </option>-->
-                                    <!--                                            </select>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
-
-                                    <div class="sm:col-span-1">
+                                     <div class="sm:col-span-1">
                                         <label for="newstatus"
                                                class="block text-sl font-medium leading-6 text-gray-500">Status</label>
                                         <div class="mt-2">
@@ -259,25 +211,27 @@
                                     </div>
 
                                     <div class="sm:col-span-1">
-                                        <label for="newpickupDate"
+                                        <label for="pickupDate"
                                                class="block text-sl font-medium leading-6 text-gray-500">Data
                                             odbioru</label>
                                         <div class="mt-2">
-                                            <input type="datetime-local" th:field="${hardware.pickUpDate}"
-                                                   name="newpickupDate"
-                                                   id="newpickupDate"
-                                                   autocomplete="off"
+                                            <input type="date" th:field="${hardware.pickUpDate}"
+                                                   name="pickupDate"
+                                                   id="pickupDate"
+                                                   th:value="${{pickUpDate}}"
+                                                   autocomplete="date"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
                                     </div>
 
                                     <div class="sm:col-span-1">
-                                        <label for="newReturnDate"
+                                        <label for="returnDate"
                                                class="block text-sl font-medium leading-6 text-gray-500">Data
                                             zwrotu</label>
                                         <div class="mt-2">
-                                            <input type="date" th:field="${hardware.returnDate}" name="newReturnDate"
-                                                   id="newReturnDate"
+                                            <input type="date" th:field="${hardware.returnDate}" name="returnDate"
+                                                   id="returnDate"
+                                                   th:value="${{returnDate}}"
                                                    autocomplete="date"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
@@ -287,36 +241,36 @@
                                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
 
                                     <div class="sm:col-span-1">
-                                        <label for="newIpAddress"
+                                        <label for="ipAddress"
                                                class="block text-sl font-medium leading-6 text-gray-500">Adres
                                             IP</label>
                                         <div class="mt-2">
-                                            <input th:field="${hardware.ipAddress}" id="newIpAddress"
-                                                   name="newIpAddress"
+                                            <input th:field="${hardware.ipAddress}" id="ipAddress"
+                                                   name="ipAddress"
                                                    autocomplete="off"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
                                     </div>
 
                                     <div class="sm:col-span-1">
-                                        <label for="newIpAddress"
+                                        <label for="macAddress"
                                                class="block text-sl font-medium leading-6 text-gray-500">Adres
                                             MAC</label>
                                         <div class="mt-2">
-                                            <input th:field="${hardware.macAddress}" id="newMacAddress"
-                                                   name="newIpAddress"
+                                            <input th:field="${hardware.macAddress}" id="macAddress"
+                                                   name="macAddress"
                                                    autocomplete="off"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
                                     </div>
 
                                     <div class="sm:col-span-1">
-                                        <label for="newIpAddress"
+                                        <label for="netBios"
                                                class="block text-sl font-medium leading-6 text-gray-500">Adres
                                             netBIOS</label>
                                         <div class="mt-2">
-                                            <input th:field="${hardware.netBios}" id="newnetBiosAddress"
-                                                   name="newIpAddress"
+                                            <input th:field="${hardware.netBios}" id="netBios"
+                                                   name="netBios"
                                                    autocomplete="off"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
@@ -333,8 +287,8 @@
                                                            class="block text-xl font-medium text-green-600 sm:mt-px sm:pt-2">Opis
                                                         urządzenia</label>
                                                     <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                    <textarea th:utext="${description}" id="description" name="description" rows="3"
-                                              class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                                    <textarea th:field="*{description}" id="description" name="description" rows="3"
+                                              class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm text-blue-700 focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg"></textarea>
 
                                                         <!--                                            <p th:errors="*{description}" class="text-danger mt-2 text-lm text-red-500"-->
                                                         <!--                                               th:if="${#fields.hasErrors('description')}"></p>-->
@@ -360,7 +314,9 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                </div>
+            </div>
         </main>
     </form>
 </div>
