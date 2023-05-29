@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_ALLOW_EMPTY_PASSWORD: true
 
-  cmms_api_service:
+  cmms2_api_service:
     build: .
     restart: always
     ports:
