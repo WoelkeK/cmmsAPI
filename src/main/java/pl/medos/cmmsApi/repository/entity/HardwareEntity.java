@@ -3,10 +3,14 @@ package pl.medos.cmmsApi.repository.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import pl.medos.cmmsApi.enums.Device;
+import pl.medos.cmmsApi.enums.Status;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Software;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,15 +29,21 @@ public class HardwareEntity {
     private String name;
     private String systemNo;
     private String inventoryNo;
-    private String type;
+    private String invoiceNo;
+    @Enumerated(EnumType.STRING)
+    private Device type;
     private String serialNumber;
     private String description;
     private String macAddress;
     private String ipAddress;
-    private String status;
-    private LocalDateTime pickUpDate;
-    private LocalDateTime returnDate;
-    private LocalDateTime installDate;
+    private String netBios;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate pickUpDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate returnDate;
+    private LocalDate installDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
