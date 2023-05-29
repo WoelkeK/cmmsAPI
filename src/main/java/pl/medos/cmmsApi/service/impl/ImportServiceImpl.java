@@ -15,6 +15,7 @@ import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Logger;
@@ -26,7 +27,11 @@ public class ImportServiceImpl implements ImportService {
 
     private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
-    private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department","status"));
+    private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
+    private List<String> hardwares = new ArrayList<>(Arrays.asList(
+            "id", "inventoryNo", "department", "status", "employee", "type",
+            "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios",
+            "ipAddress", "macAddress"));
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
@@ -105,7 +110,6 @@ public class ImportServiceImpl implements ImportService {
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
             Department rawData = mapper.convertValue(rowDataMap, Department.class);
             rawDataList.add(rawData);
             LOGGER.info("rawData " + rawData);
@@ -156,6 +160,50 @@ public class ImportServiceImpl implements ImportService {
         }
         List<Machine> machines = machineDataExcelConverter(rawDataList);
         return machines;
+    }
+
+    @Override
+    public List<Hardware> importExcelHardwareeData(MultipartFile fileName) throws IOException {
+        LOGGER.info("importExcelHardwaresData()");
+
+        List<Hardware> rawDataList = new ArrayList<>();
+        InputStream file = new BufferedInputStream(fileName.getInputStream());
+
+        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        Person person = new Person();
+        Iterator<Row> rowIterator = sheet.iterator();
+
+        while (rowIterator.hasNext()) {
+
+            Row row = rowIterator.next();
+            Map<String, String> rowDataMap = new HashMap<>();
+            Cell cell;
+            for (int k = 0; k < row.getLastCellNum(); k++) {
+                if (null != (cell = row.getCell(k))) {
+                    switch (cell.getCellType()) {
+                        case NUMERIC:
+                            rowDataMap.put(hardwares.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
+                            break;
+                        case STRING:
+//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
+                            rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
+                            break;
+                    }
+                }
+            }
+            ObjectMapper mapper = new ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+
+            Hardware rawData = mapper.convertValue(rowDataMap, Hardware.class);
+            rawDataList.add(rawData);
+            LOGGER.info("rawData " + rawData);
+        }
+        List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
+        return hardwares;
     }
 
 
@@ -228,6 +276,39 @@ public class ImportServiceImpl implements ImportService {
 
         LOGGER.info("employeeDataExcelConverter(...)");
         return convertedMachines;
+    }
+
+    private List<Hardware> hardwareDataExcelConverter(List<Hardware> hardwares) {
+        LOGGER.info("hardwareDataExcelConverter()");
+
+        List<Hardware> convertedHardwares =
+                hardwares.stream().map(m -> {
+
+                                    Hardware hardware = new Hardware();
+                                    hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
+                                    hardware.setInventoryNo(String.valueOf(m.getInventoryNo()));
+                                    Department department = new Department();
+                                    department.setId(m.getDepartment().getId());
+                                    hardware.setDepartment(department);
+                                    hardware.setStatus(m.getStatus());
+                                    hardware.setEmployee(m.getEmployee());
+                                    hardware.setType(m.getType());
+                                    hardware.setName(m.getName());
+                                    hardware.setInstallDate((m.getInstallDate()));
+                                    hardware.setInvoiceNo(m.getInvoiceNo());
+                                    hardware.setSystemNo(m.getSystemNo());
+                                    hardware.setNetBios(m.getNetBios());
+                                    hardware.setIpAddress(m.getIpAddress());
+                                    hardware.setMacAddress(m.getMacAddress());
+
+                                    LOGGER.info("departmentNameNull (...)");
+                                    return hardware;
+                                }
+                        )
+                        .toList();
+
+        LOGGER.info("hardwareDataExcelConverter(...)");
+        return convertedHardwares;
     }
 }
 
