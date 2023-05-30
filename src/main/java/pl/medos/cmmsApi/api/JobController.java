@@ -45,9 +45,9 @@ public class JobController {
     @GetMapping("/job/{id}")
     public Job findJobById(@PathVariable(name = "id") Long id) throws JobNotFoundException {
         LOGGER.info("readJob(" + id + ")");
-        Job readedJob = jobService.findJobById(id);
-        LOGGER.info("readJob(...) " + readedJob);
-        return readedJob;
+        Job readJob = jobService.findJobById(id);
+        LOGGER.info("readJob(...) " + readJob);
+        return readJob;
     }
 
     @PutMapping("/job/{id}")

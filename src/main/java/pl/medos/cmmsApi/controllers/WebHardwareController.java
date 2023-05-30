@@ -11,7 +11,6 @@ import pl.medos.cmmsApi.exception.HardwareNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.*;
 
 import java.io.IOException;
