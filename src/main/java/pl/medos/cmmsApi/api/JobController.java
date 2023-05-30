@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers;
+package pl.medos.cmmsApi.api;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
