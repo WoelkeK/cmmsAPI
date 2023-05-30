@@ -36,7 +36,7 @@ public class EmployeeController {
         return createdEmployee;
     }
 
-    @PutMapping("/employee")
+    @PutMapping("/employee/{id}")
     public Employee update(@PathVariable (name = "id")Long id,
             @RequestBody Employee employee) throws EmployeeNotFoundException {
         LOGGER.info("update()");
