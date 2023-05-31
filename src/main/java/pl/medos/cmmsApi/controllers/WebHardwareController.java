@@ -57,6 +57,10 @@ public class WebHardwareController {
         LOGGER.info("pageing()");
         int size = 5;
         Page<Hardware> hardwares = hardwareService.pagesHardware(pageNo, size);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("pageing(...)");
         return "page-hardware";
@@ -101,7 +105,7 @@ public class WebHardwareController {
     @PostMapping("/update")
     public String updateHardware(
             @ModelAttribute(name = "hardware") Hardware hardware) throws HardwareNotFoundException {
-        LOGGER.info("updateHardware()" + hardware.getId());
+        LOGGER.info("updateHardware(emp)" + hardware.getId());
         Hardware updatedHardware = hardwareService.update(hardware);
         LOGGER.info("updateHardware(...)");
         return "redirect:/hardwares";

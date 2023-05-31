@@ -118,10 +118,7 @@
                                 </dd>
                             </div>
 
-
-
-
-                            <div class="sm:col-span-1">
+                        <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Adres IP</dt>
                                 <dd th:text="${hardware.ipAddress}" id="ipAddress"
                                     name="ipAddress"
@@ -170,22 +167,22 @@
                                 </dd>
                             </div>
 
-                            <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Data odbioru</dt>
-                                <dd th:text="${#temporals.format(hardware.pickUpDate, 'dd MMMM yyyy')}"
-                                    id="hardware-pickUpDate" name="hardware-pickUpDate"
-                                    class="mt-1 text-lm text-gray-900">
-                                    Data
-                                </dd>
-                            </div>
-                            <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Data zwrotu</dt>
-                                <dd th:text="${#temporals.format(hardware.returnDate, 'dd MMMM yyyy')}"
-                                    id="hardware-returnDate" name="hardware-returnDate"
-                                    class="mt-1 text-lm text-gray-900">
-                                    Data
-                                </dd>
-                            </div>
+<!--                            <div class="sm:col-span-1">-->
+<!--                                <dt class="text-sm font-medium text-gray-400">Data odbioru</dt>-->
+<!--                                <dd th:text="${#temporals.format(hardware.pickUpDate, 'dd MMMM yyyy')}"-->
+<!--                                    id="hardware-pickUpDate" name="hardware-pickUpDate"-->
+<!--                                    class="mt-1 text-lm text-gray-900">-->
+<!--                                    Data-->
+<!--                                </dd>-->
+<!--                            </div>-->
+<!--                            <div class="sm:col-span-1">-->
+<!--                                <dt class="text-sm font-medium text-gray-400">Data zwrotu</dt>-->
+<!--                                <dd th:text="${#temporals.format(hardware.returnDate, 'dd MMMM yyyy')}"-->
+<!--                                    id="hardware-returnDate" name="hardware-returnDate"-->
+<!--                                    class="mt-1 text-lm text-gray-900">-->
+<!--                                    Data-->
+<!--                                </dd>-->
+<!--                            </div>-->
                         </dl>
                     </div>
 

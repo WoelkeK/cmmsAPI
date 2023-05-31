@@ -1,7 +1,9 @@
 package pl.medos.cmmsApi.repository.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.medos.cmmsApi.enums.Device;
@@ -39,9 +41,9 @@ public class HardwareEntity {
     private String netBios;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pickUpDate;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
     private LocalDate installDate;
     @ManyToOne(fetch = FetchType.LAZY)
