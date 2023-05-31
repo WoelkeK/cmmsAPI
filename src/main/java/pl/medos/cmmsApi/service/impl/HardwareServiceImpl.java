@@ -80,12 +80,12 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     public Hardware update(Hardware hardware) throws HardwareNotFoundException {
-        LOGGER.info("updateHardware()" + hardware);
+        LOGGER.info("mapUpdateHardware()" + hardware.getId());
         HardwareEntity hardwareEntity = hardwareMapper.mapModelToEntity(hardware);
         hardwareEntity.setId(hardware.getId());
         HardwareEntity saveHardwareEntity = hardwareRepository.save(hardwareEntity);
         Hardware savedHardware = hardwareMapper.mapEntityToModel(saveHardwareEntity);
-        LOGGER.info("updateHardware(...)" + savedHardware);
+        LOGGER.info("mapUpdateHardware(...)" + savedHardware);
         return savedHardware;
     }
 
