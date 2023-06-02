@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Moduł Sprzętu IT</title>
+    <title>Moduł Oprogramowania IT</title>
     <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-400">
@@ -284,153 +284,146 @@
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-4xl font-semibold text-gray-900">Sprzęt IT</h1>
-                                <p class="mt-2 text-lm text-gray-700">Lista urządzeń informatycznych znajdujących się na terenie firmy
+                                <h1 class="text-4xl font-semibold text-gray-900">Oprogramowanie IT</h1>
+                                <p class="mt-2 text-lm text-gray-700">Lista zainstalowanego oprogramowania znajdującego
+                                    się na terenie firmy
                                     Medos.</p>
                             </div>
+
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/hardwares/create}">Dodaj</a>
+                                    <a th:href="@{/softwares/create}">Dodaj</a>
                                 </button>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/hardwares/file}">Import</a>
+                                    <a th:href="@{/softwares/file}">Import</a>
                                 </button>
                             </div>
                         </div>
 
+                    </div>
+                </div>
+                <div class="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
 
-                        <div class="mt-4 flex flex-col">
-                            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                                        <table class="min-w-full">
-                                            <thead class="bg-gray-800">
-                                            <tr>
-                                                <th scope="col"
-                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
-                                                    Index
-                                                </th>
+                    <div class="mt-4 flex flex-col">
+                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                                    <table class="min-w-full">
+                                        <thead class="bg-gray-800">
+                                        <tr>
+                                            <th scope="col"
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
+                                                <a th:href="@{'/softwares/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                                                    Index</a>
+                                            </th>
+                                            <th scope="col"
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
+                                                <a th:href="@{'/softwares/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                    Nazwa programu </a>
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                <a th:href="@{'/softwares/page/' + ${currentPage} + '?sortField=version&sortDir=' + ${reverseSortDir}}">
+                                                    Wersja </a>
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                <a th:href="@{'/softwares/page/' + ${currentPage} + '?sortField=number&sortDir=' + ${reverseSortDir}}">
+                                                    Klucz / Konto </a>
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                <a th:href="@{'/softwares/page/' + ${currentPage} + '?sortField=activateDate&sortDir=' + ${reverseSortDir}}">
+                                                    Data aktywacji </a>
+                                            </th>
 
-                                                <th scope="col"
-                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
-                                                    Wydział
-                                                </th>
+                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
+                                                <span class="sr-only">Edit</span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="bg-gray-400">
+                                        <tr class="border-t border-gray-700">
+                                            <th colspan="7" scope="colgroup"
+                                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
+                                                Dostępne oprogramowanie
+                                            </th>
+                                        </tr>
 
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Użytkownik
-                                                </th>
+                                        <tr th:each="software : ${softwares}" class="border-t border-gray-300">
+                                            <td th:text="${software.id}"
+                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
+                                                Index
+                                            </td>
 
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Typ Urządzenia
-                                                </th>
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Nazwa
-                                                </th>
+                                            <td th:text="${software.name}"
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
+                                            </td>
 
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    SN / ServiceTag
-                                                </th>
+                                            <td th:text="${software.version}"
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wersja
+                                            </td>
 
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Adres IP
-                                                </th>
+                                            <td th:text="${software.number}"
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Klucz / Konto
 
-                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
-                                                    <span class="sr-only">Edit</span>
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="bg-gray-400">
-                                            <tr class="border-t border-gray-700">
-                                                <th colspan="9" scope="colgroup"
-                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
-                                                    Aktywny Sprzęt
-                                                </th>
-                                            </tr>
+                                            </td>
 
-                                            <tr th:each="hardware : ${hardwares}" class="border-t border-gray-300">
-                                                <td th:text="${hardware.id}"
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
-                                                    Index
-                                                </td>
-                                                <td th:text="${hardware.department.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wydział
-                                                </td>
-                                                <td th:text="${hardware.employee?.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Użytkownik
-                                                </td>
-                                                <td th:text="${hardware.type}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Typ
+                                            <td th:text="${software.activateDate}"
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data aktywacji
 
-                                                </td>
-                                                <td th:text="${hardware.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
+                                            </td>
 
-                                                </td>
-                                                <td th:text="${hardware.serialNumber}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">SN / ServiceTag
-                                                </td>
+                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
-                                                <td th:text="${hardware.ipAddress}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Adres IP
-                                                </td>
+<!--                                                <a th:href="@{/softwares/read/{id}(id=${software.id})}"-->
+<!--                                                   class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span-->
+<!--                                                        class="sr-only"></span></a>-->
 
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
+                                                <a th:href="@{/softwares/update/{id}(id=${software.id})}"
+                                                   class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
+                                                        class="sr-only"></span></a>
 
-                                                    <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
-                                                       class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
-                                                            class="sr-only"></span></a>
+                                                <a th:href="@{/softwares/delete/{id}(id=${software.id})}"
+                                                   class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
+                                                        class="sr-only"></span></a>
+                                            </td>
+                                        </tr>
 
-                                                    <a th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
-                                                       class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
-                                                            class="sr-only"></span></a>
-
-                                                    <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
-                                                       class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
-                                                            class="sr-only"></span></a>
-                                                </td>
-                                            </tr>
-
-                                            <!-- More people... -->
-                                            </tbody>
-                                            <tbody class="bg-grey">
-                                            <tr class="border-t border-gray-200">
-                                                <th colspan="9" scope="colgroup"
-                                                    class="bg-green-300 px-4 py-2 text-center text-lm font-semibold text-gray-700 sm:px-6">
-                                                    Koniec zestawienia
-                                                </th>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                        <!-- More people... -->
+                                        </tbody>
+                                        <tbody class="bg-grey">
+                                        <tr class="border-t border-gray-200">
+                                            <th colspan="7" scope="colgroup"
+                                                class="bg-green-300 px-4 py-2 text-center text-lm font-semibold text-gray-700 sm:px-6">
+                                                Koniec zestawienia
+                                            </th>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="pt-1">
-                                <div class="flex justify-end">
-                                    <button type="button"
-                                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <a th:if="${currentPage >1}"
-                                           th:href="@{'/hardwares/page/' + ${currentPage - 1}}">Poprzedni</a>
-                                        <span th:unless="${currentPage >1}">Poprzedni</span>
-                                    </button>
-                                    <button type="button"
-                                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/hardwares/page/' + ${currentPage + 1}}">Następny</a>
-                                        <span th:unless="${currentPage < totalPages}">Następny</span>
-                                    </button>
-
-                                </div>
+                        <div class="pt-1">
+                            <div class="flex justify-end">
+                                <button type="button"
+                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    <a th:if="${currentPage >1}"
+                                       th:href="@{'/softwares/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                    <span th:unless="${currentPage >1}">Poprzedni</span>
+                                </button>
+                                <button type="button"
+                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    <a th:if="${currentPage < totalPages}"
+                                       th:href="@{'/softwares/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                    <span th:unless="${currentPage < totalPages}">Następny</span>
+                                </button>
                             </div>
+                        </div>
 
 
                         <div th:if="${totalPages > 1}">
@@ -440,96 +433,92 @@
                                 </div>
                                 <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/hardwares/page/' + ${i}}">[[${i}]]</a>
+      <a th:if="${currentPage != i}" th:href="@{'/softwares/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
 
+                <div class="overflow-hidden rounded-md bg-gray shadow">
+                    <ul role="list" class="divide-y divide-gray-700">
+                        <li class="px-6 py-2">
 
-                    <div class="overflow-hidden rounded-md bg-gray shadow">
-                        <ul role="list" class="divide-y divide-gray-700">
-                            <li class="px-6 py-2">
+                            <div>
+                                <h2 class="text-sm font-medium text-gray-500">Szukaj / Export XLS</h2>
+                                <ul role="list"
+                                    class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4">
 
-                                <div>
-                                    <h2 class="text-sm font-medium text-gray-500">Szukaj / Export XLS</h2>
-                                    <ul role="list"
-                                        class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4">
-
-                                        <li class="col-span-1 flex rounded-md shadow-lm">
-                                            <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-semibold text-yellow-500">
-                                                Tekst
-                                            </div>
-                                            <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">
-                                                <div class="flex-1 truncate px-4 py-2 text-sm">
-                                                    <div class="form-group">
-                                                        <form class="form-inline" th:action="@{/hardwares/search/query}">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control"
-                                                                       name="query"/>
-                                                                <button type="submit"
-                                                                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                                    <span class="sr-only">Open options</span>
-                                                                    <svg class="h-5 w-5" viewBox="0 0 20 20"
-                                                                         fill="currentColor"
-                                                                         aria-hidden="true">
-                                                                        <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
-                                                                    </svg>
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                    <li class="col-span-1 flex rounded-md shadow-lm">
+                                        <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-semibold text-yellow-500">
+                                            Tekst
+                                        </div>
+                                        <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">
+                                            <div class="flex-1 truncate px-4 py-2 text-sm">
+                                                <div class="form-group">
+                                                    <form class="form-inline" th:action="@{/softwares/search/query}">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control"
+                                                                   name="query"/>
+                                                            <button type="submit"
+                                                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                                <span class="sr-only">Open options</span>
+                                                                <svg class="h-5 w-5" viewBox="0 0 20 20"
+                                                                     fill="currentColor"
+                                                                     aria-hidden="true">
+                                                                    <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </div>
+                                    </li>
 
-                                        <li class="col-span-1 flex rounded-md shadow-sm">
-                                            <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-medium text-yellow-500">
-                                                Wydruk
-                                            </div>
-                                            <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-green-500">
-                                                <div class="flex-1 truncate px-4 py-2 text-sm">
-                                                    <div class="form-group">
-                                                        <form class="form-inline" th:action="@{/hardwares/export}">
-                                                            <div class="input-group">
-                                                                <button type="submit"
-                                                                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                                    <span class="sr-only">Open options</span>
-                                                                    <svg class="h-5 w-5" viewBox="0 0 20 20"
-                                                                         fill="currentColor"
-                                                                         aria-hidden="true">
-                                                                        <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
-                                                                    </svg>
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                    <li class="col-span-1 flex rounded-md shadow-sm">
+                                        <div class="flex w-16 flex-shrink-0 items-center justify-center bg-gray-700 rounded-l-md text-sm font-medium text-yellow-500">
+                                            Wydruk
+                                        </div>
+                                        <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-green-500">
+                                            <div class="flex-1 truncate px-4 py-2 text-sm">
+                                                <div class="form-group">
+                                                    <form class="form-inline" th:action="@{/softwares/export}">
+                                                        <div class="input-group">
+                                                            <button type="submit"
+                                                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                                <span class="sr-only">Open options</span>
+                                                                <svg class="h-5 w-5" viewBox="0 0 20 20"
+                                                                     fill="currentColor"
+                                                                     aria-hidden="true">
+                                                                    <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </main>
-    </div>
-
 
     <div class="relative">
-                        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div class="w-full border-t border-gray-300"></div>
-                        </div>
-                        <div class="relative flex justify-center">
-                            <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center">
+            <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
+        </div>
+    </div>
+        </main>
+    </div>
+</div>
 </body>
 </html>

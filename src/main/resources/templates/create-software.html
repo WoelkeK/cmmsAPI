@@ -1,0 +1,95 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel IT Dodawnie sprzętu</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/disableSelect.js"></script>
+
+</head>
+<body class="bg-gray-400">
+<form action="#" th:action="@{/softwares/create}" th:object="${software}" method="post">
+
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-6xl font-semibold text-gray-900">Software</h1>
+                <p class="mt-2 text-lm text-gray-700">Dodawanie oprogramowania do bazy</p>
+            </div>
+
+        </div>
+
+        <div class="overflow-hidden bg-gray-700 shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg font-medium leading-6 text-yellow-400">Dane software'u</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-400">Opis programu</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 sm:px-6 lg:px-8 py-10">
+        <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+
+                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+                    <div class="sm:col-span-1">
+                        <label for="name"
+                               class="block text-sl font-medium leading-6 text-gray-500">Nazwa programu</label>
+                        <div class="mt-2">
+                            <input type="text" name="name" id="name" autocomplete="name"
+                                   th:field="${software.name}"
+                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="version" class="block text-sl font-medium leading-6 text-gray-500">Wersja programu</label>
+                        <div class="mt-2">
+                            <input id="version" name="version" type="text" autocomplete="version"
+                                   th:field="${software.version}"
+                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="number" class="block text-sl font-medium leading-6 text-gray-500">Klucz / Konto</label>
+                        <div class="mt-2">
+                            <input id="number" name="number" type="text" autocomplete="number"
+                                   th:field="${software.number}"
+                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="activateDate" class="block text-sl font-medium leading-6 text-gray-500">Data
+                            Aktywacji</label>
+                        <div class="mt-2">
+                            <input type="date" th:field="${software.activateDate}" name="activateDate"
+                                   id="activateDate"
+                                   autocomplete="date"
+                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="pt-5">
+            <div class="flex justify-end">
+                <button type="button"
+                        class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <a th:href="@{/softwares}">Wstecz</a>
+                </button>
+                <button type="submit"
+                        class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Zapisz
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
