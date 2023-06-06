@@ -35,10 +35,12 @@ public class Hardware {
     private Status status;
     private Department department;
     private Employee employee;
-    private Software software;
+
+    private String officeName;
+    private String officeNo;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private LocalDate pickUpDate;
+    private LocalDate activateDate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate returnDate;
     private LocalDate installDate;

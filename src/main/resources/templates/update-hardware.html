@@ -82,12 +82,11 @@
         <input type="hidden" th:field="*{name}">
         <input type="hidden" th:field="*{department.id}">
         <input type="hidden" th:field="${hardware.id}">
-<!--        <input type="hidden" th:field="*{software.id}">-->
+        <!--        <input type="hidden" th:field="*{software.id}">-->
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
         <input type="hidden" th:field="*{installDate}">
         <input type="hidden" th:field="*{inventoryNo}">
-        <input type="hidden" th:field="*{software}">
         <input type="hidden" th:field="*{invoiceNo}">
 
         <main class="-mt-32">
@@ -150,9 +149,9 @@
                             </div>
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Status</dt>
-                                <dd th:text="${hardware.software?.name}" id="software-name"
-                                    name="viewstatus"
+                                <dt class="text-sm font-medium text-gray-400">Office</dt>
+                                <dd th:text="${hardware.officeName}" id="software-name"
+                                    name="software-name"
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
@@ -260,6 +259,41 @@
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
                                     </div>
+
+                                    <div class="sm:col-span-1">
+                                        <label for="officeName"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Wersja
+                                            office</label>
+                                        <div class="mt-2">
+                                            <input th:field="${hardware.officeName}" id="officeName"
+                                                   name="officeName"
+                                                   autocomplete="off"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-1">
+                                        <label for="officeNo"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Klucz /
+                                            Konto</label>
+                                        <div class="mt-2">
+                                            <input th:field="${hardware.officeNo}" id="officeNo"
+                                                   name="officeNo"
+                                                   autocomplete="off"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-1">
+                                        <label for="installDate" class="block text-sl font-medium leading-6 text-gray-500">Data
+                                            aktywacji</label>
+                                        <div class="mt-2">
+                                            <input type="date" th:field="${hardware.activateDate}" name="activateDate"
+                                                   id="activateDate"
+                                                   autocomplete="date"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="px-4 py-5 sm:px-6">
@@ -322,6 +356,7 @@ field2Select.value = "";
 field2Select.disabled = false;
 }
 }
+
 
 </script>
 </body>

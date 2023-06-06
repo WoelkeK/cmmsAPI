@@ -165,16 +165,16 @@
 
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Nazwa programu</dt>
-                                <dd th:text="${hardware.software?.name}" id="software-name"
+                                <dt class="text-sm font-medium text-gray-400">Wersja office</dt>
+                                <dd th:text="${hardware.officeName}" id="software-name"
                                     name="software-name"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">Dokument zakupu</dt>
-                                <dd th:text="${hardware.software?.version}" id="software-version"
+                                <dt class="text-sm font-medium text-gray-400">Data aktywacji</dt>
+                                <dd th:text="${hardware.activateDate}" id="software-version"
                                     name="software-version"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>
@@ -182,7 +182,7 @@
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Klucz / Konto</dt>
-                                <dd th:text="${hardware.software?.number}" id="software-number"
+                                <dd th:text="${hardware.officeNo}" id="software-number"
                                     name="software-number"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>

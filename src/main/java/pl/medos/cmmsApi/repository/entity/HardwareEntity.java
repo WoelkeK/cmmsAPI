@@ -43,8 +43,7 @@ public class HardwareEntity {
     private String netBios;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate pickUpDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
     private LocalDate installDate;
@@ -54,9 +53,11 @@ public class HardwareEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "software_id")
-    private SoftwareEntity software;
+
+    private String officeName;
+    private String officeNo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate activateDate;
 
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
