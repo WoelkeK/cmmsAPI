@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
-    @Query("SELECT p from EmployeeEntity p WHERE CONCAT(p.name, ' ' , p.department.name) LIKE %?1%")
+    @Query("SELECT p from EmployeeEntity p WHERE CONCAT(p.name, ' ', p.department.name, ' ',p.position ) LIKE %?1%")
     List<EmployeeEntity> searchEmployeeByQuery(String query);
 
     Page<EmployeeEntity> findAll(Pageable pageable);

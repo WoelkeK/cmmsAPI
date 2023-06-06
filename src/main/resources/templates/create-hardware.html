@@ -12,6 +12,8 @@
 <body class="bg-gray-400">
 <form action="#" th:action="@{/hardwares/create}" th:object="${hardware}" method="post">
 
+    <input type="hidden" th:field="*{software.id}">
+
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
@@ -75,10 +77,35 @@
                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
+
+<!--                    <div class="sm:col-span-3">-->
+<!--                        <div class="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">-->
+<!--                            <div class="sm:col-span-1">-->
+<!--                                <label for="office"-->
+<!--                                       class="block text-sl font-medium leading-6 text-gray-500">Oprogramowanie</label>-->
+<!--                                <div class="mt-2">-->
+<!--                                    <button type="button" id="office"-->
+<!--                                            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">-->
+<!--                                        <a th:href="@{/softwares/create}">Dodaj</a>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="sm:col-span-1 sm:col-start-2">-->
+<!--                                <label for="software" class="block text-sl font-medium leading-6 text-gray-500">Klucz /-->
+<!--                                    Konto</label>-->
+<!--                                <div class="mt-2">-->
+<!--                                    <p th:text="${hardware.software.id}" name="software" id="software"-->
+<!--                                       autocomplete="software"-->
+<!--                                       class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">-->
+<!--                                    </p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
-
                     <div class="sm:col-span-1">
                         <label for="last-name"
                                class="block text-sl font-medium leading-6 text-gray-500">Nazwa</label>
@@ -115,7 +142,6 @@
                         </div>
                     </div>
 
-
                     <div class="sm:col-span-1">
                         <label for="department"
                                class="block text-sl font-medium leading-6 text-gray-500">Użytkownik</label>
@@ -131,7 +157,6 @@
                             </select>
                         </div>
                     </div>
-
 
                     <div class="sm:col-span-1 sm:col-start-1">
                         <label for="ipAddress" class="block text-sl font-medium leading-6 text-gray-500">Adres
@@ -178,7 +203,6 @@
                         </div>
                     </div>
 
-
                     <div class="sm:col-span-1">
                         <label for="inventoryNo" class="block text-sl font-medium leading-6 text-gray-500">Numer
                             inwentarzowy</label>
@@ -188,7 +212,6 @@
                         </div>
                     </div>
 
-
                     <div class="sm:col-span-1">
                         <label for="invoiceNo" class="block text-sl font-medium leading-6 text-gray-500">Dokument
                             zakupu</label>
@@ -197,8 +220,6 @@
                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -230,6 +251,17 @@ field2Select.value = "";
 field2Select.disabled = false;
 }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </html>

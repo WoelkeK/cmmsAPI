@@ -24,15 +24,18 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/softwares")
-@SessionAttributes(names = {"softwares"})
+@SessionAttributes(names = {"softwares", "hardwares"})
 public class WebSoftwareController {
 
     private static final Logger LOGGER = Logger.getLogger(WebSoftwareController.class.getName());
 
     private SoftwareService softwareService;
 
-    public WebSoftwareController(SoftwareService softwareService) {
+    private HardwareService hardwareService;
+
+    public WebSoftwareController(SoftwareService softwareService, HardwareService hardwareService) {
         this.softwareService = softwareService;
+        this.hardwareService = hardwareService;
     }
 
     @GetMapping("/listAll")
@@ -47,7 +50,9 @@ public class WebSoftwareController {
     @GetMapping("")
     public String listView(Model model) throws IOException {
         LOGGER.info("listView()");
-        return pagesSoftware(1, "name", "desc", model);
+        List<Hardware> hardwares = hardwareService.listAll();
+        model.addAttribute("hardwares", hardwares);
+        return pagesSoftware(1, "id", "desc", model);
     }
 
     @GetMapping("/page/{pageNo}")
@@ -83,10 +88,10 @@ public class WebSoftwareController {
 
     @PostMapping("/create")
     public String createHardware(
-            @ModelAttribute(name = "software") Software software) {
-        LOGGER.info("createHardware()" + software);
+            @ModelAttribute(name = "software") Software software) throws HardwareNotFoundException {
+        LOGGER.info("createSoftware()" + software);
         Software savedSoftware = softwareService.create(software);
-        LOGGER.info("createHardware(...)" + savedSoftware);
+        LOGGER.info("createSoftware(...)" + savedSoftware);
         return "redirect:/softwares";
     }
 

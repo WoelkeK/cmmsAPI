@@ -11,7 +11,7 @@ import pl.medos.cmmsApi.enums.Device;
 import pl.medos.cmmsApi.enums.Status;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -35,6 +35,8 @@ public class Hardware {
     private Status status;
     private Department department;
     private Employee employee;
+    private Software software;
+
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate pickUpDate;
     @DateTimeFormat(pattern="yyyy-MM-dd")

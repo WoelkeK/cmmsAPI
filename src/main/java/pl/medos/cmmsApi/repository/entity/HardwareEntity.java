@@ -14,6 +14,8 @@ import pl.medos.cmmsApi.model.Software;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -52,8 +54,14 @@ public class HardwareEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "software_id")
-//    private Software software;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "software_id")
+    private SoftwareEntity software;
 
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+//    @JoinTable(name = "hardware_soft",
+//            joinColumns = @JoinColumn(name = "hardware_id"),
+//            inverseJoinColumns = @JoinColumn(name = "software_id"))
+//    private Set<SoftwareEntity> software = new HashSet<>();
 }

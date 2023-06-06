@@ -82,12 +82,12 @@
         <input type="hidden" th:field="*{name}">
         <input type="hidden" th:field="*{department.id}">
         <input type="hidden" th:field="${hardware.id}">
-        <!--        <input type="hidden" th:field="*{employee.id}">-->
+<!--        <input type="hidden" th:field="*{software.id}">-->
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
         <input type="hidden" th:field="*{installDate}">
         <input type="hidden" th:field="*{inventoryNo}">
-        <!--        <input type="hidden" th:field="*{status}">-->
+        <input type="hidden" th:field="*{software}">
         <input type="hidden" th:field="*{invoiceNo}">
 
         <main class="-mt-32">
@@ -149,6 +149,14 @@
                                 </dd>
                             </div>
 
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Status</dt>
+                                <dd th:text="${hardware.software?.name}" id="software-name"
+                                    name="viewstatus"
+                                    class="mt-1 text-sm text-gray-900">XXXXXXXXXX
+                                </dd>
+                            </div>
+
                             <!--                            <div class="sm:col-span-1">-->
                             <!--                                <dt class="text-sm font-medium text-gray-400">Data odbioru</dt>-->
                             <!--                                <dd th:text="${#temporals.format(hardware.pickUpDate, 'dd MMMM yyyy')}"-->
@@ -179,7 +187,8 @@
                                         <label for="status"
                                                class="block text-sl font-medium leading-6 text-gray-500">Status</label>
                                         <div class="mt-2">
-                                            <select name="status" id="status" autocomplete="W_UŻYCIU" onload="disableSelectBox()"  onchange="disableSelectBox()"
+                                            <select name="status" id="status" autocomplete="W_UŻYCIU"
+                                                    onload="disableSelectBox()" onchange="disableSelectBox()"
                                                     th:field="*{status}" class="block w-fit rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
@@ -212,33 +221,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                    <!--                                    <div class="sm:col-span-1">-->
-                                    <!--                                        <label for="pickupDate"-->
-                                    <!--                                               class="block text-sl font-medium leading-6 text-gray-500">Data-->
-                                    <!--                                            odbioru</label>-->
-                                    <!--                                        <div class="mt-2">-->
-                                    <!--                                            <input type="date" th:field="${hardware.pickUpDate}"-->
-                                    <!--                                                   name="pickupDate"-->
-                                    <!--                                                   id="pickupDate"-->
-                                    <!--                                                   th:value="${{pickUpDate}}"-->
-                                    <!--                                                   autocomplete="date"-->
-                                    <!--                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
-
-                                    <!--                                    <div class="sm:col-span-1">-->
-                                    <!--                                        <label for="returnDate"-->
-                                    <!--                                               class="block text-sl font-medium leading-6 text-gray-500">Data-->
-                                    <!--                                            zwrotu</label>-->
-                                    <!--                                        <div class="mt-2">-->
-                                    <!--                                            <input type="date" th:field="${hardware.returnDate}" name="returnDate"-->
-                                    <!--                                                   id="returnDate"-->
-                                    <!--                                                   th:value="${{returnDate}}"-->
-                                    <!--                                                   autocomplete="date"-->
-                                    <!--                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
                                 </div>
 
                                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
@@ -302,6 +284,7 @@
                                         </div>
                                     </dl>
 
+
                                     <div class="pt-5">
                                         <div class="flex justify-end">
                                             <button type="button"
@@ -326,9 +309,7 @@
 <!-- Your content -->
 
 
-
 <script type="text/javascript">
-
    function disableSelectBox() {
 var field1Value = document.getElementById("status").value;
 var field2Select = document.getElementById("employee");
@@ -341,10 +322,8 @@ field2Select.value = "";
 field2Select.disabled = false;
 }
 }
+
 </script>
-
 </body>
-
-
 </html>
 
