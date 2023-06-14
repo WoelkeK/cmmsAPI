@@ -15,7 +15,7 @@ import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Software;
 import pl.medos.cmmsApi.service.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +35,7 @@ public class WebHardwareController {
     private ExportService exportService;
     private ImportService importService;
     private RaportService raportService;
+
 
     public WebHardwareController(HardwareService hardwareService, DepartmentService departmentService, EmployeeService employeeService, SoftwareService softwareService, ExportService exportService, ImportService importService, RaportService raportService) {
         this.hardwareService = hardwareService;
@@ -131,14 +132,13 @@ public class WebHardwareController {
         return "redirect:/hardwares";
     }
 
-    @PostMapping("/raport")
-    public String generateRaport(@ModelAttribute(name = "hardware") Hardware hardware) throws JRException {
-        LOGGER.info("generateReport()");
-        raportService.generateReport(hardware);
-        LOGGER.info("generateReport(...)");
-        return "redirect:/hardwares";
+    @PostMapping("/exportPdf")
+    public void generateReport(HttpServletResponse response, Hardware hardware) throws JRException, IOException {
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"hardware_"+hardware.getInventoryNo()+".pdf\""));
+        OutputStream out = response.getOutputStream();
+        raportService.exportReport(hardware, out);
     }
-
 
     @GetMapping(value = "/export")
     public void exportMachines(@ModelAttribute(name = "hardware") List<Hardware> hardwares,

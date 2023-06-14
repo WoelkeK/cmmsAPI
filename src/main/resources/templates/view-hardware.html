@@ -68,7 +68,7 @@
         </header>
     </div>
 
-    <form action="#" th:action="@{/hardwares/raport}" th:object="${hardware}" method="post">
+    <form action="#" th:action="@{/hardwares/exportPdf}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="${hardware.id}">
         <input type="hidden" th:field="${hardware.type}">
