@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Service
-@RequiredArgsConstructor
 public class RaportServiceImpl implements RaportService {
 
     private static final Logger LOGGER = Logger.getLogger(RaportServiceImpl.class.getName());
