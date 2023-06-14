@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Software;
 import pl.medos.cmmsApi.service.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,14 +34,17 @@ public class WebHardwareController {
     private SoftwareService softwareService;
     private ExportService exportService;
     private ImportService importService;
+    private RaportService raportService;
 
-    public WebHardwareController(HardwareService hardwareService, DepartmentService departmentService, EmployeeService employeeService, SoftwareService softwareService, ExportService exportService, ImportService importService) {
+
+    public WebHardwareController(HardwareService hardwareService, DepartmentService departmentService, EmployeeService employeeService, SoftwareService softwareService, ExportService exportService, ImportService importService, RaportService raportService) {
         this.hardwareService = hardwareService;
         this.departmentService = departmentService;
         this.employeeService = employeeService;
         this.softwareService = softwareService;
         this.exportService = exportService;
         this.importService = importService;
+        this.raportService = raportService;
     }
 
     @GetMapping
@@ -57,8 +61,9 @@ public class WebHardwareController {
         LOGGER.info("listViewAll(...)");
         return "list-hardware";
     }
+
     @GetMapping(value = "/page/{pageNo}")
-    public String pageing(@RequestParam(value = "pageNo") int pageNo, Model model){
+    public String pageing(@RequestParam(value = "pageNo") int pageNo, Model model) {
         LOGGER.info("pageing()");
         int size = 5;
         Page<Hardware> hardwares = hardwareService.pagesHardware(pageNo, size);
@@ -106,7 +111,7 @@ public class WebHardwareController {
         LOGGER.info("updateView(" + id + ")");
         Hardware hardware = hardwareService.read(id);
         model.addAttribute("hardware", hardware);
-        LOGGER.info("updateView(...)"+ hardware.getId());
+        LOGGER.info("updateView(...)" + hardware.getId());
         return "update-hardware";
     }
 
@@ -127,6 +132,13 @@ public class WebHardwareController {
         return "redirect:/hardwares";
     }
 
+    @PostMapping("/exportPdf")
+    public void generateReport(HttpServletResponse response, Hardware hardware) throws JRException, IOException {
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"hardware_"+hardware.getInventoryNo()+".pdf\""));
+        OutputStream out = response.getOutputStream();
+        raportService.exportReport(hardware, out);
+    }
 
     @GetMapping(value = "/export")
     public void exportMachines(@ModelAttribute(name = "hardware") List<Hardware> hardwares,
@@ -172,7 +184,7 @@ public class WebHardwareController {
 
     @GetMapping(value = "/search/query")
     public String searchHardwareByQuery(@RequestParam(value = "query") String query,
-                                       Model model) {
+                                        Model model) {
         LOGGER.info("search()");
         List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
         model.addAttribute("hardwares", hardwares);

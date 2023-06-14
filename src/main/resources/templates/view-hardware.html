@@ -68,7 +68,16 @@
         </header>
     </div>
 
-    <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
+    <form action="#" th:action="@{/hardwares/exportPdf}" th:object="${hardware}" method="post">
+
+        <input type="hidden" th:field="${hardware.id}">
+        <input type="hidden" th:field="${hardware.type}">
+        <input type="hidden" th:field="${hardware.name}">
+        <input type="hidden" th:field="${hardware.inventoryNo}">
+        <input type="hidden" th:field="${hardware.serialNumber}">
+        <input type="hidden" th:field="${hardware.employee.name}">
+
+
         <main class="-mt-32">
             <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
@@ -224,8 +233,8 @@
                             <a th:href="@{/hardwares}">Wstecz</a>
                         </button>
                         <button type="submit"
-                                class="ml-3 inline-flex justify-center rounded-md border border-indigo-400 bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-lm hover:bg-indigo-200 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
-                            Edytuj
+                                class="ml-3 inline-flex justify-center rounded-md border border-indigo-400 bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-lm hover:bg-indigo-200 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
+                            Drukuj
                         </button>
                     </div>
                 </div>
