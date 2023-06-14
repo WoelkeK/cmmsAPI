@@ -224,21 +224,43 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="flex items-end">
+                            <div class="flex flex-shrink-0 items-center px-4">
+
+                                <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+                                    <div class="sm:col-span-1">
+                                        <label for="document"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Wybór
+                                            protokołu</label>
+                                        <div class="mt-2">
+                                            <select name="document" id="document" autocomplete="WYPOŻYCZENIE"
+                                                    onload="disableSelectBox()" onchange="disableSelectBox()"
+                                                    th:field="*{document}" class="block w-fit rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1
+                                ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
+                                sm:text-xl sm:leading-6">
+
+                                                <option th:each="document : ${T(pl.medos.cmmsApi.enums.Document).values()}"
+                                                        th:value="${document }" th:text="${document}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5">
+                            <div class="flex justify-end">
+                                <button type="button"
+                                        class="rounded-md border border-indigo-400 bg-white py-2 px-4 text-sm font-medium bg-indigo-600 text-white shadow-sm text-gray-100 hover:bg-indigo-200 hover:text-indigo-800 shadow-sm ocus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    <a th:href="@{/hardwares}">Wstecz</a>
+                                </button>
+                                <button type="submit"
+                                        class="ml-3 inline-flex justify-center rounded-md border border-indigo-400 bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-lm hover:bg-indigo-200 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
+                                    Drukuj
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="pt-5">
-                    <div class="flex justify-end">
-                        <button type="button"
-                                class="rounded-md border border-indigo-400 bg-white py-2 px-4 text-sm font-medium bg-indigo-600 text-white shadow-sm text-gray-100 hover:bg-indigo-200 hover:text-indigo-800 shadow-sm ocus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            <a th:href="@{/hardwares}">Wstecz</a>
-                        </button>
-                        <button type="submit"
-                                class="ml-3 inline-flex justify-center rounded-md border border-indigo-400 bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-lm hover:bg-indigo-200 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
-                            Drukuj
-                        </button>
-                    </div>
-                </div>
-            </div>
         </main>
     </form>
 </div>

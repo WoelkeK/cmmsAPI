@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.medos.cmmsApi.enums.Device;
+import pl.medos.cmmsApi.enums.Document;
 import pl.medos.cmmsApi.enums.Status;
 
 import java.time.LocalDate;
@@ -23,6 +24,8 @@ public class Hardware {
     private String name;
     @Enumerated(EnumType.STRING)
     private Device type;
+    @Enumerated(EnumType.STRING)
+    private Document document;
     private String systemNo;
     private String invoiceNo;
     private String inventoryNo;

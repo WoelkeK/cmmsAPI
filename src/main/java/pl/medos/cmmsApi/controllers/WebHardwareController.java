@@ -133,6 +133,7 @@ public class WebHardwareController {
 
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Hardware hardware) throws JRException, IOException {
+
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"hardware_"+hardware.getInventoryNo()+".pdf\""));
         OutputStream out = response.getOutputStream();
