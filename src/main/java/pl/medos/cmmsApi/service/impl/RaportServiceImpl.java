@@ -1,11 +1,11 @@
 package pl.medos.cmmsApi.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.service.RaportService;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
@@ -24,18 +24,27 @@ public class RaportServiceImpl implements RaportService {
     public JasperPrint getJasperPrint(Hardware hardware, String resourceLocation) throws FileNotFoundException, JRException {
         File file = ResourceUtils.getFile(resourceLocation);
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-
         LOGGER.info("getJasperPrint()");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("protocolType", "Wypożyczenia");
-        parameters.put("protocolTypeShort", "wypożyczenie");
+//        parameters.put("protocolType", "Wypożyczenia");
+//        parameters.put("protocolTypeShort", "wypożyczenie");
         parameters.put("employeeName", hardware.getEmployee().getName());
         parameters.put("hardwareName", hardware.getName());
         parameters.put("hardwareType", hardware.getType().toString());
         parameters.put("inventoryNo", hardware.getInventoryNo());
         parameters.put("content", content);
         parameters.put("serialNo", hardware.getSerialNumber());
+
+        switch (hardware.getDocument().toString()) {
+            case "ZDANIE":
+                parameters.put("protocolType", "Zdania");
+                parameters.put("protocolTypeShort", "zdanie");
+                break;
+            default:
+                parameters.put("protocolType", "Wypożyczenia");
+                parameters.put("protocolTypeShort", "wypożyczenie");
+        }
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
         return jasperPrint;
@@ -45,6 +54,6 @@ public class RaportServiceImpl implements RaportService {
     public void exportReport(Hardware hardware, OutputStream outputStream) throws JRException, FileNotFoundException {
         String resourceLocation = "src/main/resources/templates/test.jrxml";
         JasperPrint jasperPrint = getJasperPrint(hardware, resourceLocation);
-        JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
     }
 }
