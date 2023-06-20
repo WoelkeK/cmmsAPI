@@ -160,7 +160,7 @@ public class WebHardwareController {
 
     @GetMapping(value = "/file")
     public String showUploadForm() {
-        return "uploadMach-form";
+        return "uploadHard-form";
     }
 
     @PostMapping(value = "/upload")
@@ -168,12 +168,11 @@ public class WebHardwareController {
 
         LOGGER.info("importHardwares()");
         if (file.isEmpty()) {
-            LOGGER.info("Please select file to upload");
+            LOGGER.info("Proszę wybrać plik do importu");
             return "redirect/hardwares";
         }
 
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Hardware> hardwares = importService.importExcelHardwareeData(file);
+        List<Hardware> hardwares = importService.importExcelHardwareData(file);
 
         hardwares.forEach((hardware) -> {
             hardwareService.create(hardware);

@@ -46,9 +46,7 @@ public class HardwareEntity {
     private Status status;
     @Enumerated(EnumType.STRING)
     private Document document;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate returnDate;
     private LocalDate installDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
@@ -57,15 +55,11 @@ public class HardwareEntity {
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
 
+
     private String officeName;
     private String officeNo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate activateDate;
 
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-//    @JoinTable(name = "hardware_soft",
-//            joinColumns = @JoinColumn(name = "hardware_id"),
-//            inverseJoinColumns = @JoinColumn(name = "software_id"))
-//    private Set<SoftwareEntity> software = new HashSet<>();
 }
