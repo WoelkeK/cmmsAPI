@@ -72,6 +72,7 @@ public class ImportServiceImpl implements ImportService {
             rawDataList.add(rawData);
         }
         List<Employee> employees = employeeDataExcelConverter(rawDataList);
+        LOGGER.info("importExcelEmployeesData(...)");
         return employees;
     }
 
