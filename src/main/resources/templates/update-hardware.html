@@ -82,7 +82,7 @@
         <input type="hidden" th:field="*{name}">
         <input type="hidden" th:field="*{department.id}">
         <input type="hidden" th:field="${hardware.id}">
-        <!--        <input type="hidden" th:field="*{software.id}">-->
+        <input type="hidden" th:field="*{systemNo}">
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
         <input type="hidden" th:field="*{installDate}">
@@ -285,7 +285,8 @@
                                     </div>
 
                                     <div class="sm:col-span-1">
-                                        <label for="installDate" class="block text-sl font-medium leading-6 text-gray-500">Data
+                                        <label for="installDate"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Data
                                             aktywacji</label>
                                         <div class="mt-2">
                                             <input type="date" th:field="${hardware.activateDate}" name="activateDate"
@@ -356,6 +357,7 @@ field2Select.value = "";
 field2Select.disabled = false;
 }
 }
+
 
 
 </script>

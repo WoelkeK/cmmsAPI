@@ -41,5 +41,6 @@ public class JsonHardware {
     private String officeName;
     private String officeNo;
     private String activateDate;
+    private String installDate;
 
 }

@@ -141,7 +141,7 @@ public class WebHardwareController {
     }
 
     @GetMapping(value = "/export")
-    public void exportMachines(@ModelAttribute(name = "hardware") List<Hardware> hardwares,
+    public void exportHardwares(@ModelAttribute(name = "hardwares") List<Hardware> hardwares,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
         response.setContentType("application/octet-stream");
@@ -153,7 +153,7 @@ public class WebHardwareController {
 
         response.setHeader(headerKey, headerValue);
         exportService.excelHardwaresModelGenerator(hardwares);
-        exportService.generateExcelFile(response);
+        exportService.generateExcelHardwareFile(response);
         response.flushBuffer();
         LOGGER.info("export(...)");
     }

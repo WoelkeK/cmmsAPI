@@ -30,7 +30,7 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "id", "inventoryNo", "systemNo", "serialNumber", "ipAddress", "name", "invoiceNo", "netBios", "macAddress", "department", "employee", "type", "status", "officeName", "officeNo", "activateDate"));
+            "id", "inventoryNo", "type", "name", "serialNumber", "systemNo", "ipAddress", "macAddress", "netBios", "employee", "department", "status", "installDate", "invoiceNo", "officeName", "officeNo", "activateDate"));
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
@@ -176,6 +176,7 @@ public class ImportServiceImpl implements ImportService {
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
+            String empty = "brak";
             if(row.getRowNum()==0 || row.getRowNum()==1){
                 continue;
             }
@@ -192,6 +193,8 @@ public class ImportServiceImpl implements ImportService {
 //                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
                             break;
+                        case BLANK:
+                            rowDataMap.put(hardwares.get(k), empty);
                     }
                 }
             }
@@ -290,23 +293,22 @@ public class ImportServiceImpl implements ImportService {
 
                                     hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
                                     hardware.setInventoryNo(m.getInventoryNo());
-                                    hardware.setSystemNo(m.getSystemNo());
-                                    hardware.setSerialNumber(m.getSerialNumber());
-                                    hardware.setIpAddress(m.getIpAddress());
-                                    hardware.setName(m.getName());
-                                    hardware.setInvoiceNo(m.getInvoiceNo());
-                                    hardware.setNetBios(m.getNetBios());
-                                    hardware.setMacAddress(m.getMacAddress());
                                     hardware.setType(m.getType());
-                                    hardware.setStatus(m.getStatus());
-
-                                    Department department = new Department();
-                                    department.setId(Long.parseLong(m.getDepartment()));
-                                    hardware.setDepartment(department);
-
+                                    hardware.setName(m.getName());
+                                    hardware.setSerialNumber(m.getSerialNumber());
+                                    hardware.setSystemNo(m.getSystemNo());
+                                    hardware.setIpAddress(m.getIpAddress());
+                                    hardware.setMacAddress(m.getMacAddress());
+                                    hardware.setNetBios(m.getNetBios());
                                     Employee employee = new Employee();
                                     employee.setId(Long.parseLong(m.getEmployee()));
                                     hardware.setEmployee(employee);
+                                    Department department = new Department();
+                                    department.setId(Long.parseLong(m.getDepartment()));
+                                    hardware.setDepartment(department);
+                                    hardware.setStatus(m.getStatus());
+                                    hardware.setInstallDate(LocalDate.now());
+                                    hardware.setInvoiceNo(m.getInvoiceNo());
 
                                     hardware.setOfficeName(m.getOfficeName());
                                     hardware.setOfficeNo(m.getOfficeNo());
