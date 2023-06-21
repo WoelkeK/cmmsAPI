@@ -11,12 +11,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.model.*;
-import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -29,9 +30,7 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "id", "inventoryNo", "department", "status", "employee", "type",
-            "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios",
-            "ipAddress", "macAddress"));
+            "id", "inventoryNo", "type", "name", "serialNumber", "systemNo", "ipAddress", "macAddress", "netBios", "employee", "department", "status", "installDate", "invoiceNo", "officeName", "officeNo", "activateDate"));
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
@@ -163,21 +162,25 @@ public class ImportServiceImpl implements ImportService {
     }
 
     @Override
-    public List<Hardware> importExcelHardwareeData(MultipartFile fileName) throws IOException {
-        LOGGER.info("importExcelHardwaresData()");
+    public List<Hardware> importExcelHardwareData(MultipartFile fileName) throws IOException {
+        LOGGER.info("importExcelHardwareData()");
 
-        List<Hardware> rawDataList = new ArrayList<>();
+        List<JsonHardware> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
 
         IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
-        Person person = new Person();
         Iterator<Row> rowIterator = sheet.iterator();
 
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
+            String empty = "brak";
+            if(row.getRowNum()==0 || row.getRowNum()==1){
+                continue;
+            }
+
             Map<String, String> rowDataMap = new HashMap<>();
             Cell cell;
             for (int k = 0; k < row.getLastCellNum(); k++) {
@@ -190,22 +193,24 @@ public class ImportServiceImpl implements ImportService {
 //                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
                             break;
+                        case BLANK:
+                            rowDataMap.put(hardwares.get(k), empty);
                     }
                 }
             }
+
             ObjectMapper mapper = new ObjectMapper()
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
 
-            Hardware rawData = mapper.convertValue(rowDataMap, Hardware.class);
+            JsonHardware rawData = mapper.convertValue(rowDataMap, JsonHardware.class);
             rawDataList.add(rawData);
             LOGGER.info("rawData " + rawData);
         }
         List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
         return hardwares;
     }
-
 
     private List<Employee> employeeDataExcelConverter(List<Person> persons) {
         LOGGER.info("employeeDataExcelConverter()");
@@ -278,30 +283,38 @@ public class ImportServiceImpl implements ImportService {
         return convertedMachines;
     }
 
-    private List<Hardware> hardwareDataExcelConverter(List<Hardware> hardwares) {
+    private List<Hardware> hardwareDataExcelConverter(List<JsonHardware> hardwares) {
         LOGGER.info("hardwareDataExcelConverter()");
 
         List<Hardware> convertedHardwares =
                 hardwares.stream().map(m -> {
 
                                     Hardware hardware = new Hardware();
+
                                     hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
-                                    hardware.setInventoryNo(String.valueOf(m.getInventoryNo()));
-                                    Department department = new Department();
-                                    department.setId(m.getDepartment().getId());
-                                    hardware.setDepartment(department);
-                                    hardware.setStatus(m.getStatus());
-                                    hardware.setEmployee(m.getEmployee());
+                                    hardware.setInventoryNo(m.getInventoryNo());
                                     hardware.setType(m.getType());
                                     hardware.setName(m.getName());
-                                    hardware.setInstallDate((m.getInstallDate()));
-                                    hardware.setInvoiceNo(m.getInvoiceNo());
+                                    hardware.setSerialNumber(m.getSerialNumber());
                                     hardware.setSystemNo(m.getSystemNo());
-                                    hardware.setNetBios(m.getNetBios());
                                     hardware.setIpAddress(m.getIpAddress());
                                     hardware.setMacAddress(m.getMacAddress());
+                                    hardware.setNetBios(m.getNetBios());
+                                    Employee employee = new Employee();
+                                    employee.setId(Long.parseLong(m.getEmployee()));
+                                    hardware.setEmployee(employee);
+                                    Department department = new Department();
+                                    department.setId(Long.parseLong(m.getDepartment()));
+                                    hardware.setDepartment(department);
+                                    hardware.setStatus(m.getStatus());
+                                    hardware.setInstallDate(LocalDate.now());
+                                    hardware.setInvoiceNo(m.getInvoiceNo());
 
-                                    LOGGER.info("departmentNameNull (...)");
+                                    hardware.setOfficeName(m.getOfficeName());
+                                    hardware.setOfficeNo(m.getOfficeNo());
+                                    hardware.setActivateDate(LocalDate.now());
+
+                                    LOGGER.info("hardware create(...)");
                                     return hardware;
                                 }
                         )

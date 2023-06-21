@@ -141,7 +141,7 @@ public class WebHardwareController {
     }
 
     @GetMapping(value = "/export")
-    public void exportMachines(@ModelAttribute(name = "hardware") List<Hardware> hardwares,
+    public void exportHardwares(@ModelAttribute(name = "hardwares") List<Hardware> hardwares,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
         response.setContentType("application/octet-stream");
@@ -153,14 +153,14 @@ public class WebHardwareController {
 
         response.setHeader(headerKey, headerValue);
         exportService.excelHardwaresModelGenerator(hardwares);
-        exportService.generateExcelFile(response);
+        exportService.generateExcelHardwareFile(response);
         response.flushBuffer();
         LOGGER.info("export(...)");
     }
 
     @GetMapping(value = "/file")
     public String showUploadForm() {
-        return "uploadMach-form";
+        return "uploadHard-form";
     }
 
     @PostMapping(value = "/upload")
@@ -168,12 +168,11 @@ public class WebHardwareController {
 
         LOGGER.info("importHardwares()");
         if (file.isEmpty()) {
-            LOGGER.info("Please select file to upload");
+            LOGGER.info("Proszę wybrać plik do importu");
             return "redirect/hardwares";
         }
 
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Hardware> hardwares = importService.importExcelHardwareeData(file);
+        List<Hardware> hardwares = importService.importExcelHardwareData(file);
 
         hardwares.forEach((hardware) -> {
             hardwareService.create(hardware);

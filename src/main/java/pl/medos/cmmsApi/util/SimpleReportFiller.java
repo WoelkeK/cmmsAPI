@@ -53,14 +53,6 @@ public class SimpleReportFiller {
         }
     }
 
-//    public DataSource getDataSource() {
-//        return dataSource;
-//    }
-//
-//    public void setDataSource(DataSource dataSource) {
-//        this.dataSource = dataSource;
-//    }
-
     public Map<String, Object> getParameters() {
         return parameters;
     }

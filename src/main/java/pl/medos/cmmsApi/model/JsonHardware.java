@@ -12,21 +12,18 @@ import pl.medos.cmmsApi.enums.Document;
 import pl.medos.cmmsApi.enums.Status;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Hardware {
+public class JsonHardware {
 
     private Long id;
     private String name;
     @Enumerated(EnumType.STRING)
     private Device type;
-    @Enumerated(EnumType.STRING)
-    private Document document;
+    private String document;
     private String systemNo;
     private String invoiceNo;
     private String inventoryNo;
@@ -36,15 +33,14 @@ public class Hardware {
     private String macAddress;
     private String ipAddress;
     private String netBios;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-    private Department department;
-    private Employee employee;
+    private String department;
+    private String employee;
     private String officeName;
     private String officeNo;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate installDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate activateDate;
+    private String activateDate;
+    private String installDate;
 
 }

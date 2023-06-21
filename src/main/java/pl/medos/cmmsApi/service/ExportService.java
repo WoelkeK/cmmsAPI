@@ -11,10 +11,9 @@ import java.util.List;
 public interface ExportService {
 
     void excelMachineModelGenerator(List<Machine> machines);
-
-    void excelHardwaresModelGenerator(List<Hardware> machines);
-
     void generateExcelFile(HttpServletResponse response) throws IOException;
 
-
+    void excelHardwaresModelGenerator(List<Hardware> machines);
+    void generateExcelHardwareFile(HttpServletResponse response) throws IOException;
 }
+
