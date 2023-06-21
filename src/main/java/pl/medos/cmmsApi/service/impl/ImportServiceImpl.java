@@ -35,6 +35,7 @@ public class ImportServiceImpl implements ImportService {
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
+        LOGGER.info("importExcelEmployeesData()");
         List<Person> rawDataList = new ArrayList<>();
 
         InputStream file = new BufferedInputStream(fileName.getInputStream());
@@ -71,6 +72,7 @@ public class ImportServiceImpl implements ImportService {
             rawDataList.add(rawData);
         }
         List<Employee> employees = employeeDataExcelConverter(rawDataList);
+        LOGGER.info("importExcelEmployeesData(...)");
         return employees;
     }
 
