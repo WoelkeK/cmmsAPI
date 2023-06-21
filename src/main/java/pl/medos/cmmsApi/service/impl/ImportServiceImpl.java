@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.model.*;
+import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.*;
@@ -30,7 +31,7 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "id", "inventoryNo", "type", "name", "serialNumber", "systemNo", "ipAddress", "macAddress", "netBios", "employee", "department", "status", "installDate", "invoiceNo", "officeName", "officeNo", "activateDate"));
+            "inventoryNo", "department", "status", "employee", "type", "name",  "installDate",   "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate","description"));
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
@@ -176,8 +177,8 @@ public class ImportServiceImpl implements ImportService {
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
-            String empty = "brak";
-            if(row.getRowNum()==0 || row.getRowNum()==1){
+            String empty = "---";
+            if (row.getRowNum() == 0 || row.getRowNum() == 1) {
                 continue;
             }
 
@@ -291,28 +292,24 @@ public class ImportServiceImpl implements ImportService {
 
                                     Hardware hardware = new Hardware();
 
-                                    hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
+//                                    hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
                                     hardware.setInventoryNo(m.getInventoryNo());
+                                    hardware.setDepartment(m.getDepartment());
+                                    hardware.setStatus(m.getStatus());
+                                    hardware.setEmployee(m.getEmployee());
                                     hardware.setType(m.getType());
                                     hardware.setName(m.getName());
-                                    hardware.setSerialNumber(m.getSerialNumber());
-                                    hardware.setSystemNo(m.getSystemNo());
-                                    hardware.setIpAddress(m.getIpAddress());
-                                    hardware.setMacAddress(m.getMacAddress());
-                                    hardware.setNetBios(m.getNetBios());
-                                    Employee employee = new Employee();
-                                    employee.setId(Long.parseLong(m.getEmployee()));
-                                    hardware.setEmployee(employee);
-                                    Department department = new Department();
-                                    department.setId(Long.parseLong(m.getDepartment()));
-                                    hardware.setDepartment(department);
-                                    hardware.setStatus(m.getStatus());
                                     hardware.setInstallDate(LocalDate.now());
                                     hardware.setInvoiceNo(m.getInvoiceNo());
-
+                                    hardware.setSystemNo(m.getSystemNo());
+                                    hardware.setSerialNumber(m.getSerialNumber());
+                                    hardware.setNetBios(m.getNetBios());
+                                    hardware.setIpAddress(m.getIpAddress());
+                                    hardware.setMacAddress(m.getMacAddress());
                                     hardware.setOfficeName(m.getOfficeName());
                                     hardware.setOfficeNo(m.getOfficeNo());
                                     hardware.setActivateDate(LocalDate.now());
+                                    hardware.setDescription(m.getDescription());
 
                                     LOGGER.info("hardware create(...)");
                                     return hardware;

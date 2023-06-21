@@ -37,8 +37,8 @@ public class Hardware {
     private String ipAddress;
     private String netBios;
     private Status status;
-    private Department department;
-    private Employee employee;
+    private String department;
+    private String employee;
     private String officeName;
     private String officeNo;
 

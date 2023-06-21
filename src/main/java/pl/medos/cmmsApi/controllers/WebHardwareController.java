@@ -23,24 +23,18 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/hardwares")
-@SessionAttributes(names = {"employees", "departments", "hardwares", "softwares"})
+@SessionAttributes(names = {"hardwares"})
 public class WebHardwareController {
 
     private static final Logger LOGGER = Logger.getLogger(WebHardwareController.class.getName());
     private HardwareService hardwareService;
-    private DepartmentService departmentService;
-    private EmployeeService employeeService;
-    private SoftwareService softwareService;
     private ExportService exportService;
     private ImportService importService;
     private RaportService raportService;
 
 
-    public WebHardwareController(HardwareService hardwareService, DepartmentService departmentService, EmployeeService employeeService, SoftwareService softwareService, ExportService exportService, ImportService importService, RaportService raportService) {
+    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportService importService, RaportService raportService) {
         this.hardwareService = hardwareService;
-        this.departmentService = departmentService;
-        this.employeeService = employeeService;
-        this.softwareService = softwareService;
         this.exportService = exportService;
         this.importService = importService;
         this.raportService = raportService;
@@ -51,12 +45,6 @@ public class WebHardwareController {
         LOGGER.info("listViewAll()");
         List<Hardware> hardwares = hardwareService.listAll();
         model.addAttribute("hardwares", hardwares);
-        List<Employee> employees = employeeService.finadAllEmployees();
-        model.addAttribute("employees", employees);
-        List<Department> departments = departmentService.findAllDepartments();
-        List<Software> softwares = softwareService.listAllSoftware();
-        model.addAttribute("softwares", softwares);
-        model.addAttribute("departments", departments);
         LOGGER.info("listViewAll(...)");
         return "list-hardware";
     }
@@ -66,13 +54,6 @@ public class WebHardwareController {
         LOGGER.info("pageing()");
         int size = 5;
         Page<Hardware> hardwares = hardwareService.pagesHardware(pageNo, size);
-        List<Employee> employees = employeeService.finadAllEmployees();
-        model.addAttribute("employees", employees);
-        List<Department> departments = departmentService.findAllDepartments();
-        model.addAttribute("departments", departments);
-        List<Software> softwares = softwareService.listAllSoftware();
-        model.addAttribute("softwares", softwares);
-
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("pageing(...)");
         return "page-hardware";

@@ -26,7 +26,7 @@ public class RaportServiceImpl implements RaportService {
 
         Map<String, Object> parameters = new HashMap<>();
 ;
-        parameters.put("employeeName", hardware.getEmployee().getName());
+        parameters.put("employeeName", hardware.getEmployee());
         parameters.put("hardwareName", hardware.getName());
         parameters.put("hardwareType", hardware.getType().toString());
         parameters.put("inventoryNo", hardware.getInventoryNo());

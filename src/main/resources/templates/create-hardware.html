@@ -126,35 +126,54 @@
                     </div>
 
                     <div class="sm:col-span-1">
-                        <label for="department"
-                               class="block text-sl font-medium leading-6 text-gray-500">Dział</label>
+                        <label for="department" class="block text-sl font-medium leading-6 text-gray-500">Dział
+                      </label>
                         <div class="mt-2">
-                            <select th:field="${hardware.department.id}" id="department" name="department"
-                                    autocomplete="department"
-                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6 [&_*]:text-black">
-                                <option th:each="department : ${departments}"
-                                        th:text="${department.name}"
-                                        th:value="${department.id}">
-                                </option>
-                            </select>
+                            <input id="department" name="serialNumber" type="text" autocomplete="department"
+                                   th:field="${hardware.department}"
+                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
 
                     <div class="sm:col-span-1">
-                        <label for="department"
-                               class="block text-sl font-medium leading-6 text-gray-500">Użytkownik</label>
+                        <label for="employee" class="block text-sl font-medium leading-6 text-gray-500">Imię i Nazwisko</label>
                         <div class="mt-2">
-                            <select th:field="${hardware.employee.id}" id="employeeId" name="employeeId"
-                                    autocomplete="employeeId"
-                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6 [&_*]:text-black">
-                                <option th:each="employee : ${employees}"
-                                        th:text="${employee.name}"
-                                        th:value="${employee.id}">
-
-                                </option>
-                            </select>
+                            <input id="employee" name="employee" type="text" autocomplete="employee"
+                                   th:field="${hardware.employee}"
+                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
+
+<!--                    <div class="sm:col-span-1">-->
+<!--                        <label for="department"-->
+<!--                               class="block text-sl font-medium leading-6 text-gray-500">Dział</label>-->
+<!--                        <div class="mt-2">-->
+<!--                            <select th:field="${hardware.department.id}" id="department" name="department"-->
+<!--                                    autocomplete="department"-->
+<!--                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6 [&_*]:text-black">-->
+<!--                                <option th:each="department : ${departments}"-->
+<!--                                        th:text="${department.name}"-->
+<!--                                        th:value="${department.id}">-->
+<!--                                </option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="sm:col-span-1">-->
+<!--                        <label for="department"-->
+<!--                               class="block text-sl font-medium leading-6 text-gray-500">Użytkownik</label>-->
+<!--                        <div class="mt-2">-->
+<!--                            <select th:field="${hardware.employee.id}" id="employeeId" name="employeeId"-->
+<!--                                    autocomplete="employeeId"-->
+<!--                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6 [&_*]:text-black">-->
+<!--                                <option th:each="employee : ${employees}"-->
+<!--                                        th:text="${employee.name}"-->
+<!--                                        th:value="${employee.id}">-->
+
+<!--                                </option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                     <div class="sm:col-span-1 sm:col-start-1">
                         <label for="ipAddress" class="block text-sl font-medium leading-6 text-gray-500">Adres
@@ -235,31 +254,8 @@
         </div>
     </div>
 </form>
+<script src="/js/disableField.js"></script>
 </body>
-<script>
-
-   function disableSelectBox() {
-var field1Value = document.getElementById("status").value;
-var field2Select = document.getElementById("employeeId");
-
-if ((field1Value === "MAGAZYN_SERWEROWNIA") || (field1Value === "MAGAZYN_SZAFA") || (field1Value === "ZUTYLIZOWANY") || (field1Value === "DO_UTYLIZACJI")) {
-field2Select.disabled = true;
-field2Select.value = "";
-} else {
-field2Select.disabled = false;
-}
-}
 
 
-
-
-
-
-
-
-
-
-
-
-</script>
 </html>

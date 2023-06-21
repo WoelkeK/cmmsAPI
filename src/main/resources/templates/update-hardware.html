@@ -80,7 +80,7 @@
     <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="*{name}">
-        <input type="hidden" th:field="*{department.id}">
+        <input type="hidden" th:field="*{department}">
         <input type="hidden" th:field="${hardware.id}">
         <input type="hidden" th:field="*{systemNo}">
         <input type="hidden" th:field="*{type}">
@@ -204,22 +204,33 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="employee"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Imię
-                                            i
-                                            Nazwisko</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Imię i Nazwisko</label>
                                         <div class="mt-2">
-                                            <select th:field="${hardware.employee.id}" id="employee"
-                                                    name="employee"
-                                                    autocomplete="employee"
-                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
-
-                                                <option th:each="employee : ${employees}"
-                                                        th:text="${employee.name}"
-                                                        th:value="${employee.id}">
-                                                </option>
-                                            </select>
+                                            <input th:field="${hardware.employee}" id="employee"
+                                                   name="employee"
+                                                   autocomplete="off"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
                                     </div>
+
+<!--                                    <div class="sm:col-span-1">-->
+<!--                                        <label for="employee"-->
+<!--                                               class="block text-sl font-medium leading-6 text-gray-500">Imię-->
+<!--                                            i-->
+<!--                                            Nazwisko</label>-->
+<!--                                        <div class="mt-2">-->
+<!--                                            <select th:field="${hardware.employee.id}" id="employee"-->
+<!--                                                    name="employee"-->
+<!--                                                    autocomplete="employee"-->
+<!--                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">-->
+
+<!--                                                <option th:each="employee : ${employees}"-->
+<!--                                                        th:text="${employee.name}"-->
+<!--                                                        th:value="${employee.id}">-->
+<!--                                                </option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
 
                                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
