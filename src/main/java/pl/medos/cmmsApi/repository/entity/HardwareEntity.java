@@ -48,14 +48,8 @@ public class HardwareEntity {
     private Document document;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate installDate;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private EmployeeEntity employee;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
-    private DepartmentEntity department;
-
-
+    private String employee;
+    private String department;
     private String officeName;
     private String officeNo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

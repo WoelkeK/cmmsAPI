@@ -92,43 +92,51 @@ public class ExportToServiceImpl implements ExportService {
         style.setFont(font);
         createCell(row, 0, "ID", style);
         createCell(row, 1, "Numer inwentarzowy", style);
-        createCell(row, 2, "Typ urządzenia", style);
-        createCell(row, 3, "Nazwa urządzaenia", style);
-        createCell(row, 4, "SN / Service Tag ", style);
-        createCell(row, 5, "Wersja OS", style);
-        createCell(row, 6, "Adres IP", style);
-        createCell(row, 7, "Adres MAC", style);
-        createCell(row, 8, "netBios", style);
-        createCell(row, 9, "Użytkownik                      ", style);
-        createCell(row, 10, "Wydział             ", style);
-        createCell(row, 11, "Stan urządzenia", style);
-        createCell(row, 12, "Data zakupu", style);
-        createCell(row, 13, "Dokument zakupu", style);
+        createCell(row, 2, "Wydział             ", style);
+        createCell(row, 3, "Stan urządzenia", style);
+        createCell(row, 4, "Użytkownik                      ", style);
+        createCell(row, 5, "Typ urządzenia", style);
+        createCell(row, 6, "Nazwa urządzaenia", style);
+        createCell(row, 7, "Data zakupu", style);
+        createCell(row, 8, "Dokument zakupu", style);
+        createCell(row, 9, "Wersja OS", style);
+        createCell(row, 10, "SN / Service Tag ", style);
+        createCell(row, 11, "netBios", style);
+        createCell(row, 12, "Adres IP", style);
+        createCell(row, 13, "Adres MAC", style);
         createCell(row, 14, "Wersja Office", style);
         createCell(row, 15, "Klucz / Konto                  ", style);
         createCell(row, 16, "Data aktywacji", style);
+        createCell(row, 17, "Opis dodatkowy                  ", style);
 
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
 
     private void createCell(Row row, int columnCount, Object valueOfCell, CellStyle style) {
 
-       LOGGER.info("createCell()");
+        LOGGER.info("createCell()");
+        String empty = " ";
         sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);
-        if (valueOfCell instanceof Integer) {
-            cell.setCellValue((Integer) valueOfCell);
-        } else if (valueOfCell instanceof Long) {
-            cell.setCellValue((Long) valueOfCell);
-        } else if (valueOfCell instanceof Boolean) {
-            cell.setCellValue((Boolean) valueOfCell);
+        if (valueOfCell !=null) {
+
+            if (valueOfCell instanceof Integer) {
+                cell.setCellValue((Integer) valueOfCell);
+            } else if (valueOfCell instanceof Long) {
+                cell.setCellValue((Long) valueOfCell);
+            } else if (valueOfCell instanceof Boolean) {
+                cell.setCellValue((Boolean) valueOfCell);
+            } else {
+                LOGGER.info("Cell value: " + valueOfCell.toString());
+                cell.setCellValue((String) valueOfCell);
+            }
+            cell.setCellStyle(style);
+            LOGGER.info("createCell(...)");
         } else {
-        LOGGER.info("Cell value: "+ valueOfCell.toString());
-            cell.setCellValue((String) valueOfCell);
+            cell.setCellValue(empty);
         }
-        cell.setCellStyle(style);
-        LOGGER.info("createCell(...)");
     }
+
 
     private void writeMachine() {
         LOGGER.info("writeMachine()");
@@ -165,21 +173,22 @@ public class ExportToServiceImpl implements ExportService {
             int columnCount = 0;
             createCell(row, columnCount++, record.getId(), style);
             createCell(row, columnCount++, record.getInventoryNo(), style);
+            createCell(row, columnCount++, record.getDepartment(), style);
+            createCell(row, columnCount++, record.getStatus().toString(), style);
+            createCell(row, columnCount++, record.getEmployee(), style);
             createCell(row, columnCount++, record.getType().toString(), style);
             createCell(row, columnCount++, record.getName(), style);
-            createCell(row, columnCount++, record.getSerialNumber(), style);
-            createCell(row, columnCount++, record.getSystemNo(), style);
-            createCell(row, columnCount++, record.getIpAddress(), style);
-            createCell(row, columnCount++, record.getMacAddress(), style);
-            createCell(row, columnCount++, record.getNetBios(), style);
-            createCell(row, columnCount++, record.getEmployee().getName(), style);
-            createCell(row, columnCount++, record.getDepartment().getName(), style);
-            createCell(row, columnCount++, record.getStatus().toString(), style);
             createCell(row, columnCount++, record.getInstallDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
             createCell(row, columnCount++, record.getInvoiceNo(), style);
+            createCell(row, columnCount++, record.getSystemNo(), style);
+            createCell(row, columnCount++, record.getSerialNumber(), style);
+            createCell(row, columnCount++, record.getNetBios(), style);
+            createCell(row, columnCount++, record.getIpAddress(), style);
+            createCell(row, columnCount++, record.getMacAddress(), style);
             createCell(row, columnCount++, record.getOfficeName(), style);
             createCell(row, columnCount++, record.getOfficeNo(), style);
             createCell(row, columnCount++, record.getActivateDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+            createCell(row, columnCount++, record.getDescription(), style);
         }
         LOGGER.info("writeHardware(...)");
     }
