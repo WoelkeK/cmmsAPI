@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
 import pl.medos.cmmsApi.model.Hardware;
@@ -38,9 +39,10 @@ public class HardwareServiceImpl implements HardwareService {
         return hardwares;
     }
 
-    public Page<Hardware> pagesHardware(int pageNo, int size) {
+    public Page<Hardware> pagesHardware(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("pagesHardware()");
-        Pageable pageable = PageRequest.of(pageNo, size);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         Page<HardwareEntity> hardwareEntities = hardwareRepository.findAll(pageable);
         Page<Hardware> hardwares = hardwareMapper.pageEntityToModels(hardwareEntities);
         LOGGER.info("pagesHardware(...)");
