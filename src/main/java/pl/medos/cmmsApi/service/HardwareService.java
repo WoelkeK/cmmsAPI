@@ -13,7 +13,7 @@ public interface HardwareService {
     Hardware update(Hardware hardware) throws HardwareNotFoundException;
     void delete(Long id);
     List<Hardware> listAll();
-    Page<Hardware> pagesHardware(int pageNo, int size);
+    Page<Hardware> pagesHardware(int pageNo, int size, String sortField, String sortDirection);
 
     List<Hardware> findHardwaresByQuery(String query);
 }
