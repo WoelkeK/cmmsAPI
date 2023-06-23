@@ -133,6 +133,7 @@
                 <div class="flex flex-shrink-0 items-center px-4">
                     <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                 </div>
+
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <a href="/index"
@@ -316,10 +317,10 @@
                                                     SN / ServiceTag
                                                 </th>
 
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Adres IP
-                                                </th>
+<!--                                                <th scope="col"-->
+<!--                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">-->
+<!--                                                    Adres IP-->
+<!--                                                </th>-->
 
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
                                                     <span class="sr-only">Edit</span>
@@ -335,7 +336,7 @@
                                             </tr>
 
                                             <tr th:each="hardware : ${hardwares}" class="border-t border-gray-300">
-                                                <td th:text="${hardware.id}"
+                                                <td th:text="${hardware.inventoryNo}"
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
                                                     Index
                                                 </td>
@@ -358,9 +359,9 @@
                                                     ServiceTag
                                                 </td>
 
-                                                <td th:text="${hardware.ipAddress}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Adres IP
-                                                </td>
+<!--                                                <td th:text="${hardware.ipAddress}"-->
+<!--                                                    class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Adres IP-->
+<!--                                                </td>-->
 
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 

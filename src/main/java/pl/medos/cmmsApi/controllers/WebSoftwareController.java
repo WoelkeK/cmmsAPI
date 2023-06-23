@@ -74,7 +74,7 @@ public class WebSoftwareController {
 
         model.addAttribute("softwares", softwares);
         LOGGER.info("pageSoftware(...)");
-        return "list-software";
+        return "hardware-front";
 
     }
 

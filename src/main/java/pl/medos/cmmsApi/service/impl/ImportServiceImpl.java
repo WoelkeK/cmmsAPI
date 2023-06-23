@@ -194,7 +194,7 @@ public class ImportServiceImpl implements ImportService {
                             break;
                         case STRING:
 //                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
-                            rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
+                            rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
                             break;
                         case BLANK:
                             rowDataMap.put(hardwares.get(k), empty);
