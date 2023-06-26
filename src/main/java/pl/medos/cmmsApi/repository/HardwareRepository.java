@@ -21,7 +21,7 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
 //    List<HardwareEntity> searchHardwareByDepartment(Long id);
 
     @Query("SELECT p from HardwareEntity p WHERE CONCAT(" +
-            "p.name, ' ', p.employee, ' ', p.serialNumber, ' ' , p.department, ' ' , p.macAddress, ' ' , p.ipAddress, ' ' , p.type) LIKE %?1%")
+            "p.inventoryNo, ' ', p.name, ' ', p.employee, ' ', p.serialNumber, ' ' , p.department, ' ' , p.macAddress, ' ' , p.ipAddress, ' ' , p.type) LIKE %?1%")
     List<HardwareEntity> searchHardwareByQuery(String query);
     Page<HardwareEntity> findAll(Pageable pageable);
 }
