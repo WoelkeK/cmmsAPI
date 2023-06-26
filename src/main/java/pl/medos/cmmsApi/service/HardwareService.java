@@ -16,5 +16,7 @@ public interface HardwareService {
     Page<Hardware> pagesHardware(int pageNo, int size, String sortField, String sortDirection);
 
     List<Hardware> findHardwaresByQuery(String query);
+
+    void deleteAll();
 }
 

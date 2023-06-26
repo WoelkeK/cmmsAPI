@@ -96,6 +96,12 @@ public class HardwareServiceImpl implements HardwareService {
         LOGGER.info("deleteHardware(" + id + ")");
         hardwareRepository.deleteById(id);
         LOGGER.info("deleteHardware(...)");
+    }
 
+    @Override
+    public void deleteAll() {
+        LOGGER.info("deleteAllHardware()");
+        hardwareRepository.deleteAll();
+        LOGGER.info("deleteAllHardware(...)");
     }
 }
