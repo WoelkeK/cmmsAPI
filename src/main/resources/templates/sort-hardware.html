@@ -225,17 +225,17 @@
                         </svg>
                         Hardware
                     </a>
-                    <a th:href="@{/softwares}"
-                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                        <!-- Heroicon name: outline/inbox -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
-                        </svg>
-                        Software
-                    </a>
+<!--                    <a th:href="@{/softwares}"-->
+<!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
+<!--                        &lt;!&ndash; Heroicon name: outline/inbox &ndash;&gt;-->
+<!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
+<!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                             stroke="currentColor" aria-hidden="true">-->
+<!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>-->
+<!--                        </svg>-->
+<!--                        Software-->
+<!--                    </a>-->
 
                     <a href="#"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
@@ -264,255 +264,257 @@
             </div>
         </div>
     </div>
-        <div class="lg:pl-72">
-            <div class="sticky top-0 z-40 lg:mx-auto lg:max-w-8xl lg:px-2">
-                <div class="mx-auto max-w-8xl px-2 sm:px-4 lg:px-4 bg-gray-500 rounded-md ">
-                    <div class="relative flex h-20 items-center justify-between">
-                        <div class="flex items-center px-1 lg:px-0">
-                            <div class="flex-shrink-0">
+    <div class="lg:pl-72">
+        <div class="sticky top-0 z-40 lg:mx-auto lg:max-w-8xl lg:px-2">
+            <div class="mx-auto max-w-8xl px-2 sm:px-4 lg:px-4 bg-gray-500 rounded-md ">
+                <div class="relative flex h-20 items-center justify-between">
+                    <div class="flex items-center px-1 lg:px-0">
+                        <div class="flex-shrink-0">
 
-                                <img class="block h-12 w-auto lg:hidden" th:src="@{/images/device2.svg}" alt="device">
-                                <img class="hidden h-12 w-auto lg:block" th:src="@{/images/device2.svg}" alt="device">
+                            <img class="block h-12 w-auto lg:hidden" th:src="@{/images/device2.svg}" alt="device">
+                            <img class="hidden h-12 w-auto lg:block" th:src="@{/images/device2.svg}" alt="device">
 
-                            </div>
-                            <div class="hidden lg:ml-10 lg:block">
-                                <div class="flex space-x-4">
-                                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    <a href="#" th:href="@{/hardwares/create}"
-                                       class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dodaj</a>
-                                    <a href="#" th:href="@{/hardwares/file}"
-                                       class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Import</a>
-                                    <a href="#" th:href="@{/hardwares/export}"
-                                       class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Export</a>
-                                    <a href="#" th:href="@{/hardwares/deleteAll}"
-                                       class="rounded-md px-10 py-2 text-lg font-medium text-gray-300 hover:bg-red-500 hover:text-white">Usuń wszystko</a>
-                                </div>
+                        </div>
+                        <div class="hidden lg:ml-10 lg:block">
+                            <div class="flex space-x-4">
+                                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                                <a href="#" th:href="@{/hardwares/create}"
+                                   class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dodaj</a>
+                                <a href="#" th:href="@{/hardwares/file}"
+                                   class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Import</a>
+                                <a href="#" th:href="@{/hardwares/export}"
+                                   class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Export</a>
+                                <a href="#" th:href="@{/hardwares/deleteAll}"
+                                   class="rounded-md px-10 py-2 text-lg font-medium text-gray-300 hover:bg-red-500 hover:text-white">Usuń
+                                    wszystko</a>
                             </div>
                         </div>
-                        <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
-                            <div class="w-full max-w-lg lg:max-w-xs">
-                                <form action="#" th:action="@{/hardwares/search/query}" method="GET">
-                                    <label for="search" class="sr-only">Szukaj</label>
-                                    <div class="relative">
-                                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                                 aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                      d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                                      clip-rule="evenodd"/>
-                                            </svg>
-                                        </div>
-                                        <input id="search" name="query"
-                                               class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
-                                               placeholder="Szukaj" type="search">
+                    </div>
+                    <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+                        <div class="w-full max-w-lg lg:max-w-xs">
+                            <form action="#" th:action="@{/hardwares/search/query}" method="GET">
+                                <label for="search" class="sr-only">Szukaj</label>
+                                <div class="relative">
+                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                             aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
                                     </div>
-                                </form>
-                            </div>
+                                    <input id="search" name="query"
+                                           class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
+                                           placeholder="Szukaj" type="search">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <main class="flex-1 overflow-hidden">
-                <div class="mx-auto max-w-9xl px-4 sm:px-6 lg:px-8">
-                    <div class="mt-2 flex flex-col">
-                        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-2">
-                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                                    <table class="min-w-full">
+        <main class="flex-1 overflow-hidden">
+            <div class="mx-auto max-w-9xl px-4 sm:px-6 lg:px-8">
+                <div class="mt-2 flex flex-col">
+                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-2">
+                            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                                <table class="min-w-full">
 
-                                        <thead class="bg-gray-700">
-                                        <tr>
-                                            <th scope="col"
-                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-center text-yellow-500 sm:pl-6">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>Index</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=inventoryNo&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                    <thead class="bg-gray-700">
+                                    <tr>
+                                        <th scope="col"
+                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-center text-yellow-500 sm:pl-6">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>Index</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=inventoryNo&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
+                                            </div>
+                                        </th>
 
-                                            <th scope="col"
-                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-center text-yellow-500 sm:pl-6">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>Wydział</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=department&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                        <th scope="col"
+                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-center text-yellow-500 sm:pl-6">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>Wydział</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=department&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
+                                            </div>
+                                        </th>
 
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>Użytkownik</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=employee&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>Użytkownik</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=employee&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
+                                            </div>
+                                        </th>
 
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>Typ urządzenia</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=type&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>Typ urządzenia</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=type&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>Nazwa</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>Nazwa</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=name&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
+                                            </div>
+                                        </th>
 
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>ServiceTag</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=serialNumber&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>ServiceTag</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=serialNumber&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
-                                            <th scope="col"
-                                                class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
-                                                <div class="flex flex-1 items-center justify-between">
-                                                    <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
-                                                        <p>Adress IP</p>
-                                                        <a class="hover:text-yellow-100 text-2xl"
-                                                           th:href="@{'/hardwares/page/' + ${currentPage} + '?sortField=ipAddress&sortDir=' + ${reverseSortDir}}">↑↓</a>
-                                                    </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-center text-yellow-500 ">
+                                            <div class="flex flex-1 items-center justify-between">
+                                                <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
+                                                    <p>Adress IP</p>
+                                                    <a class="hover:text-yellow-100 text-2xl"
+                                                       th:href="@{'/hardwares/sort/'  + '?sortField=ipAddress&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
-                                            </th>
+                                            </div>
+                                        </th>
 
-                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
-                                                <span class="sr-only">Edit</span>
-                                            </th>
-                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
-                                                <span class="sr-only">Edit</span>
-                                            </th>
-                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
-                                                <span class="sr-only">Edit</span>
-                                            </th>
-                                        </tr>
-                                        </thead>
+                                        <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                        <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                        <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
 
-                                        <tbody class="bg-gray-400">
-                                        <tr class="border-t border-gray-700">
-                                            <th colspan="10" scope="colgroup"
-                                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
-                                                Aktywny Sprzęt
-                                            </th>
-                                        </tr>
+                                    <tbody class="bg-gray-400">
+                                    <tr class="border-t border-gray-700">
+                                        <th colspan="10" scope="colgroup"
+                                            class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
+                                            Aktywny Sprzęt
+                                        </th>
+                                    </tr>
 
-                                        <tr th:each="hardware : ${hardwares}" class="border-t border-gray-300">
-                                            <td th:text="${hardware.inventoryNo}"
-                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
-                                                Index
-                                            </td>
-                                            <td th:text="${hardware.department}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wydział
-                                            </td>
-                                            <td th:text="${hardware.employee}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Użytkownik
-                                            </td>
-                                            <td th:text="${hardware.type}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Typ
+                                    <tr th:each="hardware : ${hardwares}" class="border-t border-gray-300">
+                                        <td th:text="${hardware.inventoryNo}"
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-lm font-medium text-gray-900 sm:pl-6">
+                                            Index
+                                        </td>
+                                        <td th:text="${hardware.department}"
+                                            class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Wydział
+                                        </td>
+                                        <td th:text="${hardware.employee}"
+                                            class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Użytkownik
+                                        </td>
+                                        <td th:text="${hardware.type}"
+                                            class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Typ
 
-                                            </td>
-                                            <td th:text="${hardware.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
+                                        </td>
+                                        <td th:text="${hardware.name}"
+                                            class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Nazwa
 
-                                            </td>
-                                            <td th:text="${hardware.serialNumber}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">SN /
-                                                ServiceTag
-                                            </td>
-                                            <td th:text="${hardware.ipAddress}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">SN /
-                                                ServiceTag
-                                            </td>
+                                        </td>
+                                        <td th:text="${hardware.serialNumber}"
+                                            class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">SN /
+                                            ServiceTag
+                                        </td>
+                                        <td th:text="${hardware.ipAddress}"
+                                            class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">SN /
+                                            ServiceTag
+                                        </td>
 
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
+                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
-                                                <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
-                                                   class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
-                                                        class="sr-only"></span></a>
+                                            <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
+                                               class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
+                                                    class="sr-only"></span></a>
 
-                                                <a th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
-                                                   class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
-                                                        class="sr-only"></span></a>
+                                            <a th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
+                                               class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
+                                                    class="sr-only"></span></a>
 
-                                                <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
-                                                   class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
-                                                        class="sr-only"></span></a>
+                                            <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
+                                               class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
+                                                    class="sr-only"></span></a>
 
-                                            </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
 
-                                        <!-- More people... -->
-                                        </tbody>
-                                        <tbody class="bg-grey">
-                                        <tr class="border-t border-gray-200">
-                                            <th colspan="10" scope="colgroup"
-                                                class="bg-green-300 px-4 py-2 text-center text-lm font-semibold text-gray-700 sm:px-6">
-                                                Koniec strony: [[${pageNo}]]
+                                    <!-- More people... -->
+                                    </tbody>
+                                    <tbody class="bg-grey">
+                                    <tr class="border-t border-gray-200">
+                                        <th colspan="10" scope="colgroup"
+                                            class="bg-green-300 px-4 py-2 text-center text-lm font-semibold text-gray-700 sm:px-6">
+                                            Koniec strony: [[${pageNo}]]
 
-                                            </th>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-1">
-                            <div class="flex justify-end">
-                                <button type="button"
-                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                    <a th:if="${currentPage >1}"
-                                       th:href="@{'/hardwares/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
-                                    <span th:unless="${currentPage >1}">Poprzedni</span>
-                                </button>
-                                <button type="button"
-                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                    <a th:if="${currentPage < totalPages}"
-                                       th:href="@{'/hardwares/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
-                                    <span th:unless="${currentPage < totalPages}">Następny</span>
-                                </button>
-
-                            </div>
-                        </div>
-
-                        <div th:if="${totalPages > 1}">
-                            <div class="row col-sm-10">
-                                <div class="col-sm-2">
-                                    Wszystkich wpisów: [[${totalItems}]]
-                                </div>
-                                <div class="col-sm-1 text-indigo-800 ">
-            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}"
-         th:href="@{'/hardwares/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span class="text-indigo-200 " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
-            </span>
-                                </div>
+                                        </th>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
+
+                    <!--                        <div class="pt-1">-->
+                    <!--                            <div class="flex justify-end">-->
+                    <!--                                <button type="button"-->
+                    <!--                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
+                    <!--                                    <a th:if="${currentPage >1}"-->
+                    <!--                                       th:href="@{'/hardwares/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>-->
+                    <!--                                    <span th:unless="${currentPage >1}">Poprzedni</span>-->
+                    <!--                                </button>-->
+                    <!--                                <button type="button"-->
+                    <!--                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
+                    <!--                                    <a th:if="${currentPage < totalPages}"-->
+                    <!--                                       th:href="@{'/hardwares/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>-->
+                    <!--                                    <span th:unless="${currentPage < totalPages}">Następny</span>-->
+                    <!--                                </button>-->
+
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+
+                    <!--                        <div th:if="${totalPages > 1}">-->
+                    <!--                            <div class="row col-sm-10">-->
+                    <!--                                <div class="col-sm-2">-->
+                    <!--                                    Wszystkich wpisów: [[${totalItems}]]-->
+                    <!--                                </div>-->
+                    <!--                                <div class="col-sm-1 text-indigo-800 ">-->
+                    <!--            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">-->
+                    <!--      <a th:if="${currentPage != i}"-->
+                    <!--         th:href="@{'/hardwares/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
+                    <!--      <span class="text-indigo-200 " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;-->
+                    <!--            </span>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
+    </div>
+</div>
 </body>
 </html>
