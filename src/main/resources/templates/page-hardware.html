@@ -279,11 +279,13 @@
                                 <div class="flex space-x-4">
                                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                     <a href="#" th:href="@{/hardwares/create}"
-                                       class="rounded-md bg-gray-900 px-3 py-2 text-lg font-medium text-white">Dodaj</a>
+                                       class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dodaj</a>
                                     <a href="#" th:href="@{/hardwares/file}"
                                        class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Import</a>
                                     <a href="#" th:href="@{/hardwares/export}"
                                        class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Export</a>
+                                    <a href="#" th:href="@{/hardwares/deleteAll}"
+                                       class="rounded-md px-10 py-2 text-lg font-medium text-gray-300 hover:bg-red-500 hover:text-white">Usuń wszystko</a>
                                 </div>
                             </div>
                         </div>

@@ -13,6 +13,7 @@ import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Software;
+import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.service.*;
 import java.io.*;
 import java.text.DateFormat;
@@ -31,13 +32,16 @@ public class WebHardwareController {
     private ExportService exportService;
     private ImportService importService;
     private RaportService raportService;
+    private final HardwareRepository hardwareRepository;
 
 
-    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportService importService, RaportService raportService) {
+    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportService importService, RaportService raportService,
+                                 HardwareRepository hardwareRepository) {
         this.hardwareService = hardwareService;
         this.exportService = exportService;
         this.importService = importService;
         this.raportService = raportService;
+        this.hardwareRepository = hardwareRepository;
     }
 
     @GetMapping("/list")
@@ -128,6 +132,13 @@ public class WebHardwareController {
         LOGGER.info("deleteHardware(" + id + ")");
         hardwareService.delete(id);
         LOGGER.info("deleteHardware(...)");
+        return "redirect:/hardwares";
+    }
+    @GetMapping("/deleteAll")
+    public String deleteAllHardware(){
+        LOGGER.info("deleteAllHardware()");
+        hardwareService.deleteAll();
+        LOGGER.info("deleteAllHardware(...)");
         return "redirect:/hardwares";
     }
 
