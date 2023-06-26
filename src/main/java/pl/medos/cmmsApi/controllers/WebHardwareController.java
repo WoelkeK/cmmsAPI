@@ -187,6 +187,8 @@ public class WebHardwareController {
         LOGGER.info("search()");
         List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
         model.addAttribute("hardwares", hardwares);
+        LOGGER.info("search(...)");
+
         return "list-hardware";
     }
 }
