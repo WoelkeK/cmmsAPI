@@ -52,6 +52,16 @@ public class WebHardwareController {
         LOGGER.info("listViewAll(...)");
         return "list-hardware";
     }
+
+    @GetMapping("/sort")
+    public String listViewAllSorted(Model model) {
+        LOGGER.info("listViewAll()");
+        List<Hardware> hardwares = hardwareService.findAllSorted("DESC", "inventoryNo");
+        model.addAttribute("hardwares", hardwares);
+        LOGGER.info("listViewAll(...)");
+        return "list-hardware";
+    }
+
     @GetMapping
     public String listView(Model model){
         LOGGER.info("listView()");

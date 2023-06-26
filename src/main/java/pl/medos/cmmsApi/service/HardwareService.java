@@ -17,6 +17,8 @@ public interface HardwareService {
 
     List<Hardware> findHardwaresByQuery(String query);
 
+    List<Hardware> findAllSorted(String direction, String field);
+
     void deleteAll();
 }
 

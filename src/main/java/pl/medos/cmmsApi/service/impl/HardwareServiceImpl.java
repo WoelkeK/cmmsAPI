@@ -59,6 +59,16 @@ public class HardwareServiceImpl implements HardwareService {
     }
 
     @Override
+    public List<Hardware> findAllSorted(String direction, String field) {
+        LOGGER.info("findAllSorted()");
+        Sort sort = direction.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(field).ascending() : Sort.by(field).descending();
+        List<HardwareEntity> hardwareEntities = hardwareRepository.findAll(sort);
+        List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
+        LOGGER.info("findAllSorted(...)");
+        return hardwares;
+    }
+
+    @Override
     public Hardware create(Hardware hardware) {
         LOGGER.info("createHardware() " + hardware.getId());
         String inventoryNo = hardware.getInventoryNo().toUpperCase();
