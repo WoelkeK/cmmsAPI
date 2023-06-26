@@ -60,7 +60,7 @@
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-x-2 gap-y-8 sm:grid-cols-2">
                     <div>
-                        <h1 th:text="'Podgląd urządzenia nr: ' + ${hardware.id}"
+                        <h1 th:text="'Podgląd urządzenia nr:  ' + ${hardware.inventoryNo}"
                             class="sm:col-span-1 text-3xl font-bold tracking-tight text-yellow-600"></h1>
                     </div>
                 </div>
@@ -164,6 +164,14 @@
                                 <dt class="text-sm font-medium text-gray-400">Dokument zakupu</dt>
                                 <dd th:text="${hardware.invoiceNo}" id="invoiceNo"
                                     name="invoiceNo"
+                                    class="mt-1 text-lm text-gray-900">XXXXXXXXXX
+                                </dd>
+                            </div>
+
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Wersja systemu</dt>
+                                <dd th:text="${hardware.systemNo}" id="systemNo"
+                                    name="systemNo"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
