@@ -77,14 +77,14 @@
             <frame>
                 <reportElement x="0" y="1" width="554" height="55" uuid="136ddf46-af95-47c7-889b-2b25cbbd1e65"/>
                 <staticText>
-                    <reportElement x="341" y="8" width="60" height="19" uuid="ccaf4480-3bc2-4e74-a637-3cbbe2f1194c"/>
+                    <reportElement x="381" y="7" width="60" height="19" uuid="ccaf4480-3bc2-4e74-a637-3cbbe2f1194c"/>
                     <textElement>
                         <font fontName="Arial" size="12"/>
                     </textElement>
-                    <text><![CDATA[Chełmno,]]></text>
+                    <text><![CDATA[Chełmno ,]]></text>
                 </staticText>
-                <textField pattern="MMMMM dd, yyyy">
-                    <reportElement x="406" y="7" width="107" height="20" uuid="8f3e21fc-f660-48b2-b4dd-7684bcc07dd8"/>
+                <textField pattern="dd/MM/yyyy">
+                    <reportElement x="446" y="7" width="107" height="20" uuid="8f3e21fc-f660-48b2-b4dd-7684bcc07dd8"/>
                     <textElement>
                         <font fontName="Arial" size="12"/>
                     </textElement>

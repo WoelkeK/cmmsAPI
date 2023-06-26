@@ -41,8 +41,8 @@ public class HardwareServiceImpl implements HardwareService {
 
     public Page<Hardware> pagesHardware(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("pagesHardware()");
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<HardwareEntity> hardwareEntities = hardwareRepository.findAll(pageable);
         Page<Hardware> hardwares = hardwareMapper.pageEntityToModels(hardwareEntities);
         LOGGER.info("pagesHardware(...)");
@@ -52,7 +52,7 @@ public class HardwareServiceImpl implements HardwareService {
     @Override
     public List<Hardware> findHardwaresByQuery(String query) {
         LOGGER.info("findHardwaresByQuery()" + query);
-        List<HardwareEntity> hardwareEntities = hardwareRepository.searchHardwareByQuery(query);
+        List<HardwareEntity> hardwareEntities = hardwareRepository.searchHardwareByQuery(query.toUpperCase());
         List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
         LOGGER.info("findHardwaresByQuery(...)");
         return hardwares;
@@ -61,6 +61,8 @@ public class HardwareServiceImpl implements HardwareService {
     @Override
     public Hardware create(Hardware hardware) {
         LOGGER.info("createHardware() " + hardware.getId());
+        String inventoryNo = hardware.getInventoryNo().toUpperCase();
+        hardware.setInventoryNo(inventoryNo);
         HardwareEntity hardwareEntity = hardwareMapper.mapModelToEntity(hardware);
         HardwareEntity saveHardwareEntity = hardwareRepository.save(hardwareEntity);
         Hardware savedHardware = hardwareMapper.mapEntityToModel(saveHardwareEntity);

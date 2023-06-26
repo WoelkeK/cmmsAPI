@@ -213,24 +213,29 @@
                                         </div>
                                     </div>
 
-<!--                                    <div class="sm:col-span-1">-->
-<!--                                        <label for="employee"-->
-<!--                                               class="block text-sl font-medium leading-6 text-gray-500">Imię-->
-<!--                                            i-->
-<!--                                            Nazwisko</label>-->
-<!--                                        <div class="mt-2">-->
-<!--                                            <select th:field="${hardware.employee.id}" id="employee"-->
-<!--                                                    name="employee"-->
-<!--                                                    autocomplete="employee"-->
-<!--                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">-->
+                                    <div class="sm:col-span-1">
+                                        <label for="department"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Dział</label>
+                                        <div class="mt-2">
+                                            <input th:field="${hardware.department}" id="department"
+                                                   name="department"
+                                                   autocomplete="off"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
 
-<!--                                                <option th:each="employee : ${employees}"-->
-<!--                                                        th:text="${employee.name}"-->
-<!--                                                        th:value="${employee.id}">-->
-<!--                                                </option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                    <div class="sm:col-span-1">
+                                        <label for="employee"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Wersja Systemu</label>
+                                        <div class="mt-2">
+                                            <input th:field="${hardware.systemNo}" id="systemNo"
+                                                   name="systemNo"
+                                                   autocomplete="off"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
+
+
                                 </div>
 
                                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
