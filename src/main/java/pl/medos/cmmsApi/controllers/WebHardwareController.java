@@ -53,19 +53,25 @@ public class WebHardwareController {
         return "list-hardware";
     }
 
-    @GetMapping("/sort")
-    public String listViewAllSorted(Model model) {
+    @GetMapping("/sort/")
+    public String listViewAllSorted(@RequestParam("sortField") String sortField,
+                                    @RequestParam("sortDir") String direction,
+                                    Model model) {
         LOGGER.info("listViewAll()");
-        List<Hardware> hardwares = hardwareService.findAllSorted("DESC", "inventoryNo");
+        List<Hardware> hardwares = hardwareService.findAllSorted(direction, sortField);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", direction);
+        model.addAttribute("reverseSortDir", direction.equals("asc") ? "desc" : "asc");
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("listViewAll(...)");
-        return "list-hardware";
+        return "sort-hardware";
     }
 
     @GetMapping
     public String listView(Model model){
         LOGGER.info("listView()");
-        return findHardwarePage(1, "inventoryNo", "asc", model);
+//        return findHardwarePage(1, "inventoryNo", "asc", model);
+        return listViewAllSorted("inventoryNo", "asc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
