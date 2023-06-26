@@ -25,7 +25,7 @@
                 </rectangle>
                 <image>
                     <reportElement x="60" y="11" width="177" height="79" uuid="292362f5-3b78-4161-82ee-0a4cf821dd2c"/>
-                    <imageExpression><![CDATA["C:/Users/krzysztof.woelke/Desktop/Medos.jpg"]]></imageExpression>
+                    <imageExpression><![CDATA["static/images/medos.png"]]></imageExpression>
                 </image>
                 <textField>
                     <reportElement x="261" y="11" width="240" height="14" uuid="5d294450-51ce-43f0-96b6-0a9c1baddd21"/>
@@ -226,4 +226,5 @@
             </frame>
         </band>
     </summary>
+
 </jasperReport>

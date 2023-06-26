@@ -39,6 +39,7 @@ public class SpringSecurity {
                 .requestMatchers("/info/**").permitAll()
                 .requestMatchers("/softwares/**").permitAll()
                 .requestMatchers("/dashboards/**").permitAll()
+//                .requestMatchers("/hardwares/**").permitAll()
                 .requestMatchers("/hardwares/**").hasRole("ADMIN")
                 .requestMatchers("/employees/**").hasRole("ADMIN")
                 .requestMatchers("/index/**").hasRole("ADMIN")
