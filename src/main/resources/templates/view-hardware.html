@@ -104,9 +104,9 @@
                             </div>
 
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-400">SN / ServiceTag</dt>
-                                <dd th:text="${hardware.serialNumber}" id="hardware-serialNumber"
-                                    name="hardware-serialNumber"
+                                <dt class="text-sm font-medium text-gray-400">Wydział</dt>
+                                <dd th:text="${hardware.department}" id="hardware-department"
+                                    name="hardware-department"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
@@ -169,6 +169,14 @@
                             </div>
 
                             <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">SN / ServiceTag</dt>
+                                <dd th:text="${hardware.serialNumber}" id="hardware-serialNumber"
+                                    name="hardware-serialNumber"
+                                    class="mt-1 text-lm text-gray-900">XXXXXXXXXX
+                                </dd>
+                            </div>
+
+                            <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Wersja systemu</dt>
                                 <dd th:text="${hardware.systemNo}" id="systemNo"
                                     name="systemNo"
@@ -191,7 +199,7 @@
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">Data aktywacji</dt>
-                                <dd th:text="${hardware.activateDate}" id="software-version"
+                                <dd th:text="${#temporals.format(hardware.activateDate, 'dd MMMM yyyy')}"
                                     name="software-version"
                                     class="mt-1 text-lm text-gray-900">XXXXXXXXXX
                                 </dd>

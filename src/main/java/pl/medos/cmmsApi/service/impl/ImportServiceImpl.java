@@ -11,12 +11,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.model.*;
+import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
@@ -31,7 +33,12 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "inventoryNo", "department", "status", "employee", "type", "name",  "installDate",   "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate","description"));
+            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description"));
+    private final HardwareRepository hardwareRepository;
+
+    public ImportServiceImpl(HardwareRepository hardwareRepository) {
+        this.hardwareRepository = hardwareRepository;
+    }
 
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
@@ -180,7 +187,7 @@ public class ImportServiceImpl implements ImportService {
 
             Row row = rowIterator.next();
             String empty = "---";
-            if (row.getRowNum() == 0 || row.getRowNum() == 1) {
+            if (row.getRowNum() ==0 || row.getRowNum() ==1) {
                 continue;
             }
 
@@ -190,7 +197,8 @@ public class ImportServiceImpl implements ImportService {
                 if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-                            rowDataMap.put(hardwares.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
+//                            rowDataMap.put(hardwares.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
+                            rowDataMap.put(hardwares.get(k), (cell.getDateCellValue().toString()));
                             break;
                         case STRING:
 //                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
@@ -198,6 +206,7 @@ public class ImportServiceImpl implements ImportService {
                             break;
                         case BLANK:
                             rowDataMap.put(hardwares.get(k), empty);
+
                     }
                 }
             }
@@ -301,7 +310,8 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setEmployee(m.getEmployee());
                                     hardware.setType(m.getType());
                                     hardware.setName(m.getName());
-                                    hardware.setInstallDate(LocalDate.now());
+                                    LocalDate installDate = convertDate(m.getInstallDate());
+                                    hardware.setInstallDate(installDate);
                                     hardware.setInvoiceNo(m.getInvoiceNo());
                                     hardware.setSystemNo(m.getSystemNo());
                                     hardware.setSerialNumber(m.getSerialNumber());
@@ -310,7 +320,9 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setMacAddress(m.getMacAddress());
                                     hardware.setOfficeName(m.getOfficeName());
                                     hardware.setOfficeNo(m.getOfficeNo());
-                                    hardware.setActivateDate(LocalDate.now());
+
+                                    LocalDate activateDate = convertDate(m.getActivateDate());
+                                    hardware.setActivateDate(activateDate);
                                     hardware.setDescription(m.getDescription());
 
                                     LOGGER.info("hardware create(...)");
@@ -321,6 +333,21 @@ public class ImportServiceImpl implements ImportService {
 
         LOGGER.info("hardwareDataExcelConverter(...)");
         return convertedHardwares;
+    }
+
+    private LocalDate convertDate(String date) {
+        LOGGER.info("DataXLS " + date);
+
+        if (date!=null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d H:mm:ss zzz yyyy", Locale.ENGLISH);
+            ZonedDateTime parseDate = ZonedDateTime.parse(date, formatter);
+            LocalDate localDate = parseDate.toLocalDate();
+            LOGGER.info("DataXLS " + localDate);
+            return localDate;
+        } else {
+            LocalDate defaultDate = LocalDate.of(1000, 1, 1);
+            return defaultDate;
+        }
     }
 }
 
