@@ -186,8 +186,9 @@ public class ImportServiceImpl implements ImportService {
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
-            String empty = "---";
-            if (row.getRowNum() ==0 || row.getRowNum() ==1) {
+            String empty = "-----";
+
+            if (row.getRowNum() == 0 || row.getRowNum() == 1) {
                 continue;
             }
 
@@ -206,6 +207,7 @@ public class ImportServiceImpl implements ImportService {
                             break;
                         case BLANK:
                             rowDataMap.put(hardwares.get(k), empty);
+                            break;
 
                     }
                 }
@@ -221,6 +223,7 @@ public class ImportServiceImpl implements ImportService {
             LOGGER.info("rawData " + rawData);
         }
         List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
+
         return hardwares;
     }
 
@@ -300,7 +303,7 @@ public class ImportServiceImpl implements ImportService {
 
         List<Hardware> convertedHardwares =
                 hardwares.stream().map(m -> {
-
+                                    LOGGER.info("Row create()");
                                     Hardware hardware = new Hardware();
 
 //                                    hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
@@ -310,8 +313,13 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setEmployee(m.getEmployee());
                                     hardware.setType(m.getType());
                                     hardware.setName(m.getName());
+
+
+//                                    hardware.setInstallDate(LocalDate.now());
                                     LocalDate installDate = convertDate(m.getInstallDate());
                                     hardware.setInstallDate(installDate);
+
+
                                     hardware.setInvoiceNo(m.getInvoiceNo());
                                     hardware.setSystemNo(m.getSystemNo());
                                     hardware.setSerialNumber(m.getSerialNumber());
@@ -323,9 +331,10 @@ public class ImportServiceImpl implements ImportService {
 
                                     LocalDate activateDate = convertDate(m.getActivateDate());
                                     hardware.setActivateDate(activateDate);
+
                                     hardware.setDescription(m.getDescription());
 
-                                    LOGGER.info("hardware create(...)");
+                                    LOGGER.info("Row create(...)");
                                     return hardware;
                                 }
                         )
@@ -336,17 +345,19 @@ public class ImportServiceImpl implements ImportService {
     }
 
     private LocalDate convertDate(String date) {
-        LOGGER.info("DataXLS " + date);
+        LOGGER.info("DataXLS_String " + date);
 
-        if (date!=null) {
+        if (date == null || date.contains("-----")) {
+            LocalDate defaultDate = LocalDate.of(1000, 1, 1);
+            return defaultDate;
+        }else{
+
+            LOGGER.info("Start parsing string to date " + date.toString());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d H:mm:ss zzz yyyy", Locale.ENGLISH);
             ZonedDateTime parseDate = ZonedDateTime.parse(date, formatter);
             LocalDate localDate = parseDate.toLocalDate();
-            LOGGER.info("DataXLS " + localDate);
+            LOGGER.info("DataXLS_LocalDate " + localDate);
             return localDate;
-        } else {
-            LocalDate defaultDate = LocalDate.of(1000, 1, 1);
-            return defaultDate;
         }
     }
 }
