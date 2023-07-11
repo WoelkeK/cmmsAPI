@@ -182,13 +182,12 @@ public class ImportServiceImpl implements ImportService {
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
         Iterator<Row> rowIterator = sheet.iterator();
-
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
             String empty = "-----";
 
-            if (row.getRowNum() == 0 || row.getRowNum() == 1) {
+            if (row.getRowNum() == 0) {
                 continue;
             }
 
