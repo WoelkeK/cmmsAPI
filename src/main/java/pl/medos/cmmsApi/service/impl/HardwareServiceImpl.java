@@ -23,8 +23,8 @@ public class HardwareServiceImpl implements HardwareService {
 
     private static final Logger LOGGER = Logger.getLogger(HardwareServiceImpl.class.getName());
 
-    private HardwareRepository hardwareRepository;
-    private HardwareMapper hardwareMapper;
+    private final HardwareRepository hardwareRepository;
+    private final HardwareMapper hardwareMapper;
 
     public HardwareServiceImpl(HardwareRepository hardwareRepository, HardwareMapper hardwareMapper) {
         this.hardwareRepository = hardwareRepository;
@@ -52,7 +52,7 @@ public class HardwareServiceImpl implements HardwareService {
     @Override
     public List<Hardware> findHardwaresByQuery(String query) {
         LOGGER.info("findHardwaresByQuery()" + query);
-        List<HardwareEntity> hardwareEntities = hardwareRepository.searchHardwareByQuery(query.toUpperCase());
+        List<HardwareEntity> hardwareEntities = hardwareRepository.findHardwareByquery(query.toUpperCase());
         List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
         LOGGER.info("findHardwaresByQuery(...)");
         return hardwares;
