@@ -71,7 +71,7 @@ public class WebHardwareController {
     public String listView(Model model){
         LOGGER.info("listView()");
 //        return findHardwarePage(1, "inventoryNo", "asc", model);
-        return listViewAllSorted("inventoryNo", "asc", model);
+        return listViewAllSorted("inventoryNo", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
