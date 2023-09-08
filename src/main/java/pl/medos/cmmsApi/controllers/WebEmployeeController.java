@@ -48,14 +48,18 @@ public class WebEmployeeController {
     }
 
     @GetMapping
-    public String listView(Model model) throws IOException {
+    public String listView(
+            @RequestParam(name = "pageNo", defaultValue = "1") int page,
+//            @RequestParam(defaultValue = "10") int pageSize,
+            Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPaginated(1, model);
+        return findPaginated(page, model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
     public String findPaginated(
             @PathVariable(value = "pageNo") int pageNo,
+//            @PathVariable(value = "pageSize") int pageSize,
             Model model) throws IOException {
         int pageSize = 10;
         LOGGER.info("findPage()");
@@ -83,21 +87,24 @@ public class WebEmployeeController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
+            @RequestParam(name = "pageNo") int pageNo,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("updateView()");
+        LOGGER.info("updateView()" + pageNo);
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
+        modelMap.addAttribute("pageNo", pageNo);
         return "update-employee.html";
     }
 
     @PostMapping(value = "/update/{id}")
     public String update(
             @PathVariable(name = "id") Long id,
+            @RequestParam(name = "pageNo") int pageNo,
             @ModelAttribute(name = "employee") Employee employee) throws EmployeeNotFoundException {
-        LOGGER.info("update()" + employee);
+        LOGGER.info("update()" + pageNo);
         Employee updatedEmployee = employeeService.updateEmployee(employee, id);
         LOGGER.info("update(...)" + updatedEmployee);
-        return "redirect:/employees";
+        return "redirect:/employees?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
@@ -130,10 +137,11 @@ public class WebEmployeeController {
 
     @GetMapping(value = "/delete/{id}")
     public String delete(
+            @RequestParam(name = "pageNo") int pageNo,
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         employeeService.deleteEmployee(id);
-        return "redirect:/employees";
+        return "redirect:/employees?pageNo=" + pageNo;
     }
 
     @GetMapping("/file")

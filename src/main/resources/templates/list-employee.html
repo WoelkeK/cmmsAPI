@@ -413,13 +413,13 @@
                                                 </td>
 
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a th:href="@{/employees/update/{id}(id=${employee.id})}"
+                                                    <a th:href="@{/employees/update/{id}(id=${employee.id}, pageNo=${currentPage})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
                                                     <!--                                                    <a th:href="@{/employees/read/{id}(id=${employee.id})}"-->
                                                     <!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
                                                     <!--                                                            class="sr-only"></span></a>-->
-                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id})}"
+                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id}, pageNo=${currentPage})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
@@ -463,10 +463,10 @@
                                 <div class="col-sm-2">
                                     Wszystkich wpisów: [[${totalItems}]]
                                 </div>
-                                <div class="col-sm-1">
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/employees/page/' + ${i}}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                                <div class="col-sm-1 text-indigo-800">
+            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/employees/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+      <span class="text-indigo-200 " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;&nbsp; &nbsp; &nbsp;
             </span>
                                 </div>
                             </div>
