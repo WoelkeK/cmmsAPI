@@ -62,13 +62,27 @@ public class WebInfoPortal {
         return "list-info.html";
     }
 
+//    @GetMapping("/search/name")
+//    public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
+//                                       Model model) {
+//        LOGGER.info("search()");
+//        List<Employee> employeeByName = employeeService.findEmployeeByName(query);
+//        LOGGER.info("findEmployeeByName()" + employeeByName);
+//        model.addAttribute("employees", employeeByName);
+//        return "list-info";
+//    }
+
     @GetMapping("/search/name")
-    public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
-                                       Model model) {
+    public String searchEmployeeByName(
+            @RequestParam(value = "employeeName") String query,
+            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            Model model){
         LOGGER.info("search()");
-        List<Employee> employeeByName = employeeService.findEmployeeByName(query);
-        LOGGER.info("findEmployeeByName()" + employeeByName);
+        int pagesize =10;
+        Page<Employee> employeeByName = employeeService.findEmployeeByName(pageNo, pagesize, query);
+        LOGGER.info("findEmployeeByName()");
         model.addAttribute("employees", employeeByName);
-        return "list-info";
+        model.addAttribute("currentPage", pageNo);
+        return "list-employee.html";
     }
 }

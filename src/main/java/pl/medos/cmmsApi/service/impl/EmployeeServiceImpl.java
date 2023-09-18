@@ -11,7 +11,6 @@ import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.mapper.EmployeeMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -81,13 +80,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findEmployeeByName(String employeeName) {
+    public Page<Employee> findEmployeeByName(int pageNo, int pagesize, String employeeName) {
         LOGGER.info("findEmployeeByName()" + employeeName);
-        List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByQuery(employeeName);
+        Pageable pageable = PageRequest.of(pageNo-1, pagesize);
+        Page<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByQuery(pageable,employeeName);
+        Page<Employee> employees = employeeMapper.mapPageEntitiestoModels(employeeEntities);
+        LOGGER.info("findEmployeeByName(...)");
+        return employees;
+    }
+
+    @Override
+    public List<Employee> findEmployeeByRawName(String employeeName) {
+        LOGGER.info("findEmployeeByName()" + employeeName);
+        List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByRawQuery(employeeName);
         List<Employee> employees = employeeMapper.listModels(employeeEntities);
         LOGGER.info("findEmployeeByName(...)");
         return employees;
     }
+
 
     @Override
     public Page<Employee> findPageinated(int pageNo, int pagesize) {

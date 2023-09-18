@@ -135,7 +135,7 @@
                                      alt="">
                             </div>
                             <div class="ml-3">
-                                <p class="text-base font-medium text-white">Tom Cook</p>
+                                <p class="text-base font-medium text-white">Imię i nazwisko</p>
                                 <p class="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                                  alt="">
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-white">Krzysztof Woelke</p>
+                            <p class="text-sm font-medium text-white">Imię i Nazwisko</p>
                             <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
                         </div>
                     </div>
@@ -324,7 +324,10 @@
                                     <div class="form-group">
                                         <form class="form-inline" th:action="@{/employees/search/name}">
                                             <div class="input-group">
+                                                <input type="hidden" name="pageNo" th:value =${currentPage}>
+
                                                 <input type="text" class="form-control" name="employeeName"/>
+
                                                 <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit"> Szukaj pracownika</button>
                         </span>
