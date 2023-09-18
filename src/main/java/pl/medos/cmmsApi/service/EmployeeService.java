@@ -17,7 +17,9 @@ public interface EmployeeService {
 
     void deleteEmployee(Long id);
 
-    List<Employee> findEmployeeByName(String employeeName);
+    Page<Employee> findEmployeeByName(int pageNo, int pagesize, String employeeName);
+
+    List<Employee> findEmployeeByRawName(String employeeName);
 
     Page<Employee> findPageinated(int pageNo, int pagesize);
 }

@@ -74,14 +74,19 @@ public class WebEmployeeController {
         return "list-employee.html";
     }
 
-    @GetMapping("/search/name")
-    public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
-                                       Model model) {
-        LOGGER.info("search()");
-        List<Employee> employeeByName = employeeService.findEmployeeByName(query);
-        LOGGER.info("findEmployeeByName()");
-        model.addAttribute("employees", employeeByName);
-        return "list-employee";
+    @GetMapping(value = "/search/name")
+    public String findEmployeeByname(
+            @RequestParam(value = "employeeName") String query,
+            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            Model model) throws IOException {
+        int pageSize = 10;
+        LOGGER.info("findPage()");
+        List<Employee> employeeByRawName = employeeService.findEmployeeByRawName(query);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("employees", employeeByRawName);
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        return "list-employee.html";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -151,7 +156,6 @@ public class WebEmployeeController {
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-
         LOGGER.info("importEmployees()");
         if (file.isEmpty()) {
             LOGGER.info("Please select file to upload");
@@ -160,7 +164,6 @@ public class WebEmployeeController {
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
         List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
-
         readedEmployees.forEach((employee) -> {
             employeeService.createEmployee(employee);
         });
