@@ -83,6 +83,6 @@ public class WebInfoPortal {
         LOGGER.info("findEmployeeByName()");
         model.addAttribute("employees", employeeByName);
         model.addAttribute("currentPage", pageNo);
-        return "list-employee.html";
+        return "list-info.html";
     }
 }
