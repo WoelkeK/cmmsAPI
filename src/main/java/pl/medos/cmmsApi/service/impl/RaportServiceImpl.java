@@ -25,22 +25,29 @@ public class RaportServiceImpl implements RaportService {
         LOGGER.info("getJasperPrint()");
 
         Map<String, Object> parameters = new HashMap<>();
-;
+        ;
         parameters.put("employeeName", hardware.getEmployee());
         parameters.put("hardwareName", hardware.getName());
         parameters.put("hardwareType", hardware.getType().toString());
         parameters.put("inventoryNo", hardware.getInventoryNo());
-        parameters.put("content", content);
+
         parameters.put("serialNo", hardware.getSerialNumber());
+        parameters.put("comment", hardware.getDescription());
 
         switch (hardware.getDocument().toString()) {
             case "ZDANIE":
                 parameters.put("protocolType", "Zdania");
                 parameters.put("protocolTypeShort", "zdanie");
+                parameters.put("content", "stanowiącego własność firmy MEDOS.");
+                parameters.put("employeeSign", "podpis osoby zdającej");
+                parameters.put("managerSign", "podpis osoby przyjmującej");
                 break;
             default:
                 parameters.put("protocolType", "Wypożyczenia");
                 parameters.put("protocolTypeShort", "wypożyczenie");
+                parameters.put("content", content);
+                parameters.put("employeeSign", "podpis osoby przyjmującej");
+                parameters.put("managerSign", "podpis osoby wypożyczającej");
         }
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());

@@ -10,6 +10,9 @@
     <parameter name="protocolType" class="java.lang.String"/>
     <parameter name="serialNo" class="java.lang.String"/>
     <parameter name="hardwareType" class="java.lang.String"/>
+    <parameter name="comment" class="java.lang.String"/>
+    <parameter name="managerSign" class="java.lang.String"/>
+    <parameter name="employeeSign" class="java.lang.String"/>
     <queryString>
         <![CDATA[]]>
     </queryString>
@@ -21,54 +24,54 @@
             <frame>
                 <reportElement x="0" y="0" width="554" height="100" uuid="447ee48a-e08e-430c-b777-cd1e22533165"/>
                 <rectangle radius="10">
-                    <reportElement positionType="FixRelativeToBottom" mode="Transparent" x="56" y="0" width="455" height="101" forecolor="#B0B0B0" uuid="5052ab7b-ee6c-49be-83d5-43d1e39d8d2f"/>
+                    <reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="0" width="553" height="101" forecolor="#B0B0B0" uuid="5052ab7b-ee6c-49be-83d5-43d1e39d8d2f"/>
                 </rectangle>
-                <image>
-                    <reportElement x="60" y="11" width="177" height="79" uuid="292362f5-3b78-4161-82ee-0a4cf821dd2c"/>
-                    <imageExpression><![CDATA["static/images/medos.png"]]></imageExpression>
-                </image>
                 <textField>
-                    <reportElement x="261" y="11" width="240" height="14" uuid="5d294450-51ce-43f0-96b6-0a9c1baddd21"/>
+                    <reportElement x="302" y="9" width="240" height="14" uuid="5d294450-51ce-43f0-96b6-0a9c1baddd21"/>
                     <textElement textAlignment="Right">
                         <font fontName="Arial"/>
                     </textElement>
                     <textFieldExpression><![CDATA["MEDOS Paweł Buławka spółka komandytowa "]]></textFieldExpression>
                 </textField>
                 <textField>
-                    <reportElement x="410" y="25" width="91" height="14" uuid="b1a6e1da-9f94-426a-b8b5-3415ffce4f33"/>
+                    <reportElement x="451" y="23" width="91" height="14" uuid="b1a6e1da-9f94-426a-b8b5-3415ffce4f33"/>
                     <textElement textAlignment="Right">
                         <font fontName="Arial"/>
                     </textElement>
                     <textFieldExpression><![CDATA["ul, Magazynowa 3"]]></textFieldExpression>
                 </textField>
                 <textField>
-                    <reportElement x="409" y="39" width="92" height="14" uuid="9418f7a5-5050-45ad-8715-c702e82c1f41"/>
+                    <reportElement x="450" y="37" width="92" height="14" uuid="9418f7a5-5050-45ad-8715-c702e82c1f41"/>
                     <textElement textAlignment="Right">
                         <font fontName="Arial"/>
                     </textElement>
                     <textFieldExpression><![CDATA["86-200 Chełmno"]]></textFieldExpression>
                 </textField>
                 <textField>
-                    <reportElement x="447" y="53" width="55" height="12" uuid="618501ef-26aa-4e98-9d42-89f8b67e238a"/>
+                    <reportElement x="488" y="51" width="55" height="12" uuid="618501ef-26aa-4e98-9d42-89f8b67e238a"/>
                     <textElement textAlignment="Right">
                         <font fontName="Arial"/>
                     </textElement>
                     <textFieldExpression><![CDATA["POLSKA"]]></textFieldExpression>
                 </textField>
                 <textField>
-                    <reportElement x="258" y="65" width="244" height="14" uuid="31698dc7-28ba-4ff9-a4cf-84d4d3e7814b"/>
+                    <reportElement x="299" y="63" width="244" height="14" uuid="31698dc7-28ba-4ff9-a4cf-84d4d3e7814b"/>
                     <textElement textAlignment="Right">
                         <font fontName="Arial"/>
                     </textElement>
                     <textFieldExpression><![CDATA["Tel/Fax: +48 56 691 20 54/ +48 56 6912050"]]></textFieldExpression>
                 </textField>
                 <textField>
-                    <reportElement x="362" y="79" width="139" height="16" uuid="0d39b63a-8969-442f-acec-039165d9e247"/>
+                    <reportElement x="403" y="77" width="139" height="16" uuid="0d39b63a-8969-442f-acec-039165d9e247"/>
                     <textElement textAlignment="Right">
                         <font fontName="Arial"/>
                     </textElement>
                     <textFieldExpression><![CDATA["NIP:  PL8751002162"]]></textFieldExpression>
                 </textField>
+                <image>
+                    <reportElement x="10" y="10" width="170" height="79" uuid="f41ff02b-dd29-4fd9-bc4d-c4efa845502f"/>
+                    <imageExpression><![CDATA["static/images/medos.png"]]></imageExpression>
+                </image>
             </frame>
         </band>
     </title>
@@ -77,15 +80,15 @@
             <frame>
                 <reportElement x="0" y="1" width="554" height="55" uuid="136ddf46-af95-47c7-889b-2b25cbbd1e65"/>
                 <staticText>
-                    <reportElement x="381" y="7" width="60" height="19" uuid="ccaf4480-3bc2-4e74-a637-3cbbe2f1194c"/>
-                    <textElement>
+                    <reportElement x="420" y="7" width="70" height="20" uuid="ccaf4480-3bc2-4e74-a637-3cbbe2f1194c"/>
+                    <textElement textAlignment="Right">
                         <font fontName="Arial" size="12"/>
                     </textElement>
                     <text><![CDATA[Chełmno ,]]></text>
                 </staticText>
                 <textField pattern="dd/MM/yyyy">
-                    <reportElement x="446" y="7" width="107" height="20" uuid="8f3e21fc-f660-48b2-b4dd-7684bcc07dd8"/>
-                    <textElement>
+                    <reportElement x="490" y="7" width="63" height="20" uuid="8f3e21fc-f660-48b2-b4dd-7684bcc07dd8"/>
+                    <textElement textAlignment="Right">
                         <font fontName="Arial" size="12"/>
                     </textElement>
                     <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
@@ -108,9 +111,9 @@
         </band>
     </columnHeader>
     <detail>
-        <band height="464" splitType="Stretch">
+        <band height="431" splitType="Stretch">
             <frame>
-                <reportElement x="0" y="-1" width="554" height="450" uuid="a2dee489-01d0-49a7-a0a4-57d720f78b77"/>
+                <reportElement x="0" y="-1" width="554" height="431" uuid="a2dee489-01d0-49a7-a0a4-57d720f78b77"/>
                 <textField>
                     <reportElement x="56" y="30" width="180" height="20" uuid="22866cfd-92d2-4fa7-a992-3c6741dafacb"/>
                     <textElement>
@@ -125,28 +128,6 @@
                     </textElement>
                     <textFieldExpression><![CDATA[$P{hardwareName}]]></textFieldExpression>
                 </textField>
-                <staticText>
-                    <reportElement x="55" y="395" width="149" height="23" uuid="0788adbd-7f68-4df0-8c97-d0353ebcf3ca"/>
-                    <textElement>
-                        <font fontName="Arial"/>
-                    </textElement>
-                    <text><![CDATA[(podpis pracownika wydającego)]]></text>
-                </staticText>
-                <staticText>
-                    <reportElement x="339" y="395" width="172" height="23" uuid="9f53fc64-3c1a-436a-9425-446f936b86fd"/>
-                    <textElement>
-                        <font fontName="Arial"/>
-                    </textElement>
-                    <text><![CDATA[(podpis pracownika wypożyczającego)]]></text>
-                </staticText>
-                <staticText>
-                    <reportElement x="60" y="375" width="149" height="19" uuid="4182c071-3a7c-4847-9232-705e5e66ca91"/>
-                    <text><![CDATA[....................................................................]]></text>
-                </staticText>
-                <staticText>
-                    <reportElement x="349" y="375" width="149" height="19" uuid="217127bb-0d2f-45c2-90f4-6977959ce2ec"/>
-                    <text><![CDATA[....................................................................]]></text>
-                </staticText>
                 <staticText>
                     <reportElement x="56" y="94" width="50" height="16" uuid="a192860f-5b04-4e78-a28b-51d54472abdd"/>
                     <textElement>
@@ -172,7 +153,7 @@
                     <textFieldExpression><![CDATA[$P{serialNo}]]></textFieldExpression>
                 </textField>
                 <textField textAdjust="StretchHeight">
-                    <reportElement stretchType="ContainerHeight" x="56" y="175" width="454" height="160" uuid="05451028-3922-444e-8514-7ed53f72ce1b"/>
+                    <reportElement stretchType="ContainerHeight" x="56" y="188" width="454" height="160" uuid="05451028-3922-444e-8514-7ed53f72ce1b"/>
                     <textElement textAlignment="Justified">
                         <font fontName="Arial" size="12"/>
                         <paragraph lineSpacing="Fixed" lineSpacingSize="30.0"/>
@@ -200,31 +181,74 @@
                     </textElement>
                     <textFieldExpression><![CDATA[$P{hardwareType}]]></textFieldExpression>
                 </textField>
+                <textField>
+                    <reportElement x="55" y="380" width="456" height="40" uuid="438fefcc-f42d-4c23-8db4-c5c2fa2b4d67"/>
+                    <textElement>
+                        <font fontName="Arial" isItalic="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$P{comment}]]></textFieldExpression>
+                </textField>
+                <staticText>
+                    <reportElement x="55" y="359" width="115" height="21" uuid="52462618-5cf7-4846-a201-5756e8b7afd0"/>
+                    <textElement>
+                        <font fontName="Arial" size="12" isItalic="false"/>
+                    </textElement>
+                    <text><![CDATA[Uwagi:]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement x="56" y="155" width="104" height="23" uuid="4bbcc882-fe23-483f-86ab-0bfa78d70c5b"/>
+                    <textElement textAlignment="Left" verticalAlignment="Middle">
+                        <font fontName="Arial" size="12"/>
+                    </textElement>
+                    <text><![CDATA[Nr inwentarzowy:]]></text>
+                </staticText>
+                <textField>
+                    <reportElement x="162" y="155" width="100" height="23" uuid="4aaa589f-d4ea-44da-835a-690393963166"/>
+                    <textElement textAlignment="Left" verticalAlignment="Middle">
+                        <font fontName="Arial" size="12" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$P{inventoryNo}]]></textFieldExpression>
+                </textField>
             </frame>
         </band>
     </detail>
     <columnFooter>
-        <band height="45" splitType="Stretch"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="42" splitType="Stretch"/>
-    </pageFooter>
-    <summary>
-        <band height="33" splitType="Stretch">
+        <band height="42" splitType="Stretch">
             <frame>
-                <reportElement x="0" y="0" width="554" height="30" uuid="0b615d9a-050a-4c6e-a5a6-ce85beaf4be4"/>
+                <reportElement x="0" y="-1" width="554" height="43" uuid="b5c603b6-0efe-425a-8ebb-5224a7a4f6e8"/>
+                <staticText>
+                    <reportElement x="69" y="0" width="149" height="19" uuid="910a65e1-86b1-4c61-92e9-045b7c9fb164"/>
+                    <text><![CDATA[....................................................................]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement x="358" y="0" width="149" height="19" uuid="72e2aa54-e542-4027-9f0b-13f767ce093c"/>
+                    <text><![CDATA[....................................................................]]></text>
+                </staticText>
                 <textField>
-                    <reportElement x="345" y="11" width="206" height="19" forecolor="#030303" uuid="289989e9-05b6-49ae-9cc9-2ae78c6ccb2b"/>
-                    <box>
-                        <pen lineColor="#030303"/>
-                    </box>
-                    <textElement textAlignment="Right" verticalAlignment="Bottom">
-                        <font fontName="Arial" size="10" isBold="false"/>
+                    <reportElement x="350" y="22" width="166" height="20" uuid="f13a0e50-6880-45c7-923b-1327169c3b61"/>
+                    <textElement textAlignment="Center">
+                        <font fontName="Arial"/>
                     </textElement>
-                    <textFieldExpression><![CDATA["Numer inwentaryzacyjny: "+$P{inventoryNo}]]></textFieldExpression>
+                    <textFieldExpression><![CDATA[$P{managerSign}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="61" y="22" width="168" height="20" uuid="96347c74-69a5-4e7b-9a6c-ad862c3838a4"/>
+                    <textElement textAlignment="Center">
+                        <font fontName="Arial"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$P{employeeSign}]]></textFieldExpression>
                 </textField>
             </frame>
         </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="69" splitType="Stretch">
+            <frame>
+                <reportElement x="0" y="38" width="554" height="31" uuid="82131b31-a4a2-40d9-9779-bb82064a8096"/>
+            </frame>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="31" splitType="Stretch"/>
     </summary>
-
 </jasperReport>
