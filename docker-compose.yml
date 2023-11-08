@@ -1,21 +1,23 @@
 version: "3.7"
 services:
   mysql_db_service:
-    image: "mysql:8.0"
+    image: mysql:latest
     restart: always
     ports:
       - "3307:3306"
     environment:
       MYSQL_DATABASE: cmms_db
       MYSQL_ROOT_PASSWORD: root
-#      MYSQL_USER: root
+#      MYSQL_USER: cmms
       MYSQL_PASSWORD: root
       MYSQL_ALLOW_EMPTY_PASSWORD: true
 
-  cmms_api_service:
+  web_cmms:
     build: .
     restart: always
     ports:
       - "8882:8080"
     depends_on:
+      - mysql_db_service
+    links:
       - mysql_db_service
