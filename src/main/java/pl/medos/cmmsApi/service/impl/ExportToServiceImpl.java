@@ -108,6 +108,8 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 15, "Klucz / Konto                  ", style);
         createCell(row, 16, "Data aktywacji", style);
         createCell(row, 17, "Opis dodatkowy                  ", style);
+        createCell(row, 17, "Identyfikator szyfrowania                 ", style);
+        createCell(row, 17, "Klucz szyfrujący                  ", style);
 
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
@@ -189,6 +191,8 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getOfficeNo(), style);
             createCell(row, columnCount++, record.getActivateDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
             createCell(row, columnCount++, record.getDescription(), style);
+            createCell(row, columnCount++, record.getBitLockKey(), style);
+            createCell(row, columnCount++, record.getBitRecoveryKey(), style);
         }
         LOGGER.info("writeHardware(...)");
     }

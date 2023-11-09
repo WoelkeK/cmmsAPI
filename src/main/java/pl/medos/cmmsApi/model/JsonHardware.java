@@ -33,6 +33,8 @@ public class JsonHardware {
     private String macAddress;
     private String ipAddress;
     private String netBios;
+    private String bitLockKey;
+    private String bitRecoveryKey;
 
     @Enumerated(EnumType.STRING)
     private Status status;

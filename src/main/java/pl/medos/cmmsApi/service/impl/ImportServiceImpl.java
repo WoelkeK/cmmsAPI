@@ -33,7 +33,7 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description"));
+            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description","bitLockKey","bitRecoveryKey"));
     private final HardwareRepository hardwareRepository;
 
     public ImportServiceImpl(HardwareRepository hardwareRepository) {
@@ -313,11 +313,9 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setType(m.getType());
                                     hardware.setName(m.getName());
 
-
 //                                    hardware.setInstallDate(LocalDate.now());
                                     LocalDate installDate = convertDate(m.getInstallDate());
                                     hardware.setInstallDate(installDate);
-
 
                                     hardware.setInvoiceNo(m.getInvoiceNo());
                                     hardware.setSystemNo(m.getSystemNo());
@@ -327,6 +325,8 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setMacAddress(m.getMacAddress());
                                     hardware.setOfficeName(m.getOfficeName());
                                     hardware.setOfficeNo(m.getOfficeNo());
+                                    hardware.setBitLockKey(m.getBitLockKey());
+                                    hardware.setBitRecoveryKey(m.getBitRecoveryKey());
 
                                     LocalDate activateDate = convertDate(m.getActivateDate());
                                     hardware.setActivateDate(activateDate);
