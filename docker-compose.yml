@@ -1,5 +1,20 @@
 version: "3.7"
 services:
+  cmms_api_service:
+    build: .
+    #       dockerfile: Dockerfile
+    #    image: carreg_api_service:latest
+    restart: always
+    ports:
+      - "8882:8080"
+    networks:
+      database: { }
+networks:
+  database:
+    external: true
+#--------------------------------------------
+#poprzedni single app
+
 #  mysql_db_service:
 #    image: mysql:latest
 #    restart: always
@@ -21,14 +36,3 @@ services:
 #      - mysql_db_service
 #    links:
 #      - mysql_db_service
-
-  web_cmms_service:
-    build: .
-    ports:
-      - 8882:8080
-    networks:
-      database: {}
-
-networks:
-  database:
-    external: true
