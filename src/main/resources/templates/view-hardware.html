@@ -76,6 +76,8 @@
         <input type="hidden" th:field="${hardware.inventoryNo}">
         <input type="hidden" th:field="${hardware.serialNumber}">
         <input type="hidden" th:field="${hardware.employee}">
+        <input type="hidden" th:field="${hardware.bitLockKey}">
+        <input type="hidden" th:field="${hardware.bitRecoveryKey}">
 
 
         <main class="-mt-32">
@@ -185,6 +187,7 @@
                             </div>
                         </dl>
                     </div>
+
                     <div class="border-t border-gray-200  px-4 py-8 sm:px-6">
                         <dl class="grid grid-cols-1  gap-x-4 gap-y-8 sm:grid-cols-4">
 
@@ -213,6 +216,27 @@
                                 </dd>
                             </div>
                         </dl>
+
+                        <div class="mt-4">
+
+                        <dl class="grid grid-cols-1  gap-x-4 gap-y-8 sm:grid-cols-2">
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Klucz szyfrowania</dt>
+                                <dd th:text="${hardware.bitLockKey}" id="bitLockKey"
+                                    name="bitLockKey"
+                                    class="mt-1 text-lm text-gray-900">XXXXXXXXXX
+                                </dd>
+                            </div>
+                            <div class="sm:col-span-1">
+                                <dt class="text-sm font-medium text-gray-400">Identyfikator Szyfrowania</dt>
+                                <dd th:text="${hardware.bitRecoveryKey}" id="bitRecoveryKey"
+                                    name="bitRecoveryKey"
+                                    class="mt-1 text-lm text-gray-900">XXXXXXXXXX
+                                </dd>
+                            </div>
+
+                        </dl>
+                        </div>
                     </div>
                 </div>
             </div>

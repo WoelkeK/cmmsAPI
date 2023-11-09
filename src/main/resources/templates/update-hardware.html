@@ -80,9 +80,9 @@
     <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="*{name}">
-        <input type="hidden" th:field="*{department}">
+<!--        <input type="hidden" th:field="*{department}">-->
         <input type="hidden" th:field="${hardware.id}">
-        <input type="hidden" th:field="*{systemNo}">
+<!--        <input type="hidden" th:field="*{systemNo}">-->
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
         <input type="hidden" th:field="*{installDate}">
@@ -234,8 +234,6 @@
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
@@ -312,6 +310,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+
+                                    <div class="sm:col-span-1">
+                                        <label for="bitRecoveryKey"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Klucz szyfrowania</label>
+                                        <div class="mt-2">
+                                            <input type="text" th:field="${hardware.bitRecoveryKey}" name="bitRecoveryKey"
+                                                   id="bitRecoveryKey"
+                                                   autocomplete="no"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-1">
+                                        <label for="bitLockKey"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Identyfikator szyfrowania</label>
+                                        <div class="mt-2">
+                                            <input type="text" th:field="${hardware.bitLockKey}" name="bitLockKey"
+                                                   id="bitLockKey"
+                                                   autocomplete="no"
+                                                   class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="px-4 py-5 sm:px-6">
                                     <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
@@ -325,9 +347,6 @@
                                                     <div class="mt-1 sm:col-span-2 sm:mt-0">
                                     <textarea th:field="*{description}" id="description" name="description" rows="3"
                                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm text-blue-700 focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg"></textarea>
-
-                                                        <!--                                            <p th:errors="*{description}" class="text-danger mt-2 text-lm text-red-500"-->
-                                                        <!--                                               th:if="${#fields.hasErrors('description')}"></p>-->
 
                                                     </div>
                                                 </div>

@@ -52,6 +52,9 @@ public class HardwareEntity {
     private String department;
     private String officeName;
     private String officeNo;
+    private String bitLockKey;
+    private String bitRecoveryKey;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate activateDate;
 
