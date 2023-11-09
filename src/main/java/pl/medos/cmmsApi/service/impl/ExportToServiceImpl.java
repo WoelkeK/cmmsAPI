@@ -108,8 +108,8 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 15, "Klucz / Konto                  ", style);
         createCell(row, 16, "Data aktywacji", style);
         createCell(row, 17, "Opis dodatkowy                  ", style);
-        createCell(row, 17, "Identyfikator szyfrowania                 ", style);
-        createCell(row, 17, "Klucz szyfrujący                  ", style);
+        createCell(row, 18, "Identyfikator szyfrowania                 ", style);
+        createCell(row, 19, "Klucz szyfrujący                  ", style);
 
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
