@@ -37,8 +37,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/employee/{id}")
-    public Employee update(@PathVariable (name = "id")Long id,
-            @RequestBody Employee employee) throws EmployeeNotFoundException {
+    public Employee update(@PathVariable(name = "id") Long id,
+                           @RequestBody Employee employee) throws EmployeeNotFoundException {
         LOGGER.info("update()");
         Employee updatedEmployee = employeeService.updateEmployee(employee, id);
         LOGGER.info("update(...)" + updatedEmployee);
@@ -50,5 +50,10 @@ public class EmployeeController {
         LOGGER.info("delete()");
         employeeService.deleteEmployee(id);
         LOGGER.info("delete(...)");
+    }
+    @GetMapping("/employees/findByName/{name}")
+    public List<Employee> findEmployeeByName(@PathVariable(name = "name") String query) {
+        LOGGER.info("findEmployeeByName");
+        return employeeService.findEmployeeByRawName(query);
     }
 }
