@@ -90,26 +90,26 @@ public class ExportToServiceImpl implements ExportService {
         font.setBold(true);
         font.setFontHeight(16);
         style.setFont(font);
-        createCell(row, 0, "ID", style);
-        createCell(row, 1, "Numer inwentarzowy", style);
-        createCell(row, 2, "Wydział             ", style);
-        createCell(row, 3, "Stan urządzenia", style);
-        createCell(row, 4, "Użytkownik                      ", style);
-        createCell(row, 5, "Typ urządzenia", style);
-        createCell(row, 6, "Nazwa urządzaenia", style);
-        createCell(row, 7, "Data zakupu", style);
-        createCell(row, 8, "Dokument zakupu", style);
-        createCell(row, 9, "Wersja OS", style);
-        createCell(row, 10, "SN / Service Tag ", style);
-        createCell(row, 11, "netBios", style);
-        createCell(row, 12, "Adres IP", style);
-        createCell(row, 13, "Adres MAC", style);
-        createCell(row, 14, "Wersja Office", style);
-        createCell(row, 15, "Klucz / Konto                  ", style);
-        createCell(row, 16, "Data aktywacji", style);
-        createCell(row, 17, "Opis dodatkowy                  ", style);
-        createCell(row, 18, "Identyfikator szyfrowania                 ", style);
-        createCell(row, 19, "Klucz szyfrujący                  ", style);
+//        createCell(row, 0, "ID", style);
+        createCell(row, 0, "Numer inwentarzowy", style);
+        createCell(row, 1, "Dział             ", style);
+        createCell(row, 2, "Stan urządzenia", style);
+        createCell(row, 3, "Pracownik                      ", style);
+        createCell(row, 4, "Typ urządzenia", style);
+        createCell(row, 5, "Model urządzaenia", style);
+        createCell(row, 6, "Data zakupu", style);
+        createCell(row, 7, "Dokument zakupu", style);
+        createCell(row, 8, "System operacyjny", style);
+        createCell(row, 9, "Numer seryjny ", style);
+        createCell(row, 10, "netBios", style);
+        createCell(row, 11, "Adres IP", style);
+        createCell(row, 12, "Adres MAC", style);
+        createCell(row, 13, "Wersja Office", style);
+        createCell(row, 14, "Klucz / Konto                  ", style);
+        createCell(row, 15, "Data aktywacji", style);
+        createCell(row, 16, "Opis dodatkowy                  ", style);
+        createCell(row, 17, "Identyfikator szyfrowania                 ", style);
+        createCell(row, 18, "Klucz szyfrujący                  ", style);
 
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
@@ -173,7 +173,7 @@ public class ExportToServiceImpl implements ExportService {
         for (Hardware record : hardwares) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
-            createCell(row, columnCount++, record.getId(), style);
+//            createCell(row, columnCount++, record.getId(), style);
             createCell(row, columnCount++, record.getInventoryNo(), style);
             createCell(row, columnCount++, record.getDepartment(), style);
             createCell(row, columnCount++, record.getStatus().toString(), style);

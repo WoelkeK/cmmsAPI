@@ -33,7 +33,7 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description","bitLockKey","bitRecoveryKey"));
+            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description", "bitLockKey", "bitRecoveryKey"));
     private final HardwareRepository hardwareRepository;
 
     public ImportServiceImpl(HardwareRepository hardwareRepository) {
@@ -306,6 +306,7 @@ public class ImportServiceImpl implements ImportService {
                                     Hardware hardware = new Hardware();
 
 //                                    hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
+//                                    LOGGER.info("jsonhardware id " + m.getId());
                                     hardware.setInventoryNo(m.getInventoryNo());
                                     hardware.setDepartment(m.getDepartment());
                                     hardware.setStatus(m.getStatus());
@@ -347,14 +348,17 @@ public class ImportServiceImpl implements ImportService {
         LOGGER.info("DataXLS_String " + date);
 
         if (date == null || date.contains("-----")) {
-            LocalDate defaultDate = LocalDate.of(1000, 1, 1);
-            return defaultDate;
-        }else{
+            LocalDate defaultDate = LocalDate.of(1900, 1, 1);
 
+            return defaultDate;
+        } else {
             LOGGER.info("Start parsing string to date " + date.toString());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d H:mm:ss zzz yyyy", Locale.ENGLISH);
-            ZonedDateTime parseDate = ZonedDateTime.parse(date, formatter);
-            LocalDate localDate = parseDate.toLocalDate();
+
+            LocalDate localDate = LocalDate.parse(date);
+
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d H:mm:ss zzz yyyy", Locale.ENGLISH);
+//            ZonedDateTime parseDate = ZonedDateTime.parse(date, formatter);
+//            LocalDate localDate = parseDate.toLocalDate();
             LOGGER.info("DataXLS_LocalDate " + localDate);
             return localDate;
         }

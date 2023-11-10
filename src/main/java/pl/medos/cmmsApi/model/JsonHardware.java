@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class JsonHardware {
 
-    private Long id;
+    private String id;
     private String name;
     @Enumerated(EnumType.STRING)
     private Device type;
