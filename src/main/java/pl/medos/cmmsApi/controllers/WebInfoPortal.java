@@ -72,7 +72,7 @@ public class WebInfoPortal {
 //        return "list-info";
 //    }
 
-    @GetMapping("/search/name")
+    @GetMapping("/search/query")
     public String searchEmployeeByName(
             @RequestParam(value = "employeeName") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
