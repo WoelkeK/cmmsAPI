@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service.impl;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.model.Notification;
 import pl.medos.cmmsApi.service.ImageService;
 
 import javax.imageio.ImageIO;
@@ -45,6 +46,27 @@ public class ImageServiceImpl implements ImageService {
         byte[] defaultImage = toByteArray(bf, "jpg");
         bf.flush();
         return defaultImage;
+    }
+
+    @Override
+    public Notification prepareImage(Notification notification, MultipartFile image) throws IOException {
+        LOGGER.info("prepareImage()");
+
+        if (image.getSize()==0) {
+            LOGGER.info("default image");
+            byte[] bytes = imageToByteArray();
+            notification.setResizedImage(bytes);
+            notification.setOriginalImage(bytes);
+        } else {
+            LOGGER.info("multipart file present");
+            byte[] orginalImage = multipartToByteArray(image);
+            byte[] resizeImage = simpleResizeImage(orginalImage, 300);
+            byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
+            notification.setResizedImage(resizeImage);
+            notification.setOriginalImage(resizeMaxImage);
+        }
+        LOGGER.info("image prepared");
+        return notification;
     }
 
     byte[] toByteArray(BufferedImage bi, String format) throws IOException {

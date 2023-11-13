@@ -36,7 +36,7 @@ public class WebInfoPortal {
         modelMap.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "list-info.html";
+        return "list-infos.html";
     }
 
     @GetMapping
@@ -59,7 +59,7 @@ public class WebInfoPortal {
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-info.html";
+        return "list-infos.html";
     }
 
 //    @GetMapping("/search/name")
@@ -83,6 +83,6 @@ public class WebInfoPortal {
         LOGGER.info("findEmployeeByName()");
         model.addAttribute("employees", employeeByName);
         model.addAttribute("currentPage", pageNo);
-        return "list-info.html";
+        return "list-infos.html";
     }
 }
