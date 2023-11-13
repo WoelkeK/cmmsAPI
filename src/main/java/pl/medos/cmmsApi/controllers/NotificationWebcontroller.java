@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/notifications")
-@SessionAttributes(names = {"images", "notifications"})
+@RequestMapping("/awizacje")
+@SessionAttributes(names = {"images", "awizacje"})
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationWebcontroller {
@@ -60,7 +60,7 @@ public class NotificationWebcontroller {
     public String updateNotification(@ModelAttribute(name = "notification") Notification notification) {
         log.info("updateNotification()");
         notificationService.updateNotification(notification, notification.getId());
-        return "redirect:/notifications";
+        return "redirect:/awizacje";
     }
 
     @GetMapping("/list")
@@ -140,14 +140,14 @@ public class NotificationWebcontroller {
     public String createNotification(@ModelAttribute(name = "notification") Notification notification, MultipartFile image) throws IOException {
         log.info("createNotification()");
         notificationService.createNotification(imageService.prepareImage(notification, image));
-        return "redirect:/notifications";
+        return "redirect:/awizacje";
     }
 
     @GetMapping("delete/{id}")
     public String deleteNotification(@PathVariable Long id) {
         log.info("deleteNotification()");
         notificationService.deleteNotification(id);
-        return "redirect:/notifications";
+        return "redirect:/awizacje";
     }
 
     @GetMapping(value = "/downloadfile")
