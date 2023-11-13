@@ -37,7 +37,7 @@ public class SpringSecurity {
                 .requestMatchers("/cron/**").permitAll()
                 .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/info/**").permitAll()
-                .requestMatchers("/notifications/**").permitAll()
+                .requestMatchers("/awizacje/**").permitAll()
                 .requestMatchers("/softwares/**").permitAll()
                 .requestMatchers("/dashboards/**").permitAll()
 //                .requestMatchers("/hardwares/**").permitAll()
