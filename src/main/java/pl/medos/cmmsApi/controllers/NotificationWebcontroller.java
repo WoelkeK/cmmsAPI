@@ -44,7 +44,7 @@ public class NotificationWebcontroller {
     public String findNotificationById(@PathVariable(name = "id") Long id, Model model) {
         log.info("findNotificationById() " + id);
         Notification notificationById = notificationService.findNotificationById(id);
-        model.addAttribute("notification");
+        model.addAttribute("notification", notificationById);
         return "view-notification.html";
     }
 
