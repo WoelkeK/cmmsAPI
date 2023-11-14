@@ -36,45 +36,41 @@ public class WebInfoPortal {
         modelMap.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "list-info.html";
+        return "list-infos.html";
     }
 
     @GetMapping
     public String listView(Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPaginated(1, model);
+        return findPaginated(1, "name", "desc",model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
     public String findPaginated(
             @PathVariable(value = "pageNo") int pageNo,
+            @RequestParam(name = "sortField") String sortField,
+            @RequestParam(name = "sortDir") String sortDir,
             Model model) throws IOException {
         int pageSize = 10;
         LOGGER.info("findPage()");
-        Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize);
+        Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Employee> employees = pageEmployees.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", pageEmployees.getTotalPages());
         model.addAttribute("totalItems", pageEmployees.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-info.html";
+        return "list-infos.html";
     }
 
-//    @GetMapping("/search/name")
-//    public String searchEmployeeByName(@RequestParam(value = "employeeName") String query,
-//                                       Model model) {
-//        LOGGER.info("search()");
-//        List<Employee> employeeByName = employeeService.findEmployeeByName(query);
-//        LOGGER.info("findEmployeeByName()" + employeeByName);
-//        model.addAttribute("employees", employeeByName);
-//        return "list-info";
-//    }
-
-    @GetMapping("/search/name")
+    @GetMapping("/search/query")
     public String searchEmployeeByName(
-            @RequestParam(value = "employeeName") String query,
+            @RequestParam(value = "query") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             Model model){
         LOGGER.info("search()");
@@ -83,6 +79,6 @@ public class WebInfoPortal {
         LOGGER.info("findEmployeeByName()");
         model.addAttribute("employees", employeeByName);
         model.addAttribute("currentPage", pageNo);
-        return "list-info.html";
+        return "list-infos.html";
     }
 }
