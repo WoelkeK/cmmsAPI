@@ -54,7 +54,7 @@
                         <div class="mt-2">
                             <select name="status" id="status" autocomplete="status" th:field="*{status}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
-                                sm:text-xl sm:leading-6" onchange="disableSelectBox()">
+                                sm:text-xl sm:leading-6">
 
                                 <option th:each="status : ${T(pl.medos.cmmsApi.model.Status).values()}"
                                         th:value="${status}" th:text="${status}">

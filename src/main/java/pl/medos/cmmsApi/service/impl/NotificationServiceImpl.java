@@ -27,8 +27,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notification createNotification(Notification notification) {
         log.info("createNotification()");
-        NotificationEntity notificationEntity = notificationRepository.save(modelMapper.map(notification, NotificationEntity.class));
-        return modelMapper.map(notificationEntity, Notification.class);
+        NotificationEntity savedNotification = notificationRepository.save(modelMapper.map(notification, NotificationEntity.class));
+        return modelMapper.map(savedNotification, Notification.class);
     }
 
     @Override

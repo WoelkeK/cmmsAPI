@@ -26,13 +26,10 @@ public class Notification {
     private int piece;
     private String description;
     private String comment;
-    @Enumerated(EnumType.STRING)
     private Type type;
-    @Enumerated(EnumType.STRING)
     private Status status;
-
-
     private LocalDateTime visitDate;
+
     private byte[] originalImage;
     private byte[] resizedImage;
 }

@@ -2,7 +2,7 @@ package pl.medos.cmmsApi.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.medos.cmmsApi.enums.Status;
+import pl.medos.cmmsApi.model.Status;
 import pl.medos.cmmsApi.model.Type;
 
 import java.time.LocalDateTime;
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Setter
+@Data
 public class NotificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

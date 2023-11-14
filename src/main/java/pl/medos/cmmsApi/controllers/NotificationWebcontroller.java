@@ -127,11 +127,6 @@ public class NotificationWebcontroller {
     @GetMapping("/create")
     public String createView(Model model) {
         log.info("createView");
-//        String employeesUri = externalServerURL + "/employees";
-//        RestTemplate restTemplate = new RestTemplate();
-//        Object[] employeesObjects = restTemplate.getForObject(employeesUri, Object[].class);
-//        List<Object> employees = Arrays.asList(employeesObjects);
-//        model.addAttribute("employees", employees);
         model.addAttribute("notification", new Notification());
         return "create-notification.html";
     }
@@ -139,7 +134,8 @@ public class NotificationWebcontroller {
     @PostMapping("/create")
     public String createNotification(@ModelAttribute(name = "notification") Notification notification, MultipartFile image) throws IOException {
         log.info("createNotification()");
-        notificationService.createNotification(imageService.prepareImage(notification, image));
+        Notification processedNotification = imageService.prepareImage(notification, image);
+        Notification createdNotifi = notificationService.createNotification(processedNotification);
         return "redirect:/awizacje";
     }
 
