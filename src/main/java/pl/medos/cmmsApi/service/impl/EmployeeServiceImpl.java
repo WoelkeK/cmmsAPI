@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
@@ -98,11 +99,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees;
     }
 
-
     @Override
-    public Page<Employee> findPageinated(int pageNo, int pagesize) {
+    public Page<Employee> findPageinated(int pageNo, int pagesize, String sortField, String sortDir) {
         LOGGER.info("findPageinated()");
-        Pageable pageable = PageRequest.of(pageNo-1, pagesize);
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pagesize,sort);
         Page<EmployeeEntity> employeeEntityPage = employeeRepository.findAll(pageable);
         Page<Employee> employeePage = employeeMapper.mapPageEntitiestoModels(employeeEntityPage);
         LOGGER.info("findPageinated(...)");

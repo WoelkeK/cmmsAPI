@@ -42,20 +42,26 @@ public class WebInfoPortal {
     @GetMapping
     public String listView(Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPaginated(1, model);
+        return findPaginated(1, "name", "desc",model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
     public String findPaginated(
             @PathVariable(value = "pageNo") int pageNo,
+            @RequestParam(name = "sortField") String sortField,
+            @RequestParam(name = "sortDir") String sortDir,
             Model model) throws IOException {
         int pageSize = 10;
         LOGGER.info("findPage()");
-        Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize);
+        Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Employee> employees = pageEmployees.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", pageEmployees.getTotalPages());
         model.addAttribute("totalItems", pageEmployees.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
