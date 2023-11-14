@@ -17,7 +17,8 @@ import java.util.logging.Logger;
 public class RaportServiceImpl implements RaportService {
 
     private static final Logger LOGGER = Logger.getLogger(RaportServiceImpl.class.getName());
-    private String filePath = "src/main/resources/templates/test.jrxml";
+    private String filePath1 = "src/main/resources/templates/Pzo.jrxml";
+    private String filePath2 = "src/main/resources/templates/awizo.jrxml";
     private String content = "stanowiącego własność firmy MEDOS. Sprzęt w/w zobowiązuję się zwrócić na każde żądanie właściciela w takim samym stanie, " +
             "jakim został mi przekazany w dniu wypożyczenia uwzględniając mechaniczne uszkodzenia wynikające z naturalnego eksploatowania sprzętu.";
 
@@ -81,7 +82,7 @@ public class RaportServiceImpl implements RaportService {
     @Override
     public void exportReport(Hardware hardware, OutputStream outputStream) throws JRException, FileNotFoundException {
 
-        Resource resource = new ClassPathResource("reports/test.jrxml");
+        Resource resource = new ClassPathResource("reports/Pzo.jrxml");
 
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
@@ -95,7 +96,7 @@ public class RaportServiceImpl implements RaportService {
     @Override
     public void exportReport(Notification notification, OutputStream outputStream) throws JRException, FileNotFoundException {
 
-        Resource resource = new ClassPathResource("reports/test.jrxml");
+        Resource resource = new ClassPathResource("reports/awizo.jrxml");
 
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
