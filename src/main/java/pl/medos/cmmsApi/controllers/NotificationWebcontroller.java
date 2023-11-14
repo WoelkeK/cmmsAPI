@@ -44,7 +44,7 @@ public class NotificationWebcontroller {
     public String findNotificationById(@PathVariable(name = "id") Long id, Model model) {
         log.info("findNotificationById() " + id);
         Notification notificationById = notificationService.findNotificationById(id);
-        model.addAttribute("notification", notificationById);
+        model.addAttribute("notification");
         return "view-notification.html";
     }
 
@@ -168,9 +168,9 @@ public class NotificationWebcontroller {
 
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Notification notification) throws JRException, IOException {
-
+        log.info("exportPdf()" + notification.getDescription());
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", String.format("attachment; filename=\"hardware_" + notification.getVisitDate() + ".pdf\""));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"awizacja_" + notification.getVisitDate() + ".pdf\""));
         OutputStream out = response.getOutputStream();
         raportService.exportReport(notification, out);
     }

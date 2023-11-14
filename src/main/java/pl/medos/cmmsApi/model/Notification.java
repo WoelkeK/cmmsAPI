@@ -19,6 +19,7 @@ public class Notification {
     private String supplier;
     private String driverPhone;
     private String employee;
+    private String employeePhone;
     private String carPlates;
     private String trailerPlates;
     private String item;

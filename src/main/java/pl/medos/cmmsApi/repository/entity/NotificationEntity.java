@@ -21,6 +21,7 @@ public class NotificationEntity {
     private String driverName;
     private String supplier;
     private String driverPhone;
+    private String employeePhone;
     private String employee;
     private String carPlates;
     private String trailerPlates;

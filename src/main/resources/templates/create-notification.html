@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Utwórz Awizo</title>
-<!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link rel="stylesheet" th:href="@{/css/mainold.css}" />
+    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" th:href="@{/css/mainold.css}"/>
 
 </head>
 <body class="bg-gray-400">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="overflow-hidden bg-gray-700 shadow sm:rounded-lg">
-            <div class="px-4 py-5 sm:px-6">
+            <div class="px-4 py-2 sm:px-6">
                 <h3 class="text-2xl font-medium leading-6 text-yellow-400">Dane Awizacji</h3>
                 <p class="mt-1 max-w-2xl text-sm text-gray-400">Nalezy wypełnić wszystkie pola, w celu przekazania
                     ochronie wszelkich możliwych informacji</p>
@@ -29,11 +29,11 @@
         </div>
     </div>
 
-    <div class="px-4 sm:px-6 lg:px-8 py-10">
+    <div class="px-1 sm:px-6 lg:px-8 py-2">
         <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
 
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-1">
                         <label for="type" class="block text-sl font-medium leading-6 text-gray-500">Typ</label>
 
@@ -130,12 +130,26 @@
                         </div>
                     </div>
 
+
+                </div>
+                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+
                     <div class="sm:col-span-1">
                         <label for="employee"
                                class="block text-sl font-medium leading-6 text-gray-500">Pracownik</label>
                         <div class="mt-2">
                             <input id="employee" name="employee" type="text" autocomplete="employee"
                                    th:field="${notification.employee}"
+                                   class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="employeePhone"
+                               class="block text-sl font-medium leading-6 text-gray-500">Telefon</label>
+                        <div class="mt-2">
+                            <input id="employeePhone" name="employeePhone" type="text" autocomplete="employeePhone"
+                                   th:field="${notification.employeePhone}"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
@@ -180,26 +194,25 @@
                                 <div class="mt-1 sm:col-span-2 sm:mt-0">
                                     <textarea th:field="*{description}" id="description" name="description" rows="3"
                                               class="block w-full max-w-6xl rounded-md border-gray-300 shadow-sm text-blue-700 focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg"></textarea>
-                               </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </dl>
             </div>
         </div>
-    </div>
-    <div class="pt-5">
-        <div class="flex justify-end">
-            <button type="button"
-                    class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                <a th:href="@{/awizacje}">Wstecz</a>
-            </button>
-            <button type="submit"
-                    class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                Zapisz
-            </button>
+        <div class="pt-5">
+            <div class="flex justify-end">
+                <button type="button"
+                        class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <a th:href="@{/awizacje}">Wstecz</a>
+                </button>
+                <button type="submit"
+                        class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Zapisz
+                </button>
+            </div>
         </div>
-    </div>
     </div>
 </form>
 </body>

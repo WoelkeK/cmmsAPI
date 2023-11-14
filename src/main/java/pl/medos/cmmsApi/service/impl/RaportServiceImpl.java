@@ -62,7 +62,7 @@ public class RaportServiceImpl implements RaportService {
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("employee", notification.getEmployee());
-        parameters.put("employeePhone", "+48 666 777 888");
+        parameters.put("employeePhone", notification.getEmployeePhone());
         parameters.put("driverName", notification.getDriverName());
         parameters.put("item", notification.getItem());
         parameters.put("description", notification.getDescription());

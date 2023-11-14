@@ -1,5 +1,5 @@
 package pl.medos.cmmsApi.model;
 
 public enum Type {
-        DOSTAWCA, SERWIS, SŁUŻBA, BUDOWA, KURIER
+        DOSTAWCA, ODBIORCA, SERWIS, SŁUŻBA, BUDOWA, KURIER, PRACOWNIK, GOŚĆ, INNY
 }
