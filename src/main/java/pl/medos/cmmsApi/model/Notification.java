@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.model;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,10 +17,14 @@ public class Notification {
 
     private Long id;
     private String driverName;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String supplier;
     private String driverPhone;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String employee;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String employeePhone;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String carPlates;
     private String trailerPlates;
     private String item;

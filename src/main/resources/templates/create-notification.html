@@ -11,7 +11,7 @@
 <body class="bg-gray-400">
 <form action="#" th:action="@{/awizacje/create}" th:object="${notification}" method="post"
       enctype="multipart/form-data">
-
+        <input type="hidden" th:field="${notification.id}">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
@@ -25,6 +25,7 @@
                 <h3 class="text-2xl font-medium leading-6 text-yellow-400">Dane Awizacji</h3>
                 <p class="mt-1 max-w-2xl text-sm text-gray-400">Nalezy wypełnić wszystkie pola, w celu przekazania
                     ochronie wszelkich możliwych informacji</p>
+
             </div>
         </div>
     </div>
@@ -70,8 +71,8 @@
                             <input type="datetime-local"
                                    class="form-control block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6"
                                    th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm')}" name="visitDate"
-                                   id="datePicker"
-                                   autocomplete="on">
+                                   id="datePicker">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('visitDate')}" th:errorclass="error" th:errors="*{visitDate}">
                         </div>
                     </div>
                 </div>
@@ -81,15 +82,17 @@
                     <div class="sm:col-span-1">
                         <label for="supplier" class="block text-sl font-medium leading-6 text-gray-500">Firma</label>
                         <div class="mt-2">
-                            <input type="text" name="supplier" id="supplier" autocomplete="supplier"
+                            <input type="text"  th:field="*{supplier}" name="supplier" id="supplier"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('supplier')}" th:errorclass="error" th:errors="*{supplier}">
+                                </p>
                         </div>
                     </div>
 
                     <div class="sm:col-span-1">
                         <label for="item" class="block text-sl font-medium leading-6 text-gray-500">Towar</label>
                         <div class="mt-2">
-                            <input type="text" name="item" id="item" autocomplete="item"
+                            <input type="text" name="item" id="item" th:field="${notification.item}"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
@@ -98,7 +101,7 @@
                         <label for="itemDetails" class="block text-sl font-medium leading-6 text-gray-500">Ilość /
                             Waga</label>
                         <div class="mt-2">
-                            <input type="text" name="itemDetails" id="itemDetails" autocomplete="on"
+                            <input type="text" name="itemDetails" id="itemDetails" th:field="${notification.itemDetails}"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
@@ -107,8 +110,9 @@
                         <label for="carPlates" class="block text-sl font-medium leading-6 text-gray-500">Nr
                             rejestracyjny</label>
                         <div class="mt-2">
-                            <input type="text" name="carPlates" id="carPlates" autocomplete="carPlates"
+                            <input type="text" name="carPlates" id="carPlates" th:field="${notification.carPlates}"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('carPlates')}" th:errorclass="error" th:errors="*{carPlates}">
                         </div>
                     </div>
 
@@ -116,7 +120,7 @@
                         <label for="driverName"
                                class="block text-sl font-medium leading-6 text-gray-500">Kierowca</label>
                         <div class="mt-2">
-                            <input type="text" name="driverName" id="driverName" autocomplete="driverName"
+                            <input type="text" name="driverName" id="driverName" th:field="${notification.driverName}" autocomplete="driverName"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
@@ -125,7 +129,7 @@
                         <label for="driverPhone"
                                class="block text-sl font-medium leading-6 text-gray-500">Telefon</label>
                         <div class="mt-2">
-                            <input type="text" name="driverPhone" id="driverPhone" autocomplete="driverPhone"
+                            <input type="text" name="driverPhone" id="driverPhone" th:field="${notification.driverPhone}" autocomplete="driverPhone"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
                         </div>
                     </div>
@@ -138,9 +142,10 @@
                         <label for="employee"
                                class="block text-sl font-medium leading-6 text-gray-500">Pracownik</label>
                         <div class="mt-2">
-                            <input id="employee" name="employee" type="text" autocomplete="employee"
+                            <input id="employee" name="employee" type="text"
                                    th:field="${notification.employee}"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('employee')}" th:errorclass="error" th:errors="*{employee}">
                         </div>
                     </div>
 
@@ -148,9 +153,10 @@
                         <label for="employeePhone"
                                class="block text-sl font-medium leading-6 text-gray-500">Telefon</label>
                         <div class="mt-2">
-                            <input id="employeePhone" name="employeePhone" type="text" autocomplete="employeePhone"
-                                   th:field="${notification.employeePhone}"
+                            <input id="employeePhone" name="employeePhone" type="text"
+                                   th:field="*{employeePhone}"
                                    class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('employeePhone')}" th:errorclass="error" th:errors="*{employeePhone}">
                         </div>
                     </div>
 

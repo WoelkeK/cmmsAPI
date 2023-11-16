@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
@@ -11,8 +12,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Notification;
 import pl.medos.cmmsApi.service.ImageService;
 import pl.medos.cmmsApi.service.NotificationService;
@@ -132,8 +135,18 @@ public class NotificationWebcontroller {
     }
 
     @PostMapping("/create")
-    public String createNotification(@ModelAttribute(name = "notification") Notification notification, MultipartFile image) throws IOException {
+    public String createNotification(@Valid @ModelAttribute(name = "notification") Notification notification,
+                                     BindingResult result,
+                                     Model model,
+                                     MultipartFile image) throws IOException {
         log.info("createNotification()");
+
+        if (result.hasErrors()) {
+            log.info("create: result has erorr()" + result.getFieldError());
+            model.addAttribute("notification", notification);
+            return "create-notification";
+        }
+
         Notification processedNotification = imageService.prepareImage(notification, image);
         Notification createdNotifi = notificationService.createNotification(processedNotification);
         return "redirect:/awizacje";
