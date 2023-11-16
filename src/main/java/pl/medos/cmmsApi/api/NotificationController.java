@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/")
-@Tag(name = "Awizacje")
+@Tag(name = "AwizacjeAPI")
 @Slf4j
 @RequiredArgsConstructor
 public class NotificationController {

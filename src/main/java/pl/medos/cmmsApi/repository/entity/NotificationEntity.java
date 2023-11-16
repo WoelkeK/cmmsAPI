@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import pl.medos.cmmsApi.model.Status;
 import pl.medos.cmmsApi.model.Type;
@@ -19,10 +20,14 @@ public class NotificationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String driverName;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String supplier;
     private String driverPhone;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String employeePhone;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String employee;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String carPlates;
     private String trailerPlates;
     private String item;
