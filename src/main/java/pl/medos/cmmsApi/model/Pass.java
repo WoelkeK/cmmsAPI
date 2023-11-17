@@ -22,6 +22,8 @@ public class Pass {
     @NotEmpty(message = "Pole nie może być puste!")
     private String company;
     private String description;
+
     private byte[] originalImage;
     private byte[] resizedImage;
+
 }

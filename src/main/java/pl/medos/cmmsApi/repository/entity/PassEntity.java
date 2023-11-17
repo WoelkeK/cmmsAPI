@@ -22,10 +22,9 @@ public class PassEntity {
     private String company;
     private String plates;
     private String description;
-
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
     private byte[] originalImage;
     @Lob()
     @Basic(fetch = FetchType.LAZY)

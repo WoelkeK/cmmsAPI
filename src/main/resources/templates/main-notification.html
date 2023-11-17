@@ -211,9 +211,7 @@
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
                                 <h1 class="text-4xl font-semibold text-gray-900">Awizacje</h1>
-                                <p class="mt-2 text-lg text-gray-700">Lista awizacji na wjazd pojazdów zarejestrowanych
-                                    w
-                                    systemie</p>
+                                <p class="mt-2 text-lg text-gray-700">Lista zezwoleń na wjazd pojadu</p>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                             </div>
@@ -341,10 +339,10 @@
                                                         Osoba kontaktowa</a>
                                                 </th>
 
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">
-                                                    Zdjęcie
-                                                </th>
+<!--                                                <th scope="col"-->
+<!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
+<!--                                                    Zdjęcie-->
+<!--                                                </th>-->
 
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
                                                     <span class="sr-only">Edit</span>
@@ -353,7 +351,7 @@
                                             </thead>
                                             <tbody class="bg-red">
                                             <tr class="border-t border-gray-600">
-                                                <th colspan="13" scope="colgroup"
+                                                <th colspan="12" scope="colgroup"
                                                     class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
                                                     Kliknij nagłówek tabeli, aby posortować.
                                                 </th>
@@ -401,14 +399,14 @@
                                                     zlecająca
                                                 </td>
 
-                                                <td>
-                                                    <div class="container mt-2 mb-2">
-                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">
-                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"
-                                                                 width="70px" height="30px" alt="person">
-                                                        </a>
-                                                    </div>
-                                                </td>
+<!--                                                <td>-->
+<!--                                                    <div class="container mt-2 mb-2">-->
+<!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
+<!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
+<!--                                                                 width="70px" height="30px" alt="person">-->
+<!--                                                        </a>-->
+<!--                                                    </div>-->
+<!--                                                </td>-->
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
                                                     <a th:href="@{/awizacje/read/{id}(id=${notification.id})}"
@@ -429,7 +427,7 @@
                                             </tbody>
                                             <tbody class="bg-white">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="13" scope="colgroup"
+                                                <th colspan="12" scope="colgroup"
                                                     class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
                                                     Koniec listy
                                                 </th>
