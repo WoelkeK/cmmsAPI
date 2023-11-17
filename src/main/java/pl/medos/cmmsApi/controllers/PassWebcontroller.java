@@ -56,11 +56,14 @@ public class PassWebcontroller {
     }
 
     @PostMapping("/update")
-    public String updatePass(@ModelAttribute(name = "pass") Pass pass) {
+    public String updatePass(@ModelAttribute(name = "pass") Pass pass, MultipartFile image) throws IOException {
         log.info("updatePass()");
         passService.updatePass(pass, pass.getId());
+
+        Pass processedPass = imageService.prepareImage(pass, image);
+        passService.createPass(processedPass);
         return "redirect:/przepustki";
-    }
+        }
 
     @GetMapping
     public String listView(Model model){

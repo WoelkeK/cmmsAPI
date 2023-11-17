@@ -25,7 +25,7 @@ public class PassEntity {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private byte[] originalImage;
     @Lob()
     @Basic(fetch = FetchType.LAZY)
