@@ -53,7 +53,7 @@ public class ImageServiceImpl implements ImageService {
     public Notification prepareImage(Notification notification, MultipartFile image) throws IOException {
         LOGGER.info("prepareImage()");
 
-        if (image.getSize()==0) {
+        if (image.getSize() == 0) {
             LOGGER.info("default image");
             byte[] bytes = imageToByteArray();
             notification.setResizedImage(bytes);
@@ -74,23 +74,28 @@ public class ImageServiceImpl implements ImageService {
     public Pass prepareImage(Pass pass, MultipartFile image) throws IOException {
         LOGGER.info("prepareImage()");
 
-        if (image.getSize()==0) {
+        if (image.getSize() == 0 && pass.getOriginalImage().length == 0) {
             LOGGER.info("default image");
             byte[] bytes = imageToByteArray();
             pass.setResizedImage(bytes);
             pass.setOriginalImage(bytes);
         } else {
             LOGGER.info("multipart file present");
-            byte[] orginalImage = multipartToByteArray(image);
-            byte[] resizeImage = simpleResizeImage(orginalImage, 300);
-            byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
-            pass.setOriginalImage(orginalImage);
-            pass.setResizedImage(resizeMaxImage);
-
+            if (image.isEmpty() || image.getBytes()==null) {
+                return pass;
+            } else {
+                LOGGER.info("procesed Image() ");
+                byte[] orginalImage = multipartToByteArray(image);
+                byte[] resizeImage = simpleResizeImage(orginalImage, 300);
+                byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
+                pass.setOriginalImage(orginalImage);
+                pass.setResizedImage(resizeMaxImage);
+            }
         }
         LOGGER.info("image prepared");
         return pass;
     }
+
 
     byte[] toByteArray(BufferedImage bi, String format) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
