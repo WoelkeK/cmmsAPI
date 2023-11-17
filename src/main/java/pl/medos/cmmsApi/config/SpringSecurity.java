@@ -38,6 +38,7 @@ public class SpringSecurity {
                 .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/info/**").permitAll()
                 .requestMatchers("/awizacje/**").permitAll()
+                .requestMatchers("/przepustki/**").permitAll()
                 .requestMatchers("/softwares/**").permitAll()
                 .requestMatchers("/dashboards/**").permitAll()
 //                .requestMatchers("/hardwares/**").permitAll()

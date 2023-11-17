@@ -11,6 +11,7 @@
 <body class="bg-gray-400">
 <form action="#" th:action="@{/awizacje/create}" th:object="${notification}" method="post"
       enctype="multipart/form-data">
+
         <input type="hidden" th:field="${notification.id}">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
@@ -222,5 +223,4 @@
     </div>
 </form>
 </body>
-
 </html>

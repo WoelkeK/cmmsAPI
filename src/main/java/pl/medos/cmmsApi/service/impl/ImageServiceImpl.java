@@ -4,6 +4,7 @@ import org.imgscalr.Scalr;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.model.Notification;
+import pl.medos.cmmsApi.model.Pass;
 import pl.medos.cmmsApi.service.ImageService;
 
 import javax.imageio.ImageIO;
@@ -67,6 +68,28 @@ public class ImageServiceImpl implements ImageService {
         }
         LOGGER.info("image prepared");
         return notification;
+    }
+
+    @Override
+    public Pass prepareImage(Pass pass, MultipartFile image) throws IOException {
+        LOGGER.info("prepareImage()");
+
+        if (image.getSize()==0) {
+            LOGGER.info("default image");
+            byte[] bytes = imageToByteArray();
+            pass.setResizedImage(bytes);
+            pass.setOriginalImage(bytes);
+        } else {
+            LOGGER.info("multipart file present");
+            byte[] orginalImage = multipartToByteArray(image);
+            byte[] resizeImage = simpleResizeImage(orginalImage, 300);
+            byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
+            pass.setOriginalImage(orginalImage);
+            pass.setResizedImage(resizeMaxImage);
+
+        }
+        LOGGER.info("image prepared");
+        return pass;
     }
 
     byte[] toByteArray(BufferedImage bi, String format) throws IOException {
