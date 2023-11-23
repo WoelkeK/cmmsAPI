@@ -15,6 +15,7 @@ import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.ExportService;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Logger;
@@ -120,7 +121,7 @@ public class ExportToServiceImpl implements ExportService {
         String empty = " ";
         sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);
-        if (valueOfCell !=null) {
+        if (valueOfCell != null) {
 
             if (valueOfCell instanceof Integer) {
                 cell.setCellValue((Integer) valueOfCell);
@@ -128,6 +129,9 @@ public class ExportToServiceImpl implements ExportService {
                 cell.setCellValue((Long) valueOfCell);
             } else if (valueOfCell instanceof Boolean) {
                 cell.setCellValue((Boolean) valueOfCell);
+            } else if (valueOfCell instanceof LocalDate) {
+                cell.setCellValue((LocalDate) valueOfCell);
+
             } else {
                 LOGGER.info("Cell value: " + valueOfCell.toString());
                 cell.setCellValue((String) valueOfCell);
@@ -180,7 +184,12 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getEmployee(), style);
             createCell(row, columnCount++, record.getType().toString(), style);
             createCell(row, columnCount++, record.getName(), style);
-            createCell(row, columnCount++, record.getInstallDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+
+            if (record.getInstallDate() == null) {
+                createCell(row, columnCount++, record.getInstallDate(), style);
+            } else {
+                createCell(row, columnCount++, record.getInstallDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+            }
             createCell(row, columnCount++, record.getInvoiceNo(), style);
             createCell(row, columnCount++, record.getSystemNo(), style);
             createCell(row, columnCount++, record.getSerialNumber(), style);
@@ -189,7 +198,12 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getMacAddress(), style);
             createCell(row, columnCount++, record.getOfficeName(), style);
             createCell(row, columnCount++, record.getOfficeNo(), style);
-            createCell(row, columnCount++, record.getActivateDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+            if (record.getActivateDate() == null) {
+                createCell(row, columnCount++, record.getActivateDate(), style);
+            } else {
+                createCell(row, columnCount++, record.getActivateDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+            }
+            createCell(row, columnCount++, record.getActivateDate(), style);
             createCell(row, columnCount++, record.getDescription(), style);
             createCell(row, columnCount++, record.getBitLockKey(), style);
             createCell(row, columnCount++, record.getBitRecoveryKey(), style);

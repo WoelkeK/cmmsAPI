@@ -185,7 +185,7 @@ public class ImportServiceImpl implements ImportService {
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
-            String empty = "-----";
+            String empty = "";
 
             if (row.getRowNum() == 0) {
                 continue;
@@ -204,7 +204,7 @@ public class ImportServiceImpl implements ImportService {
 //                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
                             break;
-                        case BLANK:
+                        case _NONE:
                             rowDataMap.put(hardwares.get(k), empty);
                             break;
 
@@ -304,20 +304,12 @@ public class ImportServiceImpl implements ImportService {
                 hardwares.stream().map(m -> {
                                     LOGGER.info("Row create()");
                                     Hardware hardware = new Hardware();
-
-//                                    hardware.setId(Long.parseLong((String.valueOf(m.getId()))));
-//                                    LOGGER.info("jsonhardware id " + m.getId());
                                     hardware.setInventoryNo(m.getInventoryNo());
                                     hardware.setDepartment(m.getDepartment());
                                     hardware.setStatus(m.getStatus());
                                     hardware.setEmployee(m.getEmployee());
                                     hardware.setType(m.getType());
                                     hardware.setName(m.getName());
-
-//                                    hardware.setInstallDate(LocalDate.now());
-                                    LocalDate installDate = convertDate(m.getInstallDate());
-                                    hardware.setInstallDate(installDate);
-
                                     hardware.setInvoiceNo(m.getInvoiceNo());
                                     hardware.setSystemNo(m.getSystemNo());
                                     hardware.setSerialNumber(m.getSerialNumber());
@@ -328,11 +320,20 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setOfficeNo(m.getOfficeNo());
                                     hardware.setBitLockKey(m.getBitLockKey());
                                     hardware.setBitRecoveryKey(m.getBitRecoveryKey());
-
-                                    LocalDate activateDate = convertDate(m.getActivateDate());
-                                    hardware.setActivateDate(activateDate);
-
                                     hardware.setDescription(m.getDescription());
+
+                                    if (m.getInstallDate() == null) {
+                                        hardware.setInstallDate(null);
+                                    } else {
+                                        LocalDate installDate = convertDate(m.getInstallDate());
+                                        hardware.setInstallDate(installDate);
+                                    }
+                                    if (m.getActivateDate() == null) {
+                                        hardware.setActivateDate(null);
+                                    } else {
+                                        LocalDate activateDate = convertDate(m.getActivateDate());
+                                        hardware.setActivateDate(activateDate);
+                                    }
 
                                     LOGGER.info("Row create(...)");
                                     return hardware;
@@ -346,22 +347,11 @@ public class ImportServiceImpl implements ImportService {
 
     private LocalDate convertDate(String date) {
         LOGGER.info("DataXLS_String " + date);
-
-        if (date == null || date.contains("-----")) {
-            LocalDate defaultDate = LocalDate.of(1900, 1, 1);
-
-            return defaultDate;
-        } else {
-            LOGGER.info("Start parsing string to date " + date.toString());
-
-            LocalDate localDate = LocalDate.parse(date);
-
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d H:mm:ss zzz yyyy", Locale.ENGLISH);
-//            ZonedDateTime parseDate = ZonedDateTime.parse(date, formatter);
-//            LocalDate localDate = parseDate.toLocalDate();
-            LOGGER.info("DataXLS_LocalDate " + localDate);
-            return localDate;
-        }
+        LOGGER.info("Start parsing string to date " + date.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(date, formatter);
+        LocalDate localDate = zonedDateTime.toLocalDate();
+        LOGGER.info("DataXLS_LocalDate " + localDate);
+        return localDate;
     }
 }
-
