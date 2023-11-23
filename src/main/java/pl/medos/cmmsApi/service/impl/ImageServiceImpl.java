@@ -74,7 +74,7 @@ public class ImageServiceImpl implements ImageService {
     public Pass prepareImage(Pass pass, MultipartFile image) throws IOException {
         LOGGER.info("prepareImage()");
 
-        if (image.getSize() == 0 && pass.getOriginalImage().length == 0) {
+        if (image.getSize() == 0 && pass.getOriginalImage()==null) {
             LOGGER.info("default image");
             byte[] bytes = imageToByteArray();
             pass.setResizedImage(bytes);
