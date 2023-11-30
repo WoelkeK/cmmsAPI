@@ -84,7 +84,7 @@ public class NotificationWebcontroller {
     public String listView(Model model){
         log.info("listView()");
 //        return findHardwarePage(1, "inventoryNo", "asc", model);
-        return findPagesNotifications(1,"visitDate", "desc", model);
+        return findPagesNotifications(1,"visitDate", "asc", model);
     }
 
     @GetMapping("/sort/")
