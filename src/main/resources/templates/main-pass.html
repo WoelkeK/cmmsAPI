@@ -245,7 +245,7 @@
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
                                                          fill="currentColor"
                                                          aria-hidden="true">
                                                         <path fill-rule="evenodd"
@@ -254,7 +254,7 @@
                                                     </svg>
                                                 </div>
                                                 <input id="search" name="query"
-                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
+                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-blue-700 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
                                                        placeholder="Szukaj" type="search">
                                             </div>
                                         </form>
@@ -269,31 +269,31 @@
                                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                     <div class="overflow-hidden shadow ring-2 ring-black ring-opacity-5 md:rounded-lg">
                                         <table class="min-w-full">
-                                            <thead class="bg-gray-800 text-sm">
+                                            <thead class="bg-gray-800 text-lg font-medium">
                                             <tr>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500 hover:text-yellow-100">
+                                                    class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
                                                     <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
-                                                        Imię i nazwisko</a>
+                                                        Imię i nazwisko ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500 hover:text-yellow-100">
+                                                    class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
                                                     <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=phone&sortDir=' + ${reverseSortDir}}">
-                                                        Telefon</a>
+                                                        Telefon ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left  font-semibold text-yellow-500 hover:text-yellow-100">
+                                                    class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
                                                     <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=company&sortDir=' + ${reverseSortDir}}">
-                                                        Firma</a>
+                                                        Firma ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left  font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=paltes&sortDir=' + ${reverseSortDir}}">
-                                                        Nr rejestracyjny</a>
+                                                    class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
+                                                    <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=plates&sortDir=' + ${reverseSortDir}}">
+                                                        Nr rejestracyjny ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
@@ -306,16 +306,16 @@
                                                 </th>
                                             </tr>
                                             </thead>
-                                            <tbody class="bg-red">
+                                            <tbody class="bg-grey">
                                             <tr class="border-t border-gray-600">
                                                 <th colspan="13" scope="colgroup"
-                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
-                                                    Kliknij nagłówek tabeli, aby posortować.
+                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-blue-100 sm:px-6">
+                                                    Kliknij nagłówek tabeli ↑↓ , aby posortować.
                                                 </th>
                                             </tr>
 
                                             <tr th:each="pass: ${passes}"
-                                                class="border-t border-gray-300 text-sm">
+                                                class="border-t border-gray-300 bg-gray-100 text-xl font-medium">
 
 
                                                 <td th:text="${pass.name}"
