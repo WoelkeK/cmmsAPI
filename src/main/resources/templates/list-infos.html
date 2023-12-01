@@ -296,7 +296,7 @@
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
                                                          fill="currentColor"
                                                          aria-hidden="true">
                                                         <path fill-rule="evenodd"
@@ -305,7 +305,7 @@
                                                     </svg>
                                                 </div>
                                                 <input id="search" name="query"
-                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
+                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-gray-800 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
                                                        placeholder="Szukaj" type="search">
                                             </div>
                                         </form>
@@ -353,87 +353,70 @@
                                             <tr>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Imię i nazwisko<a class="hover:text-yellow-100 text-xl"
-                                                               th:href="@{'/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
-                                                    ↑↓</a>
+                                                    <a class="hover:text-yellow-100 text-xl" th:href="@{'/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                        Imię i nazwisko ↑↓  </a>
                                                 </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
 
                                                     Stanowisko
                                                 </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    Wydział <a class="hover:text-yellow-100 text-xl"
-                                                               th:href="@{'/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">
-                                                    ↑↓</a>
+                                                    class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
+                                                     <a class="hover:text-yellow-100 text-xl"
+                                                               th:href="@{'/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział ↑↓</a>
                                                 </th>
 
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
                                                     Telefon
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
+                                                    class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
                                                     Email
-                                                </th>
-                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
-                                                    <span class="sr-only">Edit</span>
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody class="bg-gray">
                                             <tr class="border-t border-gray-600">
-                                                <th colspan="7" scope="colgroup"
-                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
-                                                    Dział Utrzymania Ruchu
+                                                <th colspan="5" scope="colgroup"
+                                                    class="bg-gray-700 px-4 py-2 text-left text-lm font-semibold text-blue-200 sm:px-6">
+                                                    Kliknij nagłówek tabeli ↑↓ , aby posortować.
                                                 </th>
                                             </tr>
 
                                             <tr th:each="employee : ${employees}"
-                                                class="border-t border-gray-300">
+                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
                                                 <td th:text="${employee.name}"
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-lg font-medium text-gray-900 sm:pl-6">
                                                     Lindsay Walton
                                                 </td>
                                                 <td th:text="${employee.position}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4text-lg font-medium font-medium  text-gray-900">
                                                     Stanowisko
                                                 </td>
                                                 <td th:text="${employee.department.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
                                                     Dział
                                                 </td>
                                                 <td th:text="${employee.phone}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
                                                     Telefon
                                                 </td>
                                                 <td th:text="${employee.email}"
-                                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
                                                     Email
                                                 </td>
-
-                                                <!--                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">-->
-                                                <!--                                                    <a th:href="@{/employees/update/{id}(id=${employee.id})}"-->
-                                                <!--                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span-->
-                                                <!--                                                            class="sr-only"></span></a>-->
-                                                <!--                                                    &lt;!&ndash;                                                    <a th:href="@{/employees/read/{id}(id=${employee.id})}"&ndash;&gt;-->
-                                                <!--                                                    &lt;!&ndash;                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span&ndash;&gt;-->
-                                                <!--                                                    &lt;!&ndash;                                                            class="sr-only"></span></a>&ndash;&gt;-->
-                                                <!--                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id})}"-->
-                                                <!--                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span-->
-                                                <!--                                                            class="sr-only"></span></a>-->
-                                                <!--                                                </td>-->
                                             </tr>
                                             <!-- More people... -->
                                             </tbody>
-                                            <tbody class="bg-white">
+                                            <tbody class="bg-green-500">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="7" scope="colgroup"
-                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
-                                                    Dział Administracyjny
+                                                <th colspan="5" scope="colgroup"
+                                                    class="bg-green-400 px-4 py-2 text-left text-lg font-medium text-gray-900 sm:px-6">
+                                                    Koniec strony
                                                 </th>
                                             </tr>
                                         </table>
@@ -461,7 +444,7 @@
                             </div>
                         </div>
 
-                        <div th:if="${totalPages > 1}">
+                        <div class="text-lg font-medium" th:if="${totalPages > 1}">
                             <div class="row col-sm-10">
                                 <div class="col-sm-2">
                                     Wszystkich wpisów: [[${totalItems}]]
@@ -470,7 +453,7 @@
             <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
          th:href="@{'/info/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span class="text-indigo-200 " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+      <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                 </div>
                             </div>
