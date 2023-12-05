@@ -3,13 +3,10 @@ package pl.medos.cmmsApi.service.impl;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import pl.medos.cmmsApi.enums.Device;
-import pl.medos.cmmsApi.enums.Status;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.ExportService;
@@ -17,6 +14,7 @@ import pl.medos.cmmsApi.service.ExportService;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -87,7 +85,6 @@ public class ExportToServiceImpl implements ExportService {
         Row row = sheet.createRow(0);
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
-
         font.setBold(true);
         font.setFontHeight(16);
         style.setFont(font);
@@ -111,6 +108,7 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 16, "Opis dodatkowy                  ", style);
         createCell(row, 17, "Identyfikator szyfrowania                 ", style);
         createCell(row, 18, "Klucz szyfrujący                  ", style);
+        createCell(row, 19, "Uprawnienia Awizacje", style);
 
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
@@ -131,6 +129,8 @@ public class ExportToServiceImpl implements ExportService {
                 cell.setCellValue((Boolean) valueOfCell);
             } else if (valueOfCell instanceof LocalDate) {
                 cell.setCellValue((LocalDate) valueOfCell);
+//            } else if (valueOfCell instanceof LocalDate) {
+//                cell.setCellValue(java.sql.Date.valueOf(LocalDate.now()));
 
             } else {
                 LOGGER.info("Cell value: " + valueOfCell.toString());
@@ -172,6 +172,11 @@ public class ExportToServiceImpl implements ExportService {
         int rowCount = 1;
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
+
+        // Create a cell style with date format
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("dd/mm/yyyy"));
+
         font.setFontHeight(14);
         style.setFont(font);
         for (Hardware record : hardwares) {
@@ -188,7 +193,7 @@ public class ExportToServiceImpl implements ExportService {
             if (record.getInstallDate() == null) {
                 createCell(row, columnCount++, record.getInstallDate(), style);
             } else {
-                createCell(row, columnCount++, record.getInstallDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+                createCell(row, columnCount++, record.getInstallDate(),dateCellStyle);
             }
             createCell(row, columnCount++, record.getInvoiceNo(), style);
             createCell(row, columnCount++, record.getSystemNo(), style);
@@ -201,13 +206,14 @@ public class ExportToServiceImpl implements ExportService {
             if (record.getActivateDate() == null) {
                 createCell(row, columnCount++, record.getActivateDate(), style);
             } else {
-                createCell(row, columnCount++, record.getActivateDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString(), style);
+                createCell(row, columnCount++, record.getActivateDate(), dateCellStyle);
             }
-            createCell(row, columnCount++, record.getActivateDate(), style);
             createCell(row, columnCount++, record.getDescription(), style);
             createCell(row, columnCount++, record.getBitLockKey(), style);
             createCell(row, columnCount++, record.getBitRecoveryKey(), style);
+            createCell(row, columnCount++, record.getPermission().toString(), style);
         }
         LOGGER.info("writeHardware(...)");
     }
+
 }

@@ -10,17 +10,17 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.Permission;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.HardwareRepository;
-import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -33,7 +33,7 @@ public class ImportServiceImpl implements ImportService {
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description", "bitLockKey", "bitRecoveryKey"));
+            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description", "bitLockKey", "bitRecoveryKey","permission"));
     private final HardwareRepository hardwareRepository;
 
     public ImportServiceImpl(HardwareRepository hardwareRepository) {
@@ -322,13 +322,22 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setBitRecoveryKey(m.getBitRecoveryKey());
                                     hardware.setDescription(m.getDescription());
 
-                                    if (m.getInstallDate() == null) {
+                                    if(m.getPermission() ==null){
+                                        hardware.setPermission(Permission.NIE);
+                                    }else{
+
+                                    hardware.setPermission(m.getPermission());
+                                    }
+
+
+                                    if (m.getInstallDate() == null || m.getInstallDate().isEmpty()) {
                                         hardware.setInstallDate(null);
                                     } else {
                                         LocalDate installDate = convertDate(m.getInstallDate());
                                         hardware.setInstallDate(installDate);
+                                        LOGGER.info(installDate.toString());
                                     }
-                                    if (m.getActivateDate() == null) {
+                                    if (m.getActivateDate() == null || m.getActivateDate().isEmpty()) {
                                         hardware.setActivateDate(null);
                                     } else {
                                         LocalDate activateDate = convertDate(m.getActivateDate());
@@ -348,10 +357,12 @@ public class ImportServiceImpl implements ImportService {
     private LocalDate convertDate(String date) {
         LOGGER.info("DataXLS_String " + date);
         LOGGER.info("Start parsing string to date " + date.toString());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
-        ZonedDateTime zonedDateTime = ZonedDateTime.parse(date, formatter);
-        LocalDate localDate = zonedDateTime.toLocalDate();
-        LOGGER.info("DataXLS_LocalDate " + localDate);
+
+        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+        LocalDate localDate = LocalDate.parse(date, inputDateFormatter);
+        DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String outputDateString = localDate.format(outputDateFormatter);
+        LOGGER.info("ConvertedDate() " + localDate.toString());
         return localDate;
     }
 }

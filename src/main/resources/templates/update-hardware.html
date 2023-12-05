@@ -80,14 +80,15 @@
     <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="*{name}">
-<!--        <input type="hidden" th:field="*{department}">-->
+        <!--        <input type="hidden" th:field="*{department}">-->
         <input type="hidden" th:field="${hardware.id}">
-<!--        <input type="hidden" th:field="*{systemNo}">-->
+        <!--        <input type="hidden" th:field="*{systemNo}">-->
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
         <input type="hidden" th:field="*{installDate}">
         <input type="hidden" th:field="*{inventoryNo}">
         <input type="hidden" th:field="*{invoiceNo}">
+<!--        <input type="hidden" th:field="*{permission}">-->
 
         <main class="-mt-32">
             <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
@@ -204,7 +205,8 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="employee"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Imię i Nazwisko</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Imię i
+                                            Nazwisko</label>
                                         <div class="mt-2">
                                             <input th:field="${hardware.employee}" id="employee"
                                                    name="employee"
@@ -226,7 +228,8 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="employee"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Wersja Systemu</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Wersja
+                                            Systemu</label>
                                         <div class="mt-2">
                                             <input th:field="${hardware.systemNo}" id="systemNo"
                                                    name="systemNo"
@@ -314,9 +317,11 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="bitRecoveryKey"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Klucz szyfrowania</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Klucz
+                                            szyfrowania</label>
                                         <div class="mt-2">
-                                            <input type="text" th:field="${hardware.bitRecoveryKey}" name="bitRecoveryKey"
+                                            <input type="text" th:field="${hardware.bitRecoveryKey}"
+                                                   name="bitRecoveryKey"
                                                    id="bitRecoveryKey"
                                                    autocomplete="no"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
@@ -325,7 +330,8 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="bitLockKey"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Identyfikator szyfrowania</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Identyfikator
+                                            szyfrowania</label>
                                         <div class="mt-2">
                                             <input type="text" th:field="${hardware.bitLockKey}" name="bitLockKey"
                                                    id="bitLockKey"
@@ -352,6 +358,27 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+                                            <div class="sm:col-span-1">
+                                                <label for="permission"
+                                                       class="block text-xl font-medium leading-6 text-gray-500">Uprawnienia Awizacje</label>
+                                                <div class="mt-2">
+                                                    <select name="permission" id="permission" autocomplete="NIE"
+                                                            th:field="*{permission}" class="block w-fit rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1
+                                ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
+                                sm:text-xl sm:leading-6">
+
+                                                        <option th:each="permission : ${T(pl.medos.cmmsApi.enums.Permission).values()}"
+                                                                th:value="${permission}" th:text="${permission}">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </dl>
 
 
@@ -380,19 +407,18 @@
 
 
 <script type="text/javascript">
-   function disableSelectBox() {
-var field1Value = document.getElementById("status").value;
-var field2Select = document.getElementById("employee");
-var field3Select = document.getElementById("employee");
+    function disableSelectBox() {
+ var field1Value = document.getElementById("status").value;
+ var field2Select = document.getElementById("employee");
+ var field3Select = document.getElementById("employee");
 
-if ((field1Value === "MAGAZYN_SERWEROWNIA") || (field1Value === "MAGAZYN_SZAFA") || (field1Value === "ZUTYLIZOWANY") || (field1Value === "DO_UTYLIZACJI")) {
-field2Select.disabled = true;
-field2Select.value = "";
-} else {
-field2Select.disabled = false;
-}
-}
-
+ if ((field1Value === "MAGAZYN_SERWEROWNIA") || (field1Value === "MAGAZYN_SZAFA") || (field1Value === "ZUTYLIZOWANY") || (field1Value === "DO_UTYLIZACJI")) {
+ field2Select.disabled = true;
+ field2Select.value = "";
+ } else {
+ field2Select.disabled = false;
+ }
+ }
 
 
 </script>

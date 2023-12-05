@@ -1,22 +1,14 @@
 package pl.medos.cmmsApi.repository.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.medos.cmmsApi.enums.Device;
 import pl.medos.cmmsApi.enums.Document;
 import pl.medos.cmmsApi.enums.Status;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Software;
+import pl.medos.cmmsApi.enums.Permission;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -54,6 +46,9 @@ public class HardwareEntity {
     private String officeNo;
     private String bitLockKey;
     private String bitRecoveryKey;
+
+    @Enumerated(EnumType.STRING)
+    private Permission permission;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate activateDate;

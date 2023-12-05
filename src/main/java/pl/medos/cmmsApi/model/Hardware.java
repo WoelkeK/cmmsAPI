@@ -10,10 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.medos.cmmsApi.enums.Device;
 import pl.medos.cmmsApi.enums.Document;
 import pl.medos.cmmsApi.enums.Status;
+import pl.medos.cmmsApi.enums.Permission;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 @Builder
@@ -23,9 +22,7 @@ public class Hardware {
 
     private Long id;
     private String name;
-    @Enumerated(EnumType.STRING)
     private Device type;
-    @Enumerated(EnumType.STRING)
     private Document document;
     private String systemNo;
     private String invoiceNo;
@@ -43,6 +40,7 @@ public class Hardware {
     private String officeNo;
     private String bitLockKey;
     private String bitRecoveryKey;
+    private Permission permission;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate installDate;
