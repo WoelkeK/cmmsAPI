@@ -41,6 +41,7 @@ public class Hardware {
     private String bitLockKey;
     private String bitRecoveryKey;
     private Permission permission;
+    private String role;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate installDate;

@@ -49,6 +49,7 @@ public class HardwareEntity {
 
     @Enumerated(EnumType.STRING)
     private Permission permission;
+    private String role;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate activateDate;

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł Pracowników</title>
-    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
+<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <link th:href="@{/admin/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 
@@ -36,7 +36,7 @@
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/awizacje"
+                        <a href="/user/awizacje"
                            class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
 
                             <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
                             Awizacje
                         </a>
 
-                        <a th:href="@{/info}"
+                        <a th:href="@{/user/info}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -70,67 +70,6 @@
                             </svg>
                             Przepustki Stałę
                         </a>
-
-                        <!--                        <a th:href="@{/engineers}"-->
-                        <!--                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
-                        <!--                            &lt;!&ndash; Heroicon name: outline/folder &ndash;&gt;-->
-                        <!--                            <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
-                        <!--                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                        <!--                                 stroke="currentColor" aria-hidden="true">-->
-                        <!--                                <path stroke-linecap="round" stroke-linejoin="round"-->
-                        <!--                                      d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>-->
-                        <!--                            </svg>-->
-                        <!--                            Mechanicy-->
-                        <!--                        </a>-->
-
-                        <!--                        <a href="#"-->
-                        <!--                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">-->
-                        <!--                            &lt;!&ndash; Heroicon name: outline/chart-bar &ndash;&gt;-->
-                        <!--                            <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"-->
-                        <!--                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                        <!--                                 stroke="currentColor" aria-hidden="true">-->
-                        <!--                                <path stroke-linecap="round" stroke-linejoin="round"-->
-                        <!--                                      d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"/>-->
-                        <!--                            </svg>-->
-                        <!--                            Wydziały-->
-                        <!--                        </a>-->
-
-                        <!--                        <a href="#"-->
-                        <!--                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">-->
-                        <!--                            &lt;!&ndash; Heroicon name: outline/calendar &ndash;&gt;-->
-                        <!--                            <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"-->
-                        <!--                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                        <!--                                 stroke="currentColor" aria-hidden="true">-->
-                        <!--                                <path stroke-linecap="round" stroke-linejoin="round"-->
-                        <!--                                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>-->
-                        <!--                            </svg>-->
-                        <!--                            Maszyny-->
-                        <!--                        </a>-->
-
-
-                        <!--                        <a href="#"-->
-                        <!--                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">-->
-                        <!--                            &lt;!&ndash; Heroicon name: outline/folder &ndash;&gt;-->
-                        <!--                            <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"-->
-                        <!--                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                        <!--                                 stroke="currentColor" aria-hidden="true">-->
-                        <!--                                <path stroke-linecap="round" stroke-linejoin="round"-->
-                        <!--                                      d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/>-->
-                        <!--                            </svg>-->
-                        <!--                            Zlecenia-->
-                        <!--                        </a>-->
-
-                        <!--                        <a href="#"-->
-                        <!--                           class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">-->
-                        <!--                            &lt;!&ndash; Heroicon name: outline/inbox &ndash;&gt;-->
-                        <!--                            <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"-->
-                        <!--                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                        <!--                                 stroke="currentColor" aria-hidden="true">-->
-                        <!--                                <path stroke-linecap="round" stroke-linejoin="round"-->
-                        <!--                                      d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>-->
-                        <!--                            </svg>-->
-                        <!--                            Reporty-->
-                        <!--                        </a>-->
                     </nav>
                 </div>
                 <div class="flex flex-shrink-0 bg-gray-700 p-4">
@@ -138,7 +77,7 @@
                         <div class="flex items-center">
                             <div>
                                 <img class="inline-block h-10 w-10 rounded-full"
-                                     th:src="@{/images/default.jpg}"
+                                     th:src="@{/user/images/default.jpg}"
                                      alt="user-photo">
                             </div>
                             <div class="ml-3">
@@ -162,11 +101,11 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                    <img class="h-8 w-auto" th:src="@{/user/images/logo.svg}" alt="Medos"/>
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/awizacje"
+                    <a href="/user/awizacje"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!--
                           Heroicon name: outline/home
@@ -181,7 +120,7 @@
                         Awizacje
                     </a>
 
-                    <a th:href="@{/info}"
+                    <a th:href="@{/user/info}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -193,7 +132,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/przepustki"
+                    <a href="/user/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -211,7 +150,7 @@
                 <a href="#" class="group block w-full flex-shrink-0">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/images/avatar.png}" alt="Avatar"/>
+                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/user/images/avatar.png}" alt="Avatar"/>
 
                         </div>
                         <div class="ml-3">
@@ -261,9 +200,9 @@
                                 <div class="flex items-center px-1 lg:px-0">
                                     <div class="flex-shrink-0">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/peoplemono.png}"
+                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/user/images/peoplemono.png}"
                                              alt="device">
-                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/peoplemono.png}"
+                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/user/images/peoplemono.png}"
                                              alt="device">
 
                                     </div>
@@ -292,7 +231,7 @@
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
-                                        <form action="#" th:action="@{/info/search/query}" method="GET">
+                                        <form action="#" th:action="@{/user/info/search/query}" method="GET">
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -353,7 +292,7 @@
                                             <tr>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    <a class="hover:text-yellow-100 text-xl" th:href="@{'/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                    <a class="hover:text-yellow-100 text-xl" th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                                                         Imię i nazwisko ↑↓  </a>
                                                 </th>
 
@@ -366,7 +305,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
                                                      <a class="hover:text-yellow-100 text-xl"
-                                                               th:href="@{'/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział ↑↓</a>
+                                                               th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział ↑↓</a>
                                                 </th>
 
 
@@ -430,13 +369,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/info/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                           th:href="@{'/user/info/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/info/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                           th:href="@{'/user/info/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -452,7 +391,7 @@
                                 <div class="col-sm-1">
             <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
-         th:href="@{'/info/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         th:href="@{'/user/info/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                 </div>

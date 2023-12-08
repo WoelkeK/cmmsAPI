@@ -6,7 +6,7 @@
     <title>Moduł awizacji</title>
     <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
     <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 
@@ -35,7 +35,7 @@
 
                 <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                        <img class="h-8 w-auto" th:src="@{/user/images/logo.svg}" alt="Medos"/>
                     </div>
 
                 </div>
@@ -68,10 +68,10 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                    <img class="h-8 w-auto" th:src="@{/user/images/logo.svg}" alt="Medos"/>
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
-                    <a th:href="@{/awizacje}"
+                    <a th:href="@{/user/awizacje}"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -81,7 +81,7 @@
                         Awizacje
                     </a>
 
-                    <a href="/info"
+                    <a href="/user/info"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -93,7 +93,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/przepustki"
+                    <a href="/user/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -161,7 +161,7 @@
                 <a href="#" class="group block w-full flex-shrink-0">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/images/avatar.png}" alt="Avatar"/>
+                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/user/images/avatar.png}" alt="Avatar"/>
 
                         </div>
                         <div class="ml-3">
@@ -211,15 +211,15 @@
                                 <div class="flex items-center px-1 lg:px-1">
                                     <div class="flex-shrink-1">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/access.png}"
+                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/user/images/access.png}"
                                              alt="device">
-                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/access.png}"
+                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/user/images/access.png}"
                                              alt="device">
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
                                         <div class="flex space-x-4">
-                                            <a href="#" th:href="@{/przepustki/create}"
+                                            <a href="#" th:href="@{/user/przepustki/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
                                             <!--                                            <a href="#" th:href="@{/notifications/file}"-->
                                             <!--                                            <a href="#"-->
@@ -241,7 +241,7 @@
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
-                                        <form action="#" th:action="@{/przepustki/search/query}" method="GET">
+                                        <form action="#" th:action="@{/user/przepustki/search/query}" method="GET">
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -274,25 +274,25 @@
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                    <a th:href="@{'/user/przepustki/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                                                         Imię i nazwisko ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=phone&sortDir=' + ${reverseSortDir}}">
+                                                    <a th:href="@{'/user/przepustki/page/' + ${currentPage} + '?sortField=phone&sortDir=' + ${reverseSortDir}}">
                                                         Telefon ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=company&sortDir=' + ${reverseSortDir}}">
+                                                    <a th:href="@{'/user/przepustki/page/' + ${currentPage} + '?sortField=company&sortDir=' + ${reverseSortDir}}">
                                                         Firma ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/przepustki/page/' + ${currentPage} + '?sortField=plates&sortDir=' + ${reverseSortDir}}">
+                                                    <a th:href="@{'/user/przepustki/page/' + ${currentPage} + '?sortField=plates&sortDir=' + ${reverseSortDir}}">
                                                         Nr rejestracyjny ↑↓</a>
                                                 </th>
 
@@ -333,7 +333,7 @@
 
                                                 <td>
                                                     <div class="container mt-2 mb-2">
-                                                        <a th:href="@{'/przepustki/downloadfile?id=' + ${pass.id}}">
+                                                        <a th:href="@{'/user/przepustki/downloadfile?id=' + ${pass.id}}">
                                                             <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(pass.id)}"
                                                                  width="70px" height="30px" alt="person">
                                                         </a>
@@ -346,11 +346,11 @@
 <!--                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span-->
 <!--                                                            class="sr-only"></span></a>-->
 
-                                                    <a th:href="@{/przepustki/update/{id}(id=${pass.id})}"
+                                                    <a th:href="@{/user/przepustki/update/{id}(id=${pass.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300 ">Edycja<span
                                                             class="sr-only"></span></a>
 
-                                                    <a th:href="@{/przepustki/delete/{id}(id=${pass.id})}"
+                                                    <a th:href="@{/user/przepustki/delete/{id}(id=${pass.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
@@ -375,13 +375,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/przepustki/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                           th:href="@{'/user/przepustki/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/przepustki/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                           th:href="@{'/user/przepustki/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -397,7 +397,7 @@
                                     <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
-         th:href="@{'/przepustki/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         th:href="@{'/user/przepustki/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
@@ -428,6 +428,5 @@
         </div>
     </div>
 </div>
-<script src="/js/main.js"></script>
 </body>
 </html>

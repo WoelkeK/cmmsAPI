@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Panel Wydział</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+<!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <link th:href="@{/user/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 <div class="px-4 sm:px-6 lg:px-8">
@@ -12,8 +13,7 @@
         <div class="sm:flex-auto">
             <h1 class="text-6xl font-semibold text-gray-900">Wydział</h1>
 
-
-            <form action="#" th:action="@{/departments/create}" th:object="${department}" method="post"
+            <form action="#" th:action="@{/admin/departments/create}" th:object="${department}" method="post"
                   class="space-y-8 divide-y divide-gray-700">
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">
@@ -54,7 +54,6 @@
                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
                         </div>
                     </div>
-
                 </div>
                 <div class="space-y-6 sm:space-y-5">
 
@@ -75,7 +74,7 @@
                         <button type="button"
                                 class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
 
-                            <a th:href="@{/departments}">Wstecz</a>
+                            <a th:href="@{/admin/departments}">Wstecz</a>
                         </button>
                         <button type="submit"
                                 class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

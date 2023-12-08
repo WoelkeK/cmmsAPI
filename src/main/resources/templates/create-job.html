@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł Zadań</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <link th:href="@{/admin/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 <div class="px-4 sm:px-6 lg:px-8">
@@ -13,13 +14,12 @@
             <h1 class="text-6xl font-semibold text-gray-900">Zlecenia</h1>
 
 
-            <form th:action="@{/jobs/create}" th:object="${job}" method="post"
-                class="space-y-8 divide-y divide-gray-700">
+            <form th:action="@{/admin/jobs/create}" th:object="${job}" method="post"
+                  class="space-y-8 divide-y divide-gray-700">
 
-            <input type="hidden" th:field="*{solution}">
-            <input type="hidden" th:field="*{status}">
-            <input type="hidden" th:field="*{jobStopTime}">
-
+                <input type="hidden" th:field="*{solution}">
+                <input type="hidden" th:field="*{status}">
+                <input type="hidden" th:field="*{jobStopTime}">
 
 
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
@@ -56,10 +56,10 @@
                             identyfikacji.</p>
                     </div>
 
-
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
                         <label for="employeeId"
-                               class="block text-lm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik zgłaszający</label>
+                               class="block text-lm font-medium text-gray-700 sm:mt-px sm:pt-2">Pracownik
+                            zgłaszający</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                             <select th:field="${job.employee.id}" id="employeeId" name="employeeId"
                                     autocomplete="employee"
@@ -106,30 +106,6 @@
                     </div>
                 </div>
 
-                <!--                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">-->
-                <!--                    <label for="jobStartTime"-->
-                <!--                           class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data rozpoczęcia-->
-                <!--                        zlecenia</label>-->
-                <!--                    <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-
-                <!--                        <input type="datetime-local" th:field="${job.jobStartTime}" id="jobStartTime"-->
-                <!--                               name="jobStartTime"-->
-                <!--                               autocomplete="date"-->
-                <!--                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!--                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">-->
-                <!--                    <label for="jobStartTime"-->
-                <!--                           class="block text-lm font-medium text-blue-700 sm:mt-px sm:pt-2">Data zakończenia-->
-                <!--                        zlecenia</label>-->
-                <!--                    <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-
-                <!--                        <input type="datetime-local" th:field="${job.jobStopTime}" id="jobStopTime" name="jobStopTime"-->
-                <!--                               autocomplete="date"-->
-                <!--                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
                 <div class="pt-6 sm:pt-5">
                     <div role="group" aria-labelledby="date-register">
                         <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
@@ -139,19 +115,6 @@
                                      id="date-register">Data zgłoszenia
                                 </div>
                             </div>
-
-                            <!--                    <div class="mt-4 space-y-4">-->
-                            <!--                        <label for="jobStartTime">Data podjęcia działania:</label>-->
-                            <!--                        <input type="date" th:field="${job.jobStartTime}" id="jobStartTime"-->
-                            <!--                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-xl focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
-                            <!--                    </div>-->
-
-                            <!--                    <div class="mt-4 space-y-4">-->
-                            <!--                        <label for="jobStopTime">Data zakończenia naprawy:</label>-->
-                            <!--                        <input type="date" th:field="${job.jobStopTime}" id="jobStopTime"-->
-                            <!--                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-xl focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
-                            <!--                    </div>-->
-                            <!--                </div>-->
                             <div class="space-y-6 divide-y divide-gray-800 pt-8 sm:space-y-5 sm:pt-10">
 
                                 <div>
@@ -269,7 +232,7 @@
                         <div class="flex justify-end">
                             <button type="button"
                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                <a th:href="@{/jobs}">Wstecz</a>
+                                <a th:href="@{/admin/jobs}">Wstecz</a>
                             </button>
                             <button type="submit"
                                     class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -278,9 +241,9 @@
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </div>
-</form>
 </body>
 </html>

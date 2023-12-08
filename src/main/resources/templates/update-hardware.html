@@ -6,7 +6,6 @@
     <title>Panel Zlecenia</title>
     <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/disableSelect.js"></script>
 </head>
 <body class="bg-gray-500">
 <div class="min-h-full">
@@ -17,7 +16,7 @@
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
-                                <img class="h-12 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                                <img class="h-12 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos"/>
 
                                 <div class="hidden md:block">
                                     <div class="ml-24 flex items-baseline space-x-4">
@@ -62,8 +61,6 @@
             </div>
         </nav>
         <header class="py-10">
-
-
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-x-2 gap-y-8 sm:grid-cols-2">
                     <div>
@@ -77,18 +74,15 @@
     </div>
 
 
-    <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
+    <form action="#" th:action="@{/admin/hardwares/update}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="*{name}">
-        <!--        <input type="hidden" th:field="*{department}">-->
         <input type="hidden" th:field="${hardware.id}">
-        <!--        <input type="hidden" th:field="*{systemNo}">-->
         <input type="hidden" th:field="*{type}">
         <input type="hidden" th:field="*{serialNumber}">
         <input type="hidden" th:field="*{installDate}">
         <input type="hidden" th:field="*{inventoryNo}">
         <input type="hidden" th:field="*{invoiceNo}">
-<!--        <input type="hidden" th:field="*{permission}">-->
 
         <main class="-mt-32">
             <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
@@ -156,24 +150,6 @@
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Data odbioru</dt>-->
-                            <!--                                <dd th:text="${#temporals.format(hardware.pickUpDate, 'dd MMMM yyyy')}"-->
-                            <!--                                    id="view-pickUpDate" name="pickUpDate"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">-->
-                            <!--                                    Data-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Data zwrotu</dt>-->
-                            <!--                                <dd th:text="${#temporals.format(hardware.returnDate, 'dd MMMM yyyy')}"-->
-                            <!--                                    id="view-returnDate" name="returnDate"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">-->
-                            <!--                                    Data-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
                         </dl>
                     </div>
 
@@ -363,7 +339,8 @@
                                         <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                                             <div class="sm:col-span-1">
                                                 <label for="permission"
-                                                       class="block text-xl font-medium leading-6 text-gray-500">Uprawnienia Awizacje</label>
+                                                       class="block text-xl font-medium leading-6 text-gray-500">Uprawnienia
+                                                    Awizacje</label>
                                                 <div class="mt-2">
                                                     <select name="permission" id="permission" autocomplete="NIE"
                                                             th:field="*{permission}" class="block w-fit rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1
@@ -386,7 +363,7 @@
                                         <div class="flex justify-end">
                                             <button type="button"
                                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                <a th:href="@{/hardwares}">Wstecz</a>
+                                                <a th:href="@{/admin/hardwares}">Wstecz</a>
                                             </button>
                                             <button type="submit"
                                                     class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
