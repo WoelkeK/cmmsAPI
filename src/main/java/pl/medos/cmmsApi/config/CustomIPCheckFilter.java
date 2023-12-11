@@ -6,6 +6,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 import pl.medos.cmmsApi.model.Hardware;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class CustomIPCheckFilter extends GenericFilterBean {
 
     private final HardwareService hardwareService;
@@ -31,35 +33,41 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         }
 
         // Log the remote IP
-        logger.info("IP Remote address: " + remoteIP);
+        log.info("IP Remote address: " + remoteIP);
 
         String requestURI = request.getRequestURI();
-        logger.info("URI: " + requestURI);
+        log.info("URI: " + requestURI);
 
         // Extract the role from the endpoint
         String roleFromEndPoint = extractRoleFromURI(requestURI);
-        logger.info("roleFromEndpoint: " + roleFromEndPoint);
+        log.info("roleFromEndpoint: " + roleFromEndPoint);
 
         Hardware ipAddressRole = hardwareService.findByIpAddress(remoteIP);
-        logger.info("roleFromDb: " + ipAddressRole.getIpAddress()+ " " + ipAddressRole.getRole());
+        log.info("roleFromDb: " + ipAddressRole.getIpAddress()+ " " + ipAddressRole.getRole());
+        req.setAttribute("isAdmin", false);
 
         if (ipAddressRole == null) {
-            logger.info("No match found in the repository for IP: " + remoteIP);
+            log.info("No match found in the repository for IP: " + remoteIP);
             throw new ServletException("Unauthorized IP Access");
         } else{
-            logger.info("IP DB Address: " + ipAddressRole.getIpAddress());
+            log.info("IP DB Address: " + ipAddressRole.getIpAddress());
             if (!roleFromEndPoint.equals(ipAddressRole.getRole()) && !(ipAddressRole.getRole().equals("admin") && roleFromEndPoint.equals("user"))) {
-                logger.info("Role mismatch. Expected: " + roleFromEndPoint + ", Actual: " + ipAddressRole.getRole());
+                log.info("Role mismatch. Expected: " + roleFromEndPoint + ", Actual: " + ipAddressRole.getRole());
                 throw new ServletException("Unauthorized IP Access");
             }
         }
+
+        if (ipAddressRole.getRole().equalsIgnoreCase("admin")) {
+            req.setAttribute("isAdmin", true);
+        }
+
         chain.doFilter(request, res);
     }
 
     private String extractRoleFromURI(String uri) throws ServletException {
-        if (uri.contains("/user")) {
+        if ((uri.contains("/user") || (uri.contains("/favicon.ico")))) {
             return "user";
-        } else if (uri.contains("/admin")) {
+        } else if ((uri.contains("/admin") || (uri.contains("/favicon.ico")))) {
             return "admin";
         } else {
             throw new ServletException("Unknown role for URL: " + uri);

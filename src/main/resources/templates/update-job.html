@@ -17,14 +17,6 @@
             <form role="form" th:action="@{/admin/jobs/update}" th:object="${job}" method="post">
 
                 <input type="hidden" th:field="${job.requestDate}">
-<!--                <input type="hidden" th:field="*{department.id}">-->
-<!--                <input type="hidden" th:field="*{machine.id}">-->
-<!--                <input type="hidden" th:field="*{message}">-->
-<!--                <input type="hidden" th:field="*{employee}">-->
-<!--                <input type="hidden" th:field="*{status}">-->
-<!--                <input type="hidden" th:field="*{resizedImage}">-->
-<!--                <input type="hidden" th:field="*{originalImage}">-->
-<!--                <input type="hidden" th:field="*{calcCost}">-->
                 <input type="hidden" th:field="${job.solution}">
 
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">

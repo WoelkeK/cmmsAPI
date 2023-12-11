@@ -104,7 +104,7 @@ public class UserNotificationWebcontroller {
             jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
         }
         model.addAttribute("images", jobBase64Images);
-        return "userview-notification.html";
+        return "main-notification.html";
     }
 
     @GetMapping(value = "/downloadfile")

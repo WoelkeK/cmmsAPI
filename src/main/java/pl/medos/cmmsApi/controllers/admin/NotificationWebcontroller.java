@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/awizacje")
+@RequestMapping("/awizacje")
 @SessionAttributes(names = {"images", "awizacje"})
 @RequiredArgsConstructor
 @Slf4j
@@ -63,7 +63,7 @@ public class NotificationWebcontroller {
     public String updateNotification(@ModelAttribute(name = "notification") Notification notification) {
         log.info("updateNotification()");
         notificationService.updateNotification(notification, notification.getId());
-        return "redirect:/user/awizacje";
+        return "redirect:/awizacje";
     }
 
     @GetMapping("/list")
@@ -149,14 +149,14 @@ public class NotificationWebcontroller {
 
         Notification processedNotification = imageService.prepareImage(notification, image);
         Notification createdNotifi = notificationService.createNotification(processedNotification);
-        return "redirect:/user/awizacje";
+        return "redirect:/awizacje";
     }
 
     @GetMapping("delete/{id}")
     public String deleteNotification(@PathVariable Long id) {
         log.info("deleteNotification()");
         notificationService.deleteNotification(id);
-        return "redirect:/user/awizacje";
+        return "redirect:/awizacje";
     }
 
     @GetMapping(value = "/downloadfile")

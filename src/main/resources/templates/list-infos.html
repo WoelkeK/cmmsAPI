@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł Pracowników</title>
-<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link th:href="@{/admin/css/mainold.css}" rel="stylesheet"/>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+    <!--    <link th:href="@{/admin/css/mainold.css}" rel="stylesheet"/>-->
 </head>
 <body class="bg-gray-400">
 
 <div>
-    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
 
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -30,12 +29,11 @@
 
                 <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto"
-                             src="https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500"
-                             alt="Medos">
+                        <!--                        <img class="h-8 w-auto"-->
+                        <!--                             src="https://logosandtypes.com/wp-content/uploads/2021/01/medos.svg?color=indigo&shade=500"-->
+                        <!--                             alt="Medos">-->
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="/user/awizacje"
                            class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
 
@@ -150,7 +148,8 @@
                 <a href="#" class="group block w-full flex-shrink-0">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/user/images/avatar.png}" alt="Avatar"/>
+                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/user/images/avatar.png}"
+                                 alt="Avatar"/>
 
                         </div>
                         <div class="ml-3">
@@ -178,9 +177,6 @@
 
         <main class="flex-1">
             <div class="py-6">
-                <!--                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
-                <!--                    <h1 class="text-2xl font-semibold text-gray-900">Panel Główny</h1>-->
-                <!--                </div>-->
                 <div class="mx-auto max-w-8xl px-4 sm:px-6 md:px-8">
                     <!-- Replace with your content -->
 
@@ -207,27 +203,8 @@
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
-                                        <!--                                        <div class="flex space-x-4">-->
-                                        <!--                                            <a href="#" th:href="@{/notifications/create}"-->
-                                        <!--                                               class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>-->
-                                        <!--                                            <a href="#" th:href="@{/notifications/file}"-->
-                                        <!--                                            <a href="#"-->
-                                        <!--                                               class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-gray-900"-->
-                                        <!--                                               th:onclick='feature("funkcja zablokowana!")'>Import</a>-->
-                                        <!--                                            &lt;!&ndash;                                            <a href="#" th:href="@{/notification/export}"&ndash;&gt;-->
-                                        <!--                                            <a href="#" th:href="@{/notifications}"-->
-                                        <!--                                               class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-gray-900"-->
-                                        <!--                                               th:onclick='feature("funkcja zablokowana!")'>Export</a>-->
-                                        <!--                                            &lt;!&ndash;                                            <a href="#" th:href="@{/notifications/deleteAll}"&ndash;&gt;-->
-                                        <!--                                            <a href="#" th:href="@{/notifications}"-->
-                                        <!--                                               class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-red-500 hover:text-gray-700"-->
-                                        <!--                                               th:onclick='feature("funkcja zablokowana!")'>Usuń-->
-                                        <!--                                                wszystko</a>-->
-
-                                        <!--                                        </div>-->
                                     </div>
                                 </div>
-
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
@@ -253,36 +230,6 @@
                             </div>
                         </div>
 
-                        <!--                            <div class="row">-->
-                        <!--                                <div class="col-md-5">-->
-                        <!--                                    <div class="form-group">-->
-                        <!--                                        <form class="form-inline" th:action="@{/info/search/name}">-->
-                        <!--                                            <div class="input-group">-->
-                        <!--                                                <input type="text" class="form-control" name="employeeName"/>-->
-                        <!--                                                <span class="input-group-btn">-->
-                        <!--                            <button class="btn btn-primary" type="submit"> Szukaj pracownika</button>-->
-                        <!--                        </span>-->
-                        <!--                                            </div>-->
-                        <!--                                        </form>-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-
-
-                        <!--                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">-->
-                        <!--                                <button type="button"-->
-                        <!--                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">-->
-                        <!--                                    <a th:href="@{/employees/create}">Dodaj</a>-->
-                        <!--                                </button>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">-->
-                        <!--                                <button type="button"-->
-                        <!--                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">-->
-                        <!--                                    <a th:href="@{/employees/file}">Import</a>-->
-                        <!--                                </button>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-
                         <div class="mt-4 flex flex-col">
                             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -292,22 +239,22 @@
                                             <tr>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
-                                                    <a class="hover:text-yellow-100 text-xl" th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
-                                                        Imię i nazwisko ↑↓  </a>
+                                                    <a class="hover:text-yellow-100 text-xl"
+                                                       th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                        Imię i nazwisko ↑↓ </a>
                                                 </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
-
                                                     Stanowisko
                                                 </th>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
-                                                     <a class="hover:text-yellow-100 text-xl"
-                                                               th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział ↑↓</a>
+                                                    <a class="hover:text-yellow-100 text-xl"
+                                                       th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział
+                                                        ↑↓</a>
                                                 </th>
-
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
@@ -403,6 +350,5 @@
         </main>
     </div>
 </div>
-
 </body>
 </html>

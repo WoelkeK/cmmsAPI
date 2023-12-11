@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Informacje</title>
 <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link rel="stylesheet" th:href="@{/user/css/mainold.css}" />
+    <link rel="stylesheet" th:href="@{/admin/css/mainold.css}" />
 </head>
 <body class="bg-gray-500">
 <div class="min-h-full">
@@ -16,7 +16,7 @@
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
-                                <img class="h-12 w-auto" th:src="@{/user/images/logo.svg}" alt="Medos"/>
+                                <img class="h-12 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos"/>
 
                                 <div class="hidden md:block">
                                     <div class="ml-24 flex items-baseline space-x-4">
@@ -69,20 +69,20 @@
         </header>
     </div>
 
-    <form action="#" th:action="@{/user/awizacje/exportPdf}" th:object="${notification}" method="post">
+    <form action="#" th:action="@{/admin/awizacje/exportPdf}" th:object="${notification}" method="post">
 
-        <input type="hidden" th:field="${notification.id}">
-        <input type="hidden" th:field="${notification.status}">
-        <input type="hidden" th:field="${notification.type}">
-        <input type="hidden" th:field="${notification.driverName}">
-        <input type="hidden" th:field="${notification.carPlates}">
-        <input type="hidden" th:field="${notification.employee}">
-        <input type="hidden" th:field="${notification.visitDate}">
-        <input type="hidden" th:field="${notification.supplier}">
-        <input type="hidden" th:field="${notification.driverPhone}">
-        <input type="hidden" th:field="${notification.item}">
-        <input type="hidden" th:field="${notification.comment}">
-        <input type="hidden" th:field="${notification.employeePhone}">
+<!--        <input type="hidden" th:field="${notification.id}">-->
+<!--        <input type="hidden" th:field="${notification.status}">-->
+<!--        <input type="hidden" th:field="${notification.type}">-->
+<!--        <input type="hidden" th:field="${notification.driverName}">-->
+<!--        <input type="hidden" th:field="${notification.carPlates}">-->
+<!--        <input type="hidden" th:field="${notification.employee}">-->
+<!--        <input type="hidden" th:field="${notification.visitDate}">-->
+<!--        <input type="hidden" th:field="${notification.supplier}">-->
+<!--        <input type="hidden" th:field="${notification.driverPhone}">-->
+<!--        <input type="hidden" th:field="${notification.item}">-->
+<!--        <input type="hidden" th:field="${notification.comment}">-->
+<!--        <input type="hidden" th:field="${notification.employeePhone}">-->
 <!--        <input type="hidden" th:field="${notification.description}">-->
 
         <main class="-mt-32">
@@ -203,7 +203,7 @@
                             <div class="flex justify-end">
                                 <button type="button"
                                         class="rounded-md border border-indigo-400 bg-blue py-2 px-4 text-sm font-medium bg-indigo-600 text-white shadow-sm text-gray-100 hover:bg-indigo-200 hover:text-indigo-800 shadow-sm ocus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                    <a th:href="@{/user/awizacje}">Wstecz</a>
+                                    <a th:href="@{/admin/awizacje}">Wstecz</a>
                                 </button>
                                 <button type="submit"
                                         class="ml-3 inline-flex justify-center rounded-md border border-indigo-400 bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-lm hover:bg-indigo-200 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
