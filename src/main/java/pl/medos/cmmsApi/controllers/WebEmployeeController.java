@@ -75,7 +75,7 @@ public class WebEmployeeController {
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-employees";
+        return "main-employees";
     }
 
     @GetMapping(value = "/search/name")
@@ -90,7 +90,7 @@ public class WebEmployeeController {
         model.addAttribute("employees", employeeByRawName);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-employees";
+        return "main-employees";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -186,6 +186,6 @@ public class WebEmployeeController {
         LOGGER.info("findEmployeeByName()");
         model.addAttribute("employees", employeeByName);
         model.addAttribute("currentPage", pageNo);
-        return "list-employees.html";
+        return "main-employees";
     }
 }

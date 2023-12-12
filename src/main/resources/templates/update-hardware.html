@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Panel Zlecenia</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+<!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="bg-gray-500">
@@ -16,7 +17,7 @@
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
-                                <img class="h-12 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos"/>
+                                <img class="h-12 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
 
                                 <div class="hidden md:block">
                                     <div class="ml-24 flex items-baseline space-x-4">
@@ -73,8 +74,7 @@
         </header>
     </div>
 
-
-    <form action="#" th:action="@{/admin/hardwares/update}" th:object="${hardware}" method="post">
+    <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="*{name}">
         <input type="hidden" th:field="${hardware.id}">
@@ -152,7 +152,6 @@
                             </div>
                         </dl>
                     </div>
-
 
                     <div class="px-4 sm:px-6 lg:px-8 py-2">
                         <div class="overflow-hidden bg-gray-200 shadow sm:rounded-xl">
@@ -363,7 +362,7 @@
                                         <div class="flex justify-end">
                                             <button type="button"
                                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                <a th:href="@{/admin/hardwares}">Wstecz</a>
+                                                <a th:href="@{/hardwares}">Wstecz</a>
                                             </button>
                                             <button type="submit"
                                                     class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

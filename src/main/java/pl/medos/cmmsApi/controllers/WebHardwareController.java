@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/admin/hardwares")
+@RequestMapping("/hardwares")
 @SessionAttributes(names = {"hardwares"})
 public class WebHardwareController {
 
@@ -66,8 +66,8 @@ public class WebHardwareController {
     @GetMapping
     public String listView(Model model){
         LOGGER.info("listView()");
-//        return findHardwarePage(1, "inventoryNo", "asc", model);
-        return listViewAllSorted("inventoryNo", "desc", model);
+        return findHardwarePage(1, "inventoryNo", "asc", model);
+//        return listViewAllSorted("inventoryNo", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -91,7 +91,7 @@ public class WebHardwareController {
 
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("pageing(...)");
-        return "page-hardware";
+        return "main-hardware";
     }
 
     @GetMapping("/create")
@@ -108,7 +108,7 @@ public class WebHardwareController {
         LOGGER.info("createHardware()" + hardware.getInstallDate());
         Hardware savedHardware = hardwareService.create(hardware);
         LOGGER.info("createHardware(...)" + savedHardware);
-        return "redirect:/admin/hardwares";
+        return "redirect:/hardwares";
     }
 
     @GetMapping(value = "/read/{id}")
@@ -136,7 +136,7 @@ public class WebHardwareController {
         LOGGER.info("updateHardware(emp)" + hardware.getId());
         Hardware updatedHardware = hardwareService.update(hardware);
         LOGGER.info("updateHardware(...)");
-        return "redirect:/admin/hardwares";
+        return "redirect:/hardwares";
     }
 
     @GetMapping("/delete/{id}")
@@ -144,14 +144,14 @@ public class WebHardwareController {
         LOGGER.info("deleteHardware(" + id + ")");
         hardwareService.delete(id);
         LOGGER.info("deleteHardware(...)");
-        return "redirect:/admin/hardwares";
+        return "redirect:/hardwares";
     }
     @GetMapping("/deleteAll")
     public String deleteAllHardware(){
         LOGGER.info("deleteAllHardware()");
         hardwareService.deleteAll();
         LOGGER.info("deleteAllHardware(...)");
-        return "redirect:/admin/hardwares";
+        return "redirect:/hardwares";
     }
 
     @PostMapping("/exportPdf")
@@ -192,7 +192,7 @@ public class WebHardwareController {
         LOGGER.info("importHardwares()");
         if (file.isEmpty()) {
             LOGGER.info("Proszę wybrać plik do importu");
-            return "redirect/admin/hardwares";
+            return "redirect/hardwares";
         }
 
         List<Hardware> hardwares = importService.importExcelHardwareData(file);
@@ -201,7 +201,7 @@ public class WebHardwareController {
             hardwareService.create(hardware);
         });
         LOGGER.info("importHardwares(...) ");
-        return "redirect:/admin/hardwares";
+        return "redirect:/hardwares";
     }
 
     @GetMapping(value = "/search/query")
@@ -211,7 +211,6 @@ public class WebHardwareController {
         List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("search(...)");
-
         return "list-hardware";
     }
 }

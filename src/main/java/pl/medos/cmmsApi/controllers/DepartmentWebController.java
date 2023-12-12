@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/admin/departments")
+@RequestMapping("/departments")
 public class DepartmentWebController {
 
     private static final Logger LOGGER = Logger.getLogger(DepartmentWebController.class.getName());
@@ -41,21 +41,30 @@ public class DepartmentWebController {
     @GetMapping
     public String listView(Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPageinated(1, model);
+        return findPageinated(1,"name", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
-    public String findPageinated(@PathVariable(value = "pageNo") int pageNo  ,Model model) {
+    public String findPageinated(@PathVariable(name = "pageNo") int pageNo,
+                                 @RequestParam(name = "sortField") String sortField,
+                                 @RequestParam(name = "sortDir") String sortDir,
+                                 Model model)  {
         LOGGER.info("findPage()");
         int pageSize=10;
-        Page<Department> departmentPage = departmentService.findDepartmentPage(pageNo, pageSize);
+
+        Page<Department> departmentPage = departmentService.findDepartmentPage(pageNo, pageSize, sortField, sortDir);
         List<Department> departments = departmentPage.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", departmentPage.getTotalPages());
         model.addAttribute("totalItems", departmentPage.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("departments", departments);
         LOGGER.info("listView(...)" + departments);
-        return "list-department.html";
+        return "main-department.html";
     }
 
     @GetMapping(value = "/create")
@@ -73,7 +82,7 @@ public class DepartmentWebController {
         LOGGER.info("create(" + department + ")");
         Department savedDepartment = departmentService.createDepartment(department);
         LOGGER.info("create(...)" + savedDepartment);
-        return "redirect:/admin/departments";
+        return "redirect:/departments";
     }
 
     @GetMapping(value = "/read/{id}")
@@ -102,7 +111,7 @@ public class DepartmentWebController {
         LOGGER.info("update()" + department);
         Department updatedDepartment = departmentService.updateDepartment(department, id);
         LOGGER.info("update(...)" + updatedDepartment);
-        return "redirect:/admin/departments";
+        return "redirect:/departments";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -110,7 +119,7 @@ public class DepartmentWebController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         departmentService.deleteDepartment(id);
-        return "redirect:/admin/departments";
+        return "redirect:/departments";
     }
 
 
@@ -125,7 +134,7 @@ public class DepartmentWebController {
         LOGGER.info("importDepartments()");
         if(file.isEmpty()){
             LOGGER.info("Please select file to upload");
-            return "redirect/admin/departments";
+            return "redirect:/departments";
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
@@ -136,6 +145,6 @@ public class DepartmentWebController {
         });
         LOGGER.info("importDepartments(...) ");
 
-        return "redirect:/admin/departments";
+        return "redirect:/departments";
     }
 }

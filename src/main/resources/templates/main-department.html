@@ -9,12 +9,15 @@
 </head>
 <body class="bg-gray-400">
 
+                <input type="hidden" th:field="*{departments}">
+
 <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
         <div class="fixed inset-0 z-40 flex">
             <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800">
+
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                     <button type="button"
                             class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -66,7 +69,7 @@
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <a th:href="@{/awizacje}"
-                       class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                       class="text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -109,7 +112,7 @@
                         IT
                     </a>
                     <a href="/departments"
-                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                       class="bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -119,6 +122,56 @@
                         </svg>
                         Wydziały
                     </a>
+
+                    <!--                    <a href="#"-->
+                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
+                    <!--                        &lt;!&ndash; Heroicon name: outline/users &ndash;&gt;-->
+                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
+                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+                    <!--                             stroke="currentColor" aria-hidden="true">-->
+                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
+                    <!--                                  d="m5 11l1.5-4.5h11L19 11m-1.5 5a1.5 1.5 0 0 1-1.5-1.5a1.5 1.5 0 0 1 1.5-1.5a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m-11 0A1.5 1.5 0 0 1 5 14.5A1.5 1.5 0 0 1 6.5 13A1.5 1.5 0 0 1 8 14.5A1.5 1.5 0 0 1 6.5 16M18.92 6c-.2-.58-.76-1-1.42-1h-11c-.66 0-1.22.42-1.42 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8l-2.08-6Z"/>-->
+                    <!--                            &lt;!&ndash;                                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/>&ndash;&gt;-->
+
+                    <!--                        </svg>-->
+                    <!--                        Pojazdy-->
+                    <!--                    </a>-->
+
+                    <!--                    <a href="#"-->
+                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
+                    <!--                        &lt;!&ndash; Heroicon name: outline/chart-bar &ndash;&gt;-->
+                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
+                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+                    <!--                             stroke="currentColor" aria-hidden="true">-->
+                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
+                    <!--                                  d="M12.673 1.612L20.8 9h-2.973L12 3.703L6 9.158V19h5v2H5a1 1 0 0 1-1-1v-9H1l10.327-9.388a1 1 0 0 1 1.346 0ZM14 11h9v7h-9v-7Zm2 2v3h5v-3h-5Zm8 8H13v-2h11v2Z"/>-->
+
+                    <!--                        </svg>-->
+                    <!--                        Dostawcy</a>-->
+
+                    <!--                    <a href="#"-->
+                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
+                    <!--                        &lt;!&ndash; Heroicon name: outline/inbox &ndash;&gt;-->
+                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
+                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+                    <!--                             stroke="currentColor" aria-hidden="true">-->
+                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
+                    <!--                                  d="M6 7.828V20h12V4H9.828L6 7.828Zm-1.707-1.12L9 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7.414a1 1 0 0 1 .293-.707ZM15 5h2v4h-2V5Zm-3 0h2v4h-2V5ZM9 6h2v3H9V6Z"/>-->
+                    <!--                        </svg>-->
+                    <!--                        Przepustki-->
+                    <!--                    </a>-->
+
+                    <!--                    <a href="#"-->
+                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
+                    <!--                        &lt;!&ndash; Heroicon name: outline/calendar &ndash;&gt;-->
+                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
+                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+                    <!--                             stroke="currentColor" aria-hidden="true">-->
+                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
+                    <!--                                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>-->
+                    <!--                        </svg>-->
+                    <!--                        Wyloguj-->
+                    <!--                    </a>-->
                 </nav>
             </div>
 
@@ -130,7 +183,7 @@
 
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-white">Niezarejestrowani</p>
+                            <p class="text-sm font-medium text-white">Niezarejestrowany</p>
                             <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
                         </div>
                     </div>
@@ -138,6 +191,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="flex flex-1 flex-col md:pl-64">
         <div class="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
@@ -161,8 +215,8 @@
                     <div class="px-4 sm:px-6 lg:px-2">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-4xl font-semibold text-gray-900">Awizacje</h1>
-                                <p class="mt-2 text-lg text-gray-700">Lista zezwoleń na wjazd pojadu</p>
+                                <h1 class="text-4xl font-semibold text-gray-900">Wydziały</h1>
+                                <p class="mt-2 text-lg text-gray-700">Lista wydziałów firmy</p>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                             </div>
@@ -174,17 +228,29 @@
                                 <div class="flex items-center px-1 lg:px-1">
                                     <div class="flex-shrink-1">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/truck.png}"
+                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/access.png}"
                                              alt="device">
-                                                                                <img class="hidden h-14 w-auto lg:block" th:src="@{/images/truck.png}"
-                                                                                     alt="device">
+                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/access.png}"
+                                             alt="device">
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
-                                        <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
                                         <div th:if="${isAdmin}" class="flex space-x-4">
-                                            <a href="#" th:href="@{/awizacje/create}"
+                                            <a href="#" th:href="@{/departments/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
+                                            <!--                                            <a href="#" th:href="@{/notifications/file}"-->
+                                            <!--                                            <a href="#"-->
+                                            <!--                                               class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-gray-900"-->
+                                            <!--                                               th:onclick='feature("funkcja zablokowana!")'>Import</a>-->
+                                            <!--                                            &lt;!&ndash;                                            <a href="#" th:href="@{/notification/export}"&ndash;&gt;-->
+                                            <!--                                            <a href="#" th:href="@{/notifications}"-->
+                                            <!--                                               class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-gray-900"-->
+                                            <!--                                               th:onclick='feature("funkcja zablokowana!")'>Export</a>-->
+                                            <!--                                            &lt;!&ndash;                                            <a href="#" th:href="@{/notifications/deleteAll}"&ndash;&gt;-->
+                                            <!--                                            <a href="#" th:href="@{/notifications}"-->
+                                            <!--                                               class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-red-500 hover:text-gray-700"-->
+                                            <!--                                               th:onclick='feature("funkcja zablokowana!")'>Usuń-->
+                                            <!--                                                wszystko</a>-->
                                         </div>
                                     </div>
                                 </div>
@@ -192,11 +258,11 @@
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
-                                        <form action="#" th:action="@{/awizacje/search/query}" method="GET">
+                                        <form action="#" th:action="@{/departments/search/query}" method="GET">
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <svg class="h-5 w-5 text-gray-800" viewBox="0 0 20 20"
+                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
                                                          fill="currentColor"
                                                          aria-hidden="true">
                                                         <path fill-rule="evenodd"
@@ -205,7 +271,7 @@
                                                     </svg>
                                                 </div>
                                                 <input id="search" name="query"
-                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-gray-900 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
+                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-blue-700 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
                                                        placeholder="Szukaj" type="search">
                                             </div>
                                         </form>
@@ -214,151 +280,72 @@
                             </div>
                         </div>
 
+
                         <div class="mt-4 flex flex-col">
                             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                     <div class="overflow-hidden shadow ring-2 ring-black ring-opacity-5 md:rounded-lg">
                                         <table class="min-w-full">
-                                            <thead class="bg-gray-800 text-sm">
+                                            <thead class="bg-gray-800 text-lg font-medium">
                                             <tr>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/awizacje/page/' + ${currentPage} + '?sortField=visitDate&sortDir=' + ${reverseSortDir}}">
-                                                        Data wjazdu ↑↓</a>
+                                                    class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
+                                                    <a th:href="@{'/departments/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                        Nazwa ↑↓</a>
                                                 </th>
 
                                                 <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/awizacje/page/' + ${currentPage} + '?sortField=type&sortDir=' + ${reverseSortDir}}">
-                                                        Kategoria ↑↓</a>
+                                                    class="px-3 py-3.5 text-left text-lg font-medium text-yellow-500 hover:text-yellow-100">
+                                                    <a th:href="@{'/departments/page/' + ${currentPage} + '?sortField=location&sortDir=' + ${reverseSortDir}}">
+                                                        Lokalizacja ↑↓</a>
                                                 </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left  font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/awizacje/page/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
-                                                        Status ↑↓</a>
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left  font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/awizacje/page/' + ${currentPage} + '?sortField=supplier&sortDir=' + ${reverseSortDir}}">
-                                                        Firma ↑↓</a>
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">
-                                                    Towar
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">
-                                                    Ilość/Waga
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">
-                                                    Nr rejstracyjny
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/awizacje/page/' + ${currentPage} + '?sortField=driverName&sortDir=' + ${reverseSortDir}}">
-                                                        Kierowca ↑↓</a>
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">
-                                                    Telefon
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500 hover:text-yellow-100">
-                                                    <a th:href="@{'/awizacje/page/' + ${currentPage} + '?sortField=employee&sortDir=' + ${reverseSortDir}}">
-                                                        Osoba kontaktowa ↑↓</a>
-                                                </th>
-
-<!--                                                <th scope="col"-->
-<!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
-<!--                                                    Zdjęcie-->
-<!--                                                </th>-->
 
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
                                                     <span class="sr-only">Edit</span>
                                                 </th>
                                             </tr>
                                             </thead>
-                                            <tbody class="bg-red">
+                                            <tbody class="bg-grey">
                                             <tr class="border-t border-gray-600">
-                                                <th colspan="12" scope="colgroup"
-                                                    class="bg-gray-700 px-4 py-2 text-left text-lm font-semibold text-blue-200 sm:px-6">
-                                                    Kliknij nagłówek tabeli, aby posortować.
+                                                <th colspan="3" scope="colgroup"
+                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-blue-100 sm:px-6">
+                                                    Kliknij nagłówek tabeli ↑↓ , aby posortować.
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="notification: ${notifications}"
-                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
+                                            <tr th:each="department: ${departments}"
+                                                class="border-t border-gray-300 bg-gray-100 text-xl font-medium">
 
-                                                <td th:text="${#temporals.format(notification.visitDate, 'dd-MM-yyyy HH:mm')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
-                                                    Data
-                                                    Zgłoszenia
+                                                <td th:text="${department.name}"
+                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">Nazwa
                                                 </td>
-                                                <td th:text="${notification.type}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Typ
-                                                </td>
-                                                <td th:text="${notification.status}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Status
-                                                </td>
-                                                <td th:text="${notification.supplier}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Dostawca
-                                                </td>
-                                                <td th:text="${notification.item}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Towar
-                                                </td>
-                                                <td th:text="${notification.itemDetails}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">ilość /
-                                                    Waga
-                                                </td>
-                                                <td th:text="${notification.carPlates}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium  text-gray-900">Nr
-                                                    rejestracyjny
-                                                </td>
-                                                <td th:text="${notification.driverName}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Kierowca
-                                                </td>
-
-                                                <td th:text="${notification.driverPhone}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Telefon do
-                                                    kierowcy
-                                                </td>
-
-                                                <td th:text="${notification.employee}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Osoba
-                                                    zlecająca
+                                                <td th:text="${department.location}"
+                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">Lokalizacja
                                                 </td>
 
 <!--                                                <td>-->
 <!--                                                    <div class="container mt-2 mb-2">-->
-<!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
-<!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
+<!--                                                        <a th:href="@{'/departments/downloadfile?id=' + ${pass.id}}">-->
+<!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(pass.id)}"-->
 <!--                                                                 width="70px" height="30px" alt="person">-->
 <!--                                                        </a>-->
 <!--                                                    </div>-->
 <!--                                                </td>-->
+
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
-                                                    <a th:href="@{/awizacje/read/{id}(id=${notification.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span
-                                                            class="sr-only"></span></a>
+<!--                                                    <a th:href="@{/przepustki/read/{id}(id=${pass.id})}"-->
+<!--                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span-->
+<!--                                                            class="sr-only"></span></a>-->
 
-                                                    <a th:if="${isAdmin}" th:href="@{/awizacje/update/{id}(id=${notification.id})}"
+                                                    <a th:if="${isAdmin}" th:href="@{/departments/update/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300 ">Edycja<span
                                                             class="sr-only"></span></a>
 
-                                                    <a th:if="${isAdmin}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"
+                                                    <a th:if="${isAdmin}" th:href="@{/departments/delete/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
-
                                                 </td>
 
                                             </tr>
@@ -366,9 +353,9 @@
                                             </tbody>
                                             <tbody class="bg-white">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="12" scope="colgroup"
+                                                <th colspan="3" scope="colgroup"
                                                     class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
-                                                    Koniec strony
+                                                    Koniec listy
                                                 </th>
                                             </tr>
                                         </table>
@@ -381,13 +368,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/awizacje/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                           th:href="@{'/departments/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/awizacje/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                           th:href="@{'/departments/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -403,7 +390,7 @@
                                     <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
-         th:href="@{'/awizacje/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         th:href="@{'/departments/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
@@ -411,7 +398,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <div class="overflow-hidden rounded-md bg-gray shadow">
                         <ul role="list" class="divide-y divide-gray-700">
@@ -422,6 +408,7 @@
                 </div>
             </div>
         </main>
+
 
         <div class="relative">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">

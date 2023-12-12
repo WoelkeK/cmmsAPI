@@ -6,7 +6,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Moduł Sprzętu IT</title>
-        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+        <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
     </head>
     <title>Title</title>
 </head>
@@ -170,18 +171,13 @@
         <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-gray-800 px-6 pb-4">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex h-16 shrink-0 items-center">
-                    <img class="h-8 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos">
+                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos">
                 </div>
 
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/admin/index"
+                    <a href="/index"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                        <!--
-                          Heroicon name: outline/home
-
-                          Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
-                        -->
                         <svg class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                              aria-hidden="true">
@@ -191,7 +187,7 @@
                         Paneł Główny
                     </a>
 
-                    <a th:href="@{/admin/employees}"
+                    <a th:href="@{/employees}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -203,7 +199,7 @@
                         Pracownicy
                     </a>
 
-                    <a th:href="@{/admin/departments}"
+                    <a th:href="@{/departments}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/users -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -214,7 +210,7 @@
                         </svg>
                         Wydziały
                     </a>
-                    <a th:href="@{/admin/hardwares}"
+                    <a th:href="@{/hardwares}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/chart-bar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -249,7 +245,7 @@
                         Raporty
                     </a>
 
-                    <a th:href="@{/admin/logout}"
+                    <a th:href="@{/logout}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -271,20 +267,20 @@
                     <div class="flex items-center px-1 lg:px-0">
                         <div class="flex-shrink-0">
 
-                            <img class="block h-12 w-auto lg:hidden" th:src="@{/admin/images/device2.svg}" alt="device">
-                            <img class="hidden h-12 w-auto lg:block" th:src="@{/admin/images/device2.svg}" alt="device">
+                            <img class="block h-12 w-auto lg:hidden" th:src="@{/images/device2.svg}" alt="device">
+                            <img class="hidden h-12 w-auto lg:block" th:src="@{/images/device2.svg}" alt="device">
 
                         </div>
                         <div class="hidden lg:ml-10 lg:block">
-                            <div class="flex space-x-4">
+                            <div th:if="${isAdmin}" class="flex space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                <a href="#" th:href="@{/admin/hardwares/create}"
+                                <a href="#" th:href="@{/hardwares/create}"
                                    class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dodaj</a>
-                                <a href="#" th:href="@{/admin/hardwares/file}"
+                                <a href="#" th:href="@{/hardwares/file}"
                                    class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Import</a>
-                                <a href="#" th:href="@{/admin/hardwares/export}"
+                                <a href="#" th:href="@{/hardwares/export}"
                                    class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Export</a>
-                                <a href="#" th:href="@{/admin/hardwares/deleteAll}"
+                                <a href="#" th:href="@{/hardwares/deleteAll}"
                                    class="rounded-md px-10 py-2 text-lg font-medium text-gray-300 hover:bg-red-500 hover:text-white">Usuń
                                     wszystko</a>
                             </div>
@@ -292,7 +288,7 @@
                     </div>
                     <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                         <div class="w-full max-w-lg lg:max-w-xs">
-                            <form action="#" th:action="@{/admin/hardwares/search/query}" method="GET">
+                            <form action="#" th:action="@{/hardwares/search/query}" method="GET">
                                 <label for="search" class="sr-only">Szukaj</label>
                                 <div class="relative">
                                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -330,7 +326,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>Index</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/' + '?sortField=inventoryNo&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=inventoryNo&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -341,7 +337,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>Wydział</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/' + '?sortField=department&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=department&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -352,7 +348,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>Użytkownik</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/' + '?sortField=employee&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=employee&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -363,7 +359,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>Typ urządzenia</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/' + '?sortField=type&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=type&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -373,7 +369,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>Nazwa</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/' + '?sortField=name&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=name&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -384,7 +380,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>ServiceTag</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/' + '?sortField=serialNumber&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/' + '?sortField=serialNumber&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -394,7 +390,7 @@
                                                 <div class="flex-1 truncate px-4 py-2 text-lg text-yellow-500">
                                                     <p>Adress IP</p>
                                                     <a class="hover:text-yellow-100 text-2xl"
-                                                       th:href="@{'/admin/hardwares/sort/'  + '?sortField=ipAddress&sortDir=' + ${reverseSortDir}}">↑↓</a>
+                                                       th:href="@{'/hardwares/sort/'  + '?sortField=ipAddress&sortDir=' + ${reverseSortDir}}">↑↓</a>
                                                 </div>
                                             </div>
                                         </th>
@@ -447,20 +443,19 @@
                                             ServiceTag
                                         </td>
 
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
+                                        <td th:if="${isAdmin}" class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
-                                            <a th:href="@{/admin/hardwares/read/{id}(id=${hardware.id})}"
+                                            <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
                                                class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
                                                     class="sr-only"></span></a>
 
-                                            <a th:href="@{/admin/hardwares/update/{id}(id=${hardware.id})}"
+                                            <a th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
                                                class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
                                                     class="sr-only"></span></a>
 
-                                            <a th:href="@{/admin/hardwares/delete/{id}(id=${hardware.id})}"
+                                            <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
                                                class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
                                                     class="sr-only"></span></a>
-
                                         </td>
                                     </tr>
 
