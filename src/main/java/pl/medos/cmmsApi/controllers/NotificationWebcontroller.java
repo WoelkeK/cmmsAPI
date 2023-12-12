@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;

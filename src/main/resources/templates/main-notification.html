@@ -75,7 +75,7 @@
                         Awizacje
                     </a>
 
-                    <a href="/info"
+                    <a href="/employees"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -160,7 +160,8 @@
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
-                                        <div class="flex space-x-4">
+                                        <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
+                                        <div th:if="${isAdmin}" class="flex space-x-4">
                                             <a href="#" th:href="@{/awizacje/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
                                         </div>
@@ -402,7 +403,6 @@
                 </div>
             </div>
         </main>
-
 
         <div class="relative">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">

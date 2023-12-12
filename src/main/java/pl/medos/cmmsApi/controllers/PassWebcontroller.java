@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/przepustki")
+@RequestMapping("/przepustki")
 @SessionAttributes(names = {"images", "przepustki"})
 @RequiredArgsConstructor
 @Slf4j
@@ -62,7 +62,7 @@ public class PassWebcontroller {
 
         Pass processedPass = imageService.prepareImage(pass, image);
         passService.createPass(processedPass);
-        return "redirect:/admin/przepustki";
+        return "redirect:/przepustki";
         }
 
     @GetMapping
@@ -112,9 +112,6 @@ public class PassWebcontroller {
                                      Model model,
                                      MultipartFile image) throws IOException {
         log.info("createPass()");
-
-        log.info("model: " + pass.getName()+ " " + pass.getCompany());
-
         if (result.hasErrors()) {
             log.info("create: result has erorr()" +pass+ " "+ result.getFieldError());
             model.addAttribute("pass", pass);
@@ -122,14 +119,14 @@ public class PassWebcontroller {
         }
         Pass processedPass = imageService.prepareImage(pass, image);
         passService.createPass(processedPass);
-        return "redirect:/admin/przepustki";
+        return "redirect:/przepustki";
     }
 
     @GetMapping("delete/{id}")
     public String deletePass(@PathVariable Long id) {
         log.info("deletePass()");
         passService.deletePass(id);
-        return "redirect:/admin/przepustki";
+        return "redirect:/przepustki";
     }
 
     @GetMapping(value = "/downloadfile")

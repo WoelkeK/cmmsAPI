@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

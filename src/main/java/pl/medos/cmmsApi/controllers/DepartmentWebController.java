@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

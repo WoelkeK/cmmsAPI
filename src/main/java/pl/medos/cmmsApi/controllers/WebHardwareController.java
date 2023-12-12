@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;

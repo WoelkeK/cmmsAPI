@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł Pracowników</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
-    <!--    <link th:href="@{/admin/css/mainold.css}" rel="stylesheet"/>-->
+<!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+        <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 
@@ -34,7 +34,7 @@
                         <!--                             alt="Medos">-->
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
-                        <a href="/user/awizacje"
+                        <a href="/awizacje"
                            class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
 
                             <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@
                             Awizacje
                         </a>
 
-                        <a th:href="@{/user/info}"
+                        <a th:href="@{/info}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -75,7 +75,7 @@
                         <div class="flex items-center">
                             <div>
                                 <img class="inline-block h-10 w-10 rounded-full"
-                                     th:src="@{/user/images/default.jpg}"
+                                     th:src="@{/images/default.jpg}"
                                      alt="user-photo">
                             </div>
                             <div class="ml-3">
@@ -99,11 +99,11 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" th:src="@{/user/images/logo.svg}" alt="Medos"/>
+                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/user/awizacje"
+                    <a href="/awizacje"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!--
                           Heroicon name: outline/home
@@ -118,7 +118,7 @@
                         Awizacje
                     </a>
 
-                    <a th:href="@{/user/info}"
+                    <a th:href="@{/info}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -130,7 +130,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/user/przepustki"
+                    <a href="/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -148,7 +148,7 @@
                 <a href="#" class="group block w-full flex-shrink-0">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/user/images/avatar.png}"
+                            <img class="inline-block h-9 w-9 rounded-full" th:src="@{/images/avatar.png}"
                                  alt="Avatar"/>
 
                         </div>
@@ -196,9 +196,9 @@
                                 <div class="flex items-center px-1 lg:px-0">
                                     <div class="flex-shrink-0">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/user/images/peoplemono.png}"
+                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/peoplemono.png}"
                                              alt="device">
-                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/user/images/peoplemono.png}"
+                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/peoplemono.png}"
                                              alt="device">
 
                                     </div>
@@ -208,7 +208,7 @@
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
-                                        <form action="#" th:action="@{/user/info/search/query}" method="GET">
+                                        <form action="#" th:action="@{/info/search/query}" method="GET">
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -240,7 +240,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
                                                     <a class="hover:text-yellow-100 text-xl"
-                                                       th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                       th:href="@{'/info/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                                                         Imię i nazwisko ↑↓ </a>
                                                 </th>
 
@@ -252,7 +252,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
                                                     <a class="hover:text-yellow-100 text-xl"
-                                                       th:href="@{'/user/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział
+                                                       th:href="@{'/info/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział
                                                         ↑↓</a>
                                                 </th>
 
@@ -263,11 +263,14 @@
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
                                                     Email
                                                 </th>
+                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 lm:pr-6">
+                                                    <span class="sr-only">Edit</span>
+                                                </th>
                                             </tr>
                                             </thead>
                                             <tbody class="bg-gray">
                                             <tr class="border-t border-gray-600">
-                                                <th colspan="5" scope="colgroup"
+                                                <th colspan="6" scope="colgroup"
                                                     class="bg-gray-700 px-4 py-2 text-left text-lm font-semibold text-blue-200 sm:px-6">
                                                     Kliknij nagłówek tabeli ↑↓ , aby posortować.
                                                 </th>
@@ -295,12 +298,24 @@
                                                     class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
                                                     Email
                                                 </td>
+
+                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                    <a th:href="@{/employees/update/{id}(id=${employee.id}, pageNo=${currentPage})}"
+                                                       class="text-indigo-800 hover:text-indigo-300">Edycja<span
+                                                            class="sr-only"></span></a>
+                                                    <!--                                                    <a th:href="@{/employees/read/{id}(id=${employee.id})}"-->
+                                                    <!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
+                                                    <!--                                                            class="sr-only"></span></a>-->
+                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id}, pageNo=${currentPage})}"
+                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span
+                                                            class="sr-only"></span></a>
+                                                </td>
                                             </tr>
                                             <!-- More people... -->
                                             </tbody>
                                             <tbody class="bg-green-500">
                                             <tr class="border-t border-gray-200">
-                                                <th colspan="5" scope="colgroup"
+                                                <th colspan="6" scope="colgroup"
                                                     class="bg-green-400 px-4 py-2 text-left text-lg font-medium text-gray-900 sm:px-6">
                                                     Koniec strony
                                                 </th>
@@ -316,13 +331,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/user/info/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                           th:href="@{'/info/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/user/info/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                           th:href="@{'/info/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -338,7 +353,7 @@
                                 <div class="col-sm-1">
             <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
-         th:href="@{'/user/info/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         th:href="@{'/info/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                 </div>

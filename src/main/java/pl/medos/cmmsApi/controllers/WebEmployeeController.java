@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping(value = "/admin/employees")
+@RequestMapping(value = "/employees")
 @SessionAttributes(names = {"employees", "departments"})
 public class WebEmployeeController {
 
@@ -42,7 +42,7 @@ public class WebEmployeeController {
         modelMap.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "list-employee.html";
+        return "list-employees";
     }
 
     @GetMapping
@@ -75,7 +75,7 @@ public class WebEmployeeController {
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-employee.html";
+        return "list-employees";
     }
 
     @GetMapping(value = "/search/name")
@@ -90,7 +90,7 @@ public class WebEmployeeController {
         model.addAttribute("employees", employeeByRawName);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-employee.html";
+        return "list-employees";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -102,7 +102,7 @@ public class WebEmployeeController {
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
         modelMap.addAttribute("pageNo", pageNo);
-        return "update-employee.html";
+        return "update-employee";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -113,14 +113,14 @@ public class WebEmployeeController {
         LOGGER.info("update()" + pageNo);
         Employee updatedEmployee = employeeService.updateEmployee(employee, id);
         LOGGER.info("update(...)" + updatedEmployee);
-        return "redirect:/admin/employees?pageNo=" + pageNo;
+        return "redirect:/employees?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
         modelMap.addAttribute("employee", new Employee());
-        return "create-employee.html";
+        return "create-employee";
     }
 
     @PostMapping(value = "/create")
@@ -131,7 +131,7 @@ public class WebEmployeeController {
 //        LOGGER.info("create(" + lastName + ")");
 //        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
         employeeService.createEmployee(employee);
-        return "redirect:/admin/employees";
+        return "redirect:/employees";
     }
 
     @GetMapping(value = "/read/{id}")
@@ -141,7 +141,7 @@ public class WebEmployeeController {
         LOGGER.info("read(" + id + ")");
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
-        return "read-employee.html";
+        return "read-employee";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -150,7 +150,7 @@ public class WebEmployeeController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         employeeService.deleteEmployee(id);
-        return "redirect:/admin/employees?pageNo=" + pageNo;
+        return "redirect:/employees?pageNo=" + pageNo;
     }
 
     @GetMapping("/file")
@@ -163,7 +163,7 @@ public class WebEmployeeController {
         LOGGER.info("importEmployees()");
         if (file.isEmpty()) {
             LOGGER.info("Please select file to upload");
-            return "redirect/admin/employees";
+            return "redirect:/employees";
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
@@ -173,6 +173,19 @@ public class WebEmployeeController {
         });
         LOGGER.info("importEmployees(...) ");
 
-        return "redirect:/admin/employees";
+        return "redirect:/employees";
+    }
+    @GetMapping("/search/query")
+    public String searchEmployeeByName(
+            @RequestParam(value = "query") String query,
+            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            Model model){
+        LOGGER.info("search()");
+        int pagesize =10;
+        Page<Employee> employeeByName = employeeService.findEmployeeByName(pageNo, pagesize, query);
+        LOGGER.info("findEmployeeByName()");
+        model.addAttribute("employees", employeeByName);
+        model.addAttribute("currentPage", pageNo);
+        return "list-employees.html";
     }
 }

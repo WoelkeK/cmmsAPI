@@ -1,4 +1,4 @@
-package pl.medos.cmmsApi.controllers.admin;
+package pl.medos.cmmsApi.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

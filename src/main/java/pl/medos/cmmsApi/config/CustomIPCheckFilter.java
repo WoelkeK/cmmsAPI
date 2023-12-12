@@ -38,10 +38,6 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         String requestURI = request.getRequestURI();
         log.info("URI: " + requestURI);
 
-        // Extract the role from the endpoint
-        String roleFromEndPoint = extractRoleFromURI(requestURI);
-        log.info("roleFromEndpoint: " + roleFromEndPoint);
-
         Hardware ipAddressRole = hardwareService.findByIpAddress(remoteIP);
         log.info("roleFromDb: " + ipAddressRole.getIpAddress()+ " " + ipAddressRole.getRole());
         req.setAttribute("isAdmin", false);
@@ -49,12 +45,6 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         if (ipAddressRole == null) {
             log.info("No match found in the repository for IP: " + remoteIP);
             throw new ServletException("Unauthorized IP Access");
-        } else{
-            log.info("IP DB Address: " + ipAddressRole.getIpAddress());
-            if (!roleFromEndPoint.equals(ipAddressRole.getRole()) && !(ipAddressRole.getRole().equals("admin") && roleFromEndPoint.equals("user"))) {
-                log.info("Role mismatch. Expected: " + roleFromEndPoint + ", Actual: " + ipAddressRole.getRole());
-                throw new ServletException("Unauthorized IP Access");
-            }
         }
 
         if (ipAddressRole.getRole().equalsIgnoreCase("admin")) {
@@ -62,15 +52,5 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         }
 
         chain.doFilter(request, res);
-    }
-
-    private String extractRoleFromURI(String uri) throws ServletException {
-        if ((uri.contains("/user") || (uri.contains("/favicon.ico")))) {
-            return "user";
-        } else if ((uri.contains("/admin") || (uri.contains("/favicon.ico")))) {
-            return "admin";
-        } else {
-            throw new ServletException("Unknown role for URL: " + uri);
-        }
     }
 }
