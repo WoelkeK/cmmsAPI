@@ -3,7 +3,9 @@ package pl.medos.cmmsApi.service.mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Job;
+import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
 import pl.medos.cmmsApi.repository.entity.MachineEntity;
 

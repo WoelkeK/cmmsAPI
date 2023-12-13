@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Panel Maszyna</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <link th:href="@{/user/css/mainold.css}" rel="stylesheet"/>
 
 </head>
 <body class="bg-gray-400">
@@ -14,7 +15,7 @@
             <h1 class="text-6xl font-semibold text-gray-900">Maszyna</h1>
 
 
-            <form action="#" th:action="@{/admin/machines/create}" th:object="${machine}" method="post"
+            <form action="#" th:action="@{/machines/create}" th:object="${machine}" method="post"
                   class="space-y-8 divide-y divide-gray-700">
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">
@@ -95,7 +96,8 @@
 
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
                         <label for="install-date"
-                               class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data instalacji maszyny</label>
+                               class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data instalacji
+                            maszyny</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
 
                             <input type="datetime-local" th:field="${machine.installDate}" id="install-date"
@@ -106,16 +108,16 @@
                     </div>
 
 
-                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                    <label for="machineStatus"
-                           class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Status Maszyny</label>
-                    <div class="mt-1 sm:col-span-2 sm:mt-0">
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
+                        <label for="machineStatus"
+                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Status Maszyny</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
 
-                        <input type="text" th:field="${machine.status}" id="machineStatus" name="machineStatus"
-                               autocomplete="machine-status"
-                               class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                            <input type="text" th:field="${machine.status}" id="machineStatus" name="machineStatus"
+                                   autocomplete="machine-status"
+                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="space-y-6 sm:space-y-5">
 
@@ -141,24 +143,12 @@
                                      id="date-register">Monitoring
                                 </div>
                             </div>
-
-                            <!--                    <div class="mt-4 space-y-4">-->
-                            <!--                        <label for="jobStartTime">Data podjęcia działania:</label>-->
-                            <!--                        <input type="date" th:field="${job.jobStartTime}" id="jobStartTime"-->
-                            <!--                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-xl focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
-                            <!--                    </div>-->
-
-                            <!--                    <div class="mt-4 space-y-4">-->
-                            <!--                        <label for="jobStopTime">Data zakończenia naprawy:</label>-->
-                            <!--                        <input type="date" th:field="${job.jobStopTime}" id="jobStopTime"-->
-                            <!--                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-xl focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">-->
-                            <!--                    </div>-->
-                            <!--                </div>-->
                             <div class="space-y-6 divide-y divide-gray-800 pt-8 sm:space-y-5 sm:pt-10">
 
                                 <div>
                                     <h3 class="text-lm font-medium leading-6 text-gray-800">Powiadomienia</h3>
-                                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Odbiór komunikatów zdalnych z API Maszyny:.</p>
+                                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Odbiór komunikatów zdalnych z API
+                                        Maszyny:.</p>
                                 </div>
                                 <div class="space-y-6 divide-y divide-gray-500 sm:space-y-5">
                                     <div class="pt-6 sm:pt-5">
@@ -177,8 +167,10 @@
                                                                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                                                             </div>
                                                             <div class="ml-3 text-sm">
-                                                                <label for="comments" class="font-medium text-yellow-700">Ostrzeżenia</label>
-                                                                <p class="text-gray-500">Powiadomienie o pojawieniu się ostrzeżenia o nieprawidłowej pracy</p>
+                                                                <label for="comments"
+                                                                       class="font-medium text-yellow-700">Ostrzeżenia</label>
+                                                                <p class="text-gray-500">Powiadomienie o pojawieniu się
+                                                                    ostrzeżenia o nieprawidłowej pracy</p>
                                                             </div>
                                                         </div>
                                                         <div class="relative flex items-start">
@@ -188,7 +180,8 @@
                                                             </div>
                                                             <div class="ml-3 text-sm">
                                                                 <label for="jobs" class="font-medium text-red-600">Awarie</label>
-                                                                <p class="text-gray-500">Powiadomienie o awarii maszyny i konieczności wezwania technika.</p>
+                                                                <p class="text-gray-500">Powiadomienie o awarii maszyny
+                                                                    i konieczności wezwania technika.</p>
                                                             </div>
                                                         </div>
 
@@ -206,7 +199,7 @@
                         <div class="flex justify-end">
                             <button type="button"
                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                <a th:href="@{/admin/machines}">Wstecz</a>
+                                <a th:href="@{/machines}">Wstecz</a>
                             </button>
                             <button type="submit"
                                     class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -219,6 +212,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

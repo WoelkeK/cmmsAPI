@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/admin/jobs")
+@RequestMapping("/jobs")
 @SessionAttributes(names = {"departments", "employees", "machines", "engineers", "images"})
 public class WebJobController {
 
@@ -66,7 +66,7 @@ public class WebJobController {
         }
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listViewAll(...)" + jobs);
-        return "list-job.html";
+        return "list-job";
     }
 
     @GetMapping
@@ -109,7 +109,7 @@ public class WebJobController {
         }
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
-        return "list-job.html";
+        return "main-job";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -121,7 +121,7 @@ public class WebJobController {
         LOGGER.info(job.getEmployee().getId().toString());
         model.addAttribute("job", job);
         LOGGER.info("updateView(...)" + job.getRequestDate());
-        return "update-job.html";
+        return "update-job";
     }
 
     @PostMapping(value = "/update")
@@ -139,7 +139,7 @@ public class WebJobController {
         model.addAttribute("job", job);
         jobService.updateJob(job, job.getId());
         LOGGER.info("update(...)");
-        return "redirect:/admin/jobs";
+        return "redirect:/jobs";
     }
 
     @GetMapping(value = "/create")
@@ -149,7 +149,7 @@ public class WebJobController {
         job.setStatus("Zgłoszono");
         job.setSolution(" ");
         model.addAttribute("job", job);
-        return "create-job.html";
+        return "create-job";
     }
 
     @PostMapping(value = "/create")
@@ -179,7 +179,7 @@ public class WebJobController {
         model.addAttribute("job", job);
         jobService.createJob(job);
         LOGGER.info("create(...)");
-        return "redirect:/admin/jobs";
+        return "redirect:/jobs";
     }
 
     @GetMapping(value = "/read/{id}")
@@ -189,7 +189,7 @@ public class WebJobController {
         LOGGER.info("read(" + id + ")");
         Job job = jobService.findJobById(id);
         modelMap.addAttribute("job", job);
-        return "read-job.html";
+        return "read-job";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -197,17 +197,10 @@ public class WebJobController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         jobService.deleteJob(id);
-        return "redirect:/admin/jobs";
+        return "redirect:/jobs";
     }
 
-    @GetMapping(value = "/search/message")
-    public String searchJobsByMessage(@RequestParam(value = "jobMessage") String query,
-                                      Model model) {
-        LOGGER.info("search()" + query);
-        List<Job> jobs = jobService.findJobsByMessage(query);
-        model.addAttribute("jobs", jobs);
-        return "list-job";
-    }
+
     @GetMapping(value = "/downloadfile")
     public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
         Job jobById = jobService.findJobById(id);
@@ -218,5 +211,19 @@ public class WebJobController {
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(jobById.getOriginalImage());
         outputStream.close();
+    }
+
+    @GetMapping("/search/query")
+    public String searchJobByName(
+            @RequestParam(value = "query") String query,
+            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            Model model){
+        LOGGER.info("search()");
+        int pagesize =10;
+        Page<Job> jobByQuery = jobService.findJobByQuery(pageNo, pagesize, query);
+        LOGGER.info("findJobByQuery()");
+        model.addAttribute("jobs", jobByQuery);
+        model.addAttribute("currentPage", pageNo);
+        return "main-job";
     }
 }

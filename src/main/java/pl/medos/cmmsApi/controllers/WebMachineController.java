@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/admin/machines")
+@RequestMapping("/machines")
 @SessionAttributes(names = {"departments", "machines"})
 public class WebMachineController {
 
@@ -58,32 +58,39 @@ public class WebMachineController {
     @GetMapping
     public String listView(Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPageinated(1, model);
+        return findPageinated(1,"name", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
-    public String findPageinated(@PathVariable(value = "pageNo") int pageNo  ,Model model) {
+    public String findPageinated(@PathVariable(name = "pageNo") int pageNo,
+                                 @RequestParam(name = "sortField") String sortField,
+                                 @RequestParam(name = "sortDir") String sortDir,
+                                 Model model) {
         LOGGER.info("findPage()");
         int pageSize=10;
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize);
+        Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Machine> machines = machinePage.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", machinePage.getTotalPages());
         model.addAttribute("totalItems", machinePage.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + machines);
-        return "list-machine";
+        return "main-machine";
     }
 
     @GetMapping(value = "/search/query")
-    public String searchMachineByQuery(@RequestParam(value = "machineQuery") String query,
+    public String searchMachineByQuery(@RequestParam(value = "query") String query,
                                        Model model) {
         LOGGER.info("search()");
         List<Machine> machines = machineService.findMachinesByQuery(query);
         model.addAttribute("machines", machines);
-        return "list-machine";
+        return "main-machine";
     }
 
     @GetMapping(value = "/search/machine")
@@ -92,7 +99,7 @@ public class WebMachineController {
         LOGGER.info("search()");
         Machine machines = machineService.findMachineById(Long.parseLong(machineName));
         model.addAttribute("machines", machines);
-        return "list-machine";
+        return "main-machine";
     }
 
     @GetMapping(value = "/search/department")
@@ -123,7 +130,7 @@ public class WebMachineController {
         LOGGER.info("update()" + machine);
         Machine savedMachine = machineService.updateMachine(machine, id);
         LOGGER.info("update(...)" + savedMachine);
-        return "redirect:/admin/machines";
+        return "redirect:/machines";
     }
 
     @GetMapping(value = "/create")
@@ -143,7 +150,7 @@ public class WebMachineController {
         LOGGER.info("create(" + machine + ")");
         Machine savedMachine = machineService.createMachine(machine);
         LOGGER.info("create(...)" + savedMachine);
-        return "redirect:/admin/machines";
+        return "redirect:/machines";
     }
 
     @GetMapping(value = "/read/{id}")
@@ -161,7 +168,14 @@ public class WebMachineController {
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         machineService.deleteMachine(id);
-        return "redirect:/admin/machines";
+        return "redirect:/machines";
+    }
+
+    @GetMapping(value = "/deleteAll")
+    public String delete() {
+        LOGGER.info("delete()");
+        machineService.deleteAllMachine();
+        return "redirect:/machines";
     }
 
     @GetMapping(value = "/shedule/{id}")
@@ -206,7 +220,7 @@ public class WebMachineController {
         LOGGER.info("importMachines()");
         if (file.isEmpty()) {
             LOGGER.info("Please select file to upload");
-            return "redirect/admin/machines";
+            return "redirect:/machines";
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
@@ -217,6 +231,6 @@ public class WebMachineController {
         });
         LOGGER.info("importMachines(...) ");
 
-        return "redirect:/admin/machines";
+        return "redirect:/machines";
     }
 }

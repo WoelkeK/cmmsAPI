@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "JOBS")
 public class JobEntity {
@@ -24,16 +24,18 @@ public class JobEntity {
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
 
-    @ManyToOne
-    @JoinColumn(name = "engineer_id")
-    private EngineerEntity engineer;
+    //    @ManyToOne
+//    @JoinColumn(name = "engineer_id")
+//    private EngineerEntity engineer;
+    private String engineer;
+
     @ManyToOne
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private MachineEntity machine;
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name = "cost_id")
 //    private CostEntity cost;
     @NotEmpty(message = "Pole nie może być puste!")

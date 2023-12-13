@@ -205,12 +205,13 @@ public class DashboardController {
             return "redirect:/jobs";
         }
 
-        @GetMapping("/search/message")
-        public String searchJobsByMessage (@RequestParam(value = "jobMessage") String query,
-                Model model){
-            LOGGER.info("search()" + query);
-            List<Job> jobs = jobService.findJobsByMessage(query);
-            model.addAttribute("jobs", jobs);
-            return "list-job";
-        }
+//        @GetMapping("/search/message")
+//        public String searchJobsByMessage (@RequestParam(value = "query") String query,
+//                Model model){
+//            LOGGER.info("search()" + query);
+//
+//            List<Job> jobs = jobService.findJobByQuery(query);
+//            model.addAttribute("jobs", jobs);
+//            return "list-job";
+//        }
     }

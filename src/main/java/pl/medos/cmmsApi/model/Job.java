@@ -23,7 +23,7 @@ public class Job {
     private LocalDateTime requestDate;
     private User user;
     private Employee employee;
-    private Engineer engineer;
+    private String engineer;
     private Department department;
     private Machine machine;
     //    private Cost cost;

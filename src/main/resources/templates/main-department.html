@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł awizacji</title>
-<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
     <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 
-                <input type="hidden" th:field="*{departments}">
+<input type="hidden" th:field="*{departments}">
 
 <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
@@ -67,6 +67,7 @@
                 <div class="flex flex-shrink-0 items-center px-4">
                     <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                 </div>
+
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <a th:href="@{/awizacje}"
                        class="text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
@@ -106,72 +107,48 @@
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/>
                         </svg>
                         IT
                     </a>
                     <a href="/departments"
                        class="bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor"
+                             class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"/>
+                                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/>
                         </svg>
                         Wydziały
                     </a>
 
-                    <!--                    <a href="#"-->
-                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
-                    <!--                        &lt;!&ndash; Heroicon name: outline/users &ndash;&gt;-->
-                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
-                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                    <!--                             stroke="currentColor" aria-hidden="true">-->
-                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
-                    <!--                                  d="m5 11l1.5-4.5h11L19 11m-1.5 5a1.5 1.5 0 0 1-1.5-1.5a1.5 1.5 0 0 1 1.5-1.5a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m-11 0A1.5 1.5 0 0 1 5 14.5A1.5 1.5 0 0 1 6.5 13A1.5 1.5 0 0 1 8 14.5A1.5 1.5 0 0 1 6.5 16M18.92 6c-.2-.58-.76-1-1.42-1h-11c-.66 0-1.22.42-1.42 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8l-2.08-6Z"/>-->
-                    <!--                            &lt;!&ndash;                                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/>&ndash;&gt;-->
+                    <a href="/machines"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/folder -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor"
+                             class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"/>
+                        </svg>
+                        Maszyny
+                    </a>
 
-                    <!--                        </svg>-->
-                    <!--                        Pojazdy-->
-                    <!--                    </a>-->
-
-                    <!--                    <a href="#"-->
-                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
-                    <!--                        &lt;!&ndash; Heroicon name: outline/chart-bar &ndash;&gt;-->
-                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
-                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                    <!--                             stroke="currentColor" aria-hidden="true">-->
-                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
-                    <!--                                  d="M12.673 1.612L20.8 9h-2.973L12 3.703L6 9.158V19h5v2H5a1 1 0 0 1-1-1v-9H1l10.327-9.388a1 1 0 0 1 1.346 0ZM14 11h9v7h-9v-7Zm2 2v3h5v-3h-5Zm8 8H13v-2h11v2Z"/>-->
-
-                    <!--                        </svg>-->
-                    <!--                        Dostawcy</a>-->
-
-                    <!--                    <a href="#"-->
-                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
-                    <!--                        &lt;!&ndash; Heroicon name: outline/inbox &ndash;&gt;-->
-                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
-                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                    <!--                             stroke="currentColor" aria-hidden="true">-->
-                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
-                    <!--                                  d="M6 7.828V20h12V4H9.828L6 7.828Zm-1.707-1.12L9 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7.414a1 1 0 0 1 .293-.707ZM15 5h2v4h-2V5Zm-3 0h2v4h-2V5ZM9 6h2v3H9V6Z"/>-->
-                    <!--                        </svg>-->
-                    <!--                        Przepustki-->
-                    <!--                    </a>-->
-
-                    <!--                    <a href="#"-->
-                    <!--                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">-->
-                    <!--                        &lt;!&ndash; Heroicon name: outline/calendar &ndash;&gt;-->
-                    <!--                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"-->
-                    <!--                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                    <!--                             stroke="currentColor" aria-hidden="true">-->
-                    <!--                            <path stroke-linecap="round" stroke-linejoin="round"-->
-                    <!--                                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>-->
-                    <!--                        </svg>-->
-                    <!--                        Wyloguj-->
-                    <!--                    </a>-->
+                    <a th:href="@{/jobs}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/inbox -->
+                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+                        </svg>
+                        Zlecenia
+                    </a>
                 </nav>
             </div>
 
@@ -228,9 +205,9 @@
                                 <div class="flex items-center px-1 lg:px-1">
                                     <div class="flex-shrink-1">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/access.png}"
+                                        <img class="block h-20 w-auto lg:hidden" th:src="@{/images/departments.png}"
                                              alt="device">
-                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/access.png}"
+                                        <img class="hidden h-20 w-auto lg:block" th:src="@{/images/departments.png}"
                                              alt="device">
 
                                     </div>
@@ -256,27 +233,27 @@
                                 </div>
 
 
-                                <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
-                                    <div class="w-full max-w-lg lg:max-w-xs">
-                                        <form action="#" th:action="@{/departments/search/query}" method="GET">
-                                            <label for="search" class="sr-only">Szukaj</label>
-                                            <div class="relative">
-                                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
-                                                         fill="currentColor"
-                                                         aria-hidden="true">
-                                                        <path fill-rule="evenodd"
-                                                              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                                              clip-rule="evenodd"/>
-                                                    </svg>
-                                                </div>
-                                                <input id="search" name="query"
-                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-blue-700 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
-                                                       placeholder="Szukaj" type="search">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                                <!--                                <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">-->
+                                <!--                                    <div class="w-full max-w-lg lg:max-w-xs">-->
+                                <!--                                        <form action="#" th:action="@{/departments/search/query}" method="GET">-->
+                                <!--                                            <label for="search" class="sr-only">Szukaj</label>-->
+                                <!--                                            <div class="relative">-->
+                                <!--                                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">-->
+                                <!--                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"-->
+                                <!--                                                         fill="currentColor"-->
+                                <!--                                                         aria-hidden="true">-->
+                                <!--                                                        <path fill-rule="evenodd"-->
+                                <!--                                                              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"-->
+                                <!--                                                              clip-rule="evenodd"/>-->
+                                <!--                                                    </svg>-->
+                                <!--                                                </div>-->
+                                <!--                                                <input id="search" name="query"-->
+                                <!--                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-blue-700 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"-->
+                                <!--                                                       placeholder="Szukaj" type="search">-->
+                                <!--                                            </div>-->
+                                <!--                                        </form>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
 
@@ -324,26 +301,28 @@
                                                     class="whitespace-nowrap px-3 py-4 text-gray-900">Lokalizacja
                                                 </td>
 
-<!--                                                <td>-->
-<!--                                                    <div class="container mt-2 mb-2">-->
-<!--                                                        <a th:href="@{'/departments/downloadfile?id=' + ${pass.id}}">-->
-<!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(pass.id)}"-->
-<!--                                                                 width="70px" height="30px" alt="person">-->
-<!--                                                        </a>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
+                                                <!--                                                <td>-->
+                                                <!--                                                    <div class="container mt-2 mb-2">-->
+                                                <!--                                                        <a th:href="@{'/departments/downloadfile?id=' + ${pass.id}}">-->
+                                                <!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(pass.id)}"-->
+                                                <!--                                                                 width="70px" height="30px" alt="person">-->
+                                                <!--                                                        </a>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </td>-->
 
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
-<!--                                                    <a th:href="@{/przepustki/read/{id}(id=${pass.id})}"-->
-<!--                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span-->
-<!--                                                            class="sr-only"></span></a>-->
+                                                    <!--                                                    <a th:href="@{/przepustki/read/{id}(id=${pass.id})}"-->
+                                                    <!--                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span-->
+                                                    <!--                                                            class="sr-only"></span></a>-->
 
-                                                    <a th:if="${isAdmin}" th:href="@{/departments/update/{id}(id=${department.id})}"
+                                                    <a th:if="${isAdmin}"
+                                                       th:href="@{/departments/update/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300 ">Edycja<span
                                                             class="sr-only"></span></a>
 
-                                                    <a th:if="${isAdmin}" th:href="@{/departments/delete/{id}(id=${department.id})}"
+                                                    <a th:if="${isAdmin}"
+                                                       th:href="@{/departments/delete/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>

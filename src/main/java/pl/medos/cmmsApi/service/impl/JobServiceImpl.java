@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
+import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
 import pl.medos.cmmsApi.service.CostService;
 import pl.medos.cmmsApi.service.ImageService;
@@ -22,6 +24,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class JobServiceImpl implements JobService {
 
     private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class.getName());
@@ -49,24 +52,6 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> findJobsByMessage(String query) {
-        LOGGER.info("findJobsByMessage()" + query);
-        List<JobEntity> jobEntities = jobRepository.searchJobsByMessage(query);
-        List<Job> jobs = jobMapper.listModels(jobEntities);
-        LOGGER.info("findJobsByMessage(...)" + query);
-        return jobs;
-    }
-
-//    @Override
-//    public List<Job> findJobsByMachine(Machine machineByName) {
-//        LOGGER.info("findJobsByMachine()" + machineByName);
-//        List<JobEntity> jobEntities = jobRepository.searchJobsByMachine(machineByName.getId());
-//        List<Job> jobs = jobMapper.listModels(jobEntities);
-//        LOGGER.info("findJobsByMachine(...)");
-//        return jobs;
-//    }
-
-    @Override
     public Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findJobPages()" + pageNo + "/" + size);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
@@ -91,41 +76,12 @@ public class JobServiceImpl implements JobService {
         LOGGER.info("findJobPagesWithStatus(...)" +jobs.getNumberOfElements());
         return jobs;
     }
-
-//    @Override
-//    public List<Job> findJobsByDepartment(Department department) {
-//        LOGGER.info("findJobsByDepartment()" + department);
-//        List<JobEntity> jobEntities = jobRepository.searchJobsByDepartment(department.getId());
-//        List<Job> jobs = jobMapper.listModels(jobEntities);
-//        LOGGER.info("findJobsByDepartment(...)");
-//        return jobs;
-//    }
-
-//    @Override
-//    public List<Job> findJobsByemployee(Employee employeeByName) {
-//        LOGGER.info("findJobsByEmployee()" + employeeByName);
-//        List<JobEntity> jobEntities = jobRepository.searchJobsByEmployee(employeeByName.getId());
-//        List<Job> jobs = jobMapper.listModels(jobEntities);
-//        LOGGER.info("findJobsByEmployee(...)");
-//        return jobs;
-//    }
-
     @Override
     public Job createJob(Job job) throws IOException {
         LOGGER.info("create(" + job + ")");
-//        MultipartFile multipartFile = job.getImage();
-//        String originalFilename = multipartFile.getOriginalFilename();
-//        job.setImageFileName(originalFilename);
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
         Job savedJobModel = jobMapper.entityToModel(savedJobEntity);
-
-//        Image image = new Image();
-//        image.setId(savedJobModel.getId());
-//        image.setProfilePicture(multipartFile.getOriginalFilename());
-//        image.setSize(multipartFile.getSize());
-//        image.setContent(multipartFile.getBytes());
-//        imageService.createImage(image);
 
         LOGGER.info("create(...)");
         return savedJobModel;
@@ -178,4 +134,15 @@ public class JobServiceImpl implements JobService {
         LOGGER.info("update()" + jobEntity);
         return jobEntity;
     }
+
+    @Override
+    public Page<Job> findJobByQuery(int pageNo, int pagesize, String query) {
+        LOGGER.info("findJobByQuery()" + query);
+        Pageable pageable = PageRequest.of(pageNo-1, pagesize);
+        Page<JobEntity> employeeEntities = jobRepository.searchEmployeeByQuery(pageable,query);
+        Page<Job> jobs = jobMapper.entitiesJobToModelsPage(employeeEntities);
+        LOGGER.info("findJobByQuery(...)");
+        return jobs;
+    }
+
 }

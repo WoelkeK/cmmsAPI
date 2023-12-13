@@ -16,12 +16,6 @@ public interface JobService {
 
     List<Job> findAllJobs();
 
-    List<Job> findJobsByMessage(String query);
-//
-//    List<Job> findJobsByDepartment(Department department);
-//
-//    List<Job> findJobsByemployee(Employee employeeByName);
-
     Job createJob(Job job) throws IOException;
 
     Job findJobById(Long id) throws JobNotFoundException;
@@ -29,9 +23,8 @@ public interface JobService {
     Job updateJob(Job job, Long id) throws JobNotFoundException;
 
     void deleteJob(Long id);
-//
-//    List<Job> findJobsByMachine(Machine machineByName);
 
     Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection);
     Page<Job> findByStatusWithPagination(String query, int pageNo, int size, String sortField, String sortDirection);
+    Page<Job> findJobByQuery(int pageNo, int pagesize, String query);
 }
