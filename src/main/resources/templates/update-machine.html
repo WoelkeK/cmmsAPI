@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Panel Aktualizacji Maszyny / Przedmiotu</title>
 <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link th:href="@{/user/css/mainold.css}" rel="stylesheet"/>
+    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 <form action="#" th:action="@{/machines/update/{id}(id=${machine.id})}" th:object="${machine}" method="post">

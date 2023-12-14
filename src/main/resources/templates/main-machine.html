@@ -144,7 +144,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
                         </svg>
-                        Zlecenia
+                        Awarie
                     </a>
                 </nav>
             </div>
@@ -264,7 +264,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
                     </svg>
-                    Zlecenia
+                    Awarie
                 </a>
             </nav>
         </div>
@@ -376,8 +376,10 @@
                                         <thead class="bg-gray-800">
                                         <tr>
                                             <th scope="col"
-                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 sm:pl-6">
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-yellow-500 hover:text-yellow-100 sm:pl-6">
+                                                <a th:href="@{'/machines/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                                                 Nazwa
+                                                </a>
                                             </th>
                                             <th scope="col"
                                                 class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
@@ -408,16 +410,16 @@
                                             </th>
                                         </tr>
                                         </thead>
-                                        <tbody class="bg-gray-400">
-                                        <tr class="border-t border-gray-700">
+                                        <tbody class="bg-grey">
+                                        <tr class="border-t border-gray-600">
                                             <th colspan="9" scope="colgroup"
-                                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
-                                                Aktywne Maszyny
+                                                class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-blue-100 sm:px-6">
+                                                Kliknij nagłówek tabeli ↑↓ , aby posortować.
                                             </th>
                                         </tr>
 
                                         <tr th:each="machine : ${machines}"
-                                            class="border-t border-gray-300">
+                                            class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
                                             <td th:text="${machine.name}"
                                                 class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">
@@ -464,11 +466,11 @@
                                         </tr>
                                         <!-- More people... -->
                                         </tbody>
-                                        <tbody class="bg-grey">
+                                        <tbody class="bg-white">
                                         <tr class="border-t border-gray-200">
                                             <th colspan="9" scope="colgroup"
-                                                class="bg-green-300 px-4 py-2 text-center text-lm font-semibold text-gray-700 sm:px-6">
-                                                Koniec zestawienia
+                                                class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
+                                                Koniec listy
                                             </th>
                                         </tr>
                                     </table>
@@ -476,51 +478,60 @@
                             </div>
                         </div>
 
-                        <div class="pt-5">
+                        <div class="pt-1">
                             <div class="flex justify-end">
                                 <button type="button"
                                         class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                     <a th:if="${currentPage >1}"
-                                       th:href="@{'/machines/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                       th:href="@{'/machines/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                     <span th:unless="${currentPage >1}">Poprzedni</span>
                                 </button>
                                 <button type="button"
                                         class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                     <a th:if="${currentPage < totalPages}"
-                                       th:href="@{'/machines/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                       th:href="@{'/machines/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                     <span th:unless="${currentPage < totalPages}">Następny</span>
                                 </button>
 
                             </div>
                         </div>
-                    </div>
 
-                    <div class="text-lg font-medium" th:if="${totalPages > 1}">
-                        <div class="row col-sm-10">
-                            <div class="col-sm-2">
-                                Wszystkich wpisów: [[${totalItems}]]
-                            </div>
-                            <div class="col-sm-1">
-            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
+
+                        <div class="text-lg font-medium" th:if="${totalPages > 1}">
+                            <div class="row col-sm-10">
+                                <div class="col-sm-2">
+                                    Wszystkich wpisów: [[${totalItems}]]
+                                </div>
+                                <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
-         th:href="@{'/machines/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         th:href="@{'/machines/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+
+                <div class="overflow-hidden rounded-md bg-gray shadow">
+                    <ul role="list" class="divide-y divide-gray-700">
+                        <li class="px-6 py-2">
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>
-</div>
-<div class="relative">
-    <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t border-gray-300"></div>
-    </div>
-    <div class="relative flex justify-center">
-        <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
+
+    <div class="relative">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center">
+            <span class="bg-gray-300 px-2 text-sm text-gray-500">Koniec strony</span>
+        </div>
     </div>
 </div>
 </body>

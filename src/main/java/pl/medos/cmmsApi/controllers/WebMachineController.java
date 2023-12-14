@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -65,13 +66,14 @@ public class WebMachineController {
     public String findPageinated(@PathVariable(name = "pageNo") int pageNo,
                                  @RequestParam(name = "sortField") String sortField,
                                  @RequestParam(name = "sortDir") String sortDir,
-                                 Model model) {
+                                 Model model) throws IOException {
         LOGGER.info("findPage()");
         int pageSize=10;
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Machine> machines = machinePage.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", machinePage.getTotalPages());
         model.addAttribute("totalItems", machinePage.getTotalElements());
@@ -82,13 +84,30 @@ public class WebMachineController {
         model.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + machines);
         return "main-machine";
+
     }
 
     @GetMapping(value = "/search/query")
     public String searchMachineByQuery(@RequestParam(value = "query") String query,
-                                       Model model) {
+                                      Model model) {
         LOGGER.info("search()");
-        List<Machine> machines = machineService.findMachinesByQuery(query);
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="name";
+        String sortDir="desc";
+
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        Page<Machine> machinePage = machineService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Machine> machines = machinePage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", machinePage.getTotalPages());
+        model.addAttribute("totalItems", machinePage.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("machines", machines);
         return "main-machine";
     }
@@ -171,13 +190,6 @@ public class WebMachineController {
         return "redirect:/machines";
     }
 
-    @GetMapping(value = "/deleteAll")
-    public String delete() {
-        LOGGER.info("delete()");
-        machineService.deleteAllMachine();
-        return "redirect:/machines";
-    }
-
     @GetMapping(value = "/shedule/{id}")
     public String sheduleView(
             @PathVariable(name = "id") Long id,
@@ -220,7 +232,7 @@ public class WebMachineController {
         LOGGER.info("importMachines()");
         if (file.isEmpty()) {
             LOGGER.info("Please select file to upload");
-            return "redirect:/machines";
+            return "redirect/machines";
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();

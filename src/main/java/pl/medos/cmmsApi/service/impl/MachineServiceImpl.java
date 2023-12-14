@@ -125,4 +125,16 @@ public class MachineServiceImpl implements MachineService {
         LOGGER.info("deleteAllMachines");
         machineRepository.deleteAll();
     }
+
+    @Override
+    public Page<Machine> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
+        LOGGER.info("findPaginated()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<MachineEntity> machineEntityPage = machineRepository.findByQueryPagable(query, pageable);
+//        Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
+        Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
+        LOGGER.info("findPaginated(...)");
+        return machines;
+    }
 }

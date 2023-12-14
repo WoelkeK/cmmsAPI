@@ -28,5 +28,7 @@ public interface MachineService {
     Page<Machine> findPageinated(int pageNo, int size, String sortField, String sortDirection);
 
     void deleteAllMachine();
+
+    Page<Machine> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 }
 

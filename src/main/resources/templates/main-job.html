@@ -144,7 +144,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
                         </svg>
-                        Zlecenia
+                        Awarie
                     </a>
                 </nav>
             </div>
@@ -178,7 +178,7 @@
     <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-4">
-                <img class="h-8 w-auto" th:src="@{/admin//images/logo.svg}" alt="Medos"/>
+                <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
             </div>
             <nav class="mt-5 flex-1 space-y-1 px-2">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
@@ -264,7 +264,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
                     </svg>
-                    Zlecenia
+                    Awarie
                 </a>
             </nav>
         </div>
@@ -324,9 +324,9 @@
                             <div class="flex items-center px-1 lg:px-0">
                                 <div class="flex-shrink-0">
 
-                                    <img class="block h-14 w-auto lg:hidden" th:src="@{/images/machine.png}"
+                                    <img class="block h-14 w-auto lg:hidden" th:src="@{/images/todolist.png}"
                                          alt="device">
-                                    <img class="hidden h-14 w-auto lg:block" th:src="@{/images/machine.png}"
+                                    <img class="hidden h-14 w-auto lg:block" th:src="@{/images/todolist.png}"
                                          alt="device">
                                 </div>
 
@@ -459,48 +459,48 @@
                                             </th>
                                         </tr>
 
-                                        <tr th:each="job : ${jobs}" class="border-t border-gray-300">
+                                        <tr th:each="job : ${jobs}" class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
                                             <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-800">Data
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
                                                 Zgłoszenia
                                             </td>
                                             <td th:text="${job.employee.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Osoba
                                             </td>
                                             <td th:text="${job?.department?.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Dział
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Dział
                                             </td>
                                             <td th:text="${job.machine.model}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Maszyna
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Maszyna
                                             </td>
                                             <td th:text="${job.message}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Opis
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Opis
                                                 usterki
                                             </td>
                                             <td th:text="${job.directContact}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Zgłoszenie
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Zgłoszenie
                                                 telefoniczne
                                             </td>
                                             <td th:text="${job.solution}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Podjęte
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Podjęte
                                                 działania
                                             </td>
                                             <td th:text="${#temporals.format(job.jobStartTime, 'dd MMMM yyyy HH:mm')}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
                                                 podjęcia działań
                                             </td>
                                             <td th:text="${#temporals.format(job.jobStopTime, 'dd MMMM yyyy HH:mm')}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Data
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
                                                 zakończenia naprawy
                                             </td>
                                             <td th:text="${job?.engineer?.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Osoba
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Osoba
                                                 wykonująca
                                             </td>
 
                                             <td th:text="${job.calcCost}"
-                                                class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">Koszt
+                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Koszt
                                             </td>
 
                                             <td>
@@ -513,7 +513,7 @@
                                                 </div>
                                             </td>
 
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
                                                 <a th:href="@{/jobs/update/{id}(id=${job.id})}"
                                                    class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                         class="sr-only"></span></a>
@@ -531,7 +531,7 @@
                                         <tbody class="bg-white">
                                         <tr class="border-t border-gray-200">
                                             <th colspan="13" scope="colgroup"
-                                                class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
+                                                class="bg-green-400 px-4 py-2 text-left text-lm font-semibold text-gray-900 sm:px-6">
                                                 Koniec strony
                                             </th>
                                         </tr>

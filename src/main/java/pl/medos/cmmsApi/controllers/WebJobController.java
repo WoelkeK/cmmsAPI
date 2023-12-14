@@ -137,7 +137,7 @@ public class WebJobController {
             return "update-job";
         }
         model.addAttribute("job", job);
-        jobService.updateJob(job, job.getId());
+        jobService.updateJob(job);
         LOGGER.info("update(...)");
         return "redirect:/jobs";
     }

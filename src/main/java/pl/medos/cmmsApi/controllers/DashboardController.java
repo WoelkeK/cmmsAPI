@@ -1,7 +1,12 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.imgscalr.Scalr;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,7 +17,12 @@ import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -192,7 +202,7 @@ public class DashboardController {
                 return "dashboard-edit";
             }
             model.addAttribute("job", job);
-            jobService.updateJob(job, id);
+            jobService.updateJob(job);
             LOGGER.info("update(...)");
             return "redirect:/dashboards";
         }

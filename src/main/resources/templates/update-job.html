@@ -11,13 +11,19 @@
 <div class="px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
-            <h1 class="text-6xl font-semibold text-gray-900">Zlecenia</h1>
+            <h1 class="text-6xl font-semibold text-gray-900">Awarie</h1>
 
 <!--            <form role="form" th:action="@{/admin/jobs/update/{id}(id=${job.id})}" th:object="${job}" method="post">-->
             <form role="form" th:action="@{/jobs/update}" th:object="${job}" method="post">
 
                 <input type="hidden" th:field="${job.requestDate}">
-                <input type="hidden" th:field="${job.solution}">
+                <input type="hidden" th:field="${job.message}">
+                <input type="hidden" th:field="${job.id}">
+                <input type="hidden" th:field="${job.resizedImage}">
+                <input type="hidden" th:field="${job.originalImage}">
+                <input type="hidden" th:field="*{employee.id}">
+                <input type="hidden" th:field="*{machine.id}">
+                <input type="hidden" th:field="*{department.id}">
 
                 <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-6">

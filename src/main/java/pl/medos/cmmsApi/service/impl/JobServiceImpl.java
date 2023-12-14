@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
-import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
-import pl.medos.cmmsApi.service.CostService;
 import pl.medos.cmmsApi.service.ImageService;
 import pl.medos.cmmsApi.service.JobService;
 import pl.medos.cmmsApi.service.mapper.JobMapper;
@@ -30,14 +28,12 @@ public class JobServiceImpl implements JobService {
     private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class.getName());
     private JobRepository jobRepository;
     private JobMapper jobMapper;
-    private CostService costService;
 
     private ImageService imageService;
 
-    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper, CostService costService, ImageService imageService) {
+    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper,ImageService imageService) {
         this.jobRepository = jobRepository;
         this.jobMapper = jobMapper;
-        this.costService = costService;
         this.imageService = imageService;
     }
 
@@ -97,20 +93,20 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job updateJob(Job job, Long id) throws JobNotFoundException {
+    public Job updateJob(Job job) throws JobNotFoundException {
         LOGGER.info("update()" + job);
-        JobEntity readedJobEntity = getJobEntity(id);
+        JobEntity readedJobEntity = getJobEntity(job.getId());
         JobEntity editedJobEntity = jobMapper.modelToEntity(job);
         editedJobEntity.setId(readedJobEntity.getId());
 
         LOGGER.info("editedJobentity()" + readedJobEntity.getId() + "in/out " + editedJobEntity.getId());
-        Cost cost = costService.searchCostByUnit("h");
-        LOGGER.info("cost" + cost.getUnit());
-        LocalDateTime jobStartTime = job.getJobStartTime();
-        LocalDateTime jobStopTime = job.getJobStopTime();
-        long minutes = ChronoUnit.MINUTES.between(jobStartTime, jobStopTime);
-        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
-        editedJobEntity.setCalcCost(jobTimeCost);
+//        Cost cost = costService.searchCostByUnit("h");
+//        LOGGER.info("cost" + cost.getUnit());
+//        LocalDateTime jobStartTime = job.getJobStartTime();
+//        LocalDateTime jobStopTime = job.getJobStopTime();
+//        long minutes = ChronoUnit.MINUTES.between(jobStartTime, jobStopTime);
+//        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
+//        editedJobEntity.setCalcCost(jobTimeCost);
 
         LOGGER.info("editedCostCalc " + editedJobEntity.getCalcCost());
         JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);

@@ -54,7 +54,7 @@ public class JobController {
     public Job updateJob(@PathVariable(name = "id") Long id,
                          @RequestBody Job job) throws JobNotFoundException {
         LOGGER.info("updateJob(" + id + ")");
-        Job updatedJob = jobService.updateJob(job, id);
+        Job updatedJob = jobService.updateJob(job);
         LOGGER.info("updateJob(...) " + updatedJob);
         return updatedJob;
     }

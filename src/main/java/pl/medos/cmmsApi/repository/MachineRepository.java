@@ -22,4 +22,6 @@ public interface MachineRepository extends JpaRepository<MachineEntity, Long> {
     @Query("SELECT p from MachineEntity p WHERE CONCAT(p.name, ' ', p.model, ' ', p.serialNumber, ' ' , p.department.name) LIKE %?1%")
     List<MachineEntity> searchMachineByQuery(String query);
     Page<MachineEntity> findAll(Pageable pageable);
+    @Query("SELECT p from MachineEntity p WHERE CONCAT(p.name, ' ', p.model, ' ', p.serialNumber, ' ' , p.department.name) LIKE %?1%")
+    Page<MachineEntity> findByQueryPagable(String query, Pageable pageable);
 }
