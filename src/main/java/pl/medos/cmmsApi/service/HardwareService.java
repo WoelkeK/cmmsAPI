@@ -28,5 +28,7 @@ public interface HardwareService {
     Boolean findHardwareByIpAddress(String clientIp, Enum permission);
 
     Hardware findByIpAddress(String remoteIP);
+
+    Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 }
 

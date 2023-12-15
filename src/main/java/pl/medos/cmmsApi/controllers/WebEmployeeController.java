@@ -10,6 +10,7 @@ import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.ImportService;
@@ -81,13 +82,25 @@ public class WebEmployeeController {
     @GetMapping(value = "/search/name")
     public String findEmployeeByname(
             @RequestParam(value = "employeeName") String query,
-            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
             Model model) throws IOException {
-        int pageSize = 10;
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="name";
+        String sortDir="desc";
+
         LOGGER.info("findPage()");
-        List<Employee> employeeByRawName = employeeService.findEmployeeByRawName(query);
+        Page<Employee> employeePage = employeeService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Employee> employees = employeePage.getContent();
+//        List<Employee> employeeByRawName = employeeService.findEmployeeByRawName(query);
+
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("employees", employeeByRawName);
+        model.addAttribute("totalPages", employeePage.getTotalPages());
+        model.addAttribute("totalItems", employeePage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         return "main-employees";

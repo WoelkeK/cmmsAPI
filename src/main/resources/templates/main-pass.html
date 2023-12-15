@@ -204,7 +204,7 @@
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
                                         <div class="flex space-x-4">
-                                            <a href="#" th:href="@{/przepustki/create}"
+                                            <a th:if="${isAdmin}" href="#" th:href="@{/przepustki/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
                                             <!--                                            <a href="#" th:href="@{/notifications/file}"-->
                                             <!--                                            <a href="#"-->
@@ -300,7 +300,7 @@
                                             </tr>
 
                                             <tr th:each="pass: ${passes}"
-                                                class="border-t border-gray-300 bg-gray-100 text-xl font-medium">
+                                                class="border-t border-gray-300 bg-gray-100 text-lg font-medium">
 
 
                                                 <td th:text="${pass.name}"
@@ -331,11 +331,11 @@
 <!--                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span-->
 <!--                                                            class="sr-only"></span></a>-->
 
-                                                    <a th:href="@{/przepustki/update/{id}(id=${pass.id})}"
+                                                    <a  th:if="${isAdmin}"  th:href="@{/przepustki/update/{id}(id=${pass.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300 ">Edycja<span
                                                             class="sr-only"></span></a>
 
-                                                    <a th:href="@{/przepustki/delete/{id}(id=${pass.id})}"
+                                                    <a  th:if="${isAdmin}"  th:href="@{/przepustki/delete/{id}(id=${pass.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
@@ -380,10 +380,10 @@
                                         Wszystkich wpisów: [[${totalItems}]]
                                     </div>
                                     <div class="col-sm-1">
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
          th:href="@{'/przepustki/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+      <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
                                 </div>

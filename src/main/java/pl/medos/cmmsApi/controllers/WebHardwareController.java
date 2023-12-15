@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
+import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.service.*;
@@ -204,13 +206,37 @@ public class WebHardwareController {
         return "redirect:/hardwares";
     }
 
+//    @GetMapping(value = "/search/query")
+//    public String searchHardwareByQuery(@RequestParam(value = "query") String query,
+//                                        Model model) {
+//        LOGGER.info("search()");
+//        List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
+//        model.addAttribute("hardwares", hardwares);
+//        LOGGER.info("search(...)");
+//        return "list-hardware";
+//    }
+
     @GetMapping(value = "/search/query")
-    public String searchHardwareByQuery(@RequestParam(value = "query") String query,
-                                        Model model) {
-        LOGGER.info("search()");
-        List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
-        model.addAttribute("hardwares", hardwares);
-        LOGGER.info("search(...)");
-        return "list-hardware";
+    public String findHardwareByQuery(
+            @RequestParam(value = "query") String query,
+//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            Model model) throws IOException {
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="name";
+        String sortDir="desc";
+
+        LOGGER.info("findPage()");
+        Page<Hardware> hardwarePage =hardwareService.findHardwarePageByQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Hardware> hardware = hardwarePage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", hardwarePage.getTotalPages());
+        model.addAttribute("totalItems", hardwarePage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("hardwares", hardware);
+        return "main-hardware";
     }
 }

@@ -198,7 +198,7 @@
                                         <img class="hidden h-14 w-auto lg:block" th:src="@{/images/computer2.png}" alt="device">
                                     </div>
 
-                                    <div class="hidden lg:ml-10 lg:block">
+                                    <div th:if="${isAdmin}"  class="hidden lg:ml-10 lg:block">
                                         <div th:if="${isAdmin}" class="flex space-x-4">
                                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                             <a href="#" th:href="@{/hardwares/create}"
@@ -404,10 +404,10 @@
                                         Wszystkich wpisów: [[${totalItems}]]
                                     </div>
                                     <div class="col-sm-1">
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
          th:href="@{'/hardwares/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+      <span class="text-indigo-200 text-xl"  th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
                                 </div>

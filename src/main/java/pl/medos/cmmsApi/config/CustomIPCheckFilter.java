@@ -47,7 +47,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
             throw new ServletException("Unauthorized IP Access");
         }
 
-        if (ipAddressRole.getRole().equalsIgnoreCase("admin")) {
+        if (ipAddressRole.getPermission().toString().equalsIgnoreCase("admin")) {
             req.setAttribute("isAdmin", true);
         }
 

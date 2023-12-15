@@ -323,7 +323,7 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setDescription(m.getDescription());
 
                                     if(m.getPermission() ==null){
-                                        hardware.setPermission(Permission.NIE);
+                                        hardware.setPermission(Permission.USER);
                                     }else{
 
                                     hardware.setPermission(m.getPermission());

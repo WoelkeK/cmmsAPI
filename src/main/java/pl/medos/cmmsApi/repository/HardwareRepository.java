@@ -44,4 +44,15 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
     Boolean existsByIpAddressAndPermission(String clientIp, Enum permission);
 
    Optional<HardwareEntity> findByIpAddress(String ipAddress);
+
+
+    @Query("SELECT p FROM HardwareEntity  p WHERE " +
+            "LOWER(p.inventoryNo) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.employee) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.serialNumber) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.department) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.ipAddress) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.type) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    Page<HardwareEntity> findByQueryPagable(String keyword, Pageable pageable);
 }

@@ -15,6 +15,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Notification;
 import pl.medos.cmmsApi.service.ImageService;
@@ -171,13 +173,13 @@ public class NotificationWebcontroller {
         outputStream.close();
     }
 
-    @GetMapping("/search/{query}")
-    public String searchByQuery(@RequestParam(name = "query") String query, Model model) {
-        log.info("searchByQuery()");
-        List<Notification> notifications = notificationService.findNotifiByQuery(query);
-        model.addAttribute("notifications", notifications);
-        return "main-notification.html";
-    }
+//    @GetMapping("/search/{query}")
+//    public String searchByQuery(@RequestParam(name = "query") String query, Model model) {
+//        log.info("searchByQuery()");
+//        List<Notification> notifications = notificationService.findNotifiByQuery(query);
+//        model.addAttribute("notifications", notifications);
+//        return "main-notification.html";
+//    }
 
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Notification notification) throws JRException, IOException {
@@ -186,5 +188,29 @@ public class NotificationWebcontroller {
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"awizacja_" + notification.getVisitDate() + ".pdf\""));
         OutputStream out = response.getOutputStream();
         raportService.exportReport(notification, out);
+    }
+
+    @GetMapping(value = "/search/query")
+    public String findNotifyByQuery(
+            @RequestParam(value = "query") String query,
+//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            Model model) throws IOException {
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="visitDate";
+        String sortDir="asc";
+
+        log.info("findPage()");
+        Page<Notification> notificationPage = notificationService.findNotificationPageByQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Notification> notifications = notificationPage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", notificationPage.getTotalPages());
+        model.addAttribute("totalItems", notificationPage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("notifications", notifications);
+        return "main-notification";
     }
 }

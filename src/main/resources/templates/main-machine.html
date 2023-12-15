@@ -455,11 +455,11 @@
 
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
-                                                <a th:href="@{/machines/update/{id}(id=${machine.id})}"
+                                                <a th:if="${isAdmin}" th:href="@{/machines/update/{id}(id=${machine.id})}"
                                                    class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                         class="sr-only"></span></a>
 
-                                                <a th:href="@{/machines/delete/{id}(id=${machine.id})}"
+                                                <a th:if="${isAdmin}" th:href="@{/machines/delete/{id}(id=${machine.id})}"
                                                    class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                         class="sr-only"></span></a>
                                             </td>
@@ -497,7 +497,7 @@
                         </div>
 
 
-                        <div class="text-lg font-medium" th:if="${totalPages > 1}">
+                        <div class="text-lg" th:if="${totalPages > 1}">
                             <div class="row col-sm-10">
                                 <div class="col-sm-2">
                                     Wszystkich wpisów: [[${totalItems}]]

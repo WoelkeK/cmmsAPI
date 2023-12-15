@@ -358,29 +358,29 @@
                                             </tr>
 
                                             <tr th:each="employee : ${employees}"
-                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
+                                                class="border-t border-gray-300 text-base font-medium bg-gray-100">
                                                 <td th:text="${employee.name}"
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-lg font-medium text-gray-900 sm:pl-6">
+                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-gray-900 sm:pl-6">
                                                     Lindsay Walton
                                                 </td>
                                                 <td th:text="${employee.position}"
-                                                    class="whitespace-nowrap px-3 py-4text-lg font-medium font-medium  text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
                                                     Stanowisko
                                                 </td>
                                                 <td th:text="${employee.department.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
                                                     Dział
                                                 </td>
                                                 <td th:text="${employee.phone}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
                                                     Telefon
                                                 </td>
                                                 <td th:text="${employee.email}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
                                                     Email
                                                 </td>
 
-                                                <td th:if="${isAdmin}" class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                <td th:if="${isAdmin}" class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lg font-medium sm:pr-6">
                                                     <a th:href="@{/employees/update/{id}(id=${employee.id}, pageNo=${currentPage})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
@@ -426,7 +426,7 @@
                             </div>
                         </div>
 
-                        <div class="text-lg font-medium" th:if="${totalPages > 1}">
+                        <div class="text-lg" th:if="${totalPages > 1}">
                             <div class="row col-sm-10">
                                 <div class="col-sm-2">
                                     Wszystkich wpisów: [[${totalItems}]]
@@ -435,7 +435,7 @@
             <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
          th:href="@{'/employees/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+      <span class="text-indigo-200 text-xl" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                 </div>
                             </div>

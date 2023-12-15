@@ -4,46 +4,47 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Notification;
 import pl.medos.cmmsApi.repository.NotificationRepository;
+import pl.medos.cmmsApi.repository.entity.HardwareEntity;
 import pl.medos.cmmsApi.repository.entity.NotificationEntity;
 import pl.medos.cmmsApi.service.NotificationService;
+import pl.medos.cmmsApi.service.mapper.NotificationMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
 
-    private final ModelMapper modelMapper;
+    private final NotificationMapper notificationMapper;
     private final NotificationRepository notificationRepository;
 
     @Override
     public Notification createNotification(Notification notification) {
         log.info("createNotification()");
-        NotificationEntity savedNotification = notificationRepository.save(modelMapper.map(notification, NotificationEntity.class));
-        return modelMapper.map(savedNotification, Notification.class);
+        NotificationEntity savedNotification = notificationRepository.save(notificationMapper.modelToEntity(notification));
+        return notificationMapper.entityToModel(savedNotification);
     }
 
     @Override
     public Notification findNotificationById(Long id) {
         log.info("findNotificationById()");
-        return modelMapper.map(notificationRepository.findById(id), Notification.class);
+        return notificationMapper.entityToModel(notificationRepository.findById(id).get());
     }
 
     @Override
     public Notification updateNotification(Notification notification, Long id) {
         log.info("updateNotification()");
         findNotificationById(id);
-        NotificationEntity notificationEntity = modelMapper.map(notification, NotificationEntity.class);
+        NotificationEntity notificationEntity = notificationMapper.modelToEntity(notification);
         notificationEntity.setId(id);
-        return modelMapper.map(notificationRepository.save(notificationEntity), Notification.class);
+        return notificationMapper.entityToModel(notificationRepository.save(notificationEntity));
     }
 
     @Override
@@ -56,17 +57,14 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> getAllNotifications() {
         log.info("getNotifications()");
         List<NotificationEntity> notificationEntities = notificationRepository.findAll();
-        return notificationEntities.stream()
-                .map(e -> modelMapper.map(e, Notification.class)).toList();
+        return notificationMapper.listModels(notificationEntities);
     }
 
     @Override
     public List<Notification> findNotifiByQuery(String query) {
         log.info("findNotificationByQuery()");
         List<NotificationEntity> repositoryByQuery = notificationRepository.searchNotificationsByQuery(query);
-        return repositoryByQuery.stream().map(
-                        notificationEntity -> modelMapper.map(notificationEntity, Notification.class))
-                .toList();
+        return notificationMapper.listModels(repositoryByQuery);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class NotificationServiceImpl implements NotificationService {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         Page<NotificationEntity> notificationEntities = notificationRepository.findAll(pageable);
-        return notificationEntities.map(NotificationEntity -> modelMapper.map(NotificationEntity, Notification.class));
+        return notificationMapper.entititesToModelsPage(notificationEntities);
     }
 
     @Override
@@ -83,7 +81,17 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("findAllSorted()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         List<NotificationEntity> notificationEntities = notificationRepository.findAll(sort);
-        return notificationEntities.stream().map(NotificationEntity->modelMapper.map(NotificationEntity,Notification.class)).toList();
+        return notificationMapper.listModels(notificationEntities);
+    }
 
+    @Override
+    public Page<Notification> findNotificationPageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
+        log.info("findNotificationPageByQuery()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<NotificationEntity> hardwareEntityPage = notificationRepository.findByQueryPagable(query, pageable);
+        Page<Notification> notifications = notificationMapper.entititesToModelsPage(hardwareEntityPage);
+        log.info("findHardwarePageByQuery(...)");
+        return notifications;
     }
 }
