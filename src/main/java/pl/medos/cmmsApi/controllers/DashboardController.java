@@ -202,7 +202,7 @@ public class DashboardController {
                 return "dashboard-edit";
             }
             model.addAttribute("job", job);
-            jobService.updateJob(job);
+            jobService.updateJob(job, id);
             LOGGER.info("update(...)");
             return "redirect:/dashboards";
         }

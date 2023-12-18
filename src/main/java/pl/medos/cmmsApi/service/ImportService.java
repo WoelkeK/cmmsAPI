@@ -12,7 +12,7 @@ import java.util.List;
 public interface ImportService {
     List<Employee> importExcelEmployeesData(MultipartFile file) throws IOException;
     List<Department> importExcelDepartmentsData(MultipartFile file) throws IOException;
-    List<Machine> importExcelMachineData(MultipartFile file) throws IOException;
+//    List<Machine> importExcelMachineData(MultipartFile file) throws IOException;
 
     List<Hardware> importExcelHardwareData(MultipartFile file) throws IOException;
 

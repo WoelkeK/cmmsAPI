@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
+import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.ImageService;
 import pl.medos.cmmsApi.service.JobService;
 import pl.medos.cmmsApi.service.mapper.JobMapper;
@@ -92,14 +94,28 @@ public class JobServiceImpl implements JobService {
         return jobModel;
     }
 
-    @Override
-    public Job updateJob(Job job) throws JobNotFoundException {
-        LOGGER.info("update()" + job);
-        JobEntity readedJobEntity = getJobEntity(job.getId());
-        JobEntity editedJobEntity = jobMapper.modelToEntity(job);
-        editedJobEntity.setId(readedJobEntity.getId());
 
-        LOGGER.info("editedJobentity()" + readedJobEntity.getId() + "in/out " + editedJobEntity.getId());
+    public Job updateJob(Job job, Long id) throws JobNotFoundException {
+        LOGGER.info("update()" + job);
+        Optional<JobEntity> optionalJobEntity = jobRepository.findById(id);
+        JobEntity jobEntity = optionalJobEntity.orElseThrow(
+                () -> new JobNotFoundException("Brak zlecenia o podanym id " + id));
+
+        JobEntity editedJobEntity = jobMapper.modelToEntity(job);
+        JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);
+        Job updatedJobModel = jobMapper.entityToModel(updatedJobEntity);
+        LOGGER.info("update(...) " + updatedJobModel);
+        return updatedJobModel;
+    }
+
+//    @Override
+//    public Job updateJob(Job job, Long id) throws JobNotFoundException {
+//        LOGGER.info("update()" + job);
+//        JobEntity readedJobEntity = getJobEntity(id);
+//        JobEntity editedJobEntity = jobMapper.modelToEntity(job);
+//        editedJobEntity.setId(readedJobEntity.getId());
+
+//        LOGGER.info("editedJobentity()" + readedJobEntity.getId() + "in/out " + editedJobEntity.getId());
 //        Cost cost = costService.searchCostByUnit("h");
 //        LOGGER.info("cost" + cost.getUnit());
 //        LocalDateTime jobStartTime = job.getJobStartTime();
@@ -108,12 +124,12 @@ public class JobServiceImpl implements JobService {
 //        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
 //        editedJobEntity.setCalcCost(jobTimeCost);
 
-        LOGGER.info("editedCostCalc " + editedJobEntity.getCalcCost());
-        JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);
-        Job updatedJobModel = jobMapper.entityToModel(updatedJobEntity);
-        LOGGER.info("update(...) " + updatedJobModel);
-        return updatedJobModel;
-    }
+//        LOGGER.info("editedCostCalc " + editedJobEntity.getCalcCost());
+//        JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);
+//        Job updatedJobModel = jobMapper.entityToModel(updatedJobEntity);
+//        LOGGER.info("update(...) " + updatedJobModel);
+//        return updatedJobModel;
+//    }
 
     @Override
     public void deleteJob(Long id) {

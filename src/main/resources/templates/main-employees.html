@@ -283,7 +283,20 @@
                                              alt="device">
 
                                     </div>
-                                    <div class="hidden lg:ml-10 lg:block">
+
+                                    <div th:if="${isAdmin}"  class="hidden lg:ml-10 lg:block">
+                                        <div th:if="${isAdmin}" class="flex space-x-4">
+                                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                                            <a href="#" th:href="@{/employees/create}"
+                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>
+                                            <a href="#" th:href="@{/employees/file}"
+                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>
+                                            <a href="#" th:href="@{/employees/export}"
+                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
+<!--                                            <a href="#" th:href="@{/employees/deleteAll}"-->
+<!--                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń-->
+<!--                                                wszystko</a>-->
+                                        </div>
                                     </div>
                                 </div>
 

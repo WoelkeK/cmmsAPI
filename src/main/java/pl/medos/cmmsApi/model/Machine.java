@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.medos.cmmsApi.enums.Operate;
 import pl.medos.cmmsApi.repository.entity.MaintenenceEntity;
 
 import java.time.LocalDateTime;

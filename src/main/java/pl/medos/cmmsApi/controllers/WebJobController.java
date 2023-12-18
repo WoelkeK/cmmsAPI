@@ -124,12 +124,33 @@ public class WebJobController {
         return "update-job";
     }
 
-    @PostMapping(value = "/update")
-    public String update(
+    @PostMapping(value = "/update/{id}")
+    public String update(@PathVariable(name = "id") Long id,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
-                         Model model) throws CostNotFoundException, JobNotFoundException {
+                         Model model,
+                         MultipartFile image)throws JobNotFoundException, IOException {
         LOGGER.info("update()" + job.getId());
+
+        if (image.getSize() == 0 && job.getOriginalImage()==null) {
+            LOGGER.info("default image");
+            byte[] bytes = imageService.imageToByteArray();
+            job.setResizedImage(bytes);
+            job.setOriginalImage(bytes);
+        } else {
+            LOGGER.info("multipart file present");
+            if (image.isEmpty() || image.getBytes()==null) {
+                return "create-job";
+            } else {
+                LOGGER.info("procesed Image() ");
+                byte[] orginalImage = imageService.multipartToByteArray(image);
+                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+                byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
+                job.setOriginalImage(orginalImage);
+                job.setResizedImage(resizeMaxImage);
+            }
+        }
+        LOGGER.info("image prepared");
 
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
@@ -137,7 +158,7 @@ public class WebJobController {
             return "update-job";
         }
         model.addAttribute("job", job);
-        jobService.updateJob(job);
+        jobService.updateJob(job, id);
         LOGGER.info("update(...)");
         return "redirect:/jobs";
     }
@@ -159,17 +180,24 @@ public class WebJobController {
             Model model,
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
-        if (image != null) {
 
-            byte[] orginalImage = imageService.multipartToByteArray(image);
-            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
-            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
-            job.setResizedImage(resizeImage);
-            job.setOriginalImage(resizeMaxImage);
-        } else {
+        if (image.getSize() == 0 && job.getOriginalImage()==null) {
+            LOGGER.info("default image");
             byte[] bytes = imageService.imageToByteArray();
             job.setResizedImage(bytes);
             job.setOriginalImage(bytes);
+        } else {
+            LOGGER.info("multipart file present");
+            if (image.isEmpty() || image.getBytes()==null) {
+                return "create-job";
+            } else {
+                LOGGER.info("procesed Image() ");
+                byte[] orginalImage = imageService.multipartToByteArray(image);
+                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+                byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
+                job.setOriginalImage(orginalImage);
+                job.setResizedImage(resizeMaxImage);
+            }
         }
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());

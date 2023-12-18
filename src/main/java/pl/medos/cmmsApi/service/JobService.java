@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
+import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Job;
@@ -20,7 +21,7 @@ public interface JobService {
 
     Job findJobById(Long id) throws JobNotFoundException;
 
-    Job updateJob(Job job) throws JobNotFoundException;
+    Job updateJob(Job job, Long id) throws JobNotFoundException;
 
     void deleteJob(Long id);
 

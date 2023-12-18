@@ -140,7 +140,7 @@ public class WebMachineController {
         modelMap.addAttribute("machine", machine);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "update-machine.html";
+        return "update-machine";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -226,23 +226,23 @@ public class WebMachineController {
         return "uploadMach-form";
     }
 
-    @PostMapping(value = "/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-
-        LOGGER.info("importMachines()");
-        if (file.isEmpty()) {
-            LOGGER.info("Please select file to upload");
-            return "redirect/machines";
-        }
-
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Machine> machines = importService.importExcelMachineData(file);
-
-        machines.forEach((machine) -> {
-            machineService.createMachine(machine);
-        });
-        LOGGER.info("importMachines(...) ");
-
-        return "redirect:/machines";
-    }
+//    @PostMapping(value = "/upload")
+//    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+//
+//        LOGGER.info("importMachines()");
+//        if (file.isEmpty()) {
+//            LOGGER.info("Please select file to upload");
+//            return "redirect/machines";
+//        }
+//
+//        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
+//        List<Machine> machines = importService.importExcelMachineData(file);
+//
+//        machines.forEach((machine) -> {
+//            machineService.createMachine(machine);
+//        });
+//        LOGGER.info("importMachines(...) ");
+//
+//        return "redirect:/machines";
+//    }
 }

@@ -185,7 +185,6 @@ public class WebEmployeeController {
             employeeService.createEmployee(employee);
         });
         LOGGER.info("importEmployees(...) ");
-
         return "redirect:/employees";
     }
     @GetMapping("/search/query")

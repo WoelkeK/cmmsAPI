@@ -84,11 +84,9 @@ public class PassWebcontroller {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", passes.getTotalPages());
         model.addAttribute("totalItems", passes.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("passes", passesList);
 
         Map<Long, String> jobBase64Images = new HashMap<>();

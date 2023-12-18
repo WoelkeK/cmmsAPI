@@ -73,7 +73,7 @@ public class DepartmentWebController {
         modelMap.addAttribute("department", new Department());
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "create-department.html";
+        return "create-department";
     }
 
     @PostMapping(value = "/create")
@@ -102,7 +102,7 @@ public class DepartmentWebController {
         LOGGER.info("updateView()");
         Department department = departmentService.findDepartmentById(id);
         modelMap.addAttribute("department", department);
-        return "update-department.html";
+        return "update-department";
     }
 
     @PostMapping(value = "/update/{id}")

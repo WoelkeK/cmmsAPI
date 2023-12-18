@@ -3,89 +3,92 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Panel Maszyna</title>
+    <title>Utwórz Awizo</title>
     <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/mainold.css}"/>
 
 </head>
 <body class="bg-gray-400">
-<div class="px-4 sm:px-6 lg:px-8">
-    <div class="sm:flex sm:items-center">
-        <div class="sm:flex-auto">
-            <h1 class="text-6xl font-semibold text-gray-900">Maszyna</h1>
+<form action="#" th:action="@{/machines/create}" th:object="${machine}" method="post"
+      enctype="multipart/form-data">
 
+    <input type="hidden" th:field="${machine.id}">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-4xl font-semibold text-gray-900">Nowa maszyna</h1>
+                <p class="mt-2 text-lm text-gray-700">Formularz dodawania maszyny</p>
+            </div>
+        </div>
 
-            <form action="#" th:action="@{/machines/create}" th:object="${machine}" method="post"
-                  class="space-y-8 divide-y divide-gray-700">
-                <div class="space-y-8 divide-y divide-gray-700 sm:space-y-5">
-                    <div class="space-y-6 sm:space-y-6">
-                        <div>
-                            <h3 class="mt-2 text-3xl font-semibold leading-6 text-gray-700">Panel Rejestracji
-                                Maszyny</h3>
-                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Zestawienie wszystkich maszyn.</p>
+        <div class="overflow-hidden bg-gray-700 shadow sm:rounded-lg">
+            <div class="px-4 py-2 sm:px-6">
+                <h3 class="text-2xl font-medium leading-6 text-yellow-400">Dane maszyny / urządzenia</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-400">Nalezy wypełnić wszystkie pola, w celu przekazania
+                    ochronie wszelkich możliwych informacji</p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="px-1 sm:px-6 lg:px-8 py-2">
+        <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+
+                <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div class="sm:col-span-1">
+                        <label for="name" class="block text-sl font-medium leading-6 text-gray-500">Nazwa
+                            maszyny</label>
+
+                        <div class="mt-2">
+                            <input type="text" th:field="${machine.name}" name="name" id="name"
+                                   class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <!--                            <p class="text-red-500" th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}">-->
+                            </p>
                         </div>
+                    </div>
 
+                    <div class="sm:col-span-1">
+                        <label for="model" class="block text-sl font-medium leading-6 text-gray-500">Model/Typ</label>
+                        <div class="mt-2">
+                            <input type="text" name="model" id="model" th:field="${machine.model}"
+                                   class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <!--                            <p class="text-red-500" th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{phone}"></p>-->
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="manufactured" class="block text-sl font-medium leading-6 text-gray-500">Rok
+                            produkcji</label>
+                        <div class="mt-2">
+                            <input type="text" name="manufactured" id="manufactured" th:field="${machine.manufactured}"
+                                   class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <!--                            <p class="text-red-500" th:if="${#fields.hasErrors('manufactured')}" th:errorclass="error" th:errors="*{company}"></p>-->
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="serialNumber" class="block text-sl font-medium leading-6 text-gray-500">Nr
+                            seryjny</label>
+                        <div class="mt-2">
+                            <input type="text" name="serialNumber" id="serialNumber" th:field="${machine.serialNumber}"
+                                   class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <!--                            <p class="text-red-500" th:if="${#fields.hasErrors('serialNumber')}" th:errorclass="error" th:errors="*{plates}">-->
+                        </div>
                     </div>
                 </div>
 
-                <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
-                    <div>
-                        <h3 class="text-xl font-medium leading-6 text-yellow-800">Dane Maszyny</h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-700">Należy wprowadzić wszystkie dane, w celu
-                            poprawnej identyfikacji.</p>
-                    </div>
+                <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-4">
 
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineName"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Nazwa maszyny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                    <div class="sm:col-span-1">
+                        <label for="department"
+                               class="block text-sl font-medium leading-6 text-gray-500">Wydział</label>
 
-                            <input type="text" th:field="${machine.name}" id="machineName" name="machine-name"
-                                   autocomplete="machine-name"
-                                   class="block w-full max-w-lg rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineModel"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Model/Typ
-                            maszyny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                            <input type="text" th:field="${machine.model}" id="machineModel" name="machineModel"
-                                   autocomplete="machine-model"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineYear"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Rok produkcji</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                            <input type="text" th:field="${machine.manufactured}" id="machineYear" name="machineYear"
-                                   autocomplete="machine-year"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineSerial"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Numer seryjny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                            <input type="text" th:field="${machine.serialNumber}" id="machineSerial"
-                                   name="machineSerial"
-                                   autocomplete="machine-serial"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
-
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="departmentId"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Wydział</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-                            <select th:field="${machine.department.id}" id="departmentId" name="departmentId"
-                                    autocomplete="department"
-                                    class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-
+                        <div class="mt-2">
+                            <select name="department" id="department" autocomplete="type"
+                                    th:field="${machine.department.id}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
+                                ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
+                                sm:text-xl sm:leading-6">
                                 <option th:each="department : ${departments}"
                                         th:text="${department.name}"
                                         th:value="${department.id}">
@@ -94,123 +97,103 @@
                         </div>
                     </div>
 
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
-                        <label for="install-date"
-                               class="block text-lm font-medium text-green-700 sm:mt-px sm:pt-2">Data instalacji
-                            maszyny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                            <input type="datetime-local" th:field="${machine.installDate}" id="install-date"
-                                   name="install-date"
-                                   autocomplete="install-date"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+                    <div class="sm:col-span-1">
+                        <label for="status" class="block text-sl font-medium leading-6 text-gray-500">Status</label>
+                        <div class="mt-2">
+                            <input type="text" name="status" id="status" th:field="${machine.status}"
+                                   class="block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
+                            <!--                            <p class="text-red-500" th:if="${#fields.hasErrors('serialNumber')}" th:errorclass="error" th:errors="*{plates}">-->
                         </div>
                     </div>
 
+                    <!--                    <div class="sm:col-span-1">-->
+                    <!--                        <label for="machineStatus"-->
+                    <!--                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Status Maszyny</label>-->
+                    <!--                        <div class="mt-1 sm:col-span-2 sm:mt-0">-->
 
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-400 sm:pt-5">
-                        <label for="machineStatus"
-                               class="block text-lm font-medium text-blue-800 sm:mt-px sm:pt-2">Status Maszyny</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-
-                            <input type="text" th:field="${machine.status}" id="machineStatus" name="machineStatus"
-                                   autocomplete="machine-status"
-                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
-                        </div>
-                    </div>
-                </div>
-                <div class="space-y-6 sm:space-y-5">
-
-                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-700 sm:pt-5">
-                        <label for="message"
-                               class="block text-xl font-medium text-gray-700 sm:mt-px sm:pt-2">Dodatkowe informacje o
-                            maszynie</label>
-                        <div class="mt-1 sm:col-span-2 sm:mt-0">
-                        <textarea id="message" name="message" rows="3"
-                                  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                            <p class="mt-2 text-sm text-gray-700">Wprowadź dodatkowe informacje dotyczącej maszyny.</p>
-                        </div>
-                    </div>
+                    <!--                            <input type="text" th:field="${machine.status}" id="machineStatus" name="machineStatus"-->
+                    <!--                                   autocomplete="machine-status"-->
+                    <!--                                   class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                 </div>
 
+                <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-                <div class="pt-6 sm:pt-5">
-                    <div role="group" aria-labelledby="date-register">
-                        <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
+                    <div class="sm:col-span-1">
+                        <label for="datePicker" class="block text-sl font-medium leading-6 text-gray-500">Data
+                            instalacji</label>
+                        <div class="mt-2">
+                            <input type="datetime-local"
+                                   class="form-control block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6"
+                                   th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm')}"
+                                   name="installDate"
+                                   id="datePicker">
+                            <!--                            <p class="text-red-500" th:if="${#fields.hasErrors('visitDate')}" th:errorclass="error" th:errors="*{visitDate}">-->
+                        </div>
+                    </div>
 
-                            <div>
-                                <div class="block text-xl font-medium text-green-800 sm:mt-px sm:pt-2"
-                                     id="date-register">Monitoring
-                                </div>
-                            </div>
-                            <div class="space-y-6 divide-y divide-gray-800 pt-8 sm:space-y-5 sm:pt-10">
-
-                                <div>
-                                    <h3 class="text-lm font-medium leading-6 text-gray-800">Powiadomienia</h3>
-                                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Odbiór komunikatów zdalnych z API
-                                        Maszyny:.</p>
-                                </div>
-                                <div class="space-y-6 divide-y divide-gray-500 sm:space-y-5">
-                                    <div class="pt-6 sm:pt-5">
-                                        <div role="group" aria-labelledby="label-email">
-                                            <div class="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4">
-                                                <div>
-                                                    <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
-                                                         id="label-email">Stan Maszyny
-                                                    </div>
-                                                </div>
-                                                <div class="mt-4 sm:col-span-2 sm:mt-0">
-                                                    <div class="max-w-lg space-y-4">
-                                                        <div class="relative flex items-start">
-                                                            <div class="flex h-5 items-center">
-                                                                <input id="comments" name="comments" type="checkbox"
-                                                                       class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                            </div>
-                                                            <div class="ml-3 text-sm">
-                                                                <label for="comments"
-                                                                       class="font-medium text-yellow-700">Ostrzeżenia</label>
-                                                                <p class="text-gray-500">Powiadomienie o pojawieniu się
-                                                                    ostrzeżenia o nieprawidłowej pracy</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="relative flex items-start">
-                                                            <div class="flex h-5 items-center">
-                                                                <input id="jobs" name="jobs" type="checkbox"
-                                                                       class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                                            </div>
-                                                            <div class="ml-3 text-sm">
-                                                                <label for="jobs" class="font-medium text-red-600">Awarie</label>
-                                                                <p class="text-gray-500">Powiadomienie o awarii maszyny
-                                                                    i konieczności wezwania technika.</p>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Zdjęcie</dt>
+                        <dd class="mt-1 text-sm text-gray-900">
+                            <ul role="list "
+                                class="divide-y divide-gray-200 rounded-md border border-gray-200">
+                                <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                                    <div class="flex w-0 flex-1 items-center">
+                                        <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20"
+                                             fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                        <span class="ml-2 w-0 flex-1 truncate">Fotografia</span>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-5">
-                        <div class="flex justify-end">
-                            <button type="button"
-                                    class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                <a th:href="@{/machines}">Wstecz</a>
-                            </button>
-                            <button type="submit"
-                                    class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                Zapisz
-                            </button>
-                        </div>
+                                    <div class="ml-4 flex-shrink-0">
+                                        <!--                                                <a href="#"-->
+                                        <!--                                                   class="font-medium text-indigo-600 hover:text-indigo-500">Dołącz</a>-->
+                                        <input type="file" accept="image/*" id="image" name="image"
+                                               class="font-medium text-indigo-600 hover:text-indigo-500">
+                                    </div>
+                                </li>
+                            </ul>
+                        </dd>
                     </div>
                 </div>
-            </form>
+
+                <!--            <div class="px-4 py-5 sm:px-6">-->
+                <!--                <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">-->
+                <!--                    <div class="sm:col-span-3">-->
+                <!--                        <div class="pace-y-6 sm:space-y-5">-->
+
+                <!--                            <div class="bg-light-blue sm:grid sm:grid-cols-2 sm:items-start sm:gap-4 sm:border-t sm:border-gray-300 sm:pt-5">-->
+                <!--                                <label for="description"-->
+                <!--                                       class="block text-xl font-medium text-green-600 sm:mt-px sm:pt-2">Informacje-->
+                <!--                                    dodatkowe:</label>-->
+                <!--                                <div class="mt-1 sm:col-span-2 sm:mt-0">-->
+                <!--                                    <textarea th:field="*{description}" id="description" name="description" rows="3"-->
+                <!--                                              class="block w-full max-w-6xl rounded-md border-gray-300 shadow-sm text-blue-700 focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg"></textarea>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </dl>-->
+                <!--            </div>-->
+
+                <div class="pt-5">
+                    <div class="flex justify-end">
+                        <button type="button"
+                                class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <a th:href="@{/machines}">Wstecz</a>
+                        </button>
+                        <button type="submit"
+                                class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Zapisz
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</form>
 </body>
 </html>
