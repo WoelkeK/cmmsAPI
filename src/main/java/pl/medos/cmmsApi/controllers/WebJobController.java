@@ -129,26 +129,25 @@ public class WebJobController {
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
                          Model model,
-                         MultipartFile image)throws JobNotFoundException, IOException {
+                         MultipartFile image) throws JobNotFoundException, IOException {
         LOGGER.info("update()" + job.getId());
 
-        if (image.getSize() == 0 && job.getOriginalImage()==null) {
-            LOGGER.info("default image");
-            byte[] bytes = imageService.imageToByteArray();
-            job.setResizedImage(bytes);
-            job.setOriginalImage(bytes);
-        } else {
-            LOGGER.info("multipart file present");
-            if (image.isEmpty() || image.getBytes()==null) {
-                return "create-job";
-            } else {
-                LOGGER.info("procesed Image() ");
-                byte[] orginalImage = imageService.multipartToByteArray(image);
-                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
-                byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-                job.setOriginalImage(orginalImage);
-                job.setResizedImage(resizeMaxImage);
+        if (image.isEmpty() || image.getBytes() == null) {
+            LOGGER.info("multipart file not present");
+
+            if (image.getSize() == 0 && job.getOriginalImage() == null) {
+                LOGGER.info("default image");
+                byte[] bytes = imageService.imageToByteArray();
+                job.setResizedImage(bytes);
+                job.setOriginalImage(bytes);
             }
+        } else {
+            LOGGER.info("procesed Image() ");
+            byte[] orginalImage = imageService.multipartToByteArray(image);
+            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
+            job.setOriginalImage(orginalImage);
+            job.setResizedImage(resizeMaxImage);
         }
         LOGGER.info("image prepared");
 
@@ -181,14 +180,14 @@ public class WebJobController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
 
-        if (image.getSize() == 0 && job.getOriginalImage()==null) {
+        if (image.getSize() == 0 && job.getOriginalImage() == null) {
             LOGGER.info("default image");
             byte[] bytes = imageService.imageToByteArray();
             job.setResizedImage(bytes);
             job.setOriginalImage(bytes);
         } else {
             LOGGER.info("multipart file present");
-            if (image.isEmpty() || image.getBytes()==null) {
+            if (image.isEmpty() || image.getBytes() == null) {
                 return "create-job";
             } else {
                 LOGGER.info("procesed Image() ");
@@ -245,9 +244,9 @@ public class WebJobController {
     public String searchJobByName(
             @RequestParam(value = "query") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            Model model){
+            Model model) {
         LOGGER.info("search()");
-        int pagesize =10;
+        int pagesize = 10;
         Page<Job> jobByQuery = jobService.findJobByQuery(pageNo, pagesize, query);
         LOGGER.info("findJobByQuery()");
         model.addAttribute("jobs", jobByQuery);
