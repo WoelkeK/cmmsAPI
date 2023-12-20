@@ -33,7 +33,7 @@ public class JobServiceImpl implements JobService {
 
     private ImageService imageService;
 
-    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper,ImageService imageService) {
+    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper, ImageService imageService) {
         this.jobRepository = jobRepository;
         this.jobMapper = jobMapper;
         this.imageService = imageService;
@@ -52,31 +52,33 @@ public class JobServiceImpl implements JobService {
     @Override
     public Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findJobPages()" + pageNo + "/" + size);
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
-        LOGGER.info("Pageable() " + pageable.getPageNumber()+ "/" + pageable.getPageSize());
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
+        LOGGER.info("Pageable() " + pageable.getPageNumber() + "/" + pageable.getPageSize());
         Page<JobEntity> jobPages = jobRepository.findAll(pageable);
-        LOGGER.info("findJobPages(repo)" +jobPages.getNumberOfElements());
+        LOGGER.info("findJobPages(repo)" + jobPages.getNumberOfElements());
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
-        LOGGER.info("findJobPages(...)" +jobs.getNumberOfElements());
+        LOGGER.info("findJobPages(...)" + jobs.getNumberOfElements());
         return jobs;
     }
 
     @Override
     public Page<Job> findByStatusWithPagination(String query, int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findJobPagesWithStatus()" + pageNo + "/" + size);
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending(): Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
-        LOGGER.info("Pageable() " + pageable.getPageNumber()+ "/" + pageable.getPageSize());
-        Page<JobEntity> jobPages = jobRepository.findByStatus(query,pageable);
-        LOGGER.info("findJobPagesWithStatus(repo)" +jobPages.getNumberOfElements());
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
+        LOGGER.info("Pageable() " + pageable.getPageNumber() + "/" + pageable.getPageSize());
+        Page<JobEntity> jobPages = jobRepository.findByStatus(query, pageable);
+        LOGGER.info("findJobPagesWithStatus(repo)" + jobPages.getNumberOfElements());
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
-        LOGGER.info("findJobPagesWithStatus(...)" +jobs.getNumberOfElements());
+        LOGGER.info("findJobPagesWithStatus(...)" + jobs.getNumberOfElements());
         return jobs;
     }
+
     @Override
-    public Job createJob(Job job) throws IOException {
+    public Job createJob(Job job) {
         LOGGER.info("create(" + job + ")");
+        job.setRequestDate(LocalDateTime.now());
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
         Job savedJobModel = jobMapper.entityToModel(savedJobEntity);
@@ -150,11 +152,18 @@ public class JobServiceImpl implements JobService {
     @Override
     public Page<Job> findJobByQuery(int pageNo, int pagesize, String query) {
         LOGGER.info("findJobByQuery()" + query);
-        Pageable pageable = PageRequest.of(pageNo-1, pagesize);
-        Page<JobEntity> employeeEntities = jobRepository.searchEmployeeByQuery(pageable,query);
+        Pageable pageable = PageRequest.of(pageNo - 1, pagesize);
+        Page<JobEntity> employeeEntities = jobRepository.searchEmployeeByQuery(pageable, query);
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(employeeEntities);
         LOGGER.info("findJobByQuery(...)");
         return jobs;
+    }
+
+    @Override
+    public void deleteAllJobs() {
+        LOGGER.info("DeleteAllJobs");
+        jobRepository.deleteAll();
+
     }
 
 }

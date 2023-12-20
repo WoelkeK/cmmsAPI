@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.service;
 
 import jakarta.servlet.http.HttpServletResponse;
 import pl.medos.cmmsApi.model.Hardware;
+import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
 
 import java.io.FileNotFoundException;
@@ -15,5 +16,9 @@ public interface ExportService {
 
     void excelHardwaresModelGenerator(List<Hardware> machines);
     void generateExcelHardwareFile(HttpServletResponse response) throws IOException;
+
+    void excelJobsModelGenerator(List<Job> jobs);
+
+    void generateExcelJobFile(HttpServletResponse response) throws IOException;
 }
 

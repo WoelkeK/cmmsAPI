@@ -206,16 +206,6 @@ public class WebHardwareController {
         return "redirect:/hardwares";
     }
 
-//    @GetMapping(value = "/search/query")
-//    public String searchHardwareByQuery(@RequestParam(value = "query") String query,
-//                                        Model model) {
-//        LOGGER.info("search()");
-//        List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
-//        model.addAttribute("hardwares", hardwares);
-//        LOGGER.info("search(...)");
-//        return "list-hardware";
-//    }
-
     @GetMapping(value = "/search/query")
     public String findHardwareByQuery(
             @RequestParam(value = "query") String query,

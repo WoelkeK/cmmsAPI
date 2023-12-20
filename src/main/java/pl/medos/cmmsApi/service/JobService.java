@@ -17,7 +17,7 @@ public interface JobService {
 
     List<Job> findAllJobs();
 
-    Job createJob(Job job) throws IOException;
+    Job createJob(Job job);
 
     Job findJobById(Long id) throws JobNotFoundException;
 
@@ -28,4 +28,6 @@ public interface JobService {
     Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection);
     Page<Job> findByStatusWithPagination(String query, int pageNo, int size, String sortField, String sortDirection);
     Page<Job> findJobByQuery(int pageNo, int pagesize, String query);
+    void deleteAllJobs();
+
 }

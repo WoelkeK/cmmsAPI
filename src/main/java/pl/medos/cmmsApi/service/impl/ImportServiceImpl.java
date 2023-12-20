@@ -2,23 +2,28 @@ package pl.medos.cmmsApi.service.impl;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.enums.Permission;
 import pl.medos.cmmsApi.model.*;
+import pl.medos.cmmsApi.repository.DepartmentRepository;
 import pl.medos.cmmsApi.repository.HardwareRepository;
-import pl.medos.cmmsApi.service.ImportService;
+import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
+import pl.medos.cmmsApi.service.*;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -27,13 +32,24 @@ import java.util.logging.Logger;
 @Service
 public class ImportServiceImpl implements ImportService {
 
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private MachineService machineService;
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    private ImageService imageService;
+
+
     private static final Logger LOGGER = Logger.getLogger(ImportServiceImpl.class.getName());
 
     private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
+    private List<String> jobs = new ArrayList<>(Arrays.asList("requestDate", "employee", "department", "machine", "message", "solution", "jobStartTime", "jobStopTime"));
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
     private List<String> machines = new ArrayList<>(Arrays.asList("id", "name", "model", "manufactured", "serialNumber", "department", "status"));
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description", "bitLockKey", "bitRecoveryKey","permission"));
+            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description", "bitLockKey", "bitRecoveryKey", "permission"));
     private final HardwareRepository hardwareRepository;
 
     public ImportServiceImpl(HardwareRepository hardwareRepository) {
@@ -222,8 +238,123 @@ public class ImportServiceImpl implements ImportService {
             LOGGER.info("rawData " + rawData);
         }
         List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
-
         return hardwares;
+    }
+
+    @Override
+    public List<Job> importExcelJobData(MultipartFile fileName) throws IOException {
+
+        LOGGER.info("importExcelJobsData()");
+        String empty = "";
+
+        List<JsonJob> rawDataList = new ArrayList<>();
+        InputStream file = new BufferedInputStream(fileName.getInputStream());
+
+        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        Iterator<Row> rowIterator = sheet.iterator();
+
+        while (rowIterator.hasNext()) {
+
+            Row row = rowIterator.next();
+            Map<String, String> rowDataMap = new HashMap<>();
+            Cell cell;
+            for (int k = 0; k < row.getLastCellNum(); k++) {
+                if (null != (cell = row.getCell(k))) {
+                    switch (cell.getCellType()) {
+                        case NUMERIC:
+//                            rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
+                            rowDataMap.put(jobs.get(k), (cell.getDateCellValue().toString()));
+                            break;
+                        case STRING:
+//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
+                            rowDataMap.put(jobs.get(k), cell.getStringCellValue().replaceAll("  ", "").trim());
+                            break;
+                        case _NONE:
+                            rowDataMap.put(jobs.get(k), empty);
+                            break;
+
+                    }
+                }
+            }
+            ObjectMapper mapper = new ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+            JsonJob rawData = mapper.convertValue(rowDataMap, JsonJob.class);
+            rawDataList.add(rawData);
+            LOGGER.info("rawData " + rawData);
+        }
+        List<Job> jobs = jobsDataExcelConverter(rawDataList);
+        return jobs;
+    }
+
+    private List<Job> jobsDataExcelConverter(List<JsonJob> jobs) {
+        LOGGER.info("jobDataExcelConverter()");
+
+        List<Job> newJobs =
+                jobs.stream().map(m -> {
+
+                                    Job job = new Job();
+//                                    job.setId(Long.parseLong(String.valueOf(m.getId())));
+
+                                    Employee employee = employeeService.findEmployeeByRawName(m.getEmployee()).get(0);
+                                    LOGGER.info("Imported employee() " + employee);
+                                    job.setEmployee(employee);
+
+                                    Department departmentByName = departmentService.findDepartmentByName(m.getDepartment());
+                                    LOGGER.info("Imported department() " + departmentByName);
+                                    job.setDepartment(departmentByName);
+                                    job.setSolution(m.getSolution());
+
+                                    Machine machine = machineService.findMachinesByQuery(m.getMachine()).stream().findFirst().orElseThrow();
+                                    LOGGER.info("Imported machine() " + machine);
+                                    job.setMachine(machine);
+                                    job.setMessage(m.getMessage());
+
+                                    if(job.getOriginalImage()==null) {
+                                        LOGGER.info("default image");
+                                        byte[] bytes = imageService.imageToByteArray();
+                                        job.setResizedImage(bytes);
+                                        job.setOriginalImage(bytes);
+                                    }
+
+                                    LOGGER.info("image prepared");
+
+                                    if (m.getJobStartTime() == null || m.getJobStartTime().isEmpty()) {
+                                        job.setJobStartTime(null);
+                                    } else {
+                                        LocalDateTime jobStartTime = convertDateTime(m.getJobStartTime());
+                                        job.setJobStartTime(jobStartTime);
+                                        LOGGER.info(jobStartTime.toString());
+                                    }
+
+                                    if (m.getJobStopTime() == null || m.getJobStopTime().isEmpty()) {
+                                        job.setJobStopTime(null);
+                                    } else {
+                                        LocalDateTime jobStopTime = convertDateTime(m.getJobStopTime());
+                                        job.setJobStopTime(jobStopTime);
+                                        LOGGER.info(jobStopTime.toString());
+                                    }
+
+                                    if (m.getRequestDate() == null || m.getRequestDate().isEmpty()) {
+                                        LOGGER.info("RequestDate null");
+                                        job.setRequestDate(null);
+                                    } else {
+                                        LocalDateTime requestDate = convertDateTime(m.getRequestDate());
+                                        job.setRequestDate(requestDate);
+                                        LOGGER.info(requestDate.toString());
+                                    }
+
+                                    LOGGER.info("createJobMap(...)");
+                                    return job;
+                                }
+                        )
+                        .toList();
+
+        LOGGER.info("employeeDataExcelConverter(...)");
+        return newJobs;
     }
 
     private List<Employee> employeeDataExcelConverter(List<Person> persons) {
@@ -322,11 +453,11 @@ public class ImportServiceImpl implements ImportService {
                                     hardware.setBitRecoveryKey(m.getBitRecoveryKey());
                                     hardware.setDescription(m.getDescription());
 
-                                    if(m.getPermission() ==null){
+                                    if (m.getPermission() == null) {
                                         hardware.setPermission(Permission.USER);
-                                    }else{
+                                    } else {
 
-                                    hardware.setPermission(m.getPermission());
+                                        hardware.setPermission(m.getPermission());
                                     }
 
 
@@ -360,6 +491,18 @@ public class ImportServiceImpl implements ImportService {
 
         DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
         LocalDate localDate = LocalDate.parse(date, inputDateFormatter);
+        DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String outputDateString = localDate.format(outputDateFormatter);
+        LOGGER.info("ConvertedDate() " + localDate.toString());
+        return localDate;
+    }
+
+    private LocalDateTime convertDateTime(String date) {
+        LOGGER.info("DataXLS_String " + date);
+        LOGGER.info("Start parsing string to date " + date.toString());
+
+        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+        LocalDateTime localDate = LocalDateTime.parse(date, inputDateFormatter);
         DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String outputDateString = localDate.format(outputDateFormatter);
         LOGGER.info("ConvertedDate() " + localDate.toString());

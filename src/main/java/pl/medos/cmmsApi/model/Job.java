@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -20,6 +21,7 @@ import java.util.Date;
 public class Job {
 
     private Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime requestDate;
     private User user;
     private Employee employee;
@@ -32,7 +34,9 @@ public class Job {
     private Boolean directContact;
     @NotEmpty(message = "Należy uzuzpełnić opis wykonanych czynności!")
     private String solution;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime jobStartTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;

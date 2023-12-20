@@ -17,10 +17,9 @@ import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Controller
@@ -36,14 +35,18 @@ public class WebJobController {
     private MachineService machineService;
     private EngineerService engineerService;
     private ImageService imageService;
+    private ImportService importService;
+    private ExportService exportService;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService, ImageService imageService) {
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService, ImageService imageService, ImportService importService, ExportService exportService) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
         this.engineerService = engineerService;
         this.imageService = imageService;
+        this.importService = importService;
+        this.exportService = exportService;
     }
 
     @GetMapping(value = "/list")
@@ -100,8 +103,8 @@ public class WebJobController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-        List<Engineer> engineers = engineerService.finadAllEmployees();
-        model.addAttribute("engineers", engineers);
+//        List<Engineer> engineers = engineerService.finadAllEmployees();
+//        model.addAttribute("engineers", engineers);
 
         Map<Long, String> jobBase64Images = new HashMap<>();
         for (Job job : jobs) {
@@ -227,6 +230,13 @@ public class WebJobController {
         return "redirect:/jobs";
     }
 
+    @GetMapping(value = "/deleteAll")
+    public String deleteAll(){
+        LOGGER.info("delete()");
+        jobService.deleteAllJobs();
+        return "redirect:/jobs";
+    }
+
 
     @GetMapping(value = "/downloadfile")
     public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
@@ -253,4 +263,48 @@ public class WebJobController {
         model.addAttribute("currentPage", pageNo);
         return "main-job";
     }
+
+
+    @GetMapping(value = "/file")
+    public String showUploadForm() {
+        return "uploadJob-form";
+    }
+
+    @PostMapping(value = "/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        LOGGER.info("importJobs()");
+        if (file.isEmpty()) {
+            LOGGER.info("Proszę wybrać plik do importu");
+            return "redirect/jobs";
+        }
+
+        List<Job> jobs = importService.importExcelJobData(file);
+
+        jobs.forEach((job) -> {
+           jobService.createJob(job);
+        });
+        LOGGER.info("importJobs(...) ");
+        return "redirect:/jobs";
+    }
+
+    @GetMapping(value = "/export")
+    public void exportJobs(@ModelAttribute(name = "jobs") List<Job> jobs,
+                                HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=hardware" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+        exportService.excelJobsModelGenerator(jobs);
+        exportService.generateExcelJobFile(response);
+        response.flushBuffer();
+        LOGGER.info("export(...)");
+    }
+
+    // TODO: 20.12.2023 dokończyć implementacje exportu awarii do pliku excel
 }

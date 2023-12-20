@@ -36,10 +36,10 @@ public class MachineServiceImpl implements MachineService {
 
     public List<Machine> findAllMachines() {
 
-        LOGGER.info("list()");
+        LOGGER.info("listAllMachines()");
         List<MachineEntity> mechineEntities = machineRepository.findAll();
         List<Machine> machineModels = machineMapper.listModels(mechineEntities);
-        LOGGER.info("List(...)");
+        LOGGER.info("ListAllMachines(...)");
         return machineModels;
     }
 

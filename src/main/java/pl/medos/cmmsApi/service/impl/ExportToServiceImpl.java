@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.model.Hardware;
+import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.ExportService;
 
@@ -24,6 +25,7 @@ public class ExportToServiceImpl implements ExportService {
     private static final Logger LOGGER = Logger.getLogger(ExportToServiceImpl.class.getName());
     private List<Machine> machines;
     private List<Hardware> hardwares;
+    private List<Job> jobs;
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
 
@@ -59,6 +61,73 @@ public class ExportToServiceImpl implements ExportService {
         workbook.write(outputStream);
         workbook.close();
         outputStream.close();
+    }
+
+    @Override
+    public void excelJobsModelGenerator(List<Job> jobs) {
+        this.jobs = jobs;
+        workbook = new XSSFWorkbook();
+    }
+
+    @Override
+    public void generateExcelJobFile(HttpServletResponse response) throws IOException {
+        writeJobHeader();
+        writeJob();
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+    }
+
+    private void writeJob() {
+        LOGGER.info("writeJob()");
+
+        int rowCount = 1;
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("dd/mm/yyyy"));
+        font.setFontHeight(14);
+        style.setFont(font);
+        for (Job record : jobs) {
+            Row row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+
+            if (record.getRequestDate() == null) {
+                createCell(row, columnCount++, record.getRequestDate(), style);
+            } else {
+                createCell(row, columnCount++, record.getRequestDate(),dateCellStyle);
+            }
+            createCell(row, columnCount++, record.getEmployee(), style);
+            createCell(row, columnCount++, record.getDepartment(), style);
+            createCell(row, columnCount++, record.getMachine(), style);
+            createCell(row, columnCount++, record.getMessage(), style);
+
+            if (record.getJobStartTime() == null) {
+                createCell(row, columnCount++, record.getJobStartTime(), style);
+            } else {
+                createCell(row, columnCount++, record.getJobStopTime(),dateCellStyle);
+            }
+        }
+        LOGGER.info("writeJob(...)");
+    }
+
+    private void writeJobHeader() {
+        sheet = workbook.createSheet("Awarie");
+        Row row = sheet.createRow(0);
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+        createCell(row, 0, "Data zgłoszenia", style);
+        createCell(row, 1, "Zgłaszający", style);
+        createCell(row, 2, "Dział", style);
+        createCell(row, 3, "Maszyna", style);
+        createCell(row, 4, "Usterka.", style);
+        createCell(row, 5, "Rozpoczęcie prac.", style);
+        createCell(row, 6, "Zakończenie prac", style);
+        LOGGER.info("Header create complete! ");
     }
 
     private void writeMachineHeader() {

@@ -40,11 +40,21 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public byte[] imageToByteArray() throws IOException {
+    public byte[] imageToByteArray() {
         LOGGER.info("imageToByteArray()");
         URL resource = getClass().getResource("/image.jpg");
-        BufferedImage bf = ImageIO.read(resource);
-        byte[] defaultImage = toByteArray(bf, "jpg");
+        BufferedImage bf = null;
+        try {
+            bf = ImageIO.read(resource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        byte[] defaultImage = new byte[0];
+        try {
+            defaultImage = toByteArray(bf, "jpg");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         bf.flush();
         return defaultImage;
     }

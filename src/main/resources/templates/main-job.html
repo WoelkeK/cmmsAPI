@@ -460,6 +460,7 @@
 
                                         <tr th:each="job : ${jobs}" class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
+<!--                                            <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"-->
                                             <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
                                                 class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
                                                 Zgłoszenia

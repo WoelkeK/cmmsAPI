@@ -18,7 +18,7 @@ public class JobEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @CreationTimestamp
+//    @CreationTimestamp
     private LocalDateTime requestDate;
     @ManyToOne
     @JoinColumn(name = "employee_id")
