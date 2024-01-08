@@ -7,6 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
@@ -25,6 +26,7 @@ public class ExportToServiceImpl implements ExportService {
     private static final Logger LOGGER = Logger.getLogger(ExportToServiceImpl.class.getName());
     private List<Machine> machines;
     private List<Hardware> hardwares;
+    private List<Employee> employees;
     private List<Job> jobs;
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
@@ -79,6 +81,59 @@ public class ExportToServiceImpl implements ExportService {
         outputStream.close();
     }
 
+    @Override
+    public void excelEmployeeModelGenerator(List<Employee> employees) {
+        this.employees = employees;
+        workbook = new XSSFWorkbook();
+    }
+
+    @Override
+    public void generateExcelEmployeeFile(HttpServletResponse response) throws IOException {
+        writeEmployeeHeader();
+        writeEmployee();
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+
+    }
+
+    private void writeEmployee() {
+        LOGGER.info("writeEmployee()");
+        int rowCount = 1;
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setFontHeight(14);
+        style.setFont(font);
+        for (Employee record : employees) {
+            Row row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            createCell(row, columnCount++, record.getName(), style);
+            createCell(row, columnCount++, record.getPosition(), style);
+            createCell(row, columnCount++, record.getDepartment().getName(), style);
+            createCell(row, columnCount++, record.getPhone(), style);
+            createCell(row, columnCount++, record.getEmail(), style);
+        }
+        LOGGER.info("writeEmployees(...)");
+    }
+
+    private void writeEmployeeHeader() {
+        sheet = workbook.createSheet("Pracownicy");
+        Row row = sheet.createRow(0);
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+        createCell(row, 0, "Imię i Nazwisko", style);
+        createCell(row, 1, "Stanowisko", style);
+        createCell(row, 2, "Wydział", style);
+        createCell(row, 3, "Telefon", style);
+        createCell(row, 4, "Email.", style);
+        LOGGER.info("Header create complete! ");
+    }
+
+
     private void writeJob() {
         LOGGER.info("writeJob()");
 
@@ -96,7 +151,7 @@ public class ExportToServiceImpl implements ExportService {
             if (record.getRequestDate() == null) {
                 createCell(row, columnCount++, record.getRequestDate(), style);
             } else {
-                createCell(row, columnCount++, record.getRequestDate(),dateCellStyle);
+                createCell(row, columnCount++, record.getRequestDate(), dateCellStyle);
             }
             createCell(row, columnCount++, record.getEmployee(), style);
             createCell(row, columnCount++, record.getDepartment(), style);
@@ -106,7 +161,7 @@ public class ExportToServiceImpl implements ExportService {
             if (record.getJobStartTime() == null) {
                 createCell(row, columnCount++, record.getJobStartTime(), style);
             } else {
-                createCell(row, columnCount++, record.getJobStopTime(),dateCellStyle);
+                createCell(row, columnCount++, record.getJobStopTime(), dateCellStyle);
             }
         }
         LOGGER.info("writeJob(...)");
@@ -262,7 +317,7 @@ public class ExportToServiceImpl implements ExportService {
             if (record.getInstallDate() == null) {
                 createCell(row, columnCount++, record.getInstallDate(), style);
             } else {
-                createCell(row, columnCount++, record.getInstallDate(),dateCellStyle);
+                createCell(row, columnCount++, record.getInstallDate(), dateCellStyle);
             }
             createCell(row, columnCount++, record.getInvoiceNo(), style);
             createCell(row, columnCount++, record.getSystemNo(), style);

@@ -169,6 +169,7 @@ public class WebHardwareController {
     public void exportHardwares(@ModelAttribute(name = "hardwares") List<Hardware> hardwares,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
+        hardwares=hardwareService.listAll();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());

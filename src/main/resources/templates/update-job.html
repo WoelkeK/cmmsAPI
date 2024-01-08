@@ -18,7 +18,6 @@
     <input type="hidden" th:field="${job.id}">
     <input type="hidden" th:field="*{solution}">
     <input type="hidden" th:field="*{status}">
-    <input type="hidden" th:field="*{jobStopTime}">
     <input type="hidden" th:field="${job.resizedImage}">
     <input type="hidden" th:field="${job.originalImage}">
     <input type="hidden" th:field="${job.requestDate}">
@@ -46,10 +45,10 @@
             <div class="px-4 py-5 sm:px-6">
 
                 <div class="mt-4 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-3">
-                    <div class="sm:col-span-2">
+                    <div class="sm:col-span-3">
                         <div class="mt-4 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-3">
                             <div class="sm:col-span-1">
-                                <label for="department"
+                                <label for="employee"
                                        class="block text-sl font-medium leading-6 text-gray-500">Zgłaszający</label>
 
                                 <div class="mt-2">
@@ -126,6 +125,31 @@
                                     </li>
                                 </ul>
                             </dd>
+                        </div>
+                    </div>
+
+
+                    <div class="sm:col-span-1">
+                        <label for="jobStartTime" class="block text-sl font-medium leading-6 text-gray-500">Data
+                            rozpoczęcia naprawy</label>
+                        <div class="mt-2">
+                            <input type="datetime-local"
+                                   class="form-control block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6"
+                                   th:value="${#temporals.format(job.jobStartTime, 'yyyy-MM-dd HH:mm')}" name="jobStartTime"
+                                   id="jobStartTime">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('jobStartTime')}" th:errorclass="error" th:errors="*{jobStartTime}">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                        <label for="jobStopTime" class="block text-sl font-medium leading-6 text-gray-500">Data
+                            rozpoczęcia naprawy</label>
+                        <div class="mt-2">
+                            <input type="datetime-local"
+                                   class="form-control block w-full rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6"
+                                   th:value="${#temporals.format(job.jobStopTime, 'yyyy-MM-dd HH:mm')}" name="jobStopTime"
+                                   id="jobStopTime">
+                            <p class="text-red-500" th:if="${#fields.hasErrors('jobStopTime')}" th:errorclass="error" th:errors="*{jobStopTime}">
                         </div>
                     </div>
                 </div>

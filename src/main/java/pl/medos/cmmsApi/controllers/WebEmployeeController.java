@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +11,17 @@ import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
+import pl.medos.cmmsApi.service.ExportService;
 import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,11 +35,14 @@ public class WebEmployeeController {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private ImportService importService;
+    private ExportService exportService;
 
-    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportService importService) {
+    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportService importService, ExportService exportService) {
+
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.importService = importService;
+        this.exportService = exportService;
     }
 
     @GetMapping(value = "/list")
@@ -187,6 +196,28 @@ public class WebEmployeeController {
         LOGGER.info("importEmployees(...) ");
         return "redirect:/employees";
     }
+
+    @GetMapping(value = "/export")
+    public void exportEmployees(@ModelAttribute(name = "employees") List<Employee> employees,
+                                HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+
+        employees = employeeService.finadAllEmployees();
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=employee" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+        exportService.excelEmployeeModelGenerator(employees);
+        exportService.generateExcelEmployeeFile(response);
+        response.flushBuffer();
+        LOGGER.info("export(...)");
+    }
+
+
     @GetMapping("/search/query")
     public String searchEmployeeByName(
             @RequestParam(value = "query") String query,
@@ -199,5 +230,12 @@ public class WebEmployeeController {
         model.addAttribute("employees", employeeByName);
         model.addAttribute("currentPage", pageNo);
         return "main-employees";
+    }
+
+    @GetMapping("/deleteAll")
+    public void deleteAll(){
+        LOGGER.info("deleteAll");
+        employeeService.deleteAll();
+
     }
 }

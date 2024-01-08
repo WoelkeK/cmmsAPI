@@ -122,4 +122,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOGGER.info("findPaginated(...)");
         return employees;
     }
+
+    @Override
+    public void deleteAll() {
+        LOGGER.info("deleteAll");
+        employeeRepository.deleteAll();
+    }
 }

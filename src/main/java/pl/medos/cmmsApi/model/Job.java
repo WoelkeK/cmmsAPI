@@ -21,7 +21,6 @@ import java.util.Date;
 public class Job {
 
     private Long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime requestDate;
     private User user;
     private Employee employee;
@@ -34,9 +33,7 @@ public class Job {
     private Boolean directContact;
     @NotEmpty(message = "Należy uzuzpełnić opis wykonanych czynności!")
     private String solution;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime jobStartTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;

@@ -461,7 +461,7 @@
                                         <tr th:each="job : ${jobs}" class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
 <!--                                            <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"-->
-                                            <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
+                                            <td th:text="${#temporals.format(job.requestDate, 'dd MM yyyy HH:mm')}"
                                                 class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">Data
                                                 Zgłoszenia
                                             </td>
@@ -486,11 +486,11 @@
 <!--                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Podjęte-->
 <!--                                                działania-->
 <!--                                            </td>-->
-                                            <td th:text="${#temporals.format(job.jobStartTime, 'dd MMMM yyyy HH:mm')}"
+                                            <td th:text="${#temporals.format(job.jobStartTime, 'dd MM yyyy HH:mm')}"
                                                 class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">Data
                                                 podjęcia działań
                                             </td>
-                                            <td th:text="${#temporals.format(job.jobStopTime, 'dd MMMM yyyy HH:mm')}"
+                                            <td th:text="${#temporals.format(job.jobStopTime, 'dd MM yyyy HH:mm')}"
                                                 class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">Data
                                                 zakończenia naprawy
                                             </td>
