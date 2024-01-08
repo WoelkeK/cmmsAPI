@@ -33,14 +33,14 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/awizacje")
-@SessionAttributes(names = {"images", "awizacje"})
+@SessionAttributes(names = {"awizacje"})
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationWebcontroller {
 
     private final NotificationService notificationService;
 
-    private final ImageService imageService;
+//    private final ImageService imageService;
 
     private final RaportService raportService;
 
@@ -74,11 +74,11 @@ public class NotificationWebcontroller {
         List<Notification> allNotifications = notificationService.getAllNotifications();
         modelMap.addAttribute("notifications", allNotifications);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Notification notification : allNotifications) {
-            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
-        }
-        modelMap.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Notification notification : allNotifications) {
+//            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
+//        }
+//        modelMap.addAttribute("images", jobBase64Images);
         return "main-notification.html";
     }
 
@@ -121,11 +121,11 @@ public class NotificationWebcontroller {
 
         model.addAttribute("notifications", notificationList);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Notification notification :notificationList) {
-            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Notification notification :notificationList) {
+//            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
+//        }
+//        model.addAttribute("images", jobBase64Images);
         return "main-notification.html";
     }
 
@@ -139,8 +139,7 @@ public class NotificationWebcontroller {
     @PostMapping("/create")
     public String createNotification(@Valid @ModelAttribute(name = "notification") Notification notification,
                                      BindingResult result,
-                                     Model model,
-                                     MultipartFile image) throws IOException {
+                                     Model model) throws IOException {
         log.info("createNotification()");
 
         if (result.hasErrors()) {
@@ -149,8 +148,8 @@ public class NotificationWebcontroller {
             return "create-notification";
         }
 
-        Notification processedNotification = imageService.prepareImage(notification, image);
-        Notification createdNotifi = notificationService.createNotification(processedNotification);
+//        Notification processedNotification = imageService.prepareImage(notification, image);
+        Notification createdNotifi = notificationService.createNotification(notification);
         return "redirect:/awizacje";
     }
 
@@ -161,17 +160,17 @@ public class NotificationWebcontroller {
         return "redirect:/awizacje";
     }
 
-    @GetMapping(value = "/downloadfile")
-    public void downloadFile(@Param(value = "id") Long id, Model model, HttpServletResponse response) throws IOException {
-        Notification notificationById = notificationService.findNotificationById(id);
-        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + notificationById.getVisitDate() + ".jpg";
-        response.setHeader(headerKey, headerValue);
-        ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(notificationById.getOriginalImage());
-        outputStream.close();
-    }
+//    @GetMapping(value = "/downloadfile")
+//    public void downloadFile(@Param(value = "id") Long id, Model model, HttpServletResponse response) throws IOException {
+//        Notification notificationById = notificationService.findNotificationById(id);
+//        response.setContentType("application/octet-stream");
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment; filename = " + notificationById.getVisitDate() + ".jpg";
+//        response.setHeader(headerKey, headerValue);
+//        ServletOutputStream outputStream = response.getOutputStream();
+//        outputStream.write(notificationById.getOriginalImage());
+//        outputStream.close();
+//    }
 
 //    @GetMapping("/search/{query}")
 //    public String searchByQuery(@RequestParam(name = "query") String query, Model model) {

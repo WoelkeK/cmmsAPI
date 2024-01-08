@@ -462,20 +462,20 @@
 
 <!--                                            <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"-->
                                             <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
+                                                class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">Data
                                                 Zgłoszenia
                                             </td>
                                             <td th:text="${job.employee.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Osoba
+                                                class="align-text-top px-3 py-4 text-lm text-gray-900">Osoba
                                             </td>
                                             <td th:text="${job?.department?.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Dział
+                                                class="align-text-top px-3 py-4 text-lm text-gray-900">Dział
                                             </td>
                                             <td th:text="${job.machine.name}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Maszyna
+                                                class="align-text-top px-3 py-4 text-lm text-gray-900">Maszyna
                                             </td>
                                             <td th:text="${job.message}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Opis
+                                                class="align-text-top px-3 py-4 text-lm text-gray-900">Opis
                                                 usterki
                                             </td>
 <!--                                            <td th:text="${job.directContact}"-->
@@ -487,11 +487,11 @@
 <!--                                                działania-->
 <!--                                            </td>-->
                                             <td th:text="${#temporals.format(job.jobStartTime, 'dd MMMM yyyy HH:mm')}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
+                                                class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">Data
                                                 podjęcia działań
                                             </td>
                                             <td th:text="${#temporals.format(job.jobStopTime, 'dd MMMM yyyy HH:mm')}"
-                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Data
+                                                class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">Data
                                                 zakończenia naprawy
                                             </td>
 <!--                                            <td th:text="${job?.engineer?.name}"-->
@@ -504,7 +504,7 @@
 <!--                                            </td>-->
 
                                             <td>
-                                                <div class="container mt-2 mb-2">
+                                                <div class="container mt-2 mb-2 align-text-top">
                                                     <a th:href="@{'/jobs/downloadfile?id=' + ${job.id}}">
                                                         <!--                                                    <img th:src="@{'/images/image?id='+ ${job.id}}" width="100px" height="50px">-->
                                                         <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(job.id)}"
@@ -513,7 +513,7 @@
                                                 </div>
                                             </td>
 
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
+                                            <td class="relative whitespace-nowrap align-text-top py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
                                                 <a th:if="${isAdmin}" th:href="@{/jobs/update/{id}(id=${job.id})}"
                                                    class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                         class="sr-only"></span></a>

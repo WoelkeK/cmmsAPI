@@ -36,6 +36,6 @@ public class Notification {
     private Status status;
     private LocalDateTime visitDate;
 
-    private byte[] originalImage;
-    private byte[] resizedImage;
+//    private byte[] originalImage;
+//    private byte[] resizedImage;
 }

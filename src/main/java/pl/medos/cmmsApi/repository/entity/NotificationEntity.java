@@ -41,13 +41,13 @@ public class NotificationEntity {
     private Type type;
     private LocalDateTime visitDate;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
-    private byte[] originalImage;
-    @Lob()
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "resizedImage", columnDefinition = "BLOB")
-    private byte[] resizedImage;
+//    @Lob
+//    @Basic(fetch = FetchType.LAZY)
+//    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
+//    private byte[] originalImage;
+//    @Lob()
+//    @Basic(fetch = FetchType.LAZY)
+//    @Column(name = "resizedImage", columnDefinition = "BLOB")
+//    private byte[] resizedImage;
 
 }

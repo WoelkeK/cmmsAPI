@@ -373,27 +373,27 @@
                                             <tr th:each="employee : ${employees}"
                                                 class="border-t border-gray-300 text-base font-medium bg-gray-100">
                                                 <td th:text="${employee.name}"
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-gray-900 sm:pl-6">
+                                                    class="whitespace-nowrap align-text-top py-4 pl-4 pr-3 text-gray-900 sm:pl-6">
                                                     Lindsay Walton
                                                 </td>
                                                 <td th:text="${employee.position}"
-                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-gray-900">
                                                     Stanowisko
                                                 </td>
                                                 <td th:text="${employee.department.name}"
-                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
+                                                    class="whitespace-nowrap align-text-top px-3 py-4 text-gray-900">
                                                     Dział
                                                 </td>
                                                 <td th:text="${employee.phone}"
-                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
+                                                    class="whitespace-nowrap align-text-top px-3 py-4 text-gray-900">
                                                     Telefon
                                                 </td>
                                                 <td th:text="${employee.email}"
-                                                    class="whitespace-nowrap px-3 py-4 text-gray-900">
+                                                    class="whitespace-nowrap align-text-top px-3 py-4 text-gray-900">
                                                     Email
                                                 </td>
 
-                                                <td th:if="${isAdmin}" class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lg font-medium sm:pr-6">
+                                                <td th:if="${isAdmin}" class="relative whitespace-nowrap align-text-top py-4 pl-3 pr-4 text-right text-lg font-medium sm:pr-6">
                                                     <a th:href="@{/employees/update/{id}(id=${employee.id}, pageNo=${currentPage})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>

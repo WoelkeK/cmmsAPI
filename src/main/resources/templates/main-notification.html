@@ -317,41 +317,41 @@
                                                 class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
                                                 <td th:text="${#temporals.format(notification.visitDate, 'dd-MM-yyyy HH:mm')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
+                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
                                                     Data
                                                     Zgłoszenia
                                                 </td>
                                                 <td th:text="${notification.type}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Typ
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Typ
                                                 </td>
                                                 <td th:text="${notification.status}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Status
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Status
                                                 </td>
                                                 <td th:text="${notification.supplier}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Dostawca
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Dostawca
                                                 </td>
                                                 <td th:text="${notification.item}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Towar
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Towar
                                                 </td>
                                                 <td th:text="${notification.itemDetails}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">ilość /
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">ilość /
                                                     Waga
                                                 </td>
                                                 <td th:text="${notification.carPlates}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium  text-gray-900">Nr
+                                                    class="align-text-top px-3 py-4 text-lg font-medium  text-gray-900">Nr
                                                     rejestracyjny
                                                 </td>
                                                 <td th:text="${notification.driverName}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Kierowca
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Kierowca
                                                 </td>
 
                                                 <td th:text="${notification.driverPhone}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Telefon do
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Telefon do
                                                     kierowcy
                                                 </td>
 
                                                 <td th:text="${notification.employee}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Osoba
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Osoba
                                                     zlecająca
                                                 </td>
 
@@ -363,7 +363,7 @@
 <!--                                                        </a>-->
 <!--                                                    </div>-->
 <!--                                                </td>-->
-                                                <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
+                                                <td class="relative align-text-top whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
                                                     <a th:href="@{/awizacje/read/{id}(id=${notification.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300 px-6">Szczegóły<span
