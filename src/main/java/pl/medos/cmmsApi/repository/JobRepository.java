@@ -43,6 +43,6 @@ public interface JobRepository extends JpaRepository<JobEntity, Long> {
 //            "LOWER(p.solution) LIKE LOWER(CONCAT('%', :query, '%'))")
 //    List<JobEntity> findJobByquery(String query);
 
-    @Query("SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.machine.model, ' ',p.message ) LIKE %?1%")
+    @Query("SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.machine.model, ' ',p.message , ' ', p.machine.name, ' ', p.department.name) LIKE %?1%")
     Page<JobEntity> searchEmployeeByQuery(Pageable pageable, String query);
 }

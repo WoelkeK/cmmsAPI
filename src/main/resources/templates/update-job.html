@@ -12,7 +12,7 @@
 
 <div class="mt-5">
 
-    <form action="#" th:action="@{/jobs/update/{id}(id=${job.id})}" th:object="${job}" method="post"
+    <form action="#" th:action="@{/jobs/update/{id}(id=${job.id}, pageNo=${pageNo})}" th:object="${job}" method="post"
           enctype="multipart/form-data">
 
     <input type="hidden" th:field="${job.id}">
@@ -178,7 +178,7 @@
                     <div class="flex justify-end">
                         <button type="button"
                                 class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            <a th:href="@{/jobs}">Wstecz</a>
+                            <a th:href="@{/jobs?pageNo={pageNo}(pageNo=${pageNo})}">Wstecz</a>
                         </button>
                         <button type="submit"
                                 class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

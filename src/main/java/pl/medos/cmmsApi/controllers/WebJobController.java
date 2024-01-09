@@ -73,9 +73,11 @@ public class WebJobController {
     }
 
     @GetMapping
-    public String listView(Model model) throws IOException {
+    public String listView(
+            @RequestParam(name = "pageNo", defaultValue = "1") int page,
+                           Model model) throws IOException {
         LOGGER.info("listView()");
-        return findJobsPages(1, "requestDate", "asc", model);
+        return findJobsPages(page, "requestDate", "asc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -118,17 +120,20 @@ public class WebJobController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
+            @RequestParam(name = "pageNo") int pageNo,
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
         LOGGER.info(job.getEmployee().getId().toString());
         model.addAttribute("job", job);
+        model.addAttribute("pageNo", pageNo);
         LOGGER.info("updateView(...)" + job.getRequestDate());
         return "update-job";
     }
 
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
+                         @RequestParam(name = "pageNo") int pageNo,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
                          Model model,
@@ -162,7 +167,7 @@ public class WebJobController {
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
         LOGGER.info("update(...)");
-        return "redirect:/jobs";
+        return "redirect:/jobs?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
@@ -289,9 +294,10 @@ public class WebJobController {
     }
 
     @GetMapping(value = "/export")
-    public void exportJobs(@ModelAttribute(name = "jobs") List<Job> jobs,
-                                HttpServletResponse response, Model model) throws Exception {
+    public void exportJobs(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
+
+        List<Job> jobs=jobService.findAllJobs();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());

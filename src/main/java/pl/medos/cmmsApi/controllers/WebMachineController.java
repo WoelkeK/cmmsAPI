@@ -207,6 +207,7 @@ public class WebMachineController {
     public void exportMachines(@ModelAttribute(name = "machines") List<Machine> machines,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
+        machines= machineService.findAllMachines();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
@@ -226,23 +227,30 @@ public class WebMachineController {
         return "uploadMach-form";
     }
 
-//    @PostMapping(value = "/upload")
-//    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-//
-//        LOGGER.info("importMachines()");
-//        if (file.isEmpty()) {
-//            LOGGER.info("Please select file to upload");
-//            return "redirect/machines";
-//        }
-//
-//        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-//        List<Machine> machines = importService.importExcelMachineData(file);
-//
-//        machines.forEach((machine) -> {
-//            machineService.createMachine(machine);
-//        });
-//        LOGGER.info("importMachines(...) ");
-//
-//        return "redirect:/machines";
-//    }
+
+    @GetMapping("/deleteAll")
+    public void deleteAll(){
+        LOGGER.info("deleteAll()");
+        machineService.deleteAllMachine();
+
+    }
+
+    @PostMapping(value = "/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        LOGGER.info("importMachines()");
+        if (file.isEmpty()) {
+            LOGGER.info("Please select file to upload");
+            return "redirect/machines";
+        }
+
+        List<Machine> machines = importService.importExcelMachineData(file);
+
+        machines.forEach((machine) -> {
+            machineService.createMachine(machine);
+        });
+        LOGGER.info("importMachines(...) ");
+
+        return "redirect:/machines";
+    }
 }

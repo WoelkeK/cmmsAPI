@@ -514,13 +514,13 @@
                                             </td>
 
                                             <td class="relative whitespace-nowrap align-text-top py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
-                                                <a th:if="${isAdmin}" th:href="@{/jobs/update/{id}(id=${job.id})}"
+                                                <a th:if="${isAdmin}" th:href="@{/jobs/update/{id}(id=${job.id}, pageNo=${currentPage})}"
                                                    class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                         class="sr-only"></span></a>
                                                 <!--                                                    <a th:href="@{/jobs/read/{id}(id=${job.id})}"-->
                                                 <!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
                                                 <!--                                                            class="sr-only"></span></a>-->
-                                                <a th:if="${isAdmin}" th:href="@{/jobs/delete/{id}(id=${job.id})}"
+                                                <a th:if="${isAdmin}" th:href="@{/jobs/delete/{id}(id=${job.id}, pageNo=${currentPage})}"
                                                    class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                         class="sr-only"></span></a>
                                             </td>

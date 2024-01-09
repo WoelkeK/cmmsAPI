@@ -15,9 +15,12 @@ import pl.medos.cmmsApi.service.ExportService;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 @Service
@@ -67,12 +70,14 @@ public class ExportToServiceImpl implements ExportService {
 
     @Override
     public void excelJobsModelGenerator(List<Job> jobs) {
+        LOGGER.info("jobExcelModelGenerator()");
         this.jobs = jobs;
         workbook = new XSSFWorkbook();
     }
 
     @Override
     public void generateExcelJobFile(HttpServletResponse response) throws IOException {
+        LOGGER.info("jobExcelGenerate()");
         writeJobHeader();
         writeJob();
         ServletOutputStream outputStream = response.getOutputStream();
@@ -141,9 +146,12 @@ public class ExportToServiceImpl implements ExportService {
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
         CellStyle dateCellStyle = workbook.createCellStyle();
-        dateCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("dd/mm/yyyy"));
+        short dateFormat = workbook.createDataFormat().getFormat("dd/mm/yyyy hh:mm");
+        dateCellStyle.setDataFormat(dateFormat);
+
         font.setFontHeight(14);
         style.setFont(font);
+        dateCellStyle.setFont(font);
         for (Job record : jobs) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
@@ -153,13 +161,20 @@ public class ExportToServiceImpl implements ExportService {
             } else {
                 createCell(row, columnCount++, record.getRequestDate(), dateCellStyle);
             }
-            createCell(row, columnCount++, record.getEmployee(), style);
-            createCell(row, columnCount++, record.getDepartment(), style);
-            createCell(row, columnCount++, record.getMachine(), style);
+            createCell(row, columnCount++, record.getEmployee().getName(), style);
+            createCell(row, columnCount++, record.getDepartment().getName(), style);
+            createCell(row, columnCount++, record.getMachine().getName(), style);
             createCell(row, columnCount++, record.getMessage(), style);
+            createCell(row, columnCount++, record.getSolution(), style);
 
             if (record.getJobStartTime() == null) {
                 createCell(row, columnCount++, record.getJobStartTime(), style);
+            } else {
+                createCell(row, columnCount++, record.getJobStartTime(), dateCellStyle);
+            }
+
+            if (record.getJobStopTime() == null) {
+                createCell(row, columnCount++, record.getJobStopTime(), style);
             } else {
                 createCell(row, columnCount++, record.getJobStopTime(), dateCellStyle);
             }
@@ -180,8 +195,9 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 2, "Dział", style);
         createCell(row, 3, "Maszyna", style);
         createCell(row, 4, "Usterka.", style);
-        createCell(row, 5, "Rozpoczęcie prac.", style);
-        createCell(row, 6, "Zakończenie prac", style);
+        createCell(row, 5, "Zakres czynności.", style);
+        createCell(row, 6, "Rozpoczęcie prac.", style);
+        createCell(row, 7, "Zakończenie prac", style);
         LOGGER.info("Header create complete! ");
     }
 
@@ -253,9 +269,8 @@ public class ExportToServiceImpl implements ExportService {
                 cell.setCellValue((Boolean) valueOfCell);
             } else if (valueOfCell instanceof LocalDate) {
                 cell.setCellValue((LocalDate) valueOfCell);
-//            } else if (valueOfCell instanceof LocalDate) {
-//                cell.setCellValue(java.sql.Date.valueOf(LocalDate.now()));
-
+            } else if (valueOfCell instanceof LocalDateTime) {
+                cell.setCellValue((LocalDateTime) valueOfCell);
             } else {
                 LOGGER.info("Cell value: " + valueOfCell.toString());
                 cell.setCellValue((String) valueOfCell);
@@ -303,6 +318,7 @@ public class ExportToServiceImpl implements ExportService {
 
         font.setFontHeight(14);
         style.setFont(font);
+        dateCellStyle.setFont(font);
         for (Hardware record : hardwares) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
