@@ -16,7 +16,6 @@
           enctype="multipart/form-data">
 
     <input type="hidden" th:field="${job.id}">
-    <input type="hidden" th:field="*{solution}">
     <input type="hidden" th:field="*{status}">
     <input type="hidden" th:field="${job.resizedImage}">
     <input type="hidden" th:field="${job.originalImage}">
@@ -165,6 +164,19 @@
                                         zgłoszeniu</label>
                                     <div class="mt-1 sm:col-span-3 sm:mt-0">
                                         <textarea th:field="*{message}" id="message" rows="4"
+                                                  class="block p-2.5 w-full text-xl text-blue-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                  placeholder="Opisz problem jaki wystepuje na maszynie lub urządzeniu"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <div class="space-y-6 sm:space-y-5">
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-300 sm:pt-5">
+                                    <label for="solution"
+                                           class="block-w-full text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Opis czynności</label>
+                                    <div class="mt-1 sm:col-span-3 sm:mt-0">
+                                        <textarea th:field="*{solution}" id="solution" rows="4"
                                                   class="block p-2.5 w-full text-xl text-blue-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                   placeholder="Opisz problem jaki wystepuje na maszynie lub urządzeniu"></textarea>
                                     </div>

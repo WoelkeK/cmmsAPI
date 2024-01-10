@@ -55,9 +55,9 @@ public class WebMachineController {
     }
 
     @GetMapping
-    public String listView(Model model) throws IOException {
+    public String listView(@RequestParam(name = "pageNo", defaultValue = "1") int page, Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPageinated(1,"name", "desc", model);
+        return findPageinated(page,"name", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -132,22 +132,25 @@ public class WebMachineController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
+            @RequestParam(name = "pageNo") int pageNo,
             ModelMap modelMap) throws Exception {
         LOGGER.info("updateView()");
         Machine machine = machineService.findMachineById(id);
         modelMap.addAttribute("machine", machine);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
+        modelMap.addAttribute("pageNo", pageNo);
         return "update-machine";
     }
 
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
+                         @RequestParam(name = "pageNo") int pageNo,
                          @ModelAttribute(name = "machine") Machine machine) throws MachineNotFoundException {
         LOGGER.info("update()" + machine);
         Machine savedMachine = machineService.updateMachine(machine, id);
         LOGGER.info("update(...)" + savedMachine);
-        return "redirect:/machines";
+        return "redirect:/machines?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
