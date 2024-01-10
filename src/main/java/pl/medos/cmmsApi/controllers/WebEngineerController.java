@@ -9,7 +9,6 @@ import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Engineer;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EngineerService;
-import pl.medos.cmmsApi.service.ImportService;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,12 +23,10 @@ public class WebEngineerController {
     private String fileName = "c:/XL/sheet6.xlsx";
     private EngineerService engineerService;
     private DepartmentService departmentService;
-    private ImportService importService;
 
-    public WebEngineerController(EngineerService engineerService, DepartmentService departmentService, ImportService importService) {
+    public WebEngineerController(EngineerService engineerService, DepartmentService departmentService) {
         this.engineerService = engineerService;
         this.departmentService = departmentService;
-        this.importService = importService;
     }
 
     @GetMapping

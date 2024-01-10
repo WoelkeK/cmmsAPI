@@ -2,21 +2,19 @@ package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ExportService;
-import pl.medos.cmmsApi.service.ImportService;
 import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.util.imports.ImportMachine;
 
 
 import java.io.IOException;
@@ -36,13 +34,13 @@ public class WebMachineController {
     private MachineService machineService;
     private DepartmentService departmentService;
     private ExportService exportService;
-    private ImportService importService;
+    private ImportMachine importMachine;
 
-    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService, ImportService importService) {
+    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService, ImportMachine importMachine) {
         this.machineService = machineService;
         this.departmentService = departmentService;
         this.exportService = exportService;
-        this.importService = importService;
+        this.importMachine = importMachine;
     }
 
     @GetMapping(value = "/list")
@@ -202,7 +200,6 @@ public class WebMachineController {
         return "shedule-machine.html";
     }
 
-
     @GetMapping(value = "/export")
     public void exportMachines(@ModelAttribute(name = "machines") List<Machine> machines,
                                HttpServletResponse response, Model model) throws Exception {
@@ -213,7 +210,7 @@ public class WebMachineController {
         String currentDateTime = dateTimeFormat.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment;filename=machine" + currentDateTime + ".xlsx";
+        String headerValue = "attachment;filename=maszyny" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
         exportService.excelMachineModelGenerator(machines);
@@ -227,11 +224,12 @@ public class WebMachineController {
         return "uploadMach-form";
     }
 
-
     @GetMapping("/deleteAll")
-    public void deleteAll(){
+    public String deleteAll(){
         LOGGER.info("deleteAll()");
         machineService.deleteAllMachine();
+        LOGGER.info("deleteAll(...)");
+        return "redirect:/machines";
 
     }
 
@@ -244,8 +242,8 @@ public class WebMachineController {
             return "redirect/machines";
         }
 
-        List<Machine> machines = importService.importExcelMachineData(file);
-
+//        List<Machine> machines = importService.importExcelMachineData(file);
+        List<Machine> machines = importMachine.importExcelMachineData(file);
         machines.forEach((machine) -> {
             machineService.createMachine(machine);
         });

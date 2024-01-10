@@ -10,7 +10,7 @@ import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.service.DepartmentService;
-import pl.medos.cmmsApi.service.ImportService;
+import pl.medos.cmmsApi.util.imports.ImportDepartment;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,11 +22,11 @@ public class DepartmentWebController {
 
     private static final Logger LOGGER = Logger.getLogger(DepartmentWebController.class.getName());
     private DepartmentService departmentService;
-    private ImportService importService;
+    private ImportDepartment importDepartment;
 
-    public DepartmentWebController(DepartmentService departmentService, ImportService importService) {
+    public DepartmentWebController(DepartmentService departmentService, ImportDepartment importDepartment) {
         this.departmentService = departmentService;
-        this.importService = importService;
+        this.importDepartment = importDepartment;
     }
 
     @GetMapping(value = "/list")
@@ -138,7 +138,8 @@ public class DepartmentWebController {
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Department> departments = importService.importExcelDepartmentsData(file);
+
+        List<Department> departments = importDepartment.importExcelDepartmentsData(file);
 
         departments.forEach((department) -> {
             departmentService.createDepartment(department);

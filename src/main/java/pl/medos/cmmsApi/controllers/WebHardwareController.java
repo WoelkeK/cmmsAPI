@@ -8,11 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.service.*;
+import pl.medos.cmmsApi.util.imports.ImportHardware;
+import pl.medos.cmmsApi.util.imports.ImportHardwareFromXls;
+
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,16 +29,14 @@ public class WebHardwareController {
     private static final Logger LOGGER = Logger.getLogger(WebHardwareController.class.getName());
     private HardwareService hardwareService;
     private ExportService exportService;
-    private ImportService importService;
+    private ImportHardware importHardware;
     private RaportService raportService;
-    private final HardwareRepository hardwareRepository;
+    private HardwareRepository hardwareRepository;
 
-
-    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportService importService, RaportService raportService,
-                                 HardwareRepository hardwareRepository) {
+    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportHardware importHardware, RaportService raportService, HardwareRepository hardwareRepository) {
         this.hardwareService = hardwareService;
         this.exportService = exportService;
-        this.importService = importService;
+        this.importHardware = importHardware;
         this.raportService = raportService;
         this.hardwareRepository = hardwareRepository;
     }
@@ -198,7 +197,8 @@ public class WebHardwareController {
             return "redirect/hardwares";
         }
 
-        List<Hardware> hardwares = importService.importExcelHardwareData(file);
+//        List<Hardware> hardwares = importService.importExcelHardwareData(file);
+        List<Hardware> hardwares = importHardware.importHardware(file);
 
         hardwares.forEach((hardware) -> {
             hardwareService.create(hardware);

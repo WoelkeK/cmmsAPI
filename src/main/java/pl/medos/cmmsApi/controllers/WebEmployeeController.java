@@ -11,12 +11,10 @@ import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.ExportService;
-import pl.medos.cmmsApi.service.ImportService;
+import pl.medos.cmmsApi.util.imports.ImportEmployee;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -34,14 +32,13 @@ public class WebEmployeeController {
     private String fileName = "c:/XL/sheet6.xlsx";
     private EmployeeService employeeService;
     private DepartmentService departmentService;
-    private ImportService importService;
+    private ImportEmployee importEmployee;
     private ExportService exportService;
 
-    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportService importService, ExportService exportService) {
-
+    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportEmployee importEmployee, ExportService exportService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
-        this.importService = importService;
+        this.importEmployee = importEmployee;
         this.exportService = exportService;
     }
 
@@ -189,8 +186,12 @@ public class WebEmployeeController {
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
-        readedEmployees.forEach((employee) -> {
+
+//        List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
+        List<Employee> employees = importEmployee.importExcelEmployeesData(file);
+
+
+        employees.forEach((employee) -> {
             employeeService.createEmployee(employee);
         });
         LOGGER.info("importEmployees(...) ");
@@ -236,6 +237,5 @@ public class WebEmployeeController {
     public void deleteAll(){
         LOGGER.info("deleteAll");
         employeeService.deleteAll();
-
     }
 }

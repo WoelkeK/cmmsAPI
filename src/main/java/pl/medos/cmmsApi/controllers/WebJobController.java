@@ -15,6 +15,7 @@ import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
+import pl.medos.cmmsApi.util.imports.ImportJob;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -35,18 +36,17 @@ public class WebJobController {
     private MachineService machineService;
     private EngineerService engineerService;
     private ImageService imageService;
-    private ImportService importService;
     private ExportService exportService;
+    private ImportJob importJob;
 
-    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, EngineerService engineerService, ImageService imageService, ImportService importService, ExportService exportService) {
+    public WebJobController(JobService jobService, EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, ImageService imageService, ExportService exportService, ImportJob importJob) {
         this.jobService = jobService;
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.machineService = machineService;
-        this.engineerService = engineerService;
         this.imageService = imageService;
-        this.importService = importService;
         this.exportService = exportService;
+        this.importJob = importJob;
     }
 
     @GetMapping(value = "/list")
@@ -284,7 +284,7 @@ public class WebJobController {
             return "redirect/jobs";
         }
 
-        List<Job> jobs = importService.importExcelJobData(file);
+        List<Job> jobs = importJob.importExcelJobData(file);
 
         jobs.forEach((job) -> {
            jobService.createJob(job);
@@ -303,7 +303,7 @@ public class WebJobController {
         String currentDateTime = dateTimeFormat.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment;filename=hardware" + currentDateTime + ".xlsx";
+        String headerValue = "attachment;filename=awarie" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
         exportService.excelJobsModelGenerator(jobs);
@@ -311,6 +311,4 @@ public class WebJobController {
         response.flushBuffer();
         LOGGER.info("export(...)");
     }
-
-    // TODO: 20.12.2023 dokończyć implementacje exportu awarii do pliku excel
 }

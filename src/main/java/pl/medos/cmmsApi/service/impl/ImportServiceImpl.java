@@ -1,524 +1,141 @@
-package pl.medos.cmmsApi.service.impl;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.NumberToTextConverter;
-import org.apache.poi.util.IOUtils;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.enums.Permission;
-import pl.medos.cmmsApi.model.*;
-import pl.medos.cmmsApi.repository.DepartmentRepository;
-import pl.medos.cmmsApi.repository.HardwareRepository;
-import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
-import pl.medos.cmmsApi.service.*;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.logging.Logger;
-
-@Service
-public class ImportServiceImpl implements ImportService {
-
-    @Autowired
-    private DepartmentService departmentService;
-    @Autowired
-    private MachineService machineService;
-    @Autowired
-    private EmployeeService employeeService;
-    @Autowired
-    private ImageService imageService;
-
-
-    private static final Logger LOGGER = Logger.getLogger(ImportServiceImpl.class.getName());
-
-    private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
-    private List<String> jobs = new ArrayList<>(Arrays.asList("requestDate", "employee", "department", "machine", "message", "solution", "jobStartTime", "jobStopTime"));
-    private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
-    private List<String> machines = new ArrayList<>(Arrays.asList("name", "model", "manufactured", "serialNumber", "installDate", "status", "department"));
-    private List<String> hardwares = new ArrayList<>(Arrays.asList(
-            "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo", "serialNumber", "netBios", "ipAddress", "macAddress", "officeName", "officeNo", "activateDate", "description", "bitLockKey", "bitRecoveryKey", "permission"));
-    private final HardwareRepository hardwareRepository;
-
-    public ImportServiceImpl(HardwareRepository hardwareRepository) {
-        this.hardwareRepository = hardwareRepository;
-    }
-
-    public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
-
-        LOGGER.info("importExcelEmployeesData()");
-        List<Person> rawDataList = new ArrayList<>();
-
-        InputStream file = new BufferedInputStream(fileName.getInputStream());
-        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        Person person = new Person();
-        Iterator<Row> rowIterator = sheet.iterator();
-
-        while (rowIterator.hasNext()) {
-
-            Row row = rowIterator.next();
-            Map<String, String> rowDataMap = new HashMap<>();
-            Cell cell;
-            for (int k = 0; k < row.getLastCellNum(); k++) {
-                if (null != (cell = row.getCell(k))) {
-                    switch (cell.getCellType()) {
-                        case NUMERIC:
-                            rowDataMap.put(persons.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
-                            rowDataMap.put(persons.get(k), cell.getStringCellValue().replaceAll(" ", " ").trim());
-                            break;
-                    }
-                }
-            }
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
-            Person rawData = mapper.convertValue(rowDataMap, Person.class);
-            rawDataList.add(rawData);
-        }
-        List<Employee> employees = employeeDataExcelConverter(rawDataList);
-        LOGGER.info("importExcelEmployeesData(...)");
-        return employees;
-    }
-
-    @Override
-    public List<Department> importExcelDepartmentsData(MultipartFile fileName) throws IOException {
-
-        LOGGER.info("importExcelDepartmentsData()");
-
-        List<Department> rawDataList = new ArrayList<>();
-        InputStream file = new BufferedInputStream(fileName.getInputStream());
-
-        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        Person person = new Person();
-        Iterator<Row> rowIterator = sheet.iterator();
-
-        while (rowIterator.hasNext()) {
-
-            Row row = rowIterator.next();
-
-            if (row.getRowNum() == 0) {
-                continue;
-            }
-
-            Map<String, String> rowDataMap = new HashMap<>();
-            Cell cell;
-            for (int k = 0; k < row.getLastCellNum(); k++) {
-                if (null != (cell = row.getCell(k))) {
-                    switch (cell.getCellType()) {
-                        case NUMERIC:
-                            rowDataMap.put(departments.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
-                            rowDataMap.put(departments.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
-                            break;
-                    }
-                }
-            }
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-            Department rawData = mapper.convertValue(rowDataMap, Department.class);
-            rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
-        }
-        List<Department> departments = departmentsDataExcelConverter(rawDataList);
-        return departments;
-    }
-
-    @Override
-    public List<Machine> importExcelMachineData(MultipartFile fileName) throws IOException {
-        LOGGER.info("importExcelMAchinesData()");
-
-        List<MachineDep> rawDataList = new ArrayList<>();
-        InputStream file = new BufferedInputStream(fileName.getInputStream());
-
-        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        Person person = new Person();
-        Iterator<Row> rowIterator = sheet.iterator();
-
-        while (rowIterator.hasNext()) {
-
-            Row row = rowIterator.next();
-            if (row.getRowNum() == 0) {
-                continue;
-            }
-
-            Map<String, String> rowDataMap = new HashMap<>();
-            Cell cell;
-            for (int k = 0; k < row.getLastCellNum(); k++) {
-                if (null != (cell = row.getCell(k))) {
-                    switch (cell.getCellType()) {
-                        case NUMERIC:
-                            rowDataMap.put(machines.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
-                            rowDataMap.put(machines.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
-                            break;
-                    }
-                }
-            }
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
-            MachineDep rawData = mapper.convertValue(rowDataMap, MachineDep.class);
-            rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
-        }
-        List<Machine> machines = machineDataExcelConverter(rawDataList);
-        return machines;
-    }
-
-    @Override
-    public List<Hardware> importExcelHardwareData(MultipartFile fileName) throws IOException {
-        LOGGER.info("importExcelHardwareData()");
-
-        List<JsonHardware> rawDataList = new ArrayList<>();
-        InputStream file = new BufferedInputStream(fileName.getInputStream());
-
-        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-
-            Row row = rowIterator.next();
-            String empty = "";
-
-            if (row.getRowNum() == 0) {
-                continue;
-            }
-
-            Map<String, String> rowDataMap = new HashMap<>();
-            Cell cell;
-            for (int k = 0; k < row.getLastCellNum(); k++) {
-                if (null != (cell = row.getCell(k))) {
-                    switch (cell.getCellType()) {
-                        case NUMERIC:
-//                            rowDataMap.put(hardwares.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
-                            rowDataMap.put(hardwares.get(k), (cell.getDateCellValue().toString()));
-                            break;
-                        case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
-                            rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
-                            break;
-                        case _NONE:
-                            rowDataMap.put(hardwares.get(k), empty);
-                            break;
-
-                    }
-                }
-            }
-
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
-            JsonHardware rawData = mapper.convertValue(rowDataMap, JsonHardware.class);
-            rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
-        }
-        List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
-        return hardwares;
-    }
-
-    @Override
-    public List<Job> importExcelJobData(MultipartFile fileName) throws IOException {
-
-        LOGGER.info("importExcelJobsData()");
-        String empty = "";
-
-        List<JsonJob> rawDataList = new ArrayList<>();
-        InputStream file = new BufferedInputStream(fileName.getInputStream());
-
-        IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> rowIterator = sheet.iterator();
-
-        while (rowIterator.hasNext()) {
-
-            Row row = rowIterator.next();
-            if (row.getRowNum() == 0) {
-                continue;
-            }
-            Map<String, String> rowDataMap = new HashMap<>();
-            Cell cell;
-            for (int k = 0; k < row.getLastCellNum(); k++) {
-
-                if (null != (cell = row.getCell(k))) {
-                    switch (cell.getCellType()) {
-                        case NUMERIC:
-//                            rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
-                            rowDataMap.put(jobs.get(k), (cell.getDateCellValue().toString()));
-                            break;
-                        case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
-                            rowDataMap.put(jobs.get(k), cell.getStringCellValue().replaceAll("  ", "").trim());
-                            break;
-                        case _NONE:
-                            rowDataMap.put(jobs.get(k), empty);
-                            break;
-
-                    }
-                }
-            }
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-            JsonJob rawData = mapper.convertValue(rowDataMap, JsonJob.class);
-            rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
-        }
-        List<Job> jobs = jobsDataExcelConverter(rawDataList);
-        return jobs;
-    }
-
-    private List<Job> jobsDataExcelConverter(List<JsonJob> jobs) {
-        LOGGER.info("jobDataExcelConverter()");
-
-        List<Job> newJobs =
-                jobs.stream().map(m -> {
-
-                                    Job job = new Job();
-//                                    job.setId(Long.parseLong(String.valueOf(m.getId())));
-
-                                    Employee employee = employeeService.findEmployeeByRawName(m.getEmployee()).get(0);
-                                    LOGGER.info("Imported employee() " + employee);
-                                    job.setEmployee(employee);
-
-                                    Department departmentByName = departmentService.findDepartmentByName(m.getDepartment());
-                                    LOGGER.info("Imported department() " + departmentByName);
-                                    job.setDepartment(departmentByName);
-                                    job.setSolution(m.getSolution());
-
-                                    Machine machine = machineService.findMachinesByQuery(m.getMachine()).stream().findFirst().orElseThrow();
-                                    LOGGER.info("Imported machine() " + machine);
-                                    job.setMachine(machine);
-                                    job.setMessage(m.getMessage());
-
-                                    if(job.getOriginalImage()==null) {
-                                        LOGGER.info("default image");
-                                        byte[] bytes = imageService.imageToByteArray();
-                                        job.setResizedImage(bytes);
-                                        job.setOriginalImage(bytes);
-                                    }
-
-                                    LOGGER.info("image prepared");
-
-                                    if (m.getJobStartTime() == null || m.getJobStartTime().isEmpty()) {
-                                        job.setJobStartTime(null);
-                                    } else {
-                                        LocalDateTime jobStartTime = convertDateTime(m.getJobStartTime());
-                                        job.setJobStartTime(jobStartTime);
-                                        LOGGER.info(jobStartTime.toString());
-                                    }
-
-                                    if (m.getJobStopTime() == null || m.getJobStopTime().isEmpty()) {
-                                        job.setJobStopTime(null);
-                                    } else {
-                                        LocalDateTime jobStopTime = convertDateTime(m.getJobStopTime());
-                                        job.setJobStopTime(jobStopTime);
-                                        LOGGER.info(jobStopTime.toString());
-                                    }
-
-                                    if (m.getRequestDate() == null || m.getRequestDate().isEmpty()) {
-                                        LOGGER.info("RequestDate null");
-                                        job.setRequestDate(null);
-                                    } else {
-                                        LocalDateTime requestDate = convertDateTime(m.getRequestDate());
-                                        job.setRequestDate(requestDate);
-                                        LOGGER.info(requestDate.toString());
-                                    }
-
-                                    LOGGER.info("createJobMap(...)");
-                                    return job;
-                                }
-                        )
-                        .toList();
-
-        LOGGER.info("employeeDataExcelConverter(...)");
-        return newJobs;
-    }
-
-    private List<Employee> employeeDataExcelConverter(List<Person> persons) {
-        LOGGER.info("employeeDataExcelConverter()");
-
-        List<Employee> employees =
-                persons.stream().map(m -> {
-
-                                    Employee employee = new Employee();
-                                    employee.setId(Long.parseLong(String.valueOf(m.getId())));
-                                    employee.setName(String.valueOf(m.getName()));
-                                    employee.setPhone(String.valueOf(m.getPhone()));
-                                    employee.setPosition(String.valueOf(m.getPosition()));
-                                    employee.setEmail(String.valueOf(m.getEmail()));
-                                    Department department = new Department();
-                                    department.setId(Long.valueOf(m.getDepartment()));
-                                    employee.setDepartment(department);
-
-                                    LOGGER.info("departmentNameNull (...)");
-                                    return employee;
-                                }
-                        )
-                        .toList();
-
-        LOGGER.info("employeeDataExcelConverter(...)");
-        return employees;
-    }
-
-    public List<Department> departmentsDataExcelConverter(List<Department> departments) {
-        LOGGER.info("employeeDataExcelConverter()");
-        List<Department> departmentsCon =
-                departments.stream().map(m -> {
-
-                            Department department = new Department();
-                            department.setId(Long.parseLong(String.valueOf(m.getId())));
-                            department.setName(String.valueOf(m.getName()));
-                            department.setLocation(m.getLocation());
-                            return department;
-                        })
-                        .toList();
-
-        LOGGER.info("employeeDataExcelConverter(...)");
-        return departments;
-    }
-
-    private List<Machine> machineDataExcelConverter(List<MachineDep> machineDeps) {
-        LOGGER.info("employeeDataExcelConverter()");
-
-        List<Machine> convertedMachines =
-                machineDeps.stream().map(m -> {
-
-                                    Machine machine = new Machine();
-//                                    machine.setId(Long.parseLong((String.valueOf(m.getId()))));
-                                    machine.setName(String.valueOf(m.getName()));
-                                    machine.setModel(String.valueOf(m.getModel()));
-                                    machine.setManufactured(Integer.valueOf(m.getManufactured()));
-                                    machine.setSerialNumber(String.valueOf(m.getSerialNumber()));
-                                    Department department = new Department();
-                                    department.setId(Long.valueOf(m.getDepartment()));
-                                    machine.setDepartment(department);
-                                    machine.setStatus(m.getStatus());
-                                    machine.setInstallDate(LocalDateTime.now());
-
-                                    LOGGER.info("departmentNameNull (...)");
-                                    return machine;
-                                }
-                        )
-                        .toList();
-
-        LOGGER.info("employeeDataExcelConverter(...)");
-        return convertedMachines;
-    }
-
-    private List<Hardware> hardwareDataExcelConverter(List<JsonHardware> hardwares) {
-        LOGGER.info("hardwareDataExcelConverter()");
-
-        List<Hardware> convertedHardwares =
-                hardwares.stream().map(m -> {
-                                    LOGGER.info("Row create()");
-                                    Hardware hardware = new Hardware();
-                                    hardware.setInventoryNo(m.getInventoryNo());
-                                    hardware.setDepartment(m.getDepartment());
-                                    hardware.setStatus(m.getStatus());
-                                    hardware.setEmployee(m.getEmployee());
-                                    hardware.setType(m.getType());
-                                    hardware.setName(m.getName());
-                                    hardware.setInvoiceNo(m.getInvoiceNo());
-                                    hardware.setSystemNo(m.getSystemNo());
-                                    hardware.setSerialNumber(m.getSerialNumber());
-                                    hardware.setNetBios(m.getNetBios());
-                                    hardware.setIpAddress(m.getIpAddress());
-                                    hardware.setMacAddress(m.getMacAddress());
-                                    hardware.setOfficeName(m.getOfficeName());
-                                    hardware.setOfficeNo(m.getOfficeNo());
-                                    hardware.setBitLockKey(m.getBitLockKey());
-                                    hardware.setBitRecoveryKey(m.getBitRecoveryKey());
-                                    hardware.setDescription(m.getDescription());
-
-                                    if (m.getPermission() == null) {
-                                        hardware.setPermission(Permission.USER);
-                                    } else {
-
-                                        hardware.setPermission(m.getPermission());
-                                    }
-
-
-                                    if (m.getInstallDate() == null || m.getInstallDate().isEmpty()) {
-                                        hardware.setInstallDate(null);
-                                    } else {
-                                        LocalDate installDate = convertDate(m.getInstallDate());
-                                        hardware.setInstallDate(installDate);
-                                        LOGGER.info(installDate.toString());
-                                    }
-                                    if (m.getActivateDate() == null || m.getActivateDate().isEmpty()) {
-                                        hardware.setActivateDate(null);
-                                    } else {
-                                        LocalDate activateDate = convertDate(m.getActivateDate());
-                                        hardware.setActivateDate(activateDate);
-                                    }
-
-                                    LOGGER.info("Row create(...)");
-                                    return hardware;
-                                }
-                        )
-                        .toList();
-
-        LOGGER.info("hardwareDataExcelConverter(...)");
-        return convertedHardwares;
-    }
-
-    private LocalDate convertDate(String date) {
-        LOGGER.info("DataXLS_String " + date);
-        LOGGER.info("Start parsing string to date " + date.toString());
-
-        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
-        LocalDate localDate = LocalDate.parse(date, inputDateFormatter);
-        DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String outputDateString = localDate.format(outputDateFormatter);
-        LOGGER.info("ConvertedDate() " + localDate.toString());
-        return localDate;
-    }
-
-    private LocalDateTime convertDateTime(String date) {
-        LOGGER.info("DataXLS_String " + date);
-        LOGGER.info("Start parsing string to date " + date.toString());
-
-        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
-        LocalDateTime localDate = LocalDateTime.parse(date, inputDateFormatter);
-        DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String outputDateString = localDate.format(outputDateFormatter);
-        LOGGER.info("ConvertedDate() " + localDate.toString());
-        return localDate;
-    }
-}
+//package pl.medos.cmmsApi.service.impl;
+//
+//import com.fasterxml.jackson.databind.DeserializationFeature;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.Row;
+//import org.apache.poi.ss.util.NumberToTextConverter;
+//import org.apache.poi.util.IOUtils;
+//import org.apache.poi.xssf.usermodel.XSSFSheet;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//import org.springframework.web.multipart.MultipartFile;
+//import pl.medos.cmmsApi.enums.Permission;
+//import pl.medos.cmmsApi.model.*;
+//import pl.medos.cmmsApi.repository.DepartmentRepository;
+//import pl.medos.cmmsApi.repository.HardwareRepository;
+//import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
+//import pl.medos.cmmsApi.service.*;
+//
+//import java.io.*;
+//import java.text.SimpleDateFormat;
+//import java.time.LocalDate;
+//import java.time.LocalDateTime;
+//import java.time.LocalTime;
+//import java.time.ZonedDateTime;
+//import java.time.format.DateTimeFormatter;
+//import java.util.*;
+//import java.util.logging.Logger;
+//
+//@Service
+//public class ImportServiceImpl implements ImportService {
+//
+//    @Autowired
+//    private DepartmentService departmentService;
+//    @Autowired
+//    private MachineService machineService;
+//    @Autowired
+//    private EmployeeService employeeService;
+//    @Autowired
+//    private ImageService imageService;
+//
+//
+//    private static final Logger LOGGER = Logger.getLogger(ImportServiceImpl.class.getName());
+//
+//    private List<String> persons = new ArrayList<>(Arrays.asList("id", "name", "phone", "email", "position", "department"));
+//
+//
+//
+//    private final HardwareRepository hardwareRepository;
+//
+//    public ImportServiceImpl(HardwareRepository hardwareRepository) {
+//        this.hardwareRepository = hardwareRepository;
+//    }
+//
+//
+//
+//
+//
+//
+//    private List<Hardware> hardwareDataExcelConverter(List<JsonHardware> hardwares) {
+//        LOGGER.info("hardwareDataExcelConverter()");
+//
+//        List<Hardware> convertedHardwares =
+//                hardwares.stream().map(m -> {
+//                                    LOGGER.info("Row create()");
+//                                    Hardware hardware = new Hardware();
+//                                    hardware.setInventoryNo(m.getInventoryNo());
+//                                    hardware.setDepartment(m.getDepartment());
+//                                    hardware.setStatus(m.getStatus());
+//                                    hardware.setEmployee(m.getEmployee());
+//                                    hardware.setType(m.getType());
+//                                    hardware.setName(m.getName());
+//                                    hardware.setInvoiceNo(m.getInvoiceNo());
+//                                    hardware.setSystemNo(m.getSystemNo());
+//                                    hardware.setSerialNumber(m.getSerialNumber());
+//                                    hardware.setNetBios(m.getNetBios());
+//                                    hardware.setIpAddress(m.getIpAddress());
+//                                    hardware.setMacAddress(m.getMacAddress());
+//                                    hardware.setOfficeName(m.getOfficeName());
+//                                    hardware.setOfficeNo(m.getOfficeNo());
+//                                    hardware.setBitLockKey(m.getBitLockKey());
+//                                    hardware.setBitRecoveryKey(m.getBitRecoveryKey());
+//                                    hardware.setDescription(m.getDescription());
+//
+//                                    if (m.getPermission() == null) {
+//                                        hardware.setPermission(Permission.USER);
+//                                    } else {
+//
+//                                        hardware.setPermission(m.getPermission());
+//                                    }
+//
+//                                    if (m.getInstallDate() == null || m.getInstallDate().isEmpty()) {
+//                                        hardware.setInstallDate(null);
+//                                    } else {
+//                                        LocalDate installDate = convertDate(m.getInstallDate());
+//                                        hardware.setInstallDate(installDate);
+//                                        LOGGER.info(installDate.toString());
+//                                    }
+//                                    if (m.getActivateDate() == null || m.getActivateDate().isEmpty()) {
+//                                        hardware.setActivateDate(null);
+//                                    } else {
+//                                        LocalDate activateDate = convertDate(m.getActivateDate());
+//                                        hardware.setActivateDate(activateDate);
+//                                    }
+//
+//                                    LOGGER.info("Row create(...)");
+//                                    return hardware;
+//                                }
+//                        )
+//                        .toList();
+//
+//        LOGGER.info("hardwareDataExcelConverter(...)");
+//        return convertedHardwares;
+//    }
+//
+//    private LocalDate convertDate(String date) {
+//        LOGGER.info("DataXLS_String " + date);
+//        LOGGER.info("Start parsing string to date " + date.toString());
+//
+//        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+//        LocalDate localDate = LocalDate.parse(date, inputDateFormatter);
+//        DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//        String outputDateString = localDate.format(outputDateFormatter);
+//        LOGGER.info("ConvertedDate() " + localDate.toString());
+//        return localDate;
+//    }
+//
+//    private LocalDateTime convertDateTime(String date) {
+//        LOGGER.info("DataXLS_String " + date);
+//        LOGGER.info("Start parsing string to date " + date.toString());
+//
+//        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+//        LocalDateTime localDate = LocalDateTime.parse(date, inputDateFormatter);
+//        DateTimeFormatter outputDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//        String outputDateString = localDate.format(outputDateFormatter);
+//        LOGGER.info("ConvertedDate() " + localDate.toString());
+//        return localDate;
+//    }
+//}

@@ -209,14 +209,13 @@ public class ExportToServiceImpl implements ExportService {
         font.setBold(true);
         font.setFontHeight(16);
         style.setFont(font);
-        createCell(row, 0, "ID", style);
-        createCell(row, 1, "Nazwa", style);
-        createCell(row, 2, "Model", style);
-        createCell(row, 3, "Rok", style);
-        createCell(row, 4, "S/N", style);
-        createCell(row, 5, "Data Instalacji.", style);
-        createCell(row, 6, "Stan.", style);
-        createCell(row, 7, "Wydział.", style);
+        createCell(row, 0, "Nazwa", style);
+        createCell(row, 1, "Model", style);
+        createCell(row, 2, "Rok", style);
+        createCell(row, 3, "S/N", style);
+        createCell(row, 4, "Data Instalacji.", style);
+        createCell(row, 5, "Stan.", style);
+        createCell(row, 6, "Wydział.", style);
         LOGGER.info("Header create complete! ");
     }
 
@@ -293,7 +292,6 @@ public class ExportToServiceImpl implements ExportService {
         for (Machine record : machines) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
-            createCell(row, columnCount++, record.getId(), style);
             createCell(row, columnCount++, record.getName(), style);
             createCell(row, columnCount++, record.getModel(), style);
             createCell(row, columnCount++, record.getManufactured(), style);
@@ -355,5 +353,4 @@ public class ExportToServiceImpl implements ExportService {
         }
         LOGGER.info("writeHardware(...)");
     }
-
 }
