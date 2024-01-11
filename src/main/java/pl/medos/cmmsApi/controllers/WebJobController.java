@@ -1,10 +1,14 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.apache.commons.io.IOUtils;
+import org.apache.xmlbeans.impl.common.IOUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,7 +21,7 @@ import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 import pl.medos.cmmsApi.util.imports.ImportJob;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -246,13 +250,9 @@ public class WebJobController {
     @GetMapping(value = "/downloadfile")
     public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
         Job jobById = jobService.findJobById(id);
-        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + jobById.getRequestDate() + ".jpg";
-        response.setHeader(headerKey, headerValue);
-        ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(jobById.getOriginalImage());
-        outputStream.close();
+        InputStream inputStream = new ByteArrayInputStream(jobById.getOriginalImage());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(inputStream, response.getOutputStream());
     }
 
     @GetMapping("/search/query")
@@ -306,6 +306,7 @@ public class WebJobController {
         String headerValue = "attachment;filename=awarie" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
+
         exportService.excelJobsModelGenerator(jobs);
         exportService.generateExcelJobFile(response);
         response.flushBuffer();

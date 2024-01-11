@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-400">
 
-<div>
+<div  th:if="${isAdmin} or ${nRead}">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -75,7 +75,7 @@
                         Awizacje
                     </a>
 
-                    <a href="/employees"
+                    <a th:if="${isAdmin} or ${eRead}" href="/employees"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -87,7 +87,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/przepustki"
+                    <a  th:if="${isAdmin} or ${pRead}"href="/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -99,7 +99,7 @@
                         Przepustki Stałe
                     </a>
 
-                    <a href="/hardwares"
+                    <a  th:if="${isAdmin}" href="/hardwares"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -108,7 +108,7 @@
                         </svg>
                         IT
                     </a>
-                    <a href="/departments"
+                    <a  th:if="${isAdmin} or ${dRead}" href="/departments"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
@@ -117,7 +117,7 @@
                         Wydziały
                     </a>
 
-                    <a href="/machines"
+                    <a  th:if="${isAdmin} or ${mRead}" href="/machines"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
@@ -126,7 +126,7 @@
                         Maszyny
                     </a>
 
-                    <a th:href="@{/jobs}"
+                    <a  th:if="${isAdmin} or ${jRead}"th:href="@{/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -200,7 +200,7 @@
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
                                         <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
-                                        <div th:if="${isAdmin}" class="flex space-x-4">
+                                        <div th:if="(${isAdmin} or ${nEdit})" class="flex space-x-4">
                                             <a href="#" th:href="@{/awizacje/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
                                         </div>
@@ -365,7 +365,7 @@
 <!--                                                </td>-->
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-lg font-medium sm:pr-8">
 
-                                                    <a th:href="@{/awizacje/read/{id}(id=${notification.id})}"
+                                                    <a th:if="${isAdmin} or ${nRead}" or th:href="@{/awizacje/read/{id}(id=${notification.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">
                                                     <button class="mr-4" title="Szczegóły">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -375,7 +375,7 @@
                                                     </button>
                                                     </a>
 
-                                                    <a th:if="${isAdmin}" th:href="@{/awizacje/update/{id}(id=${notification.id})}"
+                                                    <a th:if="${isAdmin} or ${nEdit}" th:href="@{/awizacje/update/{id}(id=${notification.id})}"
                                                        class="text-green-600 hover:text-green-300">
                                                     <button class="mr-4" title="Edycja">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -385,7 +385,7 @@
                                                     </button>
                                                     </a>
 
-                                                    <a th:if="${isAdmin}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"
+                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"
                                                        class="text-red-600 hover:text-red-300">
                                                     <button class="mr-4" title="Usuń">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">

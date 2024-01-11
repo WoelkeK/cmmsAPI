@@ -6,8 +6,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
+import org.apache.commons.io.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,7 +23,9 @@ import pl.medos.cmmsApi.service.NotificationService;
 import pl.medos.cmmsApi.service.PassService;
 import pl.medos.cmmsApi.service.RaportService;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Base64;
 import java.util.HashMap;
@@ -130,13 +134,10 @@ public class PassWebcontroller {
     @GetMapping(value = "/downloadfile")
     public void downloadFile(@Param(value = "id") Long id, Model model, HttpServletResponse response) throws IOException {
         Pass passById = passService.findPassById(id);
-        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + passById.getPlates() + ".jpg";
-        response.setHeader(headerKey, headerValue);
-        ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(passById.getOriginalImage());
-        outputStream.close();
+
+        InputStream inputStream = new ByteArrayInputStream(passById.getResizedImage());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(inputStream, response.getOutputStream());
     }
 
     @GetMapping("/search/{query}")
