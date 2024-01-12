@@ -100,7 +100,7 @@ public class WebHardwareController {
         LOGGER.info("createView()");
         model.addAttribute("hardware", new Hardware());
         LOGGER.info("createView(...)");
-        return "create-hardware";
+        return "create-hardware2";
     }
 
     @PostMapping("/create")

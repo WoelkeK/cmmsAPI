@@ -39,5 +39,8 @@ public class JsonHardware {
     private String activateDate;
     private String installDate;
     private Permission permission;
+    private boolean notRead;
+    private boolean notEdit;
+    private boolean notFull;
 
 }
