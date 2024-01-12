@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-400">
 
-<div>
+<div th:if="${isAdmin} or ${mRead}">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -66,7 +66,7 @@
                 </div>
 
                 <nav class="mt-5 flex-1 space-y-1 px-2">
-                    <a th:href="@{/awizacje}"
+                    <a th:if="${isAdmin} or ${nRead}" th:href="@{/awizacje}"
                        class="text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -76,7 +76,7 @@
                         Awizacje
                     </a>
 
-                    <a href="/employees"
+                    <a th:if="${isAdmin} or ${eRead}" href="/employees"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -88,7 +88,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/przepustki"
+                    <a th:if="${isAdmin} or ${pRead}" href="/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -100,7 +100,7 @@
                         Przepustki Stałe
                     </a>
 
-                    <a href="/hardwares"
+                    <a th:if="${isAdmin}" href="/hardwares"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -111,7 +111,7 @@
                         </svg>
                         IT
                     </a>
-                    <a href="/departments"
+                    <a th:if="${isAdmin} or ${dRead}" href="/departments"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -135,7 +135,7 @@
                         Maszyny
                     </a>
 
-                    <a th:href="@{/jobs}"
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -182,7 +182,7 @@
             </div>
             <nav class="mt-5 flex-1 space-y-1 px-2">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="/awizacje"
+                <a th:if="${isAdmin} or ${nRead}" href="/awizacje"
                    class="text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                          xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@
                     Awizacje
                 </a>
 
-                <a th:href="@{/employees}"
+                <a th:if="${isAdmin} or ${eRead}" th:href="@{/employees}"
                    class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/folder -->
                     <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -206,7 +206,7 @@
                     Pracownicy
                 </a>
 
-                <a href="/przepustki"
+                <a th:if="${isAdmin} or ${pRead}" href="/przepustki"
                    class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/folder -->
                     <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -219,7 +219,7 @@
                     Przepustki Stałe
                 </a>
 
-                <a href="/hardwares"
+                <a th:if="${isAdmin}" href="/hardwares"
                    class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/folder -->
                     <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -230,7 +230,7 @@
                     </svg>
                     IT
                 </a>
-                <a href="/departments"
+                <a th:if="${isAdmin} or ${dRead}" href="/departments"
                    class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/folder -->
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -254,7 +254,7 @@
                     Maszyny
                 </a>
 
-                <a th:href="@{/jobs}"
+                <a th:if="${isAdmin} or ${jRead}" th:href="@{/jobs}"
                    class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/inbox -->
                     <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -331,13 +331,13 @@
                                 <div class="hidden lg:ml-10 lg:block">
                                     <div th:if="${isAdmin}" class="flex space-x-4">
                                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                        <a href="#" th:href="@{/machines/create}"
+                                        <a th:if="${isAdmin} or ${mEdit}" href="#" th:href="@{/machines/create}"
                                            class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>
-                                        <a href="#" th:href="@{/machines/file}"
+                                        <a th:if="${isAdmin} or ${mFull}" href="#" th:href="@{/machines/file}"
                                            class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>
-                                        <a href="#" th:href="@{/machines/export}"
+                                        <a th:if="${isAdmin} or ${mFull}" href="#" th:href="@{/machines/export}"
                                            class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
-                                        <a href="#" th:href="@{/machines/deleteAll}"
+                                        <a th:if="${isAdmin} or ${mFull}" href="#" th:href="@{/machines/deleteAll}"
                                            class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń
                                             wszystko</a>
                                     </div>
@@ -456,7 +456,7 @@
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
 
-                                                <a th:if="${isAdmin}" th:href="@{/machines/update/{id}(id=${machine.id}, pageNo=${currentPage})}"
+                                                <a th:if="${isAdmin} or ${mEdit}" th:href="@{/machines/update/{id}(id=${machine.id}, pageNo=${currentPage})}"
                                                    class="text-green-600 hover:text-green-300">
                                                     <button class="mr-4" title="Edycja">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -466,7 +466,7 @@
                                                     </button>
                                                 </a>
 
-                                                <a th:if="${isAdmin}" th:href="@{/machines/delete/{id}(id=${machine.id}, pageNo=${currentPage})}"
+                                                <a  th:if="${isAdmin} or ${mFull}" th:href="@{/machines/delete/{id}(id=${machine.id}, pageNo=${currentPage})}"
                                                    class="text-red-600 hover:text-red-300">
                                                     <button class="mr-4" title="Usuń">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">

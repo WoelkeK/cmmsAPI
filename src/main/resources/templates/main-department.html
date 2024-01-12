@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Moduł awizacji</title>
+    <title>Moduł wydziałów</title>
     <!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
     <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
 </head>
@@ -11,7 +11,7 @@
 
 <input type="hidden" th:field="*{departments}">
 
-<div>
+<div th:if="${isAdmin} or ${dRead}">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -69,7 +69,7 @@
                 </div>
 
                 <nav class="mt-5 flex-1 space-y-1 px-2">
-                    <a th:href="@{/awizacje}"
+                    <a th:if="${isAdmin} or ${nRead}" th:href="@{/awizacje}"
                        class="text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -79,7 +79,7 @@
                         Awizacje
                     </a>
 
-                    <a href="/employees"
+                    <a th:if="${isAdmin} or ${eRead}" href="/employees"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -91,7 +91,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/przepustki"
+                    <a th:if="${isAdmin} or ${pRead}" href="/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -103,7 +103,7 @@
                         Przepustki Stałe
                     </a>
 
-                    <a href="/hardwares"
+                    <a th:if="${isAdmin}" href="/hardwares"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -126,7 +126,7 @@
                         Wydziały
                     </a>
 
-                    <a href="/machines"
+                    <a th:if="${isAdmin} or ${mRead}" href="/machines"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -138,7 +138,7 @@
                         Maszyny
                     </a>
 
-                    <a th:href="@{/jobs}"
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -212,7 +212,7 @@
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
-                                        <div th:if="${isAdmin}" class="flex space-x-4">
+                                        <div th:if="${isAdmin} or ${dEdit}" class="flex space-x-4">
                                             <a href="#" th:href="@{/departments/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
                                             <!--                                            <a href="#" th:href="@{/notifications/file}"-->
@@ -231,32 +231,8 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <!--                                <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">-->
-                                <!--                                    <div class="w-full max-w-lg lg:max-w-xs">-->
-                                <!--                                        <form action="#" th:action="@{/departments/search/query}" method="GET">-->
-                                <!--                                            <label for="search" class="sr-only">Szukaj</label>-->
-                                <!--                                            <div class="relative">-->
-                                <!--                                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">-->
-                                <!--                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"-->
-                                <!--                                                         fill="currentColor"-->
-                                <!--                                                         aria-hidden="true">-->
-                                <!--                                                        <path fill-rule="evenodd"-->
-                                <!--                                                              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"-->
-                                <!--                                                              clip-rule="evenodd"/>-->
-                                <!--                                                    </svg>-->
-                                <!--                                                </div>-->
-                                <!--                                                <input id="search" name="query"-->
-                                <!--                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-blue-700 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"-->
-                                <!--                                                       placeholder="Szukaj" type="search">-->
-                                <!--                                            </div>-->
-                                <!--                                        </form>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
                             </div>
                         </div>
-
 
                         <div class="mt-4 flex flex-col">
                             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -303,7 +279,7 @@
 
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
-                                                    <a th:if="${isAdmin}" th:href="@{/departments/update/{id}(id=${department.id})}"
+                                                    <a th:if="${isAdmin} or ${dEdit}" th:href="@{/departments/update/{id}(id=${department.id})}"
                                                        class="text-green-600 hover:text-green-300">
                                                         <button class="mr-4" title="Edycja">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -313,7 +289,7 @@
                                                         </button>
                                                     </a>
 
-                                                    <a th:if="${isAdmin}"  th:href="@{/departments/delete/{id}(id=${department.id})}"
+                                                    <a th:if="${isAdmin} or ${dEdit}" th:href="@{/departments/delete/{id}(id=${department.id})}"
                                                        class="text-red-600 hover:text-red-300">
                                                         <button class="mr-4" title="Usuń">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">

@@ -69,7 +69,6 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                 req.setAttribute("nRead", true);
                 req.setAttribute("eRead", true);
                 req.setAttribute("pRead", true);
-                req.setAttribute("dRead", true);
                 req.setAttribute("nEdit", false);
                 req.setAttribute("nFull", false);
                 break;
@@ -87,7 +86,6 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                 req.setAttribute("nRead", true);
                 req.setAttribute("eRead", true);
                 req.setAttribute("pRead", true);
-                req.setAttribute("dRead", true);
                 req.setAttribute("eEdit", false);
                 req.setAttribute("eFull", false);
                 break;
@@ -105,7 +103,6 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                 req.setAttribute("nRead", true);
                 req.setAttribute("eRead", true);
                 req.setAttribute("pRead", true);
-                req.setAttribute("dRead", true);
                 req.setAttribute("pEdit", false);
                 req.setAttribute("pFull", false);
                 break;
@@ -120,9 +117,6 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                 req.setAttribute("pFull", true);
                 break;
             case "WYDZIAŁY_USER":
-                req.setAttribute("nRead", true);
-                req.setAttribute("eRead", true);
-                req.setAttribute("pRead", true);
                 req.setAttribute("dRead", true);
                 req.setAttribute("dEdit", false);
                 req.setAttribute("dFull", false);
