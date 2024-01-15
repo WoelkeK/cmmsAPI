@@ -47,9 +47,9 @@ public class HardwareEntity {
     private String bitLockKey;
     private String bitRecoveryKey;
 
-    private boolean notRead;
-    private boolean notEdit;
-    private boolean notFull;
+    private boolean nRead;
+    private boolean nEdit;
+    private boolean nFull;
 
     @Enumerated(EnumType.STRING)
     private Permission permission;
