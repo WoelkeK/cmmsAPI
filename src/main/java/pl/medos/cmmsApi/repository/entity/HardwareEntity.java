@@ -49,7 +49,19 @@ public class HardwareEntity {
 
     private boolean nRead;
     private boolean nEdit;
-    private boolean nFull;
+    private boolean nDelete;
+    private boolean eRead;
+    private boolean eEdit;
+    private boolean eDelete;
+    private boolean pRead;
+    private boolean pEdit;
+    private boolean pDelete;
+    private boolean mRead;
+    private boolean mEdit;
+    private boolean mDelete;
+    private boolean jRead;
+    private boolean jEdit;
+    private boolean jDelete;
 
     @Enumerated(EnumType.STRING)
     private Permission permission;

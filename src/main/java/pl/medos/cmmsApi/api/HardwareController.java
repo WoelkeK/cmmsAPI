@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/hardwares")
 public class HardwareController {
 
     private static final Logger LOGGER = Logger.getLogger(HardwareController.class.getName());

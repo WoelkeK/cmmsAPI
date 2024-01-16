@@ -42,9 +42,22 @@ public class Hardware {
     private String bitRecoveryKey;
     private Permission permission;
     private String role;
+
     private boolean nRead;
     private boolean nEdit;
-    private boolean nFull;
+    private boolean nDelete;
+    private boolean eRead;
+    private boolean eEdit;
+    private boolean eDelete;
+    private boolean pRead;
+    private boolean pEdit;
+    private boolean pDelete;
+    private boolean mRead;
+    private boolean mEdit;
+    private boolean mDelete;
+    private boolean jRead;
+    private boolean jEdit;
+    private boolean jDelete;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate installDate;
