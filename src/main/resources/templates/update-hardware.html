@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel Zlecenia</title>
-    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-    <script th:src="@{/js/jquery.min.js}"></script>
 
-    <!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-            integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-            crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 
+<!--    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>-->
     <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
@@ -367,7 +364,7 @@
                                         <div class="mt-2">
 
                                             <button type="button" data-toggle="modal" data-target="#editModal"
-                                                    class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-200 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                    class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-200 shadow-sm hover:bg-gray-300 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                                 <a>Ustaw dostęp</a>
 
                                             </button>
@@ -400,11 +397,9 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <div th:if="${hardware != null}">
-            <!--             Display object properties in the modal -->
-
             <div class="shadow sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
-                    <h3 class="text-base md:text-lg font-semibold leading-6 text-gray-900">Ustawienia uprawnień.</h3>
+                    <h3 class="text-base md:text-xl font-medium leading-6 text-gray-900">Ustawienia uprawnień.</h3>
                     <div class="mt-2 sm:flex sm:items-start sm:justify-between">
                         <div class="max-w-xl text-md text-gray-500">
                             <p>Ustaw uprawnienia dostępu dla sekcji aplikacji dla danego użytkownika.</p>
@@ -422,29 +417,29 @@
                             </legend>
                             <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalNReadable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalNReadable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalNReadable">Odczyt</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalNEditable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalNEditable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalNEditable">Edycja</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalNFullAccess">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalNFullAccess">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalNFullAccess">Pełna kontrola</label>
                                         </div>
@@ -462,29 +457,29 @@
                             </legend>
                             <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalEReadable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalEReadable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalEReadable">Odczyt</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalEEditable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalEEditable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalEEditable">Edycja</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalEFullAccess">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalEFullAccess">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalEFullAccess">Pełna kontrola</label>
                                         </div>
@@ -502,29 +497,29 @@
                             </legend>
                             <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalPReadable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalPReadable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalPReadable">Odczyt</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalPEditable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalPEditable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalPEditable">Edycja</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalPFullAccess">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalPFullAccess">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalPFullAccess">Pełna kontrola</label>
                                         </div>
@@ -542,29 +537,29 @@
                             </legend>
                             <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalDReadable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalDReadable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalDReadable">Odczyt</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalDEditable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalDEditable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalDEditable">Edycja</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalDFullAccess">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalDFullAccess">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalDFullAccess">Pełna kontrola</label>
                                         </div>
@@ -582,29 +577,29 @@
                             </legend>
                             <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalMReadable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalMReadable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalMReadable">Odczyt</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalMEditable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalMEditable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalMEditable">Edycja</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalMFullAccess">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalMFullAccess">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalMFullAccess">Pełna kontrola</label>
                                         </div>
@@ -620,31 +615,31 @@
                         <fieldset>
                             <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Awarie
                             </legend>
+
                             <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
-
+                                    <div class="min-w-0 flex-1 text-md leading-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalJReadable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalJReadable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalJReadable">Odczyt</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalJEditable">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalJEditable">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalJEditable">Edycja</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="relative flex items-start py-4">
-                                    <div class="min-w-0 flex-1 text-sm leading-6">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="modalJFullAccess">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check justify-center justify-items-center">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalJFullAccess">
                                             <label class="form-check-label select-none font-medium text-gray-900"
                                                    for="modalJFullAccess">Pełna kontrola</label>
                                         </div>
@@ -656,7 +651,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="modal-footer">
 
@@ -682,115 +676,8 @@
     </div>
 </div>
 
-
-<script>
-    $(document).ready(function () {
-
-        // When the modal is about to be shown
-        $('#editModal').on('show.bs.modal', function () {
-            // Copy value from main form checkbox fields to modal checkboxes
-            $('#modalNReadable').prop('checked', $('#nRead').val() === 'true');
-            $('#modalNEditable').prop('checked', $('#nEdit').val() === 'true');
-            $('#modalNFullAccess').prop('checked', $('#nDelete').val() === 'true');
-            $('#modalEReadable').prop('checked', $('#eRead').val() === 'true');
-            $('#modalEEditable').prop('checked', $('#eEdit').val() === 'true');
-            $('#modalEFullAccess').prop('checked', $('#eDelete').val() === 'true');
-            $('#modalPReadable').prop('checked', $('#pRead').val() === 'true');
-            $('#modalPEditable').prop('checked', $('#pEdit').val() === 'true');
-            $('#modalPFullAccess').prop('checked', $('#pDelete').val() === 'true');
-            $('#modalDReadable').prop('checked', $('#dRead').val() === 'true');
-            $('#modalDEditable').prop('checked', $('#dEdit').val() === 'true');
-            $('#modalDFullAccess').prop('checked', $('#dDelete').val() === 'true');
-            $('#modalMReadable').prop('checked', $('#mRead').val() === 'true');
-            $('#modalMEditable').prop('checked', $('#mEdit').val() === 'true');
-            $('#modalMFullAccess').prop('checked', $('#mDelete').val() === 'true');
-            $('#modalJReadable').prop('checked', $('#jRead').val() === 'true');
-            $('#modalJEditable').prop('checked', $('#jEdit').val() === 'true');
-            $('#modaljFullAccess').prop('checked', $('#jDelete').val() === 'true');
-        });
-
-        // When modal is about to be hidden
-        $('#editModal').on('hide.bs.modal', function () {
-            // Copy value from modal checkbox fields to main form checkboxes
-            $('#nRead').val($('#modalNReadable').is(':checked'));
-            $('#nEdit').val($('#modalNEditable').is(':checked'));
-            $('#nDelete').val($('#modalNFullAccess').is(':checked'));
-            $('#eRead').val($('#modalEReadable').is(':checked'));
-            $('#eEdit').val($('#modalEEditable').is(':checked'));
-            $('#eDelete').val($('#modalEFullAccess').is(':checked'));
-            $('#pRead').val($('#modalPReadable').is(':checked'));
-            $('#pEdit').val($('#modalPEditable').is(':checked'));
-            $('#pDelete').val($('#modalPFullAccess').is(':checked'));
-            $('#dRead').val($('#modalDReadable').is(':checked'));
-            $('#dEdit').val($('#modalDEditable').is(':checked'));
-            $('#dDelete').val($('#modalDFullAccess').is(':checked'));
-            $('#mRead').val($('#modalMReadable').is(':checked'));
-            $('#mEdit').val($('#modalMEditable').is(':checked'));
-            $('#mDelete').val($('#modalMFullAccess').is(':checked'));
-            $('#jRead').val($('#modalJReadable').is(':checked'));
-            $('#jEdit').val($('#modalJEditable').is(':checked'));
-            $('#jDelete').val($('#modalJFullAccess').is(':checked'));
-
-        });
-    });
-</script>
-
-
-<!--        <script th:inline="javascript">-->
-
-<!--            $(document).ready(function () {-->
-<!--                $('#editModal').on('show.bs.modal', function (event) {-->
-<!--                    // Display existing age in the input field in the modal-->
-<!--                    var existingAge = $('#hiddenSerialNumber').val();-->
-<!--                    $('#serialNumber').val(existingAge);-->
-<!--                });-->
-
-<!--                $('#saveChanges').on('click', function() {-->
-<!--                    // Get updated age and assign it to the hidden input field-->
-<!--                    var updatedAge = $('#serialNumber').val();-->
-<!--                    $('#hiddenSerialNumber').val(updatedAge);-->
-
-<!--                    // Hide the modal-->
-<!--                    $('#editModal').modal('hide');-->
-<!--                });-->
-<!--            });-->
-
-<!--        </script>-->
-
-<script src="/js/disableField.js"></script>
-Add your JavaScript and other necessary dependencies here
-<script th:inline="javascript">
-    function openModal() {
-        console.log("kliknieto open");
-        var modal = document.getElementById('myModal');
-        modal.style.display = 'block';
-    }
-
-    function closeModal() {
-        var modal = document.getElementById('myModal');
-        modal.style.display = 'none';
-    }
-</script>
-
-
-<script type="text/javascript">
-    function disableSelectBox() {
-        var field1Value = document.getElementById("status").value;
-        var field2Select = document.getElementById("employee");
-        var field3Select = document.getElementById("employee");
-
-        if ((field1Value === "MAGAZYN_SERWEROWNIA") || (field1Value === "MAGAZYN_SZAFA") || (field1Value === "ZUTYLIZOWANY") || (field1Value === "DO_UTYLIZACJI")) {
-            field2Select.disabled = true;
-            field2Select.value = "";
-        } else {
-            field2Select.disabled = false;
-        }
-    }
-
-
-</script>
-
-
+<script type="text/javascript" th:src="@{/js/permissions.js}"></script>
+<script type="text/javascript" th:src="@{/js/disableField.js}"></script>
 </body>
 </html>
 
