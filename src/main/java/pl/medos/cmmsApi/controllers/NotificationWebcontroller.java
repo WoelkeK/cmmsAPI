@@ -182,7 +182,7 @@ public class NotificationWebcontroller {
 
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Notification notification) throws JRException, IOException {
-        log.info("exportPdf()" + notification.getDescription());
+        log.info("exportPdf()" + notification.getId());
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"awizacja_" + notification.getVisitDate() + ".pdf\""));
         OutputStream out = response.getOutputStream();
