@@ -100,7 +100,7 @@ public class WebHardwareController {
         LOGGER.info("createView()");
         model.addAttribute("hardware", new Hardware());
         LOGGER.info("createView(...)");
-        return "create-hardware2";
+        return "create-hardware";
     }
 
     @PostMapping("/create")
@@ -197,7 +197,6 @@ public class WebHardwareController {
             return "redirect/hardwares";
         }
 
-//        List<Hardware> hardwares = importService.importExcelHardwareData(file);
         List<Hardware> hardwares = importHardware.importHardware(file);
 
         hardwares.forEach((hardware) -> {
