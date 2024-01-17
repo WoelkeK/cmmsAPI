@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.repository.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -24,10 +25,10 @@ public class JobEntity {
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "engineer_id")
-//    private EngineerEntity engineer;
-    private String engineer;
+    @ManyToOne
+    @JoinColumn(name = "engineer_id")
+    @Nullable
+    private EngineerEntity engineer;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -47,6 +48,7 @@ public class JobEntity {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
+    private boolean open;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)

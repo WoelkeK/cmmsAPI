@@ -24,7 +24,7 @@ public class Job {
     private LocalDateTime requestDate;
     private User user;
     private Employee employee;
-    private String engineer;
+    private Engineer engineer;
     private Department department;
     private Machine machine;
     //    private Cost cost;
@@ -37,6 +37,9 @@ public class Job {
     private LocalDateTime jobStopTime;
     private double calcCost;
     private String status;
+
+    private boolean open;
+
 
     private byte[] originalImage;
     private byte[] resizedImage;

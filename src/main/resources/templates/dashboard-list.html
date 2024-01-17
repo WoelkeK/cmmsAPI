@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <title>Panel Zlecenia</title>
     <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+    <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}"/>-->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body class="bg-gray-400">
 
 
 <div class="min-h-full">
-    <div class="bg-gray-800 pb-32">
+    <div class="bg-gray-800 pb-1">
+
         <nav class="bg-gray-800">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="border-b border-gray-700">
@@ -27,11 +30,7 @@
                                         Awarię</a>
                                 </div>
                             </div>
-                            <div class="hidden md:block">
-                                <div class="ml-4 flex items-center md:ml-6">
 
-                                </div>
-                            </div>
                             <div class="-mr-2 flex md:hidden">
                                 <!-- Mobile menu button -->
                                 <button type="button"
@@ -63,24 +62,29 @@
                            class="bg-red-700 text-white block rounded-md px-3 py-2 text-base font-medium"
                            aria-current="page">Zgłoś Awarię</a>
                     </div>
-
                 </div>
+            </div>
         </nav>
-        <header class="py-10">
+
+
+        <header class="py-4">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h1 class="text-3xl font-bold tracking-tight text-yellow-600">Lista zadań</h1>
             </div>
         </header>
     </div>
 
-    <main class="-mt-32">
-        <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow xl:rounded-md">
+    <main class="mt-2">
+        <div class="mx-auto max-w-7xl px-4 pb-2 sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-transparent shadow xl:rounded-md">
 
-                <ul role="list" class="divide-y divide-gray-200">
+                <ul role="list" class="divide-y-8 divide-transparent">
                     <li th:each="job : ${jobs}">
+
+
                         <a th:href="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="get"
-                           class="block hover:bg-blue-50">
+                           class="block rounded-md hover:bg-white"
+                           th:classappend="${job.status == 'Zgłoszono'} ? 'blink' : (${job.status == 'w trakcie'} ? 'bg-yellow-400' : '')">
                             <div class="px-4 py-4 sm:px-6">
                                 <div class="flex items-center justify-between">
                                     <p th:text="${job.message} " class="truncate text-sm font-medium text-indigo-600">
@@ -132,66 +136,81 @@
                 </ul>
             </div>
 
-            <div class="pt-2 px-2">
 
-                <div class="flex justify-end">
-                    <div class="px-2">
-                        <button type="button"
-                                class="rounded-md border border-gray-300 bg-green-600 py-2 px-8 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            <a th:href="@{'/dashboards/page/' + ${currentPage} + '?sortField=requestDate&sortDir=' + ${reverseSortDir}}">
-                                Narastająco / Malejąco</a>
-                        </button>
-                    </div>
+            <!--            <div class="pt-2 px-2">-->
 
-                    <button type="button"
-                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <a th:if="${currentPage >1}"
-                           th:href="@{'/dashboards/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
-                        <span th:unless="${currentPage >1}">Poprzedni</span>
-                    </button>
+            <!--                <div class="flex justify-end">-->
+            <!--                    <div class="px-2">-->
+            <!--                        <button type="button"-->
+            <!--                                class="rounded-md border border-gray-300 bg-green-600 py-2 px-8 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
+            <!--                            <a th:href="@{'/dashboards/page/' + ${currentPage} + '?sortField=requestDate&sortDir=' + ${reverseSortDir}}">-->
+            <!--                                Narastająco / Malejąco</a>-->
+            <!--                        </button>-->
+            <!--                    </div>-->
 
-                    <button type="button"
-                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <a th:if="${currentPage < totalPages}"
-                           th:href="@{'/dashboards/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
-                        <span th:unless="${currentPage < totalPages}">Następny</span>
-                    </button>
-                </div>
-            </div>
+            <!--                    <button type="button"-->
+            <!--                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
+            <!--                        <a th:if="${currentPage >1}"-->
+            <!--                           th:href="@{'/dashboards/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>-->
+            <!--                        <span th:unless="${currentPage >1}">Poprzedni</span>-->
+            <!--                    </button>-->
+
+            <!--                    <button type="button"-->
+            <!--                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
+            <!--                        <a th:if="${currentPage < totalPages}"-->
+            <!--                           th:href="@{'/dashboards/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>-->
+            <!--                        <span th:unless="${currentPage < totalPages}">Następny</span>-->
+            <!--                    </button>-->
+            <!--                </div>-->
+            <!--            </div>-->
 
 
-            <div th:if="${totalPages > 1}">
-                <div class="row col-sm-10">
-                    <div class="col-sm-2">
-                        Wszystkich wpisów: [[${totalItems}]]
-                    </div>
-                    <div class="col-sm-1">
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}"
-         th:href="@{'/dashboards/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
-            </span>
-                    </div>
-                </div>
-            </div>
+            <!--            <div th:if="${totalPages > 1}">-->
+            <!--                <div class="row col-sm-10">-->
+            <!--                    <div class="col-sm-2">-->
+            <!--                        Wszystkich wpisów: [[${totalItems}]]-->
+            <!--                    </div>-->
+            <!--                    <div class="col-sm-1">-->
+            <!--            <span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
+            <!--      <a th:if="${currentPage != i}"-->
+            <!--         th:href="@{'/dashboards/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
+            <!--      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;-->
+            <!--            </span>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
+    </main>
+</div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-            setInterval(function() {
-                $.get('/dashboards', function(data) {
-                    console.log(data);
-                    window.location.reload(2);
-                });
-            }, 100000); // send GET request every 5 seconds
-        });
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="/updateReport" method="post">
+            <input type="hidden" id="modal-report-id" name="reportId">
+            <!-- Include other form fields corresponding to Report properties -->
+            <label for="status">Status:</label><br>
+            <input type="text" id="status" name="status"><br>
+            <button type="submit" onClick="changeStatus()">Submit</button>
+        </form>
+    </div>
+</div>
 
 
+<!--        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--        <script type="text/javascript">-->
+<!--        $(document).ready(function() {-->
+<!--            setInterval(function() {-->
+<!--                $.get('/dashboards', function(data) {-->
+<!--                    console.log(data);-->
+<!--                    window.location.reload(2);-->
+<!--                });-->
+<!--            }, 100000); // send GET request every 5 seconds-->
+<!--        });-->
+<!--        </script>-->
 
-
-
-        </script>
+<script th:src="@{/js/UpdateHandler.js}"></script>
 </body>
 </html>
 
