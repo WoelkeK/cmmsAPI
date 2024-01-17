@@ -56,6 +56,9 @@ public class HardwareEntity {
     private boolean pRead;
     private boolean pEdit;
     private boolean pDelete;
+    private boolean dRead;
+    private boolean dEdit;
+    private boolean dDelete;
     private boolean mRead;
     private boolean mEdit;
     private boolean mDelete;

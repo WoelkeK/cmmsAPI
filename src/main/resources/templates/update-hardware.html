@@ -83,7 +83,7 @@
         </header>
     </div>
 
-    <form id="mainForm" action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
+    <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
 
         <input type="hidden" th:field="*{name}" id="name">
         <input type="hidden" th:field="*{id}" id="id"/>
@@ -101,6 +101,9 @@
         <input type="hidden" id="pRead" th:field="${hardware.pRead}">
         <input type="hidden" id="pEdit" th:field="${hardware.pEdit}">
         <input type="hidden" id="pDelete" th:field="${hardware.pDelete}">
+        <input type="hidden" id="dRead" th:field="${hardware.dRead}">
+        <input type="hidden" id="dEdit" th:field="${hardware.dEdit}">
+        <input type="hidden" id="dDelete" th:field="${hardware.dDelete}">
         <input type="hidden" id="mRead" th:field="${hardware.mRead}">
         <input type="hidden" id="mEdit" th:field="${hardware.mEdit}">
         <input type="hidden" id="mDelete" th:field="${hardware.mDelete}">
@@ -451,6 +454,7 @@
                         </fieldset>
                     </div>
                 </div>
+
                 <div class="sm:col-span-1">
                     <div class="px-4 py-5 sm:px-2">
                         <fieldset>
@@ -490,8 +494,169 @@
                         </fieldset>
                     </div>
                 </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Przepustki
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalPReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalPReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalPEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalPEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalPFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalPFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Wydziały
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalDReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalDReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalDEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalDEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalDFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalDFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Maszyny
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalMReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalMReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalMEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalMEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalMFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalMFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Awarie
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalJReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalJReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalJEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalJEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-sm leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="modalJFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalJFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
             </div>
         </div>
+
 
         <div class="modal-footer">
 
@@ -501,7 +666,8 @@
                     <div class="mt-2 sm:flex sm:items-start sm:justify-between">
                         <div class="max-w-xl text-sm text-gray-500">
                             <p class="md:text-lg font-semibold">Użytkownik komputera:</p>
-                            <p class="md:text-lg font-semibold text-blue-600" th:text="${hardware.employee}"></p>
+                            <p class="md:text-lg font-semibold text-blue-600"
+                               th:text="${hardware.employee}"></p>
                         </div>
                         <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
                             <button type="button" id="saveChanges" data-dismiss="modal"
@@ -516,6 +682,7 @@
     </div>
 </div>
 
+
 <script>
     $(document).ready(function () {
 
@@ -528,6 +695,18 @@
             $('#modalEReadable').prop('checked', $('#eRead').val() === 'true');
             $('#modalEEditable').prop('checked', $('#eEdit').val() === 'true');
             $('#modalEFullAccess').prop('checked', $('#eDelete').val() === 'true');
+            $('#modalPReadable').prop('checked', $('#pRead').val() === 'true');
+            $('#modalPEditable').prop('checked', $('#pEdit').val() === 'true');
+            $('#modalPFullAccess').prop('checked', $('#pDelete').val() === 'true');
+            $('#modalDReadable').prop('checked', $('#dRead').val() === 'true');
+            $('#modalDEditable').prop('checked', $('#dEdit').val() === 'true');
+            $('#modalDFullAccess').prop('checked', $('#dDelete').val() === 'true');
+            $('#modalMReadable').prop('checked', $('#mRead').val() === 'true');
+            $('#modalMEditable').prop('checked', $('#mEdit').val() === 'true');
+            $('#modalMFullAccess').prop('checked', $('#mDelete').val() === 'true');
+            $('#modalJReadable').prop('checked', $('#jRead').val() === 'true');
+            $('#modalJEditable').prop('checked', $('#jEdit').val() === 'true');
+            $('#modaljFullAccess').prop('checked', $('#jDelete').val() === 'true');
         });
 
         // When modal is about to be hidden
@@ -539,46 +718,59 @@
             $('#eRead').val($('#modalEReadable').is(':checked'));
             $('#eEdit').val($('#modalEEditable').is(':checked'));
             $('#eDelete').val($('#modalEFullAccess').is(':checked'));
+            $('#pRead').val($('#modalPReadable').is(':checked'));
+            $('#pEdit').val($('#modalPEditable').is(':checked'));
+            $('#pDelete').val($('#modalPFullAccess').is(':checked'));
+            $('#dRead').val($('#modalDReadable').is(':checked'));
+            $('#dEdit').val($('#modalDEditable').is(':checked'));
+            $('#dDelete').val($('#modalDFullAccess').is(':checked'));
+            $('#mRead').val($('#modalMReadable').is(':checked'));
+            $('#mEdit').val($('#modalMEditable').is(':checked'));
+            $('#mDelete').val($('#modalMFullAccess').is(':checked'));
+            $('#jRead').val($('#modalJReadable').is(':checked'));
+            $('#jEdit').val($('#modalJEditable').is(':checked'));
+            $('#jDelete').val($('#modalJFullAccess').is(':checked'));
+
         });
     });
 </script>
 
 
-<!--    <script th:inline="javascript">-->
+<!--        <script th:inline="javascript">-->
 
-<!--        $(document).ready(function () {-->
-<!--            $('#editModal').on('show.bs.modal', function (event) {-->
-<!--                // Display existing age in the input field in the modal-->
-<!--                var existingAge = $('#hiddenSerialNumber').val();-->
-<!--                $('#serialNumber').val(existingAge);-->
+<!--            $(document).ready(function () {-->
+<!--                $('#editModal').on('show.bs.modal', function (event) {-->
+<!--                    // Display existing age in the input field in the modal-->
+<!--                    var existingAge = $('#hiddenSerialNumber').val();-->
+<!--                    $('#serialNumber').val(existingAge);-->
+<!--                });-->
+
+<!--                $('#saveChanges').on('click', function() {-->
+<!--                    // Get updated age and assign it to the hidden input field-->
+<!--                    var updatedAge = $('#serialNumber').val();-->
+<!--                    $('#hiddenSerialNumber').val(updatedAge);-->
+
+<!--                    // Hide the modal-->
+<!--                    $('#editModal').modal('hide');-->
+<!--                });-->
 <!--            });-->
 
-<!--            $('#saveChanges').on('click', function() {-->
-<!--                // Get updated age and assign it to the hidden input field-->
-<!--                var updatedAge = $('#serialNumber').val();-->
-<!--                $('#hiddenSerialNumber').val(updatedAge);-->
+<!--        </script>-->
 
-<!--                // Hide the modal-->
-<!--                $('#editModal').modal('hide');-->
-<!--            });-->
-<!--        });-->
+<script src="/js/disableField.js"></script>
+Add your JavaScript and other necessary dependencies here
+<script th:inline="javascript">
+    function openModal() {
+        console.log("kliknieto open");
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'block';
+    }
 
-<!--    </script>-->
-
-<!--<script src="/js/disableField.js"></script>-->
-<!-- Add your JavaScript and other necessary dependencies here -->
-<!--    <script th:inline="javascript">-->
-<!--        function openModal() {-->
-<!--            console.log("kliknieto open");-->
-<!--            var modal = document.getElementById('myModal');-->
-<!--            modal.style.display = 'block';-->
-<!--        }-->
-
-<!--        function closeModal() {-->
-<!--            var modal = document.getElementById('myModal');-->
-<!--            modal.style.display = 'none';-->
-<!--        }-->
-<!--    </script>-->
+    function closeModal() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+    }
+</script>
 
 
 <script type="text/javascript">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł IT</title>
-<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
     <script th:src="@{/js/jquery.min.js}"></script>
 
     <!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
@@ -13,26 +13,6 @@
             crossorigin="anonymous"></script>
 
     <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
-<!--    <style>-->
-<!--        .modal {-->
-<!--            position: fixed;-->
-<!--            z-index: 1;-->
-<!--            left: 0;-->
-<!--            top: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            overflow: auto;-->
-<!--            background-color: rgba(0, 0, 0, 0.4);-->
-<!--        }-->
-
-<!--        .modal-content {-->
-<!--            background-color: #fefefe;-->
-<!--            margin: 15% auto;-->
-<!--            padding: 20px;-->
-<!--            border: 1px solid #888;-->
-<!--            width: 80%;-->
-<!--        }-->
-<!--    </style>-->
 </head>
 <body class="bg-gray-400">
 
@@ -131,16 +111,21 @@
                        class="bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/>
                         </svg>
                         IT
                     </a>
                     <a href="/departments"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor"
+                             class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/>
                         </svg>
                         Wydziały
                     </a>
@@ -148,8 +133,11 @@
                     <a href="/machines"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor"
+                             class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"/>
                         </svg>
                         Maszyny
                     </a>
@@ -221,11 +209,13 @@
                                 <div class="flex items-center px-1 lg:px-1">
                                     <div class="flex-shrink-1">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/computer2.png}" alt="device">
-                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/computer2.png}" alt="device">
+                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/computer2.png}"
+                                             alt="device">
+                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/computer2.png}"
+                                             alt="device">
                                     </div>
 
-                                    <div th:if="${isAdmin}"  class="hidden lg:ml-10 lg:block">
+                                    <div th:if="${isAdmin}" class="hidden lg:ml-10 lg:block">
                                         <div th:if="${isAdmin}" class="flex space-x-4">
                                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                             <a href="#" th:href="@{/hardwares/create}"
@@ -315,10 +305,10 @@
                                                         Adres IP ↑↓</a>
                                                 </th>
 
-<!--                                                <th scope="col"-->
-<!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
-<!--                                                    Zdjęcie-->
-<!--                                                </th>-->
+                                                <!--                                                <th scope="col"-->
+                                                <!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
+                                                <!--                                                    Zdjęcie-->
+                                                <!--                                                </th>-->
 
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
                                                     <span class="sr-only">Edit</span>
@@ -336,7 +326,8 @@
                                             <tr th:each="hardware: ${hardwares}"
                                                 class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
-                                                <td th:hidden="${hardware.id}" th:id="${'hardware-id-' + hardware.id}" className="id"></td>
+                                                <td th:hidden="${hardware.id}" th:id="${'hardware-id-' + hardware.id}"
+                                                    className="id"></td>
 
 
                                                 <td th:text="${hardware.inventoryNo}"
@@ -345,83 +336,97 @@
                                                 </td>
 
                                                 <td th:text="${hardware.department}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Wydział
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    Wydział
                                                 </td>
 
                                                 <td th:text="${hardware.employee}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Użytkownik
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    Użytkownik
                                                 </td>
 
                                                 <td th:text="${hardware.type}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Typ
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    Typ
                                                 </td>
 
                                                 <td th:text="${hardware.name}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Nazwa
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    Nazwa
                                                 </td>
 
                                                 <td th:text="${hardware.serialNumber}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">SN / ServiceTag
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    SN / ServiceTag
 
                                                 </td>
 
                                                 <td th:text="${hardware.ipAddress}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium  text-gray-900">Adres IP
+                                                    class="align-text-top px-3 py-4 text-lg font-medium  text-gray-900">
+                                                    Adres IP
                                                 </td>
 
+                                                <!--                                                <td>-->
+                                                <!--                                                    <div class="container mt-2 mb-2">-->
+                                                <!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
+                                                <!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
+                                                <!--                                                                 width="70px" height="30px" alt="person">-->
+                                                <!--                                                        </a>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </td>-->
 
-
-<!--                                                <td>-->
-<!--                                                    <div class="container mt-2 mb-2">-->
-<!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
-<!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
-<!--                                                                 width="70px" height="30px" alt="person">-->
-<!--                                                        </a>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
                                                 <td class="relative whitespace-nowrap align-text-top py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
 
                                                     <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">
                                                         <button class="mr-4" title="Szczegóły">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                 viewBox="0 0 24 24" stroke-width="1.5"
+                                                                 stroke="currentColor" class="w-7 h-7">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>
                                                             </svg>
 
                                                         </button>
                                                     </a>
 
-                                                    <a th:if="${isAdmin}" th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
+                                                    <a th:if="${isAdmin}"
+                                                       th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
                                                        class="text-green-600 hover:text-green-300">
                                                         <button class="mr-4" title="Edycja">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                 viewBox="0 0 24 24" stroke-width="1.5"
+                                                                 stroke="currentColor" class="w-7 h-7">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
                                                             </svg>
 
                                                         </button>
                                                     </a>
 
-<!--                                                    <a th:if="${isAdmin}" th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"-->
-<!--                                                       class="text-red-600 hover:text-red-300">-->
-<!--                                                        <button class="mr-4" title="Usuń">-->
-<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">-->
-<!--                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />-->
-<!--                                                            </svg>-->
+                                                    <!--                                                    <a th:if="${isAdmin}" th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"-->
+                                                    <!--                                                       class="text-red-600 hover:text-red-300">-->
+                                                    <!--                                                        <button class="mr-4" title="Usuń">-->
+                                                    <!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">-->
+                                                    <!--                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />-->
+                                                    <!--                                                            </svg>-->
 
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-
-
+                                                    <!--                                                        </button>-->
+                                                    <!--                                                    </a>-->
 
 
-                                                    <button th:if="${isAdmin} or ${nFull}"  th:attr="data-id=${hardware.id}" class="deleteBtn text-red-600 hover:text-red-300">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    <button th:if="${isAdmin} or ${nFull}"
+                                                            th:attr="data-id=${hardware.id}"
+                                                            class="deleteBtn text-red-600 hover:text-red-300">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" stroke-width="1.5"
+                                                             stroke="currentColor" class="w-7 h-7">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                                         </svg>
 
                                                     </button>
-
 
 
                                                     <!--                                                    </a>-->
@@ -434,7 +439,7 @@
                                             <tr class="border-t border-gray-200">
                                                 <th colspan="10" scope="colgroup"
                                                     class="bg-green-400 px-4 py-2 text-left text-sm font-semibold text-gray-900 sm:px-6">
-                                                    Koniec strony:  [[${pageNo}]]
+                                                    Koniec strony: [[${pageNo}]]
                                                 </th>
                                             </tr>
                                         </table>
@@ -470,7 +475,7 @@
             <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
          th:href="@{'/hardwares/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span class="text-indigo-200 text-xl"  th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+      <span class="text-indigo-200 text-xl" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
                                 </div>
@@ -501,8 +506,8 @@
 </div>
 
 
-
-<div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" style="display: none;">
+<div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
+     style="display: none;">
     <!-- Modal Overlay -->
     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
         <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -510,24 +515,13 @@
 
     <!-- This modal is centered vertically and horizontally. -->
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!--
-            Background overlay, show/hide based on modal state.
 
-            Entering: "ease-out duration-300"
-              From: "opacity-0"
-              To: "opacity-100"
-            Leaving: "ease-in duration-200"
-              From: "opacity-100"
-              To: "opacity-0"
-        -->
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <!-- Inner Modal -->
         <div class="inline-block align-middle bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
             <!-- Content -->
             <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -540,55 +534,60 @@
             </div>
             <!-- Buttons -->
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                <button onclick="closeModal()" type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">Nie</button>
-                <button id="confirmDelete" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                <button onclick="closeModal()" type="button"
+                        class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Nie
+                </button>
+                <button id="confirmDelete" type="button"
+                        class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
                     Tak
-                 </button>
-             </div>
-         </div>
-     </div>
- </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script th:inline="javascript">
 
-        let selectedId = null;
+    let selectedId = null;
 
-        function openDeleteModal(id) {
-            console.log("open " + id);
-        // The id value comes from the data-id attribute
-        selectedId = id;
-        let modal = document.getElementById('deleteModal');
-        modal.style.display = "block";
-    }
+    function openDeleteModal(id) {
+        console.log("open " + id);
+    // The id value comes from the data-id attribute
+    selectedId = id;
+    let modal = document.getElementById('deleteModal');
+    modal.style.display = "block";
+}
 
-        function closeModal() {
-        let modal = document.getElementById('deleteModal');
-        modal.style.display = "none";
-    }
+    function closeModal() {
+    let modal = document.getElementById('deleteModal');
+    modal.style.display = "none";
+}
 
-        function executeDelete() {
-            console.log("executeDelete()");
-        fetch(`/api/hardwares/delete/${selectedId}`, {
-            method: 'DELETE'
-        })
-            .then(response => location.reload());
-    }
+    function executeDelete() {
+        console.log("executeDelete()");
+    fetch(`/api/hardwares/delete/${selectedId}`, {
+        method: 'DELETE'
+    })
+        .then(response => location.reload());
+}
 
-        window.onload = function() {
+    window.onload = function() {
 
-        let deleteButtons = document.getElementsByClassName('deleteBtn');
-        for(let btn of deleteButtons) {
-        btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        openDeleteModal(this.getAttribute('data-id'));
-    });
-    }
+    let deleteButtons = document.getElementsByClassName('deleteBtn');
+    for(let btn of deleteButtons) {
+    btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openDeleteModal(this.getAttribute('data-id'));
+});
+}
 
-        // Confirm the Delete
-        document.getElementById('confirmDelete').addEventListener('click', function() {
-        executeDelete();
-    });
-    }
+    // Confirm the Delete
+    document.getElementById('confirmDelete').addEventListener('click', function() {
+    executeDelete();
+});
+}
 </script>
 
 </body>
