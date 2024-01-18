@@ -158,7 +158,7 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm font-medium text-white">Niezarejestrowany</p>
-                            <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
+                            <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200"></p>
                         </div>
                     </div>
                 </a>
@@ -280,7 +280,7 @@
                     <div class="ml-3">
                         <p class="text-lm font-medium text-gray-300 group-hover:text-gray-200">Klient IP:</p>
                         <p class="text-lm font-medium text-white" th:text="${userIP}">Niezarejestrowany</p>
-                            profilu</p>
+
                     </div>
                 </div>
             </a>
@@ -329,7 +329,7 @@
                                 </div>
 
                                 <div class="hidden lg:ml-10 lg:block">
-                                    <div th:if="${isAdmin}" class="flex space-x-4">
+                                    <div class="flex space-x-4">
                                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                         <a th:if="${isAdmin} or ${mEdit}" href="#" th:href="@{/machines/create}"
                                            class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>

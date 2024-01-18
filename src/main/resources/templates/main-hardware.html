@@ -214,20 +214,20 @@
                                              alt="device">
                                     </div>
 
-                                    <div th:if="${isAdmin}" class="hidden lg:ml-10 lg:block">
-                                        <div th:if="${isAdmin}" class="flex space-x-4">
+                                    <div class="hidden lg:ml-10 lg:block">
+                                        <div class="flex space-x-4">
                                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                            <a href="#" th:href="@{/hardwares/create}"
+                                            <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/create}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>
-                                            <a href="#" th:href="@{/hardwares/file}"
+                                            <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/file}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>
-                                            <a href="#" th:href="@{/hardwares/export}"
+                                            <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/export}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
 <!--                                                                                        <a href="#" th:href="@{/hardwares/deleteAll}"-->
 <!--                                                                                           class="deleteAllBtn rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń-->
 <!--                                                                                            wszystko</a>-->
 
-                                            <button th:if="${isAdmin} or ${nFull}"
+                                            <button th:if="${isAdmin}"
                                                     class="deleteAllBtn text-red-600 hover:text-red-300">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                      viewBox="0 0 24 24" stroke-width="1.5"
@@ -417,7 +417,7 @@
                                                         </button>
                                                     </a>
 
-                                                    <button th:if="${isAdmin} or ${nFull}"
+                                                    <button th:if="${isAdmin}"
                                                             th:attr="data-id=${hardware.id}"
                                                             class="deleteBtn text-red-600 hover:text-red-300">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"

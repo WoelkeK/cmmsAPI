@@ -331,7 +331,7 @@
                                 </div>
 
                                 <div class="hidden lg:ml-10 lg:block">
-                                    <div th:if="${isAdmin}" class="flex space-x-4">
+                                    <div class="flex space-x-4">
                                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                         <a th:if="${isAdmin} or ${jEdit}" href="#" th:href="@{/jobs/create}"
                                            class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>

@@ -289,7 +289,7 @@
                                                         </button>
                                                     </a>
 
-                                                    <a th:if="${isAdmin} or ${dEdit}" th:href="@{/departments/delete/{id}(id=${department.id})}"
+                                                    <a th:if="${isAdmin} or ${dFull}" th:href="@{/departments/delete/{id}(id=${department.id})}"
                                                        class="text-red-600 hover:text-red-300">
                                                         <button class="mr-4" title="Usuń">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">

@@ -320,7 +320,6 @@ public class ExportToServiceImpl implements ExportService {
         for (Hardware record : hardwares) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
-//            createCell(row, columnCount++, record.getId(), style);
             createCell(row, columnCount++, record.getInventoryNo(), style);
             createCell(row, columnCount++, record.getDepartment(), style);
             createCell(row, columnCount++, record.getStatus().toString(), style);
