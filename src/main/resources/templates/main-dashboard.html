@@ -82,28 +82,28 @@
         <div class="mx-auto max-w-full px-4 pb-6 sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-transparent shadow-xl rounded-3xl">
 
-                <ul role="list" class="divide-y-1 divide-transparent space-y-4 rounded-3xl">
+                <ul role="list" class="divide-y-1 divide-transparent space-y-1 rounded-3xl">
                     <li th:each="job : ${jobs}">
 
                         <div th:attr="class=${job.status=='Zgłoszono'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl':'hidden')}">
                             <a th:href="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="get"
                                class="block hover:bg-blue-50 rounded-3xl">
 
-                                <div class="px-4 sm:px-6 sm:py-8">
+                                <div class="px-4 sm:px-6 sm:py-1">
 
                                     <div class="flex items-center justify-between">
                                         <p th:text="${job.message} "
-                                           class="text-wrap sm:mb-8 text-2xl xl:text-4xl text-gray-900 font-medium"></p>
+                                           class="text-wrap sm:mb-1 text-xl text-gray-900 font-medium"></p>
                                         <div class="ml-2 flex flex-shrink-0">
                                             <p th:text="${job.status}"
-                                               class="inline-flex rounded-full bg-green-100 px-2 sm:px-4 sm:py-4 sm:text-xl xl:text-2xl text-gray-900 font-semibold leading-5 text-green-800">
+                                               class="inline-flex rounded-full bg-green-100 px-2 sm:px-2 sm:py-1 sm:text-lm text-gray-900 font-semibold leading-2 text-green-800">
                                                 Status</p>
                                         </div>
                                     </div>
 
-                                    <div class="mt-2 sm:flex sm:justify-between">
+                                    <div class="mt-1 sm:flex sm:justify-between">
                                         <div class="sm:flex">
-                                            <p class="flex items-center text-2xl text-gray-900">
+                                            <p class="flex items-center text-xl text-gray-900">
                                                 <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                                                      viewBox="0 0 20 20"
                                                      fill="currentColor" aria-hidden="true">
@@ -111,7 +111,7 @@
                                                 </svg>
                                                 <span th:text="${job.employee.name}"></span>
                                             </p>
-                                            <p class="mt-2 flex items-center text-2xl text-gray-900 sm:mt-0 sm:ml-6">
+                                            <p class="mt-2 flex items-center text-xl text-gray-900 sm:mt-0 sm:ml-6">
                                                 <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                                                      viewBox="0 0 20 20"
                                                      fill="currentColor" aria-hidden="true">
@@ -122,7 +122,7 @@
                                                 <span th:text="${job.department.name}"></span>
                                             </p>
                                         </div>
-                                        <div class="mt-2 flex items-center text-2xl text-gray-900 sm:mt-0">
+                                        <div class="mt-2 flex items-center text-xl text-gray-900 sm:mt-0">
                                             <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                                                  viewBox="0 0 20 20"
                                                  fill="currentColor" aria-hidden="true">
