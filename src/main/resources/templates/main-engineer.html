@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-400">
 
-<div th:if="${isAdmin} or ${eRead}">
+<div th:if="${isAdmin} or ${jRead}">
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
 
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -45,7 +45,7 @@
                             Awizacje
                         </a>
 
-                        <a th:href="@{/employees}"
+                        <a th:if="${isAdmin} or ${jRead}" th:href="@{/employees}"
                            class="bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -133,7 +133,6 @@
                             </svg>
                             Panel Napraw
                         </a>
-
                     </nav>
                 </div>
 
@@ -267,6 +266,7 @@
                         </svg>
                         Panel Napraw
                     </a>
+
                 </nav>
             </div>
 
@@ -309,8 +309,8 @@
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-4xl font-semibold text-gray-900">Pracownicy</h1>
-                                <p class="mt-2 text-lm text-gray-700">Lista pracowników biurowych.</p>
+                                <h1 class="text-4xl font-semibold text-gray-900">Technicy</h1>
+                                <p class="mt-2 text-lm text-gray-700">Lista mechaników UR.</p>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                             </div>
@@ -332,11 +332,11 @@
                                     <div class="hidden lg:ml-10 lg:block">
                                         <div th:if="${isAdmin} or ${eEdit}" class="flex space-x-4">
                                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                            <a href="#" th:href="@{/employees/create}"
+                                            <a href="#" th:href="@{/engineers/create}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>
 <!--                                            <a href="#" th:href="@{/employees/file}"-->
 <!--                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>-->
-                                            <a  th:if="${isAdmin} or ${eFull}" href="#" th:href="@{/employees/export}"
+                                            <a  th:if="${isAdmin} or ${eFull}" href="#" th:href="@{/engineers/export}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
 <!--                                            <a href="#" th:href="@{/employees/deleteAll}"-->
 <!--                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń-->
@@ -347,7 +347,7 @@
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
-                                        <form action="#" th:action="@{/employees/search/query}" method="GET">
+                                        <form action="#" th:action="@{/engineers/search/query}" method="GET">
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -379,7 +379,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500 ">
                                                     <a class="hover:text-yellow-100 text-xl"
-                                                       th:href="@{'/employees/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                                       th:href="@{'/engineers/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                                                         Imię i nazwisko ↑↓ </a>
                                                 </th>
 
@@ -391,7 +391,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-xl font-semibold text-yellow-500 ">
                                                     <a class="hover:text-yellow-100 text-xl"
-                                                       th:href="@{'/employees/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział
+                                                       th:href="@{'/engineers/page/' + ${currentPage} + '?sortField=department.name&sortDir=' + ${reverseSortDir}}">Wydział
                                                         ↑↓</a>
                                                 </th>
 
@@ -415,32 +415,32 @@
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="employee : ${employees}"
+                                            <tr th:each="engineer : ${engineers}"
                                                 class="border-t border-gray-300 text-base font-medium bg-gray-100">
-                                                <td th:text="${employee.name}"
+                                                <td th:text="${engineer.name}"
                                                     class="whitespace-nowrap align-text-top py-4 pl-4 pr-3 text-gray-900 sm:pl-6">
                                                     Lindsay Walton
                                                 </td>
-                                                <td th:text="${employee.position}"
+                                                <td th:text="${engineer.position}"
                                                     class="align-text-top px-3 py-4 text-gray-900">
                                                     Stanowisko
                                                 </td>
-                                                <td th:text="${employee.department.name}"
+                                                <td th:text="${engineer.department.name}"
                                                     class="whitespace-nowrap align-text-top px-3 py-4 text-gray-900">
                                                     Dział
                                                 </td>
-                                                <td th:text="${employee.phone}"
+                                                <td th:text="${engineer.phone}"
                                                     class="whitespace-nowrap align-text-top px-3 py-4 text-gray-900">
                                                     Telefon
                                                 </td>
-                                                <td th:text="${employee.email}"
+                                                <td th:text="${engineer.email}"
                                                     class="whitespace-nowrap align-text-top px-3 py-4 text-gray-900">
                                                     Email
                                                 </td>
 
                                                 <td th:if="${isAdmin}" class="relative whitespace-nowrap align-text-top py-4 pl-3 pr-4 text-right text-lg font-medium sm:pr-6">
 
-                                                    <a th:href="@{/employees/update/{id}(id=${employee.id}, pageNo=${currentPage})}"
+                                                    <a th:href="@{/engineers/update/{id}(id=${engineer.id}, pageNo=${currentPage})}"
                                                        class="text-green-600 hover:text-green-300">
                                                         <button class="mr-4" title="Edycja">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -450,7 +450,7 @@
                                                         </button>
                                                     </a>
 
-                                                    <a th:href="@{/employees/delete/{id}(id=${employee.id}, pageNo=${currentPage})}"
+                                                    <a th:href="@{/engineers/delete/{id}(id=${engineer.id}, pageNo=${currentPage})}"
                                                        class="text-red-600 hover:text-red-300">
                                                         <button class="mr-4" title="Usuń">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -481,13 +481,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/employees/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
+                                           th:href="@{'/engineers/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/employees/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
+                                           th:href="@{'/engineers/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -503,7 +503,7 @@
                                 <div class="col-sm-1">
             <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
-         th:href="@{'/employees/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         th:href="@{'/engineers/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
       <span class="text-indigo-200 text-xl" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                 </div>

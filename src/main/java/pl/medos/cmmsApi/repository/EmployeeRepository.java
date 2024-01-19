@@ -15,6 +15,7 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
     @Query("SELECT p from EmployeeEntity p WHERE CONCAT(p.name, ' ', p.department.name, ' ',p.position ) LIKE %?1%")
     Page<EmployeeEntity> findByQueryPagable(String query, Pageable pageable);
+
     @Query("SELECT p from EmployeeEntity p WHERE CONCAT(p.name, ' ', p.department.name, ' ',p.position ) LIKE %?1%")
     Page<EmployeeEntity> searchEmployeeByQuery(Pageable pageable, String query);
 

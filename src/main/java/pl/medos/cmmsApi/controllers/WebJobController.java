@@ -64,7 +64,7 @@ public class WebJobController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-        List<Engineer> engineers = engineerService.finadAllEmployees();
+        List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
 
         Map<Long, String> jobBase64Images = new HashMap<>();

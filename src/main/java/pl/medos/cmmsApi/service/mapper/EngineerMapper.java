@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.service.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
@@ -39,5 +40,14 @@ public class EngineerMapper {
         ModelMapper modelMapper = new ModelMapper();
         EngineerEntity engineerEntity = modelMapper.map(engineer, EngineerEntity.class);
         return engineerEntity;
+    }
+
+    public Page<Engineer> mapPageEntitiestoModels(Page<EngineerEntity> engineerEntityPage) {
+        LOGGER.info("mapPageEntitiesToModels()");
+        ModelMapper modelMapper = new ModelMapper();
+        Page<Engineer> engineerPage = engineerEntityPage.map(EngineerEntity -> modelMapper.map(EngineerEntity, Engineer.class));
+        LOGGER.info("mapPageEntitiesToModels(...)");
+        return engineerPage;
+
     }
 }

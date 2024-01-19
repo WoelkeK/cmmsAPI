@@ -63,7 +63,7 @@ public class DashboardController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-        List<Engineer> engineers = engineerService.finadAllEmployees();
+        List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
         Map<Long, String> jobBase64Images = new HashMap<>();
         for (Job job : jobs) {
@@ -71,7 +71,7 @@ public class DashboardController {
         }
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
-        return "dashboard-list.html";
+        return "main-dashboard.html";
     }
 
     @GetMapping("/paged")
@@ -106,7 +106,7 @@ public class DashboardController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-        List<Engineer> engineers = engineerService.finadAllEmployees();
+        List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
 
         Map<Long, String> jobBase64Images = new HashMap<>();

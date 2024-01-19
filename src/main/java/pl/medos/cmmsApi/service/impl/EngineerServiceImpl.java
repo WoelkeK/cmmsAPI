@@ -1,16 +1,17 @@
 package pl.medos.cmmsApi.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
-import pl.medos.cmmsApi.repository.EmployeeRepository;
 import pl.medos.cmmsApi.repository.EngineerRepository;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.EngineerEntity;
-import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.EngineerService;
-import pl.medos.cmmsApi.service.mapper.EmployeeMapper;
 import pl.medos.cmmsApi.service.mapper.EngineerMapper;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public List<Engineer> finadAllEmployees() {
-        LOGGER.info("findAllEngineer()");
+    public List<Engineer> finadAllEngineers() {
+        LOGGER.info("findAllEngineers()");
         List<EngineerEntity> engineerEntities = engineerRepository.findAll();
         List<Engineer> engineers = engineerMapper.listModels(engineerEntities);
         LOGGER.info("findAllEngineer(...)");
@@ -40,7 +41,7 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public Engineer createEmployee(Engineer engineer) {
+    public Engineer createEngineer(Engineer engineer) {
         LOGGER.info("createEngineer()");
         EngineerEntity engineerEntity = engineerMapper.modelToEntity(engineer);
         EngineerEntity savedEngineerEntity = engineerRepository.save(engineerEntity);
@@ -49,7 +50,7 @@ public class EngineerServiceImpl implements EngineerService {
         return savedEngineerModel;
     }
 
-    public Engineer findEmployeeById(Long id) throws EmployeeNotFoundException {
+    public Engineer findEngineerById(Long id) throws EmployeeNotFoundException {
 
         LOGGER.info("read( " + id + " )");
         Optional<EngineerEntity> optionalEngineerEntity = engineerRepository.findById(id);
@@ -61,7 +62,29 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public Engineer updateEmployee(Engineer engineer, Long id) throws EmployeeNotFoundException {
+    public Page<Engineer> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
+        LOGGER.info("findPaginated()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<EngineerEntity> engineerEntityPage = engineerRepository.findByQueryPagable(query, pageable);
+        Page<Engineer> engineers = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
+        LOGGER.info("findPaginated(...)");
+        return engineers;
+    }
+
+    @Override
+    public Page<Engineer> findPageinated(int pageNo, int pageSize, String sortField, String sortDir) {
+        LOGGER.info("findPageinated()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize,sort);
+        Page<EngineerEntity> engineerEntityPage = engineerRepository.findAll(pageable);
+        Page<Engineer> engineerPage = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
+        LOGGER.info("findPageinated(...)");
+        return engineerPage;
+    }
+
+    @Override
+    public Engineer updateEngineer(Engineer engineer, Long id) throws EmployeeNotFoundException {
         LOGGER.info("update( " + engineer.getId() + " )");
         Optional<EngineerEntity> optionalEngineerEntity = engineerRepository.findById(id);
         EngineerEntity engineerEntity = optionalEngineerEntity.orElseThrow(
@@ -76,18 +99,29 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    public void deleteEngineer(Long id) {
         LOGGER.info("delete(" + id + ")");
        engineerRepository.deleteById(id);
         LOGGER.info("delete(...)");
     }
 
     @Override
-    public List<Engineer> findEmployeeByName(String employeeName) {
-        LOGGER.info("findEmployeeByName()" + employeeName);
-        List<EngineerEntity> engineerEntities = engineerRepository.searchEmployeeByName(employeeName);
+    public Page<Engineer> findEngineerByName(int pageNo, int pagesize, String query) {
+        return null;
+    }
+
+    @Override
+    public List<Engineer> findEngineerByName(String engineerName) {
+        LOGGER.info("findEngineerByName()" + engineerName);
+        List<EngineerEntity> engineerEntities = engineerRepository.searchEngineerByName(engineerName);
         List<Engineer> engineers = engineerMapper.listModels(engineerEntities);
-        LOGGER.info("findEmployeeByName(...)");
+        LOGGER.info("findEngineerByName(...)");
         return engineers;
     }
+
+    @Override
+    public void deleteAll() {
+        LOGGER.info("deleteAll");
+        engineerRepository.deleteAll();
+            }
 }
