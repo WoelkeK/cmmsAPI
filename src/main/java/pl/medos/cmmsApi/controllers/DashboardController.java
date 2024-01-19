@@ -125,7 +125,7 @@ public class DashboardController {
         job.setStatus("Zgłoszono");
         job.setSolution(" ");
         model.addAttribute("job", job);
-        return "dashboard-create.html";
+        return "create-dashboard";
     }
 
     @PostMapping(value = "/create")
@@ -154,7 +154,7 @@ public class DashboardController {
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            return "dashboard-create";
+            return "create-dashboard";
         }
         model.addAttribute("job", job);
         jobService.createJob(job);
@@ -174,7 +174,7 @@ public class DashboardController {
             job.setStatus("przetwarzanie");
             model.addAttribute("job", job);
             LOGGER.info("updateView(...)" + job.getStatus());
-            return "dashboard-edit.html";
+            return "update-dashboard";
         } else {
             return "redirect:/dashboards";
         }
@@ -187,7 +187,7 @@ public class DashboardController {
         LOGGER.info("read(" + id + ")");
         Job job = jobService.findJobById(id);
         modelMap.addAttribute("job", job);
-        return "dashboard-edit.html";
+        return "update-dashboard";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -199,7 +199,7 @@ public class DashboardController {
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            return "dashboard-edit";
+            return "update-dashboard";
         }
 
         if ((job.getJobStartTime() != null) && (job.getJobStopTime() != null)) {
@@ -207,12 +207,12 @@ public class DashboardController {
             if (job.getJobStopTime().isAfter(job.getJobStartTime())) {
                 job.setStatus("zakończono");
             } else {
-                return "dashboard-edit.html";
+                return "update-dashboard";
             }
         }else if((job.getJobStartTime()!=null) && (job.getJobStopTime()==null)){
                 job.setStatus("oczekiwanie");
         }else {
-            return "dashboard-edit.html";
+            return "update-dashboard";
         }
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
