@@ -82,7 +82,7 @@
         <div class="mx-auto max-w-full px-4 pb-6 sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-transparent shadow-xl rounded-3xl">
 
-                <ul role="list" class="divide-y-1 divide-transparent space-y-1 rounded-3xl">
+                <ul role="list" class="divide-y-1 divide-transparent space-y-2 rounded-3xl">
                     <li th:each="job : ${jobs}">
 
                         <div th:attr="class=${job.status=='Zgłoszono'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl':'hidden')}">
