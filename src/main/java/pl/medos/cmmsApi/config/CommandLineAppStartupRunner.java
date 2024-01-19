@@ -24,7 +24,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     @Autowired
     HardwareRepository hardwareRepository;
 
-    @Value( "${admins}" )
+    @Value("${admins}")
     private String[] admins;
 
 
@@ -52,6 +52,15 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
             } else {
                 log.info("Admin allready exist...");
+
+                HardwareEntity hardwareEntity = hardwareByIp.orElseThrow();
+
+                if ((hardwareEntity.getPermission() == null)) {
+                    log.info("Add admin permission to existing profile.");
+                    Permission permission = Permission.ADMIN;
+                    hardwareEntity.setPermission(permission);
+                    HardwareEntity accessEntity = hardwareRepository.save(hardwareEntity);
+                }
             }
         });
     }
