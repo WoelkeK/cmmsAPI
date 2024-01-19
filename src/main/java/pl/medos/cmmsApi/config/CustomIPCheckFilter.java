@@ -68,12 +68,14 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                 req.setAttribute("dRead", ipAddressRole.isDRead());
                 req.setAttribute("mRead", ipAddressRole.isMRead());
                 req.setAttribute("jRead", ipAddressRole.isJRead());
+
                 req.setAttribute("nEdit", ipAddressRole.isNEdit());
                 req.setAttribute("eEdit", ipAddressRole.isEEdit());
-                req.setAttribute("pEdit", ipAddressRole.isEEdit());
-                req.setAttribute("dEdit", ipAddressRole.isEEdit());
-                req.setAttribute("mEdit", ipAddressRole.isEEdit());
-                req.setAttribute("jEdit", ipAddressRole.isPEdit());
+                req.setAttribute("pEdit", ipAddressRole.isPEdit());
+                req.setAttribute("dEdit", ipAddressRole.isDEdit());
+                req.setAttribute("mEdit", ipAddressRole.isMEdit());
+                req.setAttribute("jEdit", ipAddressRole.isJEdit());
+
                 req.setAttribute("nFull", ipAddressRole.isNDelete());
                 req.setAttribute("eFull", ipAddressRole.isEDelete());
                 req.setAttribute("pFull", ipAddressRole.isPDelete());
