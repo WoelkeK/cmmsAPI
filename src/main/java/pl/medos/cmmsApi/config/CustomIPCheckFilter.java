@@ -26,11 +26,13 @@ public class CustomIPCheckFilter extends GenericFilterBean {
 
     private final HardwareService hardwareService;
 
+
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-
+        String access= "";
         String remoteIP = request.getHeader("X-FORWARDED-FOR");
         if (remoteIP == null) {
             remoteIP = request.getRemoteAddr();
@@ -43,50 +45,53 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         Hardware ipAddressRole = hardwareService.findByIpAddress(remoteIP);
         req.setAttribute("isAdmin", false);
 
-        if (ipAddressRole == null) {
+        if (ipAddressRole.getId() == null) {
             log.info("No match found in the repository for IP: " + remoteIP);
-            throw new ServletException("Unauthorized IP Access");
-        }
-        Permission permission = ipAddressRole.getPermission();
-        if (permission == null) {
+            req.setAttribute("isAdmin", false);
+            req.setAttribute("noAccess", true);
+//            throw new ServletException("Unauthorized IP Access");
+        }else if(ipAddressRole.getPermission()==null) {
             log.info("No permission sets in the repository for IP: " + remoteIP + " default: NO_ACCESS");
-            permission = Permission.USER;
-            log.info("Permission "+ permission.toString());
+            Permission permission = Permission.USER;
+            log.info("Permission " + permission.toString());
             ipAddressRole.setPermission(permission);
+            access = ipAddressRole.getPermission().toString().toUpperCase();
+        }else {
+            log.info("start set");
+            access = ipAddressRole.getPermission().toString().toUpperCase();
         }
-        String access = permission.toString().toUpperCase();
-        log.info(access);
+            log.info("Dostęp: " + access);
+            switch (access) {
+                case "ADMIN":
+                    req.setAttribute("isAdmin", true);
+                    break;
+                case "USER":
+                    req.setAttribute("nRead", ipAddressRole.isNRead());
+                    req.setAttribute("eRead", ipAddressRole.isERead());
+                    req.setAttribute("pRead", ipAddressRole.isPRead());
+                    req.setAttribute("dRead", ipAddressRole.isDRead());
+                    req.setAttribute("mRead", ipAddressRole.isMRead());
+                    req.setAttribute("jRead", ipAddressRole.isJRead());
 
-        switch(access){
-            case "ADMIN":
-                req.setAttribute("isAdmin", true);
-                break;
-            case "USER":
-                req.setAttribute("nRead", ipAddressRole.isNRead());
-                req.setAttribute("eRead", ipAddressRole.isERead());
-                req.setAttribute("pRead", ipAddressRole.isPRead());
-                req.setAttribute("dRead", ipAddressRole.isDRead());
-                req.setAttribute("mRead", ipAddressRole.isMRead());
-                req.setAttribute("jRead", ipAddressRole.isJRead());
+                    req.setAttribute("nEdit", ipAddressRole.isNEdit());
+                    req.setAttribute("eEdit", ipAddressRole.isEEdit());
+                    req.setAttribute("pEdit", ipAddressRole.isPEdit());
+                    req.setAttribute("dEdit", ipAddressRole.isDEdit());
+                    req.setAttribute("mEdit", ipAddressRole.isMEdit());
+                    req.setAttribute("jEdit", ipAddressRole.isJEdit());
 
-                req.setAttribute("nEdit", ipAddressRole.isNEdit());
-                req.setAttribute("eEdit", ipAddressRole.isEEdit());
-                req.setAttribute("pEdit", ipAddressRole.isPEdit());
-                req.setAttribute("dEdit", ipAddressRole.isDEdit());
-                req.setAttribute("mEdit", ipAddressRole.isMEdit());
-                req.setAttribute("jEdit", ipAddressRole.isJEdit());
-
-                req.setAttribute("nFull", ipAddressRole.isNDelete());
-                req.setAttribute("eFull", ipAddressRole.isEDelete());
-                req.setAttribute("pFull", ipAddressRole.isPDelete());
-                req.setAttribute("dFull", ipAddressRole.isDDelete());
-                req.setAttribute("mFull", ipAddressRole.isMDelete());
-                req.setAttribute("jFull", ipAddressRole.isJDelete());
-                break;
+                    req.setAttribute("nFull", ipAddressRole.isNDelete());
+                    req.setAttribute("eFull", ipAddressRole.isEDelete());
+                    req.setAttribute("pFull", ipAddressRole.isPDelete());
+                    req.setAttribute("dFull", ipAddressRole.isDDelete());
+                    req.setAttribute("mFull", ipAddressRole.isMDelete());
+                    req.setAttribute("jFull", ipAddressRole.isJDelete());
+                    break;
 
                 default:
-                req.setAttribute("isAdmin", false);
-        }
+                    req.setAttribute("isAdmin", false);
+                    req.setAttribute("noAccess", true);
+            }
 
 
 //        if (ipAddressRole.getPermission().toString().equalsIgnoreCase("admin")) {
@@ -95,6 +100,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
 //        } else {
 //            req.setAttribute("isAdmin", false);
 //        }
+        log.info("Send data to frontend");
         req.setAttribute("userIP", remoteIP);
         chain.doFilter(request, res);
     }

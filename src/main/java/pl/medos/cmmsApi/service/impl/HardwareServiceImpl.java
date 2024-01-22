@@ -116,20 +116,29 @@ public class HardwareServiceImpl implements HardwareService {
         LOGGER.info("deleteAllHardware(...)");
     }
 
-    @Override
-    public Boolean findHardwareByIpAddress(String clientIp, Enum permission) {
-        LOGGER.info("findHardwareByIpAddress()" + clientIp + " " + permission);
-        return hardwareRepository.existsByIpAddressAndPermission(clientIp, permission);
-    }
+//    @Override
+//    public Boolean findHardwareByIpAddress(String clientIp) {
+//        LOGGER.info("findHardwareByIpAddress()" + clientIp);
+//        return hardwareRepository.existsByIpAddressAndPermission(clientIp);
+//    }
+
+//    @Override
+//    public Hardware findByIpAddress(String ipAddres) {
+//        LOGGER.info("findByIpAddress");
+//        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElseThrow(
+//                ()-> new NoSuchElementException("Brak adresu IP w bazie danych")
+//        );
+//        return hardwareMapper.mapEntityToModel(byIpAddress);
+//    }
 
     @Override
     public Hardware findByIpAddress(String ipAddres) {
         LOGGER.info("findByIpAddress");
-        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElseThrow(
-                ()-> new NoSuchElementException("Brak adresu IP w bazie danych")
-        );
+        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElse(new HardwareEntity());
         return hardwareMapper.mapEntityToModel(byIpAddress);
     }
+
+
 
     @Override
     public Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {

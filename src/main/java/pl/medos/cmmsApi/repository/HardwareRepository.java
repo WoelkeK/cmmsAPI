@@ -41,7 +41,7 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
 
     boolean existsByIpAddress(String ipAddress);
 
-    Boolean existsByIpAddressAndPermission(String clientIp, Enum permission);
+//    Boolean existsByIpAddressAndPermission(String clientIp);
 
    Optional<HardwareEntity> findByIpAddress(String ipAddress);
 

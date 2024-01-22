@@ -25,7 +25,7 @@ public interface HardwareService {
 
 //    Boolean findHardwareByIpAddress(String clientIp);
 
-    Boolean findHardwareByIpAddress(String clientIp, Enum permission);
+//    Boolean findHardwareByIpAddress(String clientIp);
 
     Hardware findByIpAddress(String remoteIP);
 
