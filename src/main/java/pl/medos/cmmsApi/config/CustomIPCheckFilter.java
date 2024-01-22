@@ -44,6 +44,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         String requestURI = request.getRequestURI();
         Hardware ipAddressRole = hardwareService.findByIpAddress(remoteIP);
         req.setAttribute("isAdmin", false);
+        req.setAttribute("noAccess", true);
 
         if (ipAddressRole.getId() == null) {
             log.info("No match found in the repository for IP: " + remoteIP);
@@ -57,7 +58,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
             ipAddressRole.setPermission(permission);
             access = ipAddressRole.getPermission().toString().toUpperCase();
         }else {
-            log.info("start set");
+            log.info("start set from db");
             access = ipAddressRole.getPermission().toString().toUpperCase();
         }
             log.info("Dostęp: " + access);
