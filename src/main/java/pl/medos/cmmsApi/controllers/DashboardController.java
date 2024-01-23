@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -169,7 +170,7 @@ public class DashboardController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
 
-        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie")) {
+        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
 
             job.setStatus("przetwarzanie");
             model.addAttribute("job", job);

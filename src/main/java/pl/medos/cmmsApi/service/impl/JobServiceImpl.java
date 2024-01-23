@@ -6,19 +6,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.enums.DateOffset;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
-import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.ImageService;
 import pl.medos.cmmsApi.service.JobService;
 import pl.medos.cmmsApi.service.mapper.JobMapper;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -164,6 +161,21 @@ public class JobServiceImpl implements JobService {
         LOGGER.info("DeleteAllJobs");
         jobRepository.deleteAll();
 
+    }
+    @Override
+    public LocalDateTime calculateFutureDate(LocalDateTime initialDate, DateOffset unit, int amount) {
+        switch (unit) {
+            case DNI:
+                return initialDate.plusDays(amount);
+            case TYGODNIE:
+                return initialDate.plusWeeks(amount);
+            case MIESIACE:
+                return initialDate.plusMonths(amount);
+            case LATA:
+                return initialDate.plusYears(amount);
+            default:
+                return initialDate;
+        }
     }
 
 }

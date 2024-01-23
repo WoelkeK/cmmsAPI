@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
@@ -191,6 +192,12 @@ public class WebJobController {
             Model model,
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
+
+        String status = job.getJobStatus().toString();
+        if(status.equalsIgnoreCase("przegląd")){
+            job.setStatus("przegląd");
+        }
+
 
         if (image.getSize() == 0 && job.getOriginalImage() == null) {
             LOGGER.info("default image");

@@ -83,22 +83,23 @@
             <div class="overflow-hidden bg-transparent shadow-xl rounded-3xl">
 
                 <ul role="list" class="divide-y-1 divide-transparent space-y-2 rounded-3xl">
-                    <li th:each="job : ${jobs}">
 
-                        <div th:attr="class=${job.status=='zgłoszenie'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl':'hidden')}">
+                    <li th:each="job : ${jobs}" th:if="${(job.jobShedule ==null) || (job.jobShedule !=null && job.jobShedule.isBefore(T(java.time.LocalDateTime).now()))}">
+
+                        <div th:attr="class=${job.status=='zgłoszenie'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl': (job.status=='przegląd'?'bg-blue-500 rounded-3xl':'hidden'))}">
                             <a th:href="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="get"
                                class="block hover:bg-blue-50 rounded-3xl">
 
                                 <div class="px-4 sm:px-6 sm:py-1">
-
                                     <div class="flex items-center justify-between">
-                                        <p th:text="${job.message} "
+                                        <p th:text="${job.message}"
                                            class="text-wrap sm:mb-1 text-xl text-gray-900 font-medium"></p>
                                         <div class="ml-2 flex flex-shrink-0">
                                             <p th:text="${job.status}"
                                                class="inline-flex rounded-full bg-green-100 px-2 sm:px-2 sm:py-1 sm:text-lm text-gray-900 font-semibold leading-2 text-green-800">
                                                 Status</p>
                                         </div>
+
                                     </div>
 
                                     <div class="mt-1 sm:flex sm:justify-between">
@@ -143,6 +144,10 @@
                             </a>
                         </div>
                     </li>
+
+
+
+
                 </ul>
             </div>
 
@@ -210,9 +215,48 @@
 
 
 
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function() {-->
+<!--        var pElements = document.querySelectorAll("p");-->
 
-<script th:src="@{/js/UpdateHandler.js}"></script>
+<!--        pElements.forEach(function(pElement) {-->
+<!--            var decision = pElement.getAttribute("data-decision");-->
+<!--            var dateOffset = pElement.getAttribute("data-dateOffset");-->
+<!--            var offset = pElement.getAttribute("data-offset");-->
+<!--            console.log("Decision:", decision);-->
+
+<!--            if(decision === "TAK") {-->
+<!--                console.log("AutoCreateJob2");-->
+<!--                createJob({dateOffset: dateOffset, offset: offset});-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+
+<!--    function createJob(job) {-->
+<!--        console.log("Post Create()")-->
+<!--        fetch('/api/jobs/create', {-->
+
+<!--            method: 'POST',-->
+<!--            headers: { 'Content-Type': 'application/json' },-->
+<!--            body: JSON.stringify(job)-->
+<!--        })-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                //Możesz tutaj zaktualizować swoją stronę, na przykład dodać nowe zadanie do listy-->
+<!--            })-->
+<!--            .catch((error) => {-->
+<!--                console.error('Error:', error);-->
+<!--            });-->
+<!--    }-->
+<!--</script>-->
+
+
+
+
+<!--<script th:src="@{/js/UpdateHandler.js}"></script>-->
 <script th:src="@{/js/Refresh.js}"></script>
+<!--<script th:src="@{/js/Reorder.js}"></script>-->
+
 </body>
 </html>
 
