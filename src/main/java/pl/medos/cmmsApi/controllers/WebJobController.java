@@ -178,7 +178,7 @@ public class WebJobController {
     public String createView(Model model) {
         LOGGER.info("createView()");
         Job job = new Job();
-        job.setStatus("Zgłoszono");
+        job.setStatus("zgłoszenie");
         job.setSolution(" ");
         model.addAttribute("job", job);
         return "create-job";
