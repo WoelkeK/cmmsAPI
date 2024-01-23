@@ -44,6 +44,7 @@ public class Job {
     private int offset;
     private DateOffset dateOffset;
 
+    private boolean open;
 
     private double calcCost;
     private String status;

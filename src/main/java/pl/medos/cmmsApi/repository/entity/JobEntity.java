@@ -59,6 +59,8 @@ public class JobEntity {
     private double calcCost;
     private String status;
 
+    private boolean open;
+
     @Enumerated(EnumType.STRING)
     private JobStatus jobStatus;
 
