@@ -6,9 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.medos.cmmsApi.repository.entity.HardwareEntity;
 import pl.medos.cmmsApi.repository.entity.JobEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -19,22 +21,28 @@ public interface JobRepository extends JpaRepository<JobEntity, Long> {
     @Query("SELECT t FROM JobEntity t WHERE LOWER(t.status) LIKE LOWER(CONCAT('%', ?1,'%'))")
     Page<JobEntity> findByStatus(String query, Pageable pageable);
 
-    @Query("SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.engineer.name, ' ', p.department.name, ' ' , p.machine.name,' ' , p.message,' ' , p.solution) LIKE %?1%")
-    List<JobEntity> searchJobsByMessage(String query);
+
+//    @Query("SELECT p FROM JobEntity  p WHERE " +
+//            "LOWER(p.employee.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.engineer.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.department.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.machine.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.message) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.solution) LIKE LOWER(CONCAT('%', :query, '%'))")
+//    @Query(value = "SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.engineer.name, ' ', p.department.name, ' ' , p.machine.name,' ' , p.message,' ' , p.solution) LIKE %?1%")
+//    List<JobEntity> searchJobsByQuery(String query);
 
 
-
-
-
-//    @Query("SELECT p from JobEntity p WHERE " +
-//            " p.department.id LIKE CONCAT('%', :query, '%')")
-//    List<JobEntity> searchJobsByDepartment(Long query);
 //
-//    @Query("SELECT p from JobEntity p WHERE " +
-//            " p.employee.id LIKE CONCAT('%', :query, '%')")
-//    List<JobEntity> searchJobsByEmployee(Long query);
-//
-//    @Query("SELECT p from JobEntity p WHERE " +
-//            " p.machine.id LIKE CONCAT('%', :query, '%')")
-//    List<JobEntity> searchJobsByMachine(Long query);
+//        @Query("SELECT p FROM JobEntity  p WHERE " +
+//            "LOWER(p.employee.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.engineer.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.department.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.machine.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.message) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+//            "LOWER(p.solution) LIKE LOWER(CONCAT('%', :query, '%'))")
+//    List<JobEntity> findJobByquery(String query);
+
+    @Query("SELECT p from JobEntity p WHERE CONCAT(p.employee.name, ' ', p.machine.model, ' ',p.message , ' ', p.machine.name, ' ', p.department.name) LIKE %?1%")
+    Page<JobEntity> searchEmployeeByQuery(Pageable pageable, String query);
 }

@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
@@ -35,10 +36,10 @@ public class MachineServiceImpl implements MachineService {
 
     public List<Machine> findAllMachines() {
 
-        LOGGER.info("list()");
+        LOGGER.info("listAllMachines()");
         List<MachineEntity> mechineEntities = machineRepository.findAll();
         List<Machine> machineModels = machineMapper.listModels(mechineEntities);
-        LOGGER.info("List(...)");
+        LOGGER.info("ListAllMachines(...)");
         return machineModels;
     }
 
@@ -109,10 +110,29 @@ public class MachineServiceImpl implements MachineService {
     }
 
     @Override
-    public Page<Machine> findPageinated(int pageNo, int size) {
+    public Page<Machine> findPageinated(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findPaginated()");
-        Pageable pageable = PageRequest.of(pageNo-1, size);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
+        Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
+        LOGGER.info("findPaginated(...)");
+        return machines;
+    }
+
+    @Override
+    public void deleteAllMachine() {
+        LOGGER.info("deleteAllMachines");
+        machineRepository.deleteAll();
+    }
+
+    @Override
+    public Page<Machine> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
+        LOGGER.info("findPaginated()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<MachineEntity> machineEntityPage = machineRepository.findByQueryPagable(query, pageable);
+//        Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
         Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
         LOGGER.info("findPaginated(...)");
         return machines;

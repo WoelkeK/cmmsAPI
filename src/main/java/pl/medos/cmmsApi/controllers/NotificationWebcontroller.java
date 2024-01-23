@@ -15,6 +15,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.model.Department;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Notification;
 import pl.medos.cmmsApi.service.ImageService;
@@ -31,14 +33,14 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/awizacje")
-@SessionAttributes(names = {"images", "awizacje"})
+@SessionAttributes(names = {"awizacje"})
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationWebcontroller {
 
     private final NotificationService notificationService;
 
-    private final ImageService imageService;
+//    private final ImageService imageService;
 
     private final RaportService raportService;
 
@@ -72,11 +74,11 @@ public class NotificationWebcontroller {
         List<Notification> allNotifications = notificationService.getAllNotifications();
         modelMap.addAttribute("notifications", allNotifications);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Notification notification : allNotifications) {
-            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
-        }
-        modelMap.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Notification notification : allNotifications) {
+//            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
+//        }
+//        modelMap.addAttribute("images", jobBase64Images);
         return "main-notification.html";
     }
 
@@ -119,11 +121,11 @@ public class NotificationWebcontroller {
 
         model.addAttribute("notifications", notificationList);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Notification notification :notificationList) {
-            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Notification notification :notificationList) {
+//            jobBase64Images.put(notification.getId(), Base64.getEncoder().encodeToString(notification.getResizedImage()));
+//        }
+//        model.addAttribute("images", jobBase64Images);
         return "main-notification.html";
     }
 
@@ -137,8 +139,7 @@ public class NotificationWebcontroller {
     @PostMapping("/create")
     public String createNotification(@Valid @ModelAttribute(name = "notification") Notification notification,
                                      BindingResult result,
-                                     Model model,
-                                     MultipartFile image) throws IOException {
+                                     Model model) throws IOException {
         log.info("createNotification()");
 
         if (result.hasErrors()) {
@@ -147,8 +148,8 @@ public class NotificationWebcontroller {
             return "create-notification";
         }
 
-        Notification processedNotification = imageService.prepareImage(notification, image);
-        Notification createdNotifi = notificationService.createNotification(processedNotification);
+//        Notification processedNotification = imageService.prepareImage(notification, image);
+        Notification createdNotifi = notificationService.createNotification(notification);
         return "redirect:/awizacje";
     }
 
@@ -159,32 +160,56 @@ public class NotificationWebcontroller {
         return "redirect:/awizacje";
     }
 
-    @GetMapping(value = "/downloadfile")
-    public void downloadFile(@Param(value = "id") Long id, Model model, HttpServletResponse response) throws IOException {
-        Notification notificationById = notificationService.findNotificationById(id);
-        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + notificationById.getVisitDate() + ".jpg";
-        response.setHeader(headerKey, headerValue);
-        ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(notificationById.getOriginalImage());
-        outputStream.close();
-    }
+//    @GetMapping(value = "/downloadfile")
+//    public void downloadFile(@Param(value = "id") Long id, Model model, HttpServletResponse response) throws IOException {
+//        Notification notificationById = notificationService.findNotificationById(id);
+//        response.setContentType("application/octet-stream");
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment; filename = " + notificationById.getVisitDate() + ".jpg";
+//        response.setHeader(headerKey, headerValue);
+//        ServletOutputStream outputStream = response.getOutputStream();
+//        outputStream.write(notificationById.getOriginalImage());
+//        outputStream.close();
+//    }
 
-    @GetMapping("/search/{query}")
-    public String searchByQuery(@RequestParam(name = "query") String query, Model model) {
-        log.info("searchByQuery()");
-        List<Notification> notifications = notificationService.findNotifiByQuery(query);
-        model.addAttribute("notifications", notifications);
-        return "main-notification.html";
-    }
+//    @GetMapping("/search/{query}")
+//    public String searchByQuery(@RequestParam(name = "query") String query, Model model) {
+//        log.info("searchByQuery()");
+//        List<Notification> notifications = notificationService.findNotifiByQuery(query);
+//        model.addAttribute("notifications", notifications);
+//        return "main-notification.html";
+//    }
 
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Notification notification) throws JRException, IOException {
-        log.info("exportPdf()" + notification.getDescription());
+        log.info("exportPdf()" + notification.getId());
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"awizacja_" + notification.getVisitDate() + ".pdf\""));
         OutputStream out = response.getOutputStream();
         raportService.exportReport(notification, out);
+    }
+
+    @GetMapping(value = "/search/query")
+    public String findNotifyByQuery(
+            @RequestParam(value = "query") String query,
+//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            Model model) throws IOException {
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="visitDate";
+        String sortDir="asc";
+
+        log.info("findPage()");
+        Page<Notification> notificationPage = notificationService.findNotificationPageByQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Notification> notifications = notificationPage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", notificationPage.getTotalPages());
+        model.addAttribute("totalItems", notificationPage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("notifications", notifications);
+        return "main-notification";
     }
 }

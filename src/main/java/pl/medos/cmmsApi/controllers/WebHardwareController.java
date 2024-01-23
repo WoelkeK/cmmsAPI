@@ -7,14 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.model.Software;
 import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.service.*;
+import pl.medos.cmmsApi.util.imports.ImportHardware;
+import pl.medos.cmmsApi.util.imports.ImportHardwareFromXls;
+
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,16 +29,14 @@ public class WebHardwareController {
     private static final Logger LOGGER = Logger.getLogger(WebHardwareController.class.getName());
     private HardwareService hardwareService;
     private ExportService exportService;
-    private ImportService importService;
+    private ImportHardware importHardware;
     private RaportService raportService;
-    private final HardwareRepository hardwareRepository;
+    private HardwareRepository hardwareRepository;
 
-
-    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportService importService, RaportService raportService,
-                                 HardwareRepository hardwareRepository) {
+    public WebHardwareController(HardwareService hardwareService, ExportService exportService, ImportHardware importHardware, RaportService raportService, HardwareRepository hardwareRepository) {
         this.hardwareService = hardwareService;
         this.exportService = exportService;
-        this.importService = importService;
+        this.importHardware = importHardware;
         this.raportService = raportService;
         this.hardwareRepository = hardwareRepository;
     }
@@ -70,8 +67,8 @@ public class WebHardwareController {
     @GetMapping
     public String listView(Model model){
         LOGGER.info("listView()");
-//        return findHardwarePage(1, "inventoryNo", "asc", model);
-        return listViewAllSorted("inventoryNo", "desc", model);
+        return findHardwarePage(1, "inventoryNo", "asc", model);
+//        return listViewAllSorted("inventoryNo", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -95,7 +92,7 @@ public class WebHardwareController {
 
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("pageing(...)");
-        return "page-hardware";
+        return "main-hardware";
     }
 
     @GetMapping("/create")
@@ -171,6 +168,7 @@ public class WebHardwareController {
     public void exportHardwares(@ModelAttribute(name = "hardwares") List<Hardware> hardwares,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
+        hardwares=hardwareService.listAll();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
@@ -199,7 +197,7 @@ public class WebHardwareController {
             return "redirect/hardwares";
         }
 
-        List<Hardware> hardwares = importService.importExcelHardwareData(file);
+        List<Hardware> hardwares = importHardware.importHardware(file);
 
         hardwares.forEach((hardware) -> {
             hardwareService.create(hardware);
@@ -209,13 +207,26 @@ public class WebHardwareController {
     }
 
     @GetMapping(value = "/search/query")
-    public String searchHardwareByQuery(@RequestParam(value = "query") String query,
-                                        Model model) {
-        LOGGER.info("search()");
-        List<Hardware> hardwares = hardwareService.findHardwaresByQuery(query);
-        model.addAttribute("hardwares", hardwares);
-        LOGGER.info("search(...)");
+    public String findHardwareByQuery(
+            @RequestParam(value = "query") String query,
+//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            Model model) throws IOException {
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="name";
+        String sortDir="desc";
 
-        return "list-hardware";
+        LOGGER.info("findPage()");
+        Page<Hardware> hardwarePage =hardwareService.findHardwarePageByQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Hardware> hardware = hardwarePage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", hardwarePage.getTotalPages());
+        model.addAttribute("totalItems", hardwarePage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("hardwares", hardware);
+        return "main-hardware";
     }
 }

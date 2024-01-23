@@ -6,7 +6,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Moduł Sprzętu IT</title>
-        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+        <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
     </head>
     <title>Title</title>
 </head>
@@ -158,7 +159,6 @@
                         </li>
                     </ul>
                 </nav>
-
             </div>
         </div>
     </div>
@@ -275,7 +275,7 @@
 
                     </div>
                     <div class="hidden lg:ml-10 lg:block">
-                        <div class="flex space-x-4">
+                        <div th:if="${isAdmin}" class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="#" th:href="@{/hardwares/create}"
                                class="rounded-md bg-gray-900 px-3 py-2 text-lg font-medium text-white">Dodaj</a>
@@ -422,11 +422,12 @@
                                            class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
                                                 class="sr-only"></span></a>
 
-                                        <a th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
+                                        <a th:if="${isAdmin}" th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
+
                                            class=" px-1 text-indigo-800 hover:text-indigo-300">Edycja<span
                                                 class="sr-only"></span></a>
 
-                                        <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
+                                        <a th:if="${isAdmin}" th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
                                            class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
                                                 class="sr-only"></span></a>
 

@@ -21,5 +21,5 @@ public interface DepartmentService {
 
     Department findDepartmentByName(String departmentName);
 
-    Page<Department> findDepartmentPage(int pageNo, int size);
+    Page<Department> findDepartmentPage(int pageNo, int size, String sortField, String sortDirection);
 }

@@ -3,10 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel Zlecenia</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/disableSelect.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+<!--    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>-->
+    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-500">
 <div class="min-h-full">
@@ -62,8 +68,6 @@
             </div>
         </nav>
         <header class="py-10">
-
-
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-x-2 gap-y-8 sm:grid-cols-2">
                     <div>
@@ -76,23 +80,38 @@
         </header>
     </div>
 
-
     <form action="#" th:action="@{/hardwares/update}" th:object="${hardware}" method="post">
 
-        <input type="hidden" th:field="*{name}">
-<!--        <input type="hidden" th:field="*{department}">-->
-        <input type="hidden" th:field="${hardware.id}">
-<!--        <input type="hidden" th:field="*{systemNo}">-->
+        <input type="hidden" th:field="*{name}" id="name">
+        <input type="hidden" th:field="*{id}" id="id"/>
         <input type="hidden" th:field="*{type}">
-        <input type="hidden" th:field="*{serialNumber}">
+        <input type="hidden" th:field="*{serialNumber}" id="hiddenSerialNumber"/>
         <input type="hidden" th:field="*{installDate}">
         <input type="hidden" th:field="*{inventoryNo}">
         <input type="hidden" th:field="*{invoiceNo}">
+        <input type="hidden" id="nRead" th:field="${hardware.nRead}">
+        <input type="hidden" id="nEdit" th:field="${hardware.nEdit}">
+        <input type="hidden" id="nDelete" th:field="${hardware.nDelete}">
+        <input type="hidden" id="eRead" th:field="${hardware.eRead}">
+        <input type="hidden" id="eEdit" th:field="${hardware.eEdit}">
+        <input type="hidden" id="eDelete" th:field="${hardware.eDelete}">
+        <input type="hidden" id="pRead" th:field="${hardware.pRead}">
+        <input type="hidden" id="pEdit" th:field="${hardware.pEdit}">
+        <input type="hidden" id="pDelete" th:field="${hardware.pDelete}">
+        <input type="hidden" id="dRead" th:field="${hardware.dRead}">
+        <input type="hidden" id="dEdit" th:field="${hardware.dEdit}">
+        <input type="hidden" id="dDelete" th:field="${hardware.dDelete}">
+        <input type="hidden" id="mRead" th:field="${hardware.mRead}">
+        <input type="hidden" id="mEdit" th:field="${hardware.mEdit}">
+        <input type="hidden" id="mDelete" th:field="${hardware.mDelete}">
+        <input type="hidden" id="jRead" th:field="${hardware.jRead}">
+        <input type="hidden" id="jEdit" th:field="${hardware.jEdit}">
+        <input type="hidden" id="jDelete" th:field="${hardware.jDelete}">
 
         <main class="-mt-32">
             <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
 
-                <div class="overflow-hidden bg-gray-300 shadow sm:rounded-lg">
+                <div class="form-group overflow-hidden bg-gray-300 shadow sm:rounded-lg">
                     <div class="px-4 py-5 sm:px-6">
                         <h3 class="text-base font-semibold leading-6 text-gray-900">Informacja o sprzęcie</h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">Szczegółowe zestawienie informacji o wybranym
@@ -117,7 +136,7 @@
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-400">SN / ServiceTag</dt>
-                                <dd th:text="${hardware.serialNumber}" id="serialNumber"
+                                <dd th:text="${hardware.serialNumber}"
                                     name="serialNumber"
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
@@ -155,27 +174,8 @@
                                     class="mt-1 text-sm text-gray-900">XXXXXXXXXX
                                 </dd>
                             </div>
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Data odbioru</dt>-->
-                            <!--                                <dd th:text="${#temporals.format(hardware.pickUpDate, 'dd MMMM yyyy')}"-->
-                            <!--                                    id="view-pickUpDate" name="pickUpDate"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">-->
-                            <!--                                    Data-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
-
-                            <!--                            <div class="sm:col-span-1">-->
-                            <!--                                <dt class="text-sm font-medium text-gray-400">Data zwrotu</dt>-->
-                            <!--                                <dd th:text="${#temporals.format(hardware.returnDate, 'dd MMMM yyyy')}"-->
-                            <!--                                    id="view-returnDate" name="returnDate"-->
-                            <!--                                    class="mt-1 text-sm text-gray-900">-->
-                            <!--                                    Data-->
-                            <!--                                </dd>-->
-                            <!--                            </div>-->
                         </dl>
                     </div>
-
 
                     <div class="px-4 sm:px-6 lg:px-8 py-2">
                         <div class="overflow-hidden bg-gray-200 shadow sm:rounded-xl">
@@ -204,7 +204,8 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="employee"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Imię i Nazwisko</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Imię i
+                                            Nazwisko</label>
                                         <div class="mt-2">
                                             <input th:field="${hardware.employee}" id="employee"
                                                    name="employee"
@@ -226,7 +227,8 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="employee"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Wersja Systemu</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Wersja
+                                            Systemu</label>
                                         <div class="mt-2">
                                             <input th:field="${hardware.systemNo}" id="systemNo"
                                                    name="systemNo"
@@ -314,9 +316,11 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="bitRecoveryKey"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Klucz szyfrowania</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Klucz
+                                            szyfrowania</label>
                                         <div class="mt-2">
-                                            <input type="text" th:field="${hardware.bitRecoveryKey}" name="bitRecoveryKey"
+                                            <input type="text" th:field="${hardware.bitRecoveryKey}"
+                                                   name="bitRecoveryKey"
                                                    id="bitRecoveryKey"
                                                    autocomplete="no"
                                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-blue-700 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2 sm:text-xl sm:leading-6">
@@ -325,7 +329,8 @@
 
                                     <div class="sm:col-span-1">
                                         <label for="bitLockKey"
-                                               class="block text-sl font-medium leading-6 text-gray-500">Identyfikator szyfrowania</label>
+                                               class="block text-sl font-medium leading-6 text-gray-500">Identyfikator
+                                            szyfrowania</label>
                                         <div class="mt-2">
                                             <input type="text" th:field="${hardware.bitLockKey}" name="bitLockKey"
                                                    id="bitLockKey"
@@ -353,19 +358,31 @@
                                             </div>
                                         </div>
                                     </dl>
+                                    <div class="sm:col-span-1">
+                                        <label for="invoiceNo"
+                                               class="block text-sl font-medium leading-6 text-gray-500">Uprawnienia</label>
+                                        <div class="mt-2">
 
+                                            <button type="button" data-toggle="modal" data-target="#editModal"
+                                                    class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-200 shadow-sm hover:bg-gray-300 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                <a>Ustaw dostęp</a>
 
-                                    <div class="pt-5">
-                                        <div class="flex justify-end">
-                                            <button type="button"
-                                                    class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                <a th:href="@{/hardwares}">Wstecz</a>
-                                            </button>
-                                            <button type="submit"
-                                                    class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                Zapisz
                                             </button>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5">
+                                    <div class="flex justify-end">
+                                        <button type="button"
+                                                class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            <a th:href="@{/hardwares}">Wstecz</a>
+                                        </button>
+
+                                        <button type="submit"
+                                                class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Zapisz
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -376,26 +393,291 @@
         </main>
     </form>
 </div>
-<!-- Your content -->
 
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div th:if="${hardware != null}">
+            <div class="shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-base md:text-xl font-medium leading-6 text-gray-900">Ustawienia uprawnień.</h3>
+                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                        <div class="max-w-xl text-md text-gray-500">
+                            <p>Ustaw uprawnienia dostępu dla sekcji aplikacji dla danego użytkownika.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<script type="text/javascript">
-   function disableSelectBox() {
-var field1Value = document.getElementById("status").value;
-var field2Select = document.getElementById("employee");
-var field3Select = document.getElementById("employee");
+            <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-6 bg-gray-400 shadow sm:rounded-lg">
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
 
-if ((field1Value === "MAGAZYN_SERWEROWNIA") || (field1Value === "MAGAZYN_SZAFA") || (field1Value === "ZUTYLIZOWANY") || (field1Value === "DO_UTYLIZACJI")) {
-field2Select.disabled = true;
-field2Select.value = "";
-} else {
-field2Select.disabled = false;
-}
-}
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Awizacje
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalNReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalNReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
 
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalNEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalNEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalNFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalNFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
 
-</script>
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Pracownicy
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalEReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalEReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalEEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalEEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalEFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalEFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Przepustki
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalPReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalPReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalPEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalPEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalPFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalPFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Wydziały
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalDReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalDReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalDEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalDEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalDFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalDFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Maszyny
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalMReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalMReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalMEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalMEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalMFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalMFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Awarie
+                            </legend>
+
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalJReadable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalJReadable">Odczyt</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalJEditable">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalJEditable">Edycja</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+                                        <div class="form-check justify-center justify-items-center">
+                                            <input type="checkbox" class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="modalJFullAccess">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="modalJFullAccess">Pełna kontrola</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+
+            <div class="shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>
+                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                        <div class="max-w-xl text-sm text-gray-500">
+                            <p class="md:text-lg font-semibold">Użytkownik komputera:</p>
+                            <p class="md:text-lg font-semibold text-blue-600"
+                               th:text="${hardware.employee}"></p>
+                        </div>
+                        <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
+                            <button type="button" id="saveChanges" data-dismiss="modal"
+                                    class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                                Zamknij
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/permissions.js}"></script>
+<script type="text/javascript" th:src="@{/js/disableField.js}"></script>
 </body>
 </html>
 

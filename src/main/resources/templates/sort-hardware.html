@@ -6,7 +6,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Moduł Sprzętu IT</title>
-        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+        <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
     </head>
     <title>Title</title>
 </head>
@@ -177,11 +178,6 @@
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <a href="/index"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                        <!--
-                          Heroicon name: outline/home
-
-                          Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
-                        -->
                         <svg class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                              aria-hidden="true">
@@ -276,7 +272,7 @@
 
                         </div>
                         <div class="hidden lg:ml-10 lg:block">
-                            <div class="flex space-x-4">
+                            <div th:if="${isAdmin}" class="flex space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                 <a href="#" th:href="@{/hardwares/create}"
                                    class="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dodaj</a>
@@ -447,7 +443,7 @@
                                             ServiceTag
                                         </td>
 
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
+                                        <td th:if="${isAdmin}" class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
                                             <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
                                                class="px-1 text-indigo-800 hover:text-indigo-300">Podgląd<span
@@ -460,7 +456,6 @@
                                             <a th:href="@{/hardwares/delete/{id}(id=${hardware.id})}"
                                                class="px-1 text-indigo-800 hover:text-indigo-300">Usuń<span
                                                     class="sr-only"></span></a>
-
                                         </td>
                                     </tr>
 
@@ -478,39 +473,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!--                        <div class="pt-1">-->
-                    <!--                            <div class="flex justify-end">-->
-                    <!--                                <button type="button"-->
-                    <!--                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-                    <!--                                    <a th:if="${currentPage >1}"-->
-                    <!--                                       th:href="@{'/hardwares/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>-->
-                    <!--                                    <span th:unless="${currentPage >1}">Poprzedni</span>-->
-                    <!--                                </button>-->
-                    <!--                                <button type="button"-->
-                    <!--                                        class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-                    <!--                                    <a th:if="${currentPage < totalPages}"-->
-                    <!--                                       th:href="@{'/hardwares/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>-->
-                    <!--                                    <span th:unless="${currentPage < totalPages}">Następny</span>-->
-                    <!--                                </button>-->
-
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-
-                    <!--                        <div th:if="${totalPages > 1}">-->
-                    <!--                            <div class="row col-sm-10">-->
-                    <!--                                <div class="col-sm-2">-->
-                    <!--                                    Wszystkich wpisów: [[${totalItems}]]-->
-                    <!--                                </div>-->
-                    <!--                                <div class="col-sm-1 text-indigo-800 ">-->
-                    <!--            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">-->
-                    <!--      <a th:if="${currentPage != i}"-->
-                    <!--         th:href="@{'/hardwares/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
-                    <!--      <span class="text-indigo-200 " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;-->
-                    <!--            </span>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
                 </div>
             </div>
         </main>

@@ -6,12 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import pl.medos.cmmsApi.enums.Device;
-import pl.medos.cmmsApi.enums.Document;
 import pl.medos.cmmsApi.enums.Status;
-
-import java.time.LocalDate;
+import pl.medos.cmmsApi.enums.Permission;
 
 @Data
 @Builder
@@ -21,7 +18,6 @@ public class JsonHardware {
 
     private String id;
     private String name;
-    @Enumerated(EnumType.STRING)
     private Device type;
     private String document;
     private String systemNo;
@@ -35,8 +31,6 @@ public class JsonHardware {
     private String netBios;
     private String bitLockKey;
     private String bitRecoveryKey;
-
-    @Enumerated(EnumType.STRING)
     private Status status;
     private String department;
     private String employee;
@@ -44,5 +38,9 @@ public class JsonHardware {
     private String officeNo;
     private String activateDate;
     private String installDate;
+    private Permission permission;
+    private boolean notRead;
+    private boolean notEdit;
+    private boolean notFull;
 
 }

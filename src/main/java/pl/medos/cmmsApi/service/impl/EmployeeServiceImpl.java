@@ -7,8 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.EmployeeRepository;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.mapper.EmployeeMapper;
 
@@ -108,5 +110,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> employeePage = employeeMapper.mapPageEntitiestoModels(employeeEntityPage);
         LOGGER.info("findPageinated(...)");
         return employeePage;
+    }
+
+    @Override
+    public Page<Employee> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
+        LOGGER.info("findPaginated()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<EmployeeEntity> employeeEntityPage = employeeRepository.findByQueryPagable(query, pageable);
+        Page<Employee> employees = employeeMapper.mapPageEntitiestoModels(employeeEntityPage);
+        LOGGER.info("findPaginated(...)");
+        return employees;
+    }
+
+    @Override
+    public void deleteAll() {
+        LOGGER.info("deleteAll");
+        employeeRepository.deleteAll();
     }
 }

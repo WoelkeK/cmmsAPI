@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/jobs")
 @AllArgsConstructor
 public class JobController {
 
@@ -42,7 +42,7 @@ public class JobController {
         return createdJob;
     }
 
-    @GetMapping("/job/{id}")
+    @GetMapping("/jobs/{id}")
     public Job findJobById(@PathVariable(name = "id") Long id) throws JobNotFoundException {
         LOGGER.info("readJob(" + id + ")");
         Job readJob = jobService.findJobById(id);
@@ -50,7 +50,7 @@ public class JobController {
         return readJob;
     }
 
-    @PutMapping("/job/{id}")
+    @PutMapping("/jobs/{id}")
     public Job updateJob(@PathVariable(name = "id") Long id,
                          @RequestBody Job job) throws JobNotFoundException {
         LOGGER.info("updateJob(" + id + ")");
@@ -59,7 +59,7 @@ public class JobController {
         return updatedJob;
     }
 
-    @DeleteMapping("/job/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteJob(" + id + ")");
         jobService.deleteJob(id);

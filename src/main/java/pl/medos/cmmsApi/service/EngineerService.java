@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service;
 
+import org.springframework.data.domain.Page;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
@@ -8,15 +9,23 @@ import java.util.List;
 
 public interface EngineerService {
 
-    List<Engineer> finadAllEmployees();
+    List<Engineer> finadAllEngineers();
 
-    Engineer createEmployee(Engineer employee);
+    Engineer createEngineer(Engineer engineer);
 
-    Engineer findEmployeeById(Long id) throws EmployeeNotFoundException;
+    Engineer updateEngineer(Engineer engineer, Long id) throws EmployeeNotFoundException;
 
-    Engineer updateEmployee(Engineer employee, Long id) throws EmployeeNotFoundException;
+    void deleteEngineer(Long id);
 
-    void deleteEmployee(Long id);
+    Page<Engineer> findEngineerByName(int pageNo, int pagesize, String query);
 
-   List<Engineer> findEmployeeByName(String employeeName);
+    List<Engineer> findEngineerByName(String engineerName);
+
+    void deleteAll();
+
+    Engineer findEngineerById(Long id) throws EmployeeNotFoundException;
+
+    Page<Engineer> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
+
+    Page<Engineer> findPageinated(int pageNo, int pageSize, String sortField, String sortDir);
 }

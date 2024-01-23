@@ -16,4 +16,5 @@ public interface NotificationService {
     List<Notification> findNotifiByQuery(String query);
     Page<Notification> findPageNotifications(int pageNo, int size, String sortField, String sortDirection);
     List<Notification> findSortNotifications(String sortField, String sortDirection);
+    Page<Notification> findNotificationPageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 }

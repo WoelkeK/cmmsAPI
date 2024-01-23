@@ -1,24 +1,27 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.HardwareRepository;
+import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.HardwareEntity;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.HardwareService;
 import pl.medos.cmmsApi.service.mapper.HardwareMapper;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
+@RequiredArgsConstructor
 public class HardwareServiceImpl implements HardwareService {
 
     private static final Logger LOGGER = Logger.getLogger(HardwareServiceImpl.class.getName());
@@ -26,10 +29,6 @@ public class HardwareServiceImpl implements HardwareService {
     private final HardwareRepository hardwareRepository;
     private final HardwareMapper hardwareMapper;
 
-    public HardwareServiceImpl(HardwareRepository hardwareRepository, HardwareMapper hardwareMapper) {
-        this.hardwareRepository = hardwareRepository;
-        this.hardwareMapper = hardwareMapper;
-    }
 
     public List<Hardware> listAll() {
         LOGGER.info("listAll()");
@@ -115,5 +114,40 @@ public class HardwareServiceImpl implements HardwareService {
         LOGGER.info("deleteAllHardware()");
         hardwareRepository.deleteAll();
         LOGGER.info("deleteAllHardware(...)");
+    }
+
+//    @Override
+//    public Boolean findHardwareByIpAddress(String clientIp) {
+//        LOGGER.info("findHardwareByIpAddress()" + clientIp);
+//        return hardwareRepository.existsByIpAddressAndPermission(clientIp);
+//    }
+
+//    @Override
+//    public Hardware findByIpAddress(String ipAddres) {
+//        LOGGER.info("findByIpAddress");
+//        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElseThrow(
+//                ()-> new NoSuchElementException("Brak adresu IP w bazie danych")
+//        );
+//        return hardwareMapper.mapEntityToModel(byIpAddress);
+//    }
+
+    @Override
+    public Hardware findByIpAddress(String ipAddres) {
+        LOGGER.info("findByIpAddress");
+        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElse(new HardwareEntity());
+        return hardwareMapper.mapEntityToModel(byIpAddress);
+    }
+
+
+
+    @Override
+    public Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
+        LOGGER.info("findHardwarePageByQuery()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<HardwareEntity> hardwareEntityPage = hardwareRepository.findByQueryPagable(query, pageable);
+        Page<Hardware> hardware = hardwareMapper.pageEntityToModels(hardwareEntityPage);
+        LOGGER.info("findHardwarePageByQuery(...)");
+        return hardware;
     }
 }

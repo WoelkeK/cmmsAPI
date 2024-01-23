@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Panel Zlecenia</title>
-    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+
+    <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-500">
 <div class="min-h-full">
@@ -20,7 +23,7 @@
                                 <div class="hidden md:block">
                                     <div class="ml-24 flex items-baseline space-x-4">
                                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                          </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="hidden md:block">
@@ -55,7 +58,9 @@
                 <div class="border-b border-gray-700 md:hidden" id="mobile-menu">
                     <div class="space-y-1 px-2 py-3 sm:px-3">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                    </div>
                 </div>
+            </div>
         </nav>
         <header class="py-10">
 
@@ -63,7 +68,8 @@
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-x-2 gap-y-8 sm:grid-cols-2">
                     <div>
-                        <h1 th:text="'Zamknięcie zlecenia nr: ' + ${job.id}"  class="sm:col-span-1 text-3xl font-bold tracking-tight text-yellow-600"></h1>
+                        <h1 th:text="'Zamknięcie zlecenia nr: ' + ${job.id}"
+                            class="sm:col-span-1 text-3xl font-bold tracking-tight text-yellow-600"></h1>
                     </div>
                 </div>
             </div>
@@ -72,7 +78,8 @@
     </div>
 
 
-    <form role="form" th:action="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="post">
+    <form id="mainForm" role="form" th:action="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}"
+          method="post">
 
 
         <main class="-mt-32">
@@ -127,6 +134,7 @@
                     <input type="hidden" th:field="*{resizedImage}">
                     <input type="hidden" th:field="*{originalImage}">
                     <input type="hidden" th:field="*{calcCost}">
+                    <input type="hidden" id="dateTimeField" name="dateTimeField"/>
 
                     <div class="px-4 py-5 sm:px-6">
                         <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
@@ -142,7 +150,7 @@
                                     <textarea th:utext="${solution}" id="solution" name="solution" rows="3"
                                               class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
 
-                                            <p th:errors = "*{solution}" class="text-danger mt-2 text-lm text-red-500"
+                                            <p th:errors="*{solution}" class="text-danger mt-2 text-lm text-red-500"
                                                th:if="${#fields.hasErrors('solution')}"></p>
 
                                         </div>
@@ -151,7 +159,8 @@
 
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-500 sm:pt-5">
                                     <label for="engineerId"
-                                           class="block text-lm font-medium text-gray-700 sm:mt-px sm:pt-2">Realizujący zlecenie</label>
+                                           class="block text-lm font-medium text-gray-700 sm:mt-px sm:pt-2">Realizujący
+                                        zlecenie</label>
                                     <div class="mt-1 sm:col-span-2 sm:mt-0">
                                         <select th:field="${job.engineer.id}" id="engineerId" name="engineerId"
                                                 autocomplete="engineer"
@@ -190,6 +199,7 @@
                                         <input type="datetime-local" th:field="${job.jobStopTime}" id="jobStopTime"
                                                name="jobStopTime" autocomplete="date"
                                                class="block w-full max-w-lg rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-lm">
+
                                     </div>
                                 </div>
                             </div>
@@ -214,8 +224,6 @@
         </main>
     </form>
 </div>
-</div>
-<!-- Your content -->
 </body>
 </html>
 

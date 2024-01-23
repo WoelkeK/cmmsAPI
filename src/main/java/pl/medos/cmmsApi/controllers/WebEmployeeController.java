@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +13,13 @@ import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
-import pl.medos.cmmsApi.service.ImportService;
+import pl.medos.cmmsApi.service.ExportService;
+import pl.medos.cmmsApi.util.imports.ImportEmployee;
 
-import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,12 +32,14 @@ public class WebEmployeeController {
     private String fileName = "c:/XL/sheet6.xlsx";
     private EmployeeService employeeService;
     private DepartmentService departmentService;
-    private ImportService importService;
+    private ImportEmployee importEmployee;
+    private ExportService exportService;
 
-    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportService importService) {
+    public WebEmployeeController(EmployeeService employeeService, DepartmentService departmentService, ImportEmployee importEmployee, ExportService exportService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
-        this.importService = importService;
+        this.importEmployee = importEmployee;
+        this.exportService = exportService;
     }
 
     @GetMapping(value = "/list")
@@ -44,7 +49,7 @@ public class WebEmployeeController {
         modelMap.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "list-employee.html";
+        return "list-employees";
     }
 
     @GetMapping
@@ -77,22 +82,34 @@ public class WebEmployeeController {
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-employee.html";
+        return "main-employees";
     }
 
     @GetMapping(value = "/search/name")
     public String findEmployeeByname(
             @RequestParam(value = "employeeName") String query,
-            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
             Model model) throws IOException {
-        int pageSize = 10;
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="name";
+        String sortDir="desc";
+
         LOGGER.info("findPage()");
-        List<Employee> employeeByRawName = employeeService.findEmployeeByRawName(query);
+        Page<Employee> employeePage = employeeService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Employee> employees = employeePage.getContent();
+//        List<Employee> employeeByRawName = employeeService.findEmployeeByRawName(query);
+
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("employees", employeeByRawName);
+        model.addAttribute("totalPages", employeePage.getTotalPages());
+        model.addAttribute("totalItems", employeePage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        return "list-employee.html";
+        return "main-employees";
     }
 
     @GetMapping(value = "/update/{id}")
@@ -104,7 +121,7 @@ public class WebEmployeeController {
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
         modelMap.addAttribute("pageNo", pageNo);
-        return "update-employee.html";
+        return "update-employee";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -122,7 +139,7 @@ public class WebEmployeeController {
     public String createView(ModelMap modelMap) {
         LOGGER.info("createView()");
         modelMap.addAttribute("employee", new Employee());
-        return "create-employee.html";
+        return "create-employee";
     }
 
     @PostMapping(value = "/create")
@@ -143,7 +160,7 @@ public class WebEmployeeController {
         LOGGER.info("read(" + id + ")");
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
-        return "read-employee.html";
+        return "read-employee";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -165,16 +182,60 @@ public class WebEmployeeController {
         LOGGER.info("importEmployees()");
         if (file.isEmpty()) {
             LOGGER.info("Please select file to upload");
-            return "redirect/employees";
+            return "redirect:/employees";
         }
 
         EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
-        readedEmployees.forEach((employee) -> {
+
+//        List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
+        List<Employee> employees = importEmployee.importExcelEmployeesData(file);
+
+
+        employees.forEach((employee) -> {
             employeeService.createEmployee(employee);
         });
         LOGGER.info("importEmployees(...) ");
-
         return "redirect:/employees";
+    }
+
+    @GetMapping(value = "/export")
+    public void exportEmployees(@ModelAttribute(name = "employees") List<Employee> employees,
+                                HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+
+        employees = employeeService.finadAllEmployees();
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=employee" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+        exportService.excelEmployeeModelGenerator(employees);
+        exportService.generateExcelEmployeeFile(response);
+        response.flushBuffer();
+        LOGGER.info("export(...)");
+    }
+
+
+    @GetMapping("/search/query")
+    public String searchEmployeeByName(
+            @RequestParam(value = "query") String query,
+            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            Model model){
+        LOGGER.info("search()");
+        int pagesize =10;
+        Page<Employee> employeeByName = employeeService.findEmployeeByName(pageNo, pagesize, query);
+        LOGGER.info("findEmployeeByName()");
+        model.addAttribute("employees", employeeByName);
+        model.addAttribute("currentPage", pageNo);
+        return "main-employees";
+    }
+
+    @GetMapping("/deleteAll")
+    public void deleteAll(){
+        LOGGER.info("deleteAll");
+        employeeService.deleteAll();
     }
 }

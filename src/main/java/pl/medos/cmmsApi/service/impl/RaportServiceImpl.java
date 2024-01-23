@@ -58,7 +58,7 @@ public class RaportServiceImpl implements RaportService {
 
     public JasperPrint getJasperPrint(Notification notification, JasperReport jasperReport) throws FileNotFoundException, JRException {
 
-        LOGGER.info("getJasperPrint()");
+        LOGGER.info("getJasperPrint()" + notification.getId());
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("employee", notification.getEmployee());
@@ -82,8 +82,8 @@ public class RaportServiceImpl implements RaportService {
     @Override
     public void exportReport(Hardware hardware, OutputStream outputStream) throws JRException, FileNotFoundException {
 
-        Resource resource = new ClassPathResource("reports/Pzo.jrxml");
-
+        Resource resource = new ClassPathResource("/reports/Pzo.jrxml");
+        LOGGER.info("exportRaport()" + hardware.getId());
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
             JasperPrint jasperPrint = getJobJasperPrint(hardware, jasperReport);

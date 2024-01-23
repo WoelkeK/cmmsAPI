@@ -40,35 +40,50 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public byte[] imageToByteArray() throws IOException {
+    public byte[] imageToByteArray() {
         LOGGER.info("imageToByteArray()");
         URL resource = getClass().getResource("/image.jpg");
-        BufferedImage bf = ImageIO.read(resource);
-        byte[] defaultImage = toByteArray(bf, "jpg");
+        BufferedImage bf = null;
+        try {
+            bf = ImageIO.read(resource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        byte[] defaultImage = new byte[0];
+        try {
+            defaultImage = toByteArray(bf, "jpg");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         bf.flush();
         return defaultImage;
     }
 
     @Override
     public Notification prepareImage(Notification notification, MultipartFile image) throws IOException {
-        LOGGER.info("prepareImage()");
-
-        if (image.getSize() == 0) {
-            LOGGER.info("default image");
-            byte[] bytes = imageToByteArray();
-            notification.setResizedImage(bytes);
-            notification.setOriginalImage(bytes);
-        } else {
-            LOGGER.info("multipart file present");
-            byte[] orginalImage = multipartToByteArray(image);
-            byte[] resizeImage = simpleResizeImage(orginalImage, 300);
-            byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
-            notification.setResizedImage(resizeImage);
-            notification.setOriginalImage(resizeMaxImage);
-        }
-        LOGGER.info("image prepared");
-        return notification;
+        return null;
     }
+
+//    @Override
+//    public Notification prepareImage(Notification notification, MultipartFile image) throws IOException {
+//        LOGGER.info("prepareImage()");
+//
+//        if (image.getSize() == 0) {
+//            LOGGER.info("default image");
+//            byte[] bytes = imageToByteArray();
+//            notification.setResizedImage(bytes);
+//            notification.setOriginalImage(bytes);
+//        } else {
+//            LOGGER.info("multipart file present");
+//            byte[] orginalImage = multipartToByteArray(image);
+//            byte[] resizeImage = simpleResizeImage(orginalImage, 300);
+//            byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
+//            notification.setResizedImage(resizeImage);
+//            notification.setOriginalImage(resizeMaxImage);
+//        }
+//        LOGGER.info("image prepared");
+//        return notification;
+//    }
 
     @Override
     public Pass prepareImage(Pass pass, MultipartFile image) throws IOException {

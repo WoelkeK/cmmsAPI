@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.service.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
@@ -42,16 +43,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department findDepartmentByName(String name) {
         LOGGER.info("findDeaprtmentsByName()" + name);
-        DepartmentEntity departmentEntity = departmentRepository.searchDepartmentByName(name);
-        Department department = departmentMapper.entityToModel(departmentEntity);
+        List<DepartmentEntity> departmentEntity = departmentRepository.searchDepartmentByName(name);
+        Department department = departmentMapper.entityToModel(departmentEntity.get(0));
         LOGGER.info("findDepartmentsByName(...)" + department.getName());
         return department;
     }
 
     @Override
-    public Page<Department> findDepartmentPage(int pageNo, int size) {
+    public Page<Department> findDepartmentPage(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findDepartmentPage(" + pageNo + ")");
-        Pageable pageable = PageRequest.of(pageNo-1, size);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         Page<DepartmentEntity> departmentEntities = departmentRepository.findAll(pageable);
         Page<Department> departmentPage = departmentMapper.mapEntitiesToModelsPage(departmentEntities);
         LOGGER.info("findDepartmentPage(...)");

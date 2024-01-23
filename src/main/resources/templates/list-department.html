@@ -51,7 +51,7 @@
                             Panel Główny
                         </a>
 
-                        <a th:href="@{/employees}"
+                        <a th:href="@{/admin/employees}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -63,7 +63,7 @@
                             Pracownicy
                         </a>
 
-                        <a th:href="@{/engineers}"
+                        <a th:href="@{/admin/engineers}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/folder -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -111,7 +111,7 @@
                             </svg>
                             Zlecenia
                         </a>
-                        <a th:href="@{/resources}"
+                        <a th:href="@{/admin/resources}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/calendar -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -123,7 +123,7 @@
                             Magazyn
                         </a>
 
-                        <a th:href="@{/hardwares}"
+                        <a th:href="@{/admin/hardwares}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/calendar -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -135,7 +135,7 @@
                             IT
                         </a>
 
-                        <a th:href="@{/logout}"
+                        <a th:href="@{/admin/logout}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/calendar -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -177,11 +177,11 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                    <img class="h-8 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos"/>
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/index"
+                    <a href="/admin/index"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!--
                           Heroicon name: outline/home
@@ -197,7 +197,7 @@
                         Paneł Główny
                     </a>
 
-                    <a th:href="@{/employees}"
+                    <a th:href="@{/admin/employees}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -209,7 +209,7 @@
                         Pracownicy
                     </a>
 
-                    <a th:href="@{/engineers}"
+                    <a th:href="@{/admin/engineers}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -220,7 +220,7 @@
                         </svg>
                         Mechanicy
                     </a>
-                    <a th:href="@{/departments}"
+                    <a th:href="@{/admin/departments}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/users -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -232,7 +232,7 @@
                         Wydziały
                     </a>
 
-                    <a th:href="@{/machines}"
+                    <a th:href="@{/admin/machines}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/chart-bar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -244,7 +244,7 @@
                         Maszyny
                     </a>
 
-                    <a th:href="@{/jobs}"
+                    <a th:href="@{/admin/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -256,7 +256,7 @@
                         Zlecenia
                     </a>
 
-                    <a th:href="@{/resources}"
+                    <a th:href="@{/admin/resources}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -268,7 +268,7 @@
                         Magazyn
                     </a>
 
-                    <a th:href="@{/hardwares}"
+                    <a th:href="@{/admin/hardwares}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -280,7 +280,7 @@
                         IT
                     </a>
 
-                    <a th:href="@{/logout}"
+                    <a th:href="@{/admin/logout}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -328,9 +328,6 @@
         </div>
         <main class="flex-1">
             <div class="py-6">
-                <!--        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
-                <!--          <h1 class="text-2xl font-semibold text-gray-900">Wydziały</h1>-->
-                <!--        </div>-->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                     <!--Opis tabeli-->
                     <div class="px-4 sm:px-6 lg:px-8">
@@ -343,13 +340,13 @@
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/departments/create}">Dodaj</a>
+                                    <a th:href="@{/admin/departments/create}">Dodaj</a>
                                 </button>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/departments/file}">Import</a>
+                                    <a th:href="@{/admin/departments/file}">Import</a>
                                 </button>
                             </div>
                         </div>
@@ -400,13 +397,10 @@
                                                 </td>
 
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a th:href="@{/departments/update/{id}(id=${department.id})}"
+                                                    <a th:href="@{/admin/departments/update/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
-                                                    <!--                                                    <a th:href="@{/departments/read/{id}(id=${department.id})}"-->
-                                                    <!--                                                       class="text-indigo-600 hover:text-indigo-900">Pokaż<span-->
-                                                    <!--                                                            class="sr-only"></span></a>-->
-                                                    <a th:href="@{/departments/delete/{id}(id=${department.id})}"
+                                                    <a th:href="@{/admin/departments/delete/{id}(id=${department.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
@@ -429,13 +423,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/departments/page/' + ${currentPage - 1}}">Poprzedni</a>
+                                           th:href="@{'/admin/departments/page/' + ${currentPage - 1}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/departments/page/' + ${currentPage + 1}}">Następny</a>
+                                           th:href="@{'/admin/departments/page/' + ${currentPage + 1}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -449,7 +443,7 @@
                                     </div>
                                     <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/departments/page/' + ${i}}">[[${i}]]</a>
+      <a th:if="${currentPage != i}" th:href="@{'/admin/departments/page/' + ${i}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>

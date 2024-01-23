@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.medos.cmmsApi.model.Employee;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,5 +23,4 @@ public class DepartmentEntity {
     private Long id;
     private String name;
     private String location;
-
 }

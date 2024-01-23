@@ -1,24 +1,16 @@
 package pl.medos.cmmsApi.controllers;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
 import pl.medos.cmmsApi.exception.SoftwareNotFoundException;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Software;
 import pl.medos.cmmsApi.service.*;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 

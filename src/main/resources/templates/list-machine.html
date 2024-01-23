@@ -28,10 +28,10 @@
 
                 <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                        <img class="h-8 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos"/>
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
-                        <a href="/"
+                        <a href="/admin/"
                            class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
 
                             <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@
                             Zlecenia
                         </a>
 
-                        <a th:href="@{/hardwares}"
+                        <a th:href="@{/admin/hardwares}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <!-- Heroicon name: outline/calendar -->
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -107,11 +107,11 @@
                         <div class="flex items-center">
                             <div>
                                 <img class="inline-block h-10 w-10 rounded-full"
-                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt="">
+                                     th:src="@{/admin/images/default.jpg}"
+                                     alt="user-photo">
                             </div>
                             <div class="ml-3">
-                                <p class="text-base font-medium text-white">Tom Cook</p>
+                                <p class="text-base font-medium text-white">Niezarejestrowany</p>
                                 <p class="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
                             </div>
                         </div>
@@ -131,11 +131,11 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                    <img class="h-8 w-auto" th:src="@{/admin/images/logo.svg}" alt="Medos"/>
                 </div>
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/index"
+                    <a href="/admin/index"
                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!--
                           Heroicon name: outline/home
@@ -151,7 +151,7 @@
                         Paneł Główny
                     </a>
 
-                    <a th:href="@{/employees}"
+                    <a th:href="@{/admin/employees}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -163,7 +163,7 @@
                         Pracownicy
                     </a>
 
-                    <a th:href="@{/engineers}"
+                    <a th:href="@{/admin/engineers}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -175,7 +175,7 @@
                         Mechanicy
                     </a>
 
-                    <a th:href="@{/departments}"
+                    <a th:href="@{/admin/departments}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/users -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -186,7 +186,7 @@
                         </svg>
                         Wydziały
                     </a>
-                    <a th:href="@{/machines}"
+                    <a th:href="@{/admin/machines}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/chart-bar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -197,7 +197,7 @@
                         </svg>
                         Maszyny
                     </a>
-                    <a th:href="@{/jobs}"
+                    <a th:href="@{/admin/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -209,7 +209,7 @@
                         Zlecenia
                     </a>
 
-                    <a th:href="@{/resources}"
+                    <a th:href="@{/admin/resources}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -221,7 +221,7 @@
                         Magazyn
                     </a>
 
-                    <a th:href="@{/hardwares}"
+                    <a th:href="@{/admin/hardwares}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -233,7 +233,7 @@
                         IT
                     </a>
 
-                    <a th:href="@{/logout}"
+                    <a th:href="@{/admin/logout}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/calendar -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -252,11 +252,11 @@
                     <div class="flex items-center">
                         <div>
                             <img class="inline-block h-9 w-9 rounded-full"
-                                 src="https://media.licdn.com/dms/image/C4D03AQEJEio39iNw_Q/profile-displayphoto-shrink_800_800/0/1661529893600?e=2147483647&v=beta&t=V3TkCm9POhJxk4HNIqzG6VOnNXgWI75vekdusiDOpeQ"
-                                 alt="">
+                                 th:src="@{/user/images/default.jpg}"
+                                 alt="user-photo">
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-white">Krzysztof Woelke</p>
+                            <p class="text-sm font-medium text-white">Niezarrejstrowany</p>
                             <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
                         </div>
                     </div>
@@ -291,13 +291,13 @@
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/machines/create}">Dodaj</a>
+                                    <a th:href="@{/admin/machines/create}">Dodaj</a>
                                 </button>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                                 <button type="button"
                                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                                    <a th:href="@{/machines/file}">Import</a>
+                                    <a th:href="@{/admin/machines/file}">Import</a>
                                 </button>
                             </div>
                         </div>
@@ -387,17 +387,11 @@
 
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-lm font-medium sm:pr-6">
 
-                                                    <!--                                                    <a th:href="@{/machines/shedule/{id}(id=${machine.id})}"-->
-                                                    <!--                                                       class="text-indigo-800 hover:text-indigo-300">Przeglądy<span-->
-                                                    <!--                                                            class="sr-only"></span></a>-->
-
-                                                    <a th:href="@{/machines/update/{id}(id=${machine.id})}"
+                                                    <a th:href="@{/admin/machines/update/{id}(id=${machine.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Edycja<span
                                                             class="sr-only"></span></a>
-                                                    <!--                                                    <a th:href="@{/machines/read/{id}(id=${machine.id})}"-->
-                                                    <!--                                                       class="text-indigo-800 hover:text-indigo-300">Pokaż<span-->
-                                                    <!--                                                            class="sr-only"></span></a>-->
-                                                    <a th:href="@{/machines/delete/{id}(id=${machine.id})}"
+
+                                                    <a th:href="@{/admin/machines/delete/{id}(id=${machine.id})}"
                                                        class="text-indigo-800 hover:text-indigo-300">Usuń<span
                                                             class="sr-only"></span></a>
                                                 </td>
@@ -421,13 +415,13 @@
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
-                                           th:href="@{'/machines/page/' + ${currentPage - 1}}">Poprzedni</a>
+                                           th:href="@{'/admin/machines/page/' + ${currentPage - 1}}">Poprzedni</a>
                                         <span th:unless="${currentPage >1}">Poprzedni</span>
                                     </button>
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage < totalPages}"
-                                           th:href="@{'/machines/page/' + ${currentPage + 1}}">Następny</a>
+                                           th:href="@{'/admin/machines/page/' + ${currentPage + 1}}">Następny</a>
                                         <span th:unless="${currentPage < totalPages}">Następny</span>
                                     </button>
 
@@ -435,20 +429,20 @@
                             </div>
 
 
-                        <div th:if="${totalPages > 1}">
-                            <div class="row col-sm-10">
-                                <div class="col-sm-2">
-                                    Wszystkich wpisów: [[${totalItems}]]
-                                </div>
-                                <div class="col-sm-1">
+                            <div th:if="${totalPages > 1}">
+                                <div class="row col-sm-10">
+                                    <div class="col-sm-2">
+                                        Wszystkich wpisów: [[${totalItems}]]
+                                    </div>
+                                    <div class="col-sm-1">
             <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/machines/page/' + ${i}}">[[${i}]]</a>
+      <a th:if="${currentPage != i}" th:href="@{'/admin/machines/page/' + ${i}}">[[${i}]]</a>
       <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
 
 
@@ -468,7 +462,8 @@
                                             <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-yellow-500">
                                                 <div class="flex-1 truncate px-4 py-2 text-sm">
                                                     <div class="form-group">
-                                                        <form class="form-inline" th:action="@{/machines/search/query}">
+                                                        <form class="form-inline"
+                                                              th:action="@{/admin/machines/search/query}">
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control"
                                                                        name="machineQuery"/>
@@ -495,7 +490,7 @@
                                             <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-300 bg-green-500">
                                                 <div class="flex-1 truncate px-4 py-2 text-sm">
                                                     <div class="form-group">
-                                                        <form class="form-inline" th:action="@{/machines/export}">
+                                                        <form class="form-inline" th:action="@{/admin/machines/export}">
                                                             <div class="input-group">
                                                                 <button type="submit"
                                                                         class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -524,14 +519,13 @@
 
 
     <div class="relative">
-                        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div class="w-full border-t border-gray-300"></div>
-                        </div>
-                        <div class="relative flex justify-center">
-                            <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center">
+            <span class="bg-gray-300 px-2 text-sm text-gray-500">Filtruj</span>
+        </div>
+    </div>
+</div>
 </body>
 </html>

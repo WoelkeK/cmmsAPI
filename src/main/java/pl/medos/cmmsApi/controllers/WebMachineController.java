@@ -7,15 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.ExportService;
-import pl.medos.cmmsApi.service.ImportService;
 import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.util.imports.ImportMachine;
 
 
 import java.io.IOException;
@@ -35,13 +34,13 @@ public class WebMachineController {
     private MachineService machineService;
     private DepartmentService departmentService;
     private ExportService exportService;
-    private ImportService importService;
+    private ImportMachine importMachine;
 
-    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService, ImportService importService) {
+    public WebMachineController(MachineService machineService, DepartmentService departmentService, ExportService exportService, ImportMachine importMachine) {
         this.machineService = machineService;
         this.departmentService = departmentService;
         this.exportService = exportService;
-        this.importService = importService;
+        this.importMachine = importMachine;
     }
 
     @GetMapping(value = "/list")
@@ -56,34 +55,59 @@ public class WebMachineController {
     }
 
     @GetMapping
-    public String listView(Model model) throws IOException {
+    public String listView(@RequestParam(name = "pageNo", defaultValue = "1") int page, Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPageinated(1, model);
+        return findPageinated(page,"name", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
-    public String findPageinated(@PathVariable(value = "pageNo") int pageNo  ,Model model) {
+    public String findPageinated(@PathVariable(name = "pageNo") int pageNo,
+                                 @RequestParam(name = "sortField") String sortField,
+                                 @RequestParam(name = "sortDir") String sortDir,
+                                 Model model) throws IOException {
         LOGGER.info("findPage()");
         int pageSize=10;
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
-        Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize);
+        Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Machine> machines = machinePage.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", machinePage.getTotalPages());
         model.addAttribute("totalItems", machinePage.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("machines", machines);
         LOGGER.info("listView(...)" + machines);
-        return "list-machine";
+        return "main-machine";
+
     }
 
     @GetMapping(value = "/search/query")
-    public String searchMachineByQuery(@RequestParam(value = "machineQuery") String query,
-                                       Model model) {
+    public String searchMachineByQuery(@RequestParam(value = "query") String query,
+                                      Model model) {
         LOGGER.info("search()");
-        List<Machine> machines = machineService.findMachinesByQuery(query);
+        int pageSize=10;
+        int pageNo=1;
+        String sortField="name";
+        String sortDir="desc";
+
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        Page<Machine> machinePage = machineService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
+        List<Machine> machines = machinePage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", machinePage.getTotalPages());
+        model.addAttribute("totalItems", machinePage.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("machines", machines);
-        return "list-machine";
+        return "main-machine";
     }
 
     @GetMapping(value = "/search/machine")
@@ -92,7 +116,7 @@ public class WebMachineController {
         LOGGER.info("search()");
         Machine machines = machineService.findMachineById(Long.parseLong(machineName));
         model.addAttribute("machines", machines);
-        return "list-machine";
+        return "main-machine";
     }
 
     @GetMapping(value = "/search/department")
@@ -108,22 +132,25 @@ public class WebMachineController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
+            @RequestParam(name = "pageNo") int pageNo,
             ModelMap modelMap) throws Exception {
         LOGGER.info("updateView()");
         Machine machine = machineService.findMachineById(id);
         modelMap.addAttribute("machine", machine);
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        return "update-machine.html";
+        modelMap.addAttribute("pageNo", pageNo);
+        return "update-machine";
     }
 
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
+                         @RequestParam(name = "pageNo") int pageNo,
                          @ModelAttribute(name = "machine") Machine machine) throws MachineNotFoundException {
         LOGGER.info("update()" + machine);
         Machine savedMachine = machineService.updateMachine(machine, id);
         LOGGER.info("update(...)" + savedMachine);
-        return "redirect:/machines";
+        return "redirect:/machines?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
@@ -176,17 +203,17 @@ public class WebMachineController {
         return "shedule-machine.html";
     }
 
-
     @GetMapping(value = "/export")
     public void exportMachines(@ModelAttribute(name = "machines") List<Machine> machines,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
+        machines= machineService.findAllMachines();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment;filename=machine" + currentDateTime + ".xlsx";
+        String headerValue = "attachment;filename=maszyny" + currentDateTime + ".xlsx";
 
         response.setHeader(headerKey, headerValue);
         exportService.excelMachineModelGenerator(machines);
@@ -200,6 +227,15 @@ public class WebMachineController {
         return "uploadMach-form";
     }
 
+    @GetMapping("/deleteAll")
+    public String deleteAll(){
+        LOGGER.info("deleteAll()");
+        machineService.deleteAllMachine();
+        LOGGER.info("deleteAll(...)");
+        return "redirect:/machines";
+
+    }
+
     @PostMapping(value = "/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
 
@@ -209,9 +245,8 @@ public class WebMachineController {
             return "redirect/machines";
         }
 
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-        List<Machine> machines = importService.importExcelMachineData(file);
-
+//        List<Machine> machines = importService.importExcelMachineData(file);
+        List<Machine> machines = importMachine.importExcelMachineData(file);
         machines.forEach((machine) -> {
             machineService.createMachine(machine);
         });

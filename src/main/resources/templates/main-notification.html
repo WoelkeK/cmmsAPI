@@ -4,23 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł awizacji</title>
-    <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
-    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
     <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-400">
 
-<div>
+<div  th:if="${isAdmin} or ${nRead} ">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
-
-
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
-
         <div class="fixed inset-0 z-40 flex">
-
             <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800">
-
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                     <button type="button"
                             class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -48,7 +47,7 @@
                                      alt="">
                             </div>
                             <div class="ml-3">
-                                <p class="text-base font-medium text-white">Tom Cook</p>
+                                <p class="text-base font-medium text-white">Niezarejestrowany</p>
                                 <p class="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
                             </div>
                         </div>
@@ -81,7 +80,7 @@
                         Awizacje
                     </a>
 
-                    <a href="/info"
+                    <a th:if="${isAdmin} or ${eRead}" href="/employees"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -93,7 +92,7 @@
                         Pracownicy
                     </a>
 
-                    <a href="/przepustki"
+                    <a  th:if="${isAdmin} or ${pRead}"href="/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -104,6 +103,70 @@
                         </svg>
                         Przepustki Stałe
                     </a>
+
+                    <a  th:if="${isAdmin}" href="/hardwares"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/folder -->
+                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                        </svg>
+                        IT
+                    </a>
+                    <a  th:if="${isAdmin} or ${dRead}" href="/departments"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/folder -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        </svg>
+                        Wydziały
+                    </a>
+
+                    <a  th:if="${isAdmin} or ${mRead}" href="/machines"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/folder -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+                        </svg>
+                        Maszyny
+                    </a>
+
+                    <a  th:if="${isAdmin} or ${jRead}"th:href="@{/jobs}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/inbox -->
+                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+                        </svg>
+                        Utrzymanie Ruchu
+                    </a>
+
+                    <a  th:if="${isAdmin} or ${jRead}" th:href="@{/engineers}"
+                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/inbox -->
+                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+                        </svg>
+                        Technicy
+                    </a>
+
+                    <a  th:if="${isAdmin} or ${jRead}" th:href="@{/dashboards}"
+                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/inbox -->
+                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+                        </svg>
+                        Panel Napraw
+                    </a>
+
                 </nav>
             </div>
 
@@ -115,8 +178,8 @@
 
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-white">Imię i Nazwisko</p>
-                            <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">Podgląd profilu</p>
+                            <p class="text-lm font-medium text-gray-300 group-hover:text-gray-200">Klient IP:</p>
+                            <p class="text-lm font-medium text-white" th:text="${userIP}">Niezarejestrowany</p>
                         </div>
                     </div>
                 </a>
@@ -147,7 +210,7 @@
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
                                 <h1 class="text-4xl font-semibold text-gray-900">Awizacje</h1>
-                                <p class="mt-2 text-lg text-gray-700">Lista zezwoleń na wjazd pojadu</p>
+                                <p class="mt-2 text-lg text-gray-700">Lista zezwoleń na wjazd pojazdu</p>
                             </div>
                             <div class="mt-8 sm:mt-12 sm:ml-16 sm:flex-none">
                             </div>
@@ -159,14 +222,15 @@
                                 <div class="flex items-center px-1 lg:px-1">
                                     <div class="flex-shrink-1">
 
-                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/truck.png}"
+                                        <img class="block h-14 w-auto lg:hidden" th:src="@{/images/car.png}"
                                              alt="device">
-                                                                                <img class="hidden h-14 w-auto lg:block" th:src="@{/images/truck.png}"
+                                                                                <img class="hidden h-14 w-auto lg:block" th:src="@{/images/car.png}"
                                                                                      alt="device">
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
-                                        <div class="flex space-x-4">
+                                        <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
+                                        <div th:if="(${isAdmin} or ${nEdit})" class="flex space-x-4">
                                             <a href="#" th:href="@{/awizacje/create}"
                                                class="rounded-md bg-green-900 px-3 py-2 text-lg font-medium hover:bg-green-400 text-gray-300 hover:text-gray-700">Dodaj</a>
                                         </div>
@@ -274,7 +338,7 @@
                                             <tbody class="bg-red">
                                             <tr class="border-t border-gray-600">
                                                 <th colspan="12" scope="colgroup"
-                                                    class="bg-gray-700 px-4 py-2 text-left text-lm font-semibold text-blue-200 sm:px-6">
+                                                    class="bg-gray-500 px-4 py-2 text-left text-lm font-semibold text-gray-800 sm:px-6">
                                                     Kliknij nagłówek tabeli, aby posortować.
                                                 </th>
                                             </tr>
@@ -283,41 +347,41 @@
                                                 class="border-t border-gray-300 text-lg font-medium bg-gray-100">
 
                                                 <td th:text="${#temporals.format(notification.visitDate, 'dd-MM-yyyy HH:mm')}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
+                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
                                                     Data
                                                     Zgłoszenia
                                                 </td>
                                                 <td th:text="${notification.type}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Typ
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Typ
                                                 </td>
                                                 <td th:text="${notification.status}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Status
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Status
                                                 </td>
                                                 <td th:text="${notification.supplier}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Dostawca
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Dostawca
                                                 </td>
                                                 <td th:text="${notification.item}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Towar
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Towar
                                                 </td>
                                                 <td th:text="${notification.itemDetails}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">ilość /
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">ilość /
                                                     Waga
                                                 </td>
                                                 <td th:text="${notification.carPlates}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium  text-gray-900">Nr
+                                                    class="align-text-top px-3 py-4 text-lg font-medium  text-gray-900">Nr
                                                     rejestracyjny
                                                 </td>
                                                 <td th:text="${notification.driverName}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Kierowca
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Kierowca
                                                 </td>
 
                                                 <td th:text="${notification.driverPhone}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Telefon do
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Telefon do
                                                     kierowcy
                                                 </td>
 
                                                 <td th:text="${notification.employee}"
-                                                    class="whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-900">Osoba
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Osoba
                                                     zlecająca
                                                 </td>
 
@@ -329,20 +393,39 @@
 <!--                                                        </a>-->
 <!--                                                    </div>-->
 <!--                                                </td>-->
-                                                <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
+                                                <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-lg font-medium sm:pr-8">
 
-                                                    <a th:href="@{/awizacje/read/{id}(id=${notification.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300 px-6">Info<span
-                                                            class="sr-only"></span></a>
+                                                    <a th:if="${isAdmin} or ${nRead}" or th:href="@{/awizacje/read/{id}(id=${notification.id})}"
+                                                       class="text-indigo-800 hover:text-indigo-300">
+                                                    <button class="mr-4" title="Szczegóły">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                                                        </svg>
 
-                                                    <a th:href="@{/awizacje/update/{id}(id=${notification.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300 ">Edycja<span
-                                                            class="sr-only"></span></a>
+                                                    </button>
+                                                    </a>
 
-                                                    <a th:href="@{/awizacje/delete/{id}(id=${notification.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">Usuń<span
-                                                            class="sr-only"></span></a>
-                                                </td>
+                                                    <a th:if="${isAdmin} or ${nEdit}" th:href="@{/awizacje/update/{id}(id=${notification.id})}"
+                                                       class="text-green-600 hover:text-green-300">
+                                                    <button class="mr-4" title="Edycja">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                        </svg>
+
+                                                    </button>
+                                                    </a>
+
+                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"
+                                                       class="deleteBtn text-red-600 hover:text-red-300">
+                                                    <button class="mr-4" title="Usuń" data-toggle="modal" data-target="#editModal">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+
+                                                    </button>
+
+                                                    </a>
+                                               </td>
 
                                             </tr>
                                             <!-- More people... -->
@@ -359,8 +442,8 @@
                                 </div>
                             </div>
 
-                            <div class="pt-1">
-                                <div class="flex justify-end">
+                            <div class="pt-5">
+                                <div class="flex justify-end space-x-2">
                                     <button type="button"
                                             class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         <a th:if="${currentPage >1}"
@@ -384,10 +467,10 @@
                                         Wszystkich wpisów: [[${totalItems}]]
                                     </div>
                                     <div class="col-sm-1">
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <span class="hover:text-indigo-200" th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${currentPage != i}"
          th:href="@{'/awizacje/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+      <span class="text-indigo-200 text-xl " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
             </span>
                                     </div>
                                 </div>
@@ -406,7 +489,6 @@
             </div>
         </main>
 
-
         <div class="relative">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="w-full border-t border-gray-300"></div>
@@ -417,6 +499,112 @@
         </div>
     </div>
 </div>
-<script src="/js/main.js"></script>
+
+
+<div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
+     style="display: none;">
+    <!-- Modal Overlay -->
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-middle bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full sm:p-6">
+
+            <div class="flex flex-shrink-0 items-center gap-4 ">
+                <img class="h-16 w-auto" th:src="@{/images/warning.png}" alt="Medos"/>
+                <p class="text-xl text-gray-500">
+                    Czy napewno usunąć ?
+                </p>
+            </div>
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse space-x-20 ">
+                <button onclick="closeModal()" type="button"
+                        class="w-fit inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 max-w-20 md:text-md">
+                    Nie
+                </button>
+                <button id="confirmDelete" type="button"
+                        class="mt-3 w-fit inline-flex justify-center rounded-md border border-transparent shadow-sm px-6 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 max-w-20 md:text-md">
+                    Tak
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+
+        <div class="shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-base md:text-2xl font-medium leading-6 text-red-600">Brak uprawnień!</h3>
+                <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                    <div class="max-w-xl text-md text-gray-500">
+                        <p>Dostęp do aplikacji niemożliwy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-3 bg-gray-400 shadow sm:rounded-lg">
+            <div class="sm:col-span-3">
+                <div class="px-4 py-5 sm:px-2">
+
+                    <fieldset>
+                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Moduł awizacje
+                        </legend>
+                        <div class="mt-4 divide-y divide-gray-200">
+                            <div class="shadow sm:rounded-lg">
+                                <div class="px-4 py-5 sm:p-6">
+                                    <h3 class="text-base md:text-md font-medium leading-6 text-gray-600">Nastąpi
+                                        przekierowanie na stronę główną Medos.pl</h3>
+                                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                                        <div class="max-w-xl text-md text-gray-500">
+                                            <p>Skontaktuj się z działem IT w celu uzyskania dostępu do aplikacji.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+
+            <div class="shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>
+                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                        <div class="max-w-xl text-sm text-gray-500">
+                            <p class="md:text-lg font-semibold">Twoj adres IP:</p>
+                            <p class="md:text-lg font-semibold text-blue-600" th:text="${userIP}"
+                               No ip></p>
+                        </div>
+                        <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
+                            <button type="button" id="saveChanges" data-dismiss="modal"
+                                    class="defaultPage inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                                Zamknij
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:if="${noAccess}" th:src="@{/js/alert.js}"></script>
+<script th:src="@{/js/redirect.js}"></script>
+<script type="text/javascript" th:src="@{/js/deleteModal.js}"></script>
 </body>
 </html>
