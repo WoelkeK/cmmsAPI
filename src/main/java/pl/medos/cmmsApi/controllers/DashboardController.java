@@ -87,7 +87,7 @@ public class DashboardController {
                                 Model model) {
         LOGGER.info("listView()");
         int size = 5;
-        String query = "Zgłoszono";
+        String query = "zgłoszenie";
         Page<Job> jobPages = jobService.findByStatusWithPagination(query, pageNo, size, sortField, sortDirection);
         List<Job> jobs = jobPages.getContent();
         model.addAttribute("currentPage", pageNo);

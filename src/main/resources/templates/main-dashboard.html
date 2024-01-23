@@ -85,7 +85,7 @@
                 <ul role="list" class="divide-y-1 divide-transparent space-y-2 rounded-3xl">
                     <li th:each="job : ${jobs}">
 
-                        <div th:attr="class=${job.status=='Zgłoszono'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl':'hidden')}">
+                        <div th:attr="class=${job.status=='zgłoszenie'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl':'hidden')}">
                             <a th:href="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="get"
                                class="block hover:bg-blue-50 rounded-3xl">
 
@@ -211,7 +211,7 @@
 
 
 
-<!--<script th:src="@{/js/UpdateHandler.js}"></script>-->
+<script th:src="@{/js/UpdateHandler.js}"></script>
 <script th:src="@{/js/Refresh.js}"></script>
 </body>
 </html>
