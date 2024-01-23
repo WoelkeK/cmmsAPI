@@ -134,7 +134,7 @@
                                                 class="block w-full max-w-lg rounded-md text-blue-800  border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-xl">
 
                                             <option th:each="machine : ${machines}"
-                                                    th:text="${machine.model}"
+                                                    th:text="${machine.name}"
                                                     th:value="${machine.id}">
                                             </option>
                                         </select>

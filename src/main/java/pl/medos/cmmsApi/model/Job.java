@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.DateOffset;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 
 
 import java.time.LocalDate;
@@ -35,11 +38,17 @@ public class Job {
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
+
+    private LocalDateTime jobShedule;
+    private Decision decision;
+    private int offset;
+    private DateOffset dateOffset;
+
+
     private double calcCost;
     private String status;
 
-    private boolean open;
-
+    private JobStatus jobStatus;
 
     private byte[] originalImage;
     private byte[] resizedImage;

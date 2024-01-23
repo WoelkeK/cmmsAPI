@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import pl.medos.cmmsApi.enums.DateOffset;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 
 import java.time.LocalDateTime;
 
@@ -46,9 +49,18 @@ public class JobEntity {
     private String solution;
     private LocalDateTime jobStartTime;
     private LocalDateTime jobStopTime;
+    private LocalDateTime jobShedule;
+    @Enumerated(EnumType.STRING)
+    private Decision decision;
+    private int offset;
+    @Enumerated(EnumType.STRING)
+    private DateOffset dateOffset;
+
     private double calcCost;
     private String status;
-    private boolean open;
+
+    @Enumerated(EnumType.STRING)
+    private JobStatus jobStatus;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)

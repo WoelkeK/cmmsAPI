@@ -122,7 +122,7 @@ public class DashboardController {
     public String createView(Model model) {
         LOGGER.info("createView()");
         Job job = new Job();
-        job.setStatus("Zgłoszono");
+        job.setStatus("zgłoszenie");
         job.setSolution(" ");
         model.addAttribute("job", job);
         return "create-dashboard";
@@ -169,7 +169,7 @@ public class DashboardController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
 
-        if (job.getStatus().equals("Zgłoszono") || job.getStatus().equals("oczekiwanie")) {
+        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie")) {
 
             job.setStatus("przetwarzanie");
             model.addAttribute("job", job);
