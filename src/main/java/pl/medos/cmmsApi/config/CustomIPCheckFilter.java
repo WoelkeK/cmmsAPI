@@ -101,7 +101,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
 //        } else {
 //            req.setAttribute("isAdmin", false);
 //        }
-        log.info("Send data to frontend");
+        log.info("Send data to frontend " + access);
         req.setAttribute("userIP", remoteIP);
         chain.doFilter(request, res);
     }

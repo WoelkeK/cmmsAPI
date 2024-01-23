@@ -392,7 +392,7 @@
                                             <a th:if="${isAdmin} or ${jFull}" href="#" th:href="@{/jobs/export}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
                                             <a th:if="${isAdmin} or ${jFull}" href="#" th:href="@{/jobs/deleteAll}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń
+                                               class="deleteAllBtn rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń
                                                 wszystko</a>
                                         </div>
                                     </div>
@@ -597,9 +597,9 @@
                                                     </a>
 
                                                     <a th:if="${isAdmin} or ${jFull}"
-                                                       th:href="@{/jobs/delete/{id}(id=${job.id}, pageNo=${currentPage})}"
                                                        class="text-red-600 hover:text-red-300">
-                                                        <button class="mr-4 deleteBtn" title="Usuń">
+                                                        <button th:attr="data-id=${job.id}" class="mr-4 deleteBtn"
+                                                                title="Usuń">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                  viewBox="0 0 24 24" stroke-width="1.5"
                                                                  stroke="currentColor" class="w-7 h-7">
@@ -780,7 +780,7 @@
 
 <script th:if="${noAccess}" th:src="@{/js/alert.js}"></script>
 <script th:src="@{/js/redirect.js}"></script>
-<script type="text/javascript" th:src="@{/js/deleteModal.js}"></script>
+<script type="text/javascript" th:src="@{/js/deleteJobModal.js}"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {

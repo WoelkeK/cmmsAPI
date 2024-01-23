@@ -233,10 +233,11 @@ public class WebJobController {
 
     @GetMapping(value = "/delete/{id}")
     public String delete(
+            @RequestParam(name = "pageNo") int pageNo,
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         jobService.deleteJob(id);
-        return "redirect:/jobs";
+        return "redirect:/jobs?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/deleteAll")
