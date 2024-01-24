@@ -9,6 +9,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EmployeeService;
@@ -149,6 +151,18 @@ public class ImportJobFromXls implements ImportJob {
                                         job.setRequestDate(requestDate);
                                         LOGGER.info(requestDate.toString());
                                     }
+
+                                    if(m.getJobStatus()==null){
+                                        job.setJobStatus(JobStatus.AWARIA);
+                                    }
+                                    if(m.getDecision()==null){
+                                        job.setDecision(Decision.NIE);
+                                    }
+
+                                    if(m.getStatus()==null){
+                                        job.setStatus("zgłoszenie");
+                                    }
+
 
                                     LOGGER.info("createJobMap(...)");
                                     return job;

@@ -5,8 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.enums.DateOffset;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.repository.JobRepository;
@@ -76,6 +79,7 @@ public class JobServiceImpl implements JobService {
     public Job createJob(Job job) {
         LOGGER.info("create(" + job + ")");
         job.setRequestDate(LocalDateTime.now());
+        job.setOpen(true);
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
         Job savedJobModel = jobMapper.entityToModel(savedJobEntity);
@@ -162,9 +166,16 @@ public class JobServiceImpl implements JobService {
         jobRepository.deleteAll();
 
     }
+
     @Override
     public LocalDateTime calculateFutureDate(LocalDateTime initialDate, DateOffset unit, int amount) {
         switch (unit) {
+            case SEKUNDY:
+                return initialDate.plusSeconds(amount);
+            case MINUTY:
+                return initialDate.plusSeconds(amount);
+            case GODZINY:
+                return initialDate.plusSeconds(amount);
             case DNI:
                 return initialDate.plusDays(amount);
             case TYGODNIE:
@@ -178,4 +189,47 @@ public class JobServiceImpl implements JobService {
         }
     }
 
+    @Scheduled(fixedRate = 10000)
+    public void checkAndUpdate() {
+//        LOGGER.info("checkAndUpdate()");
+
+        List<JobEntity> jobs = jobRepository.findAll();
+
+
+        jobs.stream().forEach(job -> {
+
+                    if (job.getJobStatus().equals(JobStatus.PRZEGLĄD) && job.getStatus().equalsIgnoreCase("zakończono")) {
+//                        LOGGER.info("Is open " + job.isOpen());
+
+                        if (job.getDecision().equals(Decision.TAK) && (job.isOpen())) {
+
+                            LocalDateTime futureJobDate = calculateFutureDate(job.getJobShedule(), job.getDateOffset(), job.getOffset());
+                            JobEntity cycleJob = new JobEntity();
+                            cycleJob.setMessage(job.getMessage());
+                            cycleJob.setMachine(job.getMachine());
+                            cycleJob.setStatus("przegląd");
+                            cycleJob.setDepartment(job.getDepartment());
+                            cycleJob.setEmployee(job.getEmployee());
+                            cycleJob.setDecision(job.getDecision());
+                            cycleJob.setDateOffset(job.getDateOffset());
+                            cycleJob.setJobShedule(futureJobDate);
+                            cycleJob.setOffset(job.getOffset());
+                            cycleJob.setOpen(true);
+                            cycleJob.setOriginalImage(job.getOriginalImage());
+                            cycleJob.setResizedImage(job.getResizedImage());
+                            cycleJob.setJobStatus(JobStatus.PRZEGLĄD);
+
+//                            LOGGER.info("Create new cyclic job ");
+                            jobRepository.save(cycleJob);
+//                            LOGGER.info("Set prevoius record to close");
+                            job.setOpen(false);
+                            jobRepository.save(job);
+                        }
+
+                    }
+                }
+        );
+//
+//        LOGGER.info("checkAndUpdate(...)");
+    }
 }

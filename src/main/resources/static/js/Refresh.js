@@ -7,7 +7,7 @@ $(document).ready(function() {
         });
     }, 100000);
     window.jobs.forEach(job => {
-        if (job.status === "Zgłoszono") {
+        if (job.status === "zgłoszenie") {
             let audio = document.getElementById("audio");
             audio.play();
         }

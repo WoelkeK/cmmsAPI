@@ -3,6 +3,9 @@ package pl.medos.cmmsApi.model;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import pl.medos.cmmsApi.enums.DateOffset;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +28,14 @@ public class JsonJob {
     private String solution;
     private String jobStartTime;
     private String jobStopTime;
+
+    private LocalDateTime jobShedule;
+    private Decision decision;
+    private int offset;
+    private DateOffset dateOffset;
+    private String status;
+    private JobStatus jobStatus;
+
 //    private String calcCost;
 //    private String status;
 

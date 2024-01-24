@@ -144,10 +144,6 @@
                             </a>
                         </div>
                     </li>
-
-
-
-
                 </ul>
             </div>
 
@@ -212,50 +208,8 @@
 <!--    </div>-->
 <!--</div>-->
 
-
-
-
-<!--<script>-->
-<!--    document.addEventListener("DOMContentLoaded", function() {-->
-<!--        var pElements = document.querySelectorAll("p");-->
-
-<!--        pElements.forEach(function(pElement) {-->
-<!--            var decision = pElement.getAttribute("data-decision");-->
-<!--            var dateOffset = pElement.getAttribute("data-dateOffset");-->
-<!--            var offset = pElement.getAttribute("data-offset");-->
-<!--            console.log("Decision:", decision);-->
-
-<!--            if(decision === "TAK") {-->
-<!--                console.log("AutoCreateJob2");-->
-<!--                createJob({dateOffset: dateOffset, offset: offset});-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-
-<!--    function createJob(job) {-->
-<!--        console.log("Post Create()")-->
-<!--        fetch('/api/jobs/create', {-->
-
-<!--            method: 'POST',-->
-<!--            headers: { 'Content-Type': 'application/json' },-->
-<!--            body: JSON.stringify(job)-->
-<!--        })-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--                //Możesz tutaj zaktualizować swoją stronę, na przykład dodać nowe zadanie do listy-->
-<!--            })-->
-<!--            .catch((error) => {-->
-<!--                console.error('Error:', error);-->
-<!--            });-->
-<!--    }-->
-<!--</script>-->
-
-
-
-
 <!--<script th:src="@{/js/UpdateHandler.js}"></script>-->
 <script th:src="@{/js/Refresh.js}"></script>
-<!--<script th:src="@{/js/Reorder.js}"></script>-->
 
 </body>
 </html>
