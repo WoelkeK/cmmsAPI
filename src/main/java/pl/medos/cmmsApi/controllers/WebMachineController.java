@@ -185,11 +185,21 @@ public class WebMachineController {
 
     @GetMapping(value = "/delete/{id}")
     public String delete(
+            @RequestParam(name = "pageNo") int pageNo,
             @PathVariable(name = "id") Long id) {
         LOGGER.info("delete()");
         machineService.deleteMachine(id);
-        return "redirect:/machines";
-    }
+        return "redirect:/machines?pageNo=" + pageNo;
+    }    
+//
+//
+//    @GetMapping(value = "/delete/{id}")
+//    public String delete(
+//            @PathVariable(name = "id") Long id) {
+//        LOGGER.info("delete()");
+//        machineService.deleteMachine(id);
+//        return "redirect:/machines";
+//    }
 
     @GetMapping(value = "/shedule/{id}")
     public String sheduleView(
