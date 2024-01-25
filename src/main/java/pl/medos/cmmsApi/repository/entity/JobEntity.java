@@ -33,12 +33,17 @@ public class JobEntity {
     @Nullable
     private EngineerEntity engineer;
 
+
     @ManyToOne
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private MachineEntity machine;
+
+
+
+
     //    @ManyToOne
 //    @JoinColumn(name = "cost_id")
 //    private CostEntity cost;

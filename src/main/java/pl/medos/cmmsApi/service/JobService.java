@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import pl.medos.cmmsApi.enums.DateOffset;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
@@ -11,6 +12,7 @@ import pl.medos.cmmsApi.model.Job;
 import pl.medos.cmmsApi.model.Machine;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface JobService {
@@ -30,4 +32,5 @@ public interface JobService {
     Page<Job> findJobByQuery(int pageNo, int pagesize, String query);
     void deleteAllJobs();
 
+    LocalDateTime calculateFutureDate(LocalDateTime initialDate, DateOffset unit, int amount);
 }

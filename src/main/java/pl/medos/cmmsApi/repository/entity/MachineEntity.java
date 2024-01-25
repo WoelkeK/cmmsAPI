@@ -29,6 +29,7 @@ public class MachineEntity {
     private String model;
     private int manufactured;
     private String serialNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
@@ -42,4 +43,7 @@ public class MachineEntity {
     @CreationTimestamp
     private LocalDateTime installDate;
 
+
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobEntity> jobEntities;
 }

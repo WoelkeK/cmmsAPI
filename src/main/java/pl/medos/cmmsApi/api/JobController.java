@@ -34,7 +34,7 @@ public class JobController {
         return jobs;
     }
 
-    @PostMapping("/job")
+    @PostMapping("/create")
     public Job createJob(@RequestBody Job job) throws IOException {
         LOGGER.info("createJob(" + job + ")");
         Job createdJob = jobService.createJob(job);

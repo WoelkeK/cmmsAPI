@@ -23,4 +23,8 @@ public class DepartmentEntity {
     private Long id;
     private String name;
     private String location;
+
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobEntity> jobEntities;
 }

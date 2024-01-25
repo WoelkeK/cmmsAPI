@@ -1,5 +1,4 @@
     let selectedId = null;
-    let selectedJob = null;
 
     function openDeleteAllModal() {
         console.log("open ");
@@ -14,7 +13,7 @@
 
     function executeDeleteAll() {
         console.log("executeDeleteAll()");
-    fetch(`/jobs/deleteAll`, {
+    fetch(`/machines/deleteAll`, {
         method: 'GET'
     })
         .then(response => location.reload());
@@ -35,7 +34,7 @@
 
     function executeDelete() {
         console.log("executeDelete()");
-    fetch(`/api/jobs/delete/${selectedId}`, {
+    fetch(`/api/machines/delete/${selectedId}`, {
         method: 'DELETE'
     })
         .then(response => location.reload());

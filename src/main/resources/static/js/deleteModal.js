@@ -1,7 +1,7 @@
     let selectedId = null;
 
     function openDeleteAllModal() {
-        console.log("open ");
+        console.log("openDeleteAll ");
     let modal2 = document.getElementById('deleteAllModal');
     modal2.style.display = "block";
 }
@@ -20,7 +20,7 @@
 }
 
     function openDeleteModal(id) {
-        console.log("open " + id);
+        console.log("openDeleteModal " + id);
     // The id value comes from the data-id attribute
     selectedId = id;
     let modal = document.getElementById('deleteModal');

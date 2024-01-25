@@ -13,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.exception.*;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
@@ -23,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -169,7 +172,7 @@ public class DashboardController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
 
-        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie")) {
+        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
 
             job.setStatus("przetwarzanie");
             model.addAttribute("job", job);
@@ -216,9 +219,32 @@ public class DashboardController {
         }
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
+
+//        if(job.getDecision().equals(Decision.TAK)){
+//
+//            LocalDateTime futureJobDate = jobService.calculateFutureDate(job.getJobShedule(), job.getDateOffset(), job.getOffset());
+//            Job cycleJob = new Job();
+//            cycleJob.setMessage(job.getMessage());
+//            cycleJob.setMachine(job.getMachine());
+//            cycleJob.setStatus("przegląd");
+//            cycleJob.setDepartment(job.getDepartment());
+//            cycleJob.setEmployee(job.getEmployee());
+//            cycleJob.setDecision(job.getDecision());
+//            cycleJob.setDateOffset(job.getDateOffset());
+//            cycleJob.setJobShedule(futureJobDate);
+//            cycleJob.setOffset(job.getOffset());
+//            cycleJob.setOpen(job.isOpen());
+//            cycleJob.setOriginalImage(job.getOriginalImage());
+//            cycleJob.setResizedImage(job.getResizedImage());
+//            cycleJob.setJobStatus(JobStatus.PRZEGLĄD);
+//            LOGGER.info("Create new job based on cyclic");
+//            jobService.createJob(cycleJob);
+//        }
+
         LOGGER.info("update(...)");
         return "redirect:/dashboards";
     }
+
 
     @GetMapping(value = "/delete/{id}")
     public String delete(

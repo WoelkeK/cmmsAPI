@@ -9,21 +9,26 @@ import org.apache.xmlbeans.impl.common.IOUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.Decision;
+import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
+import pl.medos.cmmsApi.repository.entity.JobEntity;
 import pl.medos.cmmsApi.service.*;
 import pl.medos.cmmsApi.util.imports.ImportJob;
 
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -79,7 +84,7 @@ public class WebJobController {
     @GetMapping
     public String listView(
             @RequestParam(name = "pageNo", defaultValue = "1") int page,
-                           Model model) throws IOException {
+            Model model) throws IOException {
         LOGGER.info("listView()");
         return findJobsPages(page, "requestDate", "asc", model);
     }
@@ -192,6 +197,12 @@ public class WebJobController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
 
+        String status = job.getJobStatus().toString();
+        if (status.equalsIgnoreCase("przegląd")) {
+            job.setStatus("przegląd");
+        }
+
+
         if (image.getSize() == 0 && job.getOriginalImage() == null) {
             LOGGER.info("default image");
             byte[] bytes = imageService.imageToByteArray();
@@ -241,7 +252,7 @@ public class WebJobController {
     }
 
     @GetMapping(value = "/deleteAll")
-    public String deleteAll(){
+    public String deleteAll() {
         LOGGER.info("delete()");
         jobService.deleteAllJobs();
         return "redirect:/jobs";
@@ -288,7 +299,7 @@ public class WebJobController {
         List<Job> jobs = importJob.importExcelJobData(file);
 
         jobs.forEach((job) -> {
-           jobService.createJob(job);
+            jobService.createJob(job);
         });
         LOGGER.info("importJobs(...) ");
         return "redirect:/jobs";
@@ -298,7 +309,7 @@ public class WebJobController {
     public void exportJobs(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
 
-        List<Job> jobs=jobService.findAllJobs();
+        List<Job> jobs = jobService.findAllJobs();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
