@@ -43,4 +43,7 @@ public class MachineEntity {
     @CreationTimestamp
     private LocalDateTime installDate;
 
+
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobEntity> jobEntities;
 }

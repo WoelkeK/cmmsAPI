@@ -1,23 +1,23 @@
     let selectedId = null;
 
-//    function openDeleteAllModal() {
-//        console.log("open ");
-//    let modal2 = document.getElementById('deleteAllModal');
-//    modal2.style.display = "block";
-//}
-//
-//    function closeAllModal() {
-//    let modal2 = document.getElementById('deleteAllModal');
-//    modal2.style.display = "none";
-//}
+    function openDeleteAllModal() {
+        console.log("open ");
+    let modal2 = document.getElementById('deleteAllModal');
+    modal2.style.display = "block";
+}
 
-//    function executeDeleteAll() {
-//        console.log("executeDeleteAll()");
-//    fetch(`/jobs/deleteAll`, {
-//        method: 'GET'
-//    })
-//        .then(response => location.reload());
-//}
+    function closeAllModal() {
+    let modal2 = document.getElementById('deleteAllModal');
+    modal2.style.display = "none";
+}
+
+    function executeDeleteAll() {
+        console.log("executeDeleteAll()");
+    fetch(`/machines/deleteAll`, {
+        method: 'GET'
+    })
+        .then(response => location.reload());
+}
 
     function openDeleteModal(id) {
         console.log("open " + id);
@@ -51,14 +51,14 @@
 });
 }
 
-//
-//    let deleteAllButtons = document.getElementsByClassName('deleteAllBtn');
-//    for(let btn of deleteAllButtons) {
-//    btn.addEventListener('click', function(e) {
-//    e.preventDefault();
-//    openDeleteAllModal();
-//});
-//}
+
+    let deleteAllButtons = document.getElementsByClassName('deleteAllBtn');
+    for(let btn of deleteAllButtons) {
+    btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openDeleteAllModal();
+});
+}
 
 
     // Confirm the Delete
@@ -67,9 +67,9 @@
 });
 
 
-//    // Confirm the Delete
-//    document.getElementById('confirmDeleteAll').addEventListener('click', function() {
-//    executeDeleteAll();
-//});
+    // Confirm the Delete
+    document.getElementById('confirmDeleteAll').addEventListener('click', function() {
+    executeDeleteAll();
+});
 
 }
