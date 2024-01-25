@@ -133,10 +133,12 @@
                                             </svg>
                                             <p th:switch="${job.status}">
 
-                                                <time th:case="'Zgłoszono'" datetime="date"
+                                                <time th:case="'zgłoszenie'" datetime="date"
                                                       th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"></time>
-                                                <time th:case="'Zakończono'" datetime="date"
-                                                      th:text="${#temporals.format(job.jobStopTime, 'dd MMMM yyyy HH:mm')}"></time>
+                                                <time th:case="'oczekiwanie'" datetime="date"
+                                                      th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"></time>
+                                                <time th:case="'przegląd'" datetime="date"
+                                                      th:text="${#temporals.format(job.jobShedule, 'dd MMMM yyyy HH:mm')}"></time>
                                             </p>
                                         </div>
                                     </div>
