@@ -39,8 +39,24 @@ public class JsonHardware {
     private String activateDate;
     private String installDate;
     private Permission permission;
-    private boolean notRead;
-    private boolean notEdit;
-    private boolean notFull;
+
+    private String nRead;
+    private String nEdit;
+    private String nDelete;
+    private String eRead;
+    private String eEdit;
+    private String eDelete;
+    private String pRead;
+    private String pEdit;
+    private String pDelete;
+    private String dRead;
+    private String dEdit;
+    private String dDelete;
+    private String mRead;
+    private String mEdit;
+    private String mDelete;
+    private String jRead;
+    private String jEdit;
+    private String jDelete;
 
 }
