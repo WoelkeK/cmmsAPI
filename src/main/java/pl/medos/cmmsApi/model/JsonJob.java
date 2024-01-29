@@ -20,7 +20,7 @@ public class JsonJob {
     private String requestDate;
 //    private String user;
     private String employee;
-//    private String engineer;
+    private String engineer;
     private String department;
     private String machine;
     private String message;
@@ -29,15 +29,16 @@ public class JsonJob {
     private String jobStartTime;
     private String jobStopTime;
 
-    private LocalDateTime jobShedule;
+    private String jobShedule;
     private Decision decision;
-    private int offset;
-    private DateOffset dateOffset;
+    private String dateOffset;
     private String status;
     private JobStatus jobStatus;
+    private String open;
+    private String offset;
 
-//    private String calcCost;
-//    private String status;
+
+
 
 //    private byte[] originalImage;
 //    private byte[] resizedImage;

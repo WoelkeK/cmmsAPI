@@ -41,7 +41,7 @@ public class Job {
 
     private LocalDateTime jobShedule;
     private Decision decision;
-    private int offset;
+    private Integer offset;
     private DateOffset dateOffset;
 
     private boolean open;

@@ -2,20 +2,20 @@ package pl.medos.cmmsApi.util.imports;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.schemas.office.visio.x2012.main.CellType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.DateOffset;
 import pl.medos.cmmsApi.enums.Decision;
 import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.model.*;
-import pl.medos.cmmsApi.service.DepartmentService;
-import pl.medos.cmmsApi.service.EmployeeService;
-import pl.medos.cmmsApi.service.ImageService;
-import pl.medos.cmmsApi.service.MachineService;
+import pl.medos.cmmsApi.service.*;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -28,15 +28,22 @@ import java.util.logging.Logger;
 public class ImportJobFromXls implements ImportJob {
 
     private static final Logger LOGGER = Logger.getLogger(ImportJobFromXls.class.getName());
-    private List<String> jobs = new ArrayList<>(Arrays.asList("requestDate", "employee", "department", "machine", "message", "solution", "jobStartTime", "jobStopTime"));
+    private List<String> jobs = new ArrayList<>(Arrays.asList
+            ("requestDate", "employee", "engineer", "department", "machine", "message", "solution", "jobStartTime",
+                    "jobStopTime", "jobStatus", "jobShedule","decision","dateOffset", "status", "offset"));
+
+
+//                    , "decision", "offset", "dateOffset","status"));
 
     private EmployeeService employeeService;
+    private EngineerService engineerService;
     private DepartmentService departmentService;
     private MachineService machineService;
     private ImageService imageService;
 
-    public ImportJobFromXls(EmployeeService employeeService, DepartmentService departmentService, MachineService machineService, ImageService imageService) {
+    public ImportJobFromXls(EmployeeService employeeService, EngineerService engineerService, DepartmentService departmentService, MachineService machineService, ImageService imageService) {
         this.employeeService = employeeService;
+        this.engineerService = engineerService;
         this.departmentService = departmentService;
         this.machineService = machineService;
         this.imageService = imageService;
@@ -69,8 +76,16 @@ public class ImportJobFromXls implements ImportJob {
                 if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-//                            rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
-                            rowDataMap.put(jobs.get(k), (cell.getDateCellValue().toString()));
+
+                            if (k == row.getLastCellNum()-1) {
+                                LOGGER.info("Cell Number value");
+                                rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
+
+                            } else {
+                                LOGGER.info("Cell Data value");
+                                rowDataMap.put(jobs.get(k), (cell.getDateCellValue().toString()));
+                            }
+
                             break;
                         case STRING:
 //                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
@@ -104,19 +119,23 @@ public class ImportJobFromXls implements ImportJob {
                                     Job job = new Job();
 //                                    job.setId(Long.parseLong(String.valueOf(m.getId())));
 
-                                    Employee employee = employeeService.findEmployeeByRawName(m.getEmployee()).get(0);
+                                    Employee employee = employeeService.finadAllEmployees().get(0);
                                     LOGGER.info("Imported employee() " + employee);
                                     job.setEmployee(employee);
 
-                                    Department departmentByName = departmentService.findDepartmentByName(m.getDepartment());
+                                    Engineer engineer = engineerService.finadAllEngineers().get(0);
+                                    LOGGER.info("Imported engineer() " + engineer);
+                                    job.setEngineer(engineer);
+
+                                    Department departmentByName = departmentService.findAllDepartments().get(0);
                                     LOGGER.info("Imported department() " + departmentByName);
                                     job.setDepartment(departmentByName);
-                                    job.setSolution(m.getSolution());
 
                                     Machine machine = machineService.findMachinesByQuery(m.getMachine()).stream().findFirst().orElseThrow();
                                     LOGGER.info("Imported machine() " + machine);
                                     job.setMachine(machine);
                                     job.setMessage(m.getMessage());
+                                    job.setSolution(m.getSolution());
 
                                     if (job.getOriginalImage() == null) {
                                         LOGGER.info("default image");
@@ -152,25 +171,76 @@ public class ImportJobFromXls implements ImportJob {
                                         LOGGER.info(requestDate.toString());
                                     }
 
-                                    if(m.getJobStatus()==null){
+                                    if (m.getJobStatus() == null) {
                                         job.setJobStatus(JobStatus.AWARIA);
+                                    } else {
+                                        job.setJobStatus(m.getJobStatus());
                                     }
-                                    if(m.getDecision()==null){
+
+                                    if (m.getJobShedule() == null || m.getJobShedule().isEmpty()) {
+                                        job.setJobShedule(null);
+                                    } else {
+                                        LocalDateTime jobShedule = DateConverter.convertDateTime(m.getJobShedule());
+                                        job.setJobStopTime(jobShedule);
+                                        LOGGER.info(jobShedule.toString());
+                                    }
+
+                                    if (m.getDecision() == null) {
                                         job.setDecision(Decision.NIE);
+                                    } else {
+                                        job.setDecision(m.getDecision());
                                     }
 
-                                    if(m.getStatus()==null){
+                                    if ((m.getDateOffset() == null) || (m.getDateOffset().equals(""))) {
+                                        job.setDateOffset(null);
+                                    } else {
+                                        job.setDateOffset(convertXLSDateOffsetField(m.getDateOffset()));
+                                    }
+
+                                    if (m.getStatus() == null) {
                                         job.setStatus("zgłoszenie");
+                                    } else {
+                                        job.setStatus(m.getStatus());
                                     }
 
+                                    if(m.getOffset()==null || m.getOffset().equals("")){
+                                        job.setOffset(0);
+                                    }else{
+                                        job.setOffset(Integer.parseInt(m.getOffset()));
+                                    }
 
+                                    LOGGER.info("Offset: " + m.getOffset());
+
+//                                    job.setOpen(true); // TODO: 26.01.2024 napisać konwersje podobnie jak permissions
                                     LOGGER.info("createJobMap(...)");
                                     return job;
                                 }
                         )
+
                         .toList();
 
         LOGGER.info("employeeDataExcelConverter(...)");
         return newJobs;
+    }
+
+
+    static DateOffset convertXLSDateOffsetField(String condition) {
+
+        if (condition != null) {
+
+            switch (condition) {
+                case "DNI":
+                    return DateOffset.DNI;
+                case "TYGODNIE":
+                    return DateOffset.TYGODNIE;
+                case "MIESIĄCE":
+                    return DateOffset.MIESIACE;
+                case "LATA":
+                    return DateOffset.LATA;
+                default:
+                    return DateOffset.GODZINY;
+            }
+        }
+        return null;
     }
 }

@@ -57,7 +57,8 @@ public class JobEntity {
     private LocalDateTime jobShedule;
     @Enumerated(EnumType.STRING)
     private Decision decision;
-    private int offset;
+    @Nullable
+    private Integer offset;
     @Enumerated(EnumType.STRING)
     private DateOffset dateOffset;
 
