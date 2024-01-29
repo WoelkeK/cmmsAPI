@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/departments")
 @CrossOrigin
 public class DepartmentController {
 
@@ -29,7 +29,7 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/departments")
+    @GetMapping
     public List list() {
         LOGGER.info("departmentList()");
         List departments = departmentService.findAllDepartments();
@@ -37,7 +37,7 @@ public class DepartmentController {
         return departments;
     }
 
-    @PostMapping("/department")
+    @PostMapping("/create")
     public Department create(@RequestBody Department department) {
         LOGGER.info("createDepartment(" + department + ")");
         Department createdDepartment = departmentService.createDepartment(department);
@@ -45,7 +45,7 @@ public class DepartmentController {
         return createdDepartment;
     }
 
-    @GetMapping("/department/{id}")
+    @GetMapping("/read/{id}")
     public Department read(@PathVariable(name = "id") Long id) throws DepartmentNotFoundException {
         LOGGER.info("readDepartment(" + id + ")");
         Department readedMachine = departmentService.findDepartmentById(id);
@@ -53,7 +53,7 @@ public class DepartmentController {
         return readedMachine;
     }
 
-    @PutMapping("/department/{id}")
+    @PutMapping("/update/{id}")
     public Department update(@PathVariable (name = "id") Long id,
             @RequestBody Department department) throws DepartmentNotFoundException {
         LOGGER.info("updateDepartment(" + department + ")");
@@ -62,10 +62,17 @@ public class DepartmentController {
         return updatedMachine;
     }
 
-    @DeleteMapping("/department/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         LOGGER.info("deleteDepartment(" + id + ")");
         departmentService.deleteDepartment(id);
         LOGGER.info("deleteDepartment(...)");
+    }
+
+    @DeleteMapping("/deleteAll")
+    public void delete() {
+        LOGGER.info("deleteAllDepartments()");
+        departmentService.deleteAll();
+        LOGGER.info("deleteAllDepartments(...)");
     }
 }

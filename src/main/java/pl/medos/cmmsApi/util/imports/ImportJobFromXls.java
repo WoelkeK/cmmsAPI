@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 @Component
 public class ImportJobFromXls implements ImportJob {
@@ -119,21 +120,22 @@ public class ImportJobFromXls implements ImportJob {
                                     Job job = new Job();
 //                                    job.setId(Long.parseLong(String.valueOf(m.getId())));
 
-                                    Employee employee = employeeService.finadAllEmployees().get(0);
+                                    Employee employee = employeeService.findByEmployee(m.getEmployee());
                                     LOGGER.info("Imported employee() " + employee);
                                     job.setEmployee(employee);
 
-                                    Engineer engineer = engineerService.finadAllEngineers().get(0);
+                                    Engineer engineer = engineerService.findByName(m.getEngineer());
                                     LOGGER.info("Imported engineer() " + engineer);
                                     job.setEngineer(engineer);
 
-                                    Department departmentByName = departmentService.findAllDepartments().get(0);
+                                    Department departmentByName = departmentService.findByName(m.getDepartment());
                                     LOGGER.info("Imported department() " + departmentByName);
                                     job.setDepartment(departmentByName);
 
-                                    Machine machine = machineService.findMachinesByQuery(m.getMachine()).stream().findFirst().orElseThrow();
+                                    Machine machine = machineService.findByName(m.getMachine());
                                     LOGGER.info("Imported machine() " + machine);
                                     job.setMachine(machine);
+
                                     job.setMessage(m.getMessage());
                                     job.setSolution(m.getSolution());
 

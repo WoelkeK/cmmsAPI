@@ -16,4 +16,6 @@ public interface DepartmentRepository extends JpaRepository<DepartmentEntity,  L
     List<DepartmentEntity> searchDepartmentByName(String query);
 
     Page<DepartmentEntity> findAll(Pageable pageable);
+
+    DepartmentEntity findByName(String name);
 }

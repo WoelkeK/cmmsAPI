@@ -26,4 +26,6 @@ public interface EmployeeService {
     Page<Employee> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 
     void deleteAll();
+
+    Employee findByEmployee(String employeeName);
 }

@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -34,20 +35,17 @@ public class JobEntity {
     private EngineerEntity engineer;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     private MachineEntity machine;
 
 
 
 
-    //    @ManyToOne
-//    @JoinColumn(name = "cost_id")
-//    private CostEntity cost;
-//    @NotEmpty(message = "Pole nie może być puste!")
     private String message;
     private boolean directContact;
 //    @NotEmpty(message = "Pole nie może być puste!")

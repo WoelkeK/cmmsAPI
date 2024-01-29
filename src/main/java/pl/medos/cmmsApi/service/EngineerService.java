@@ -28,4 +28,6 @@ public interface EngineerService {
     Page<Engineer> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 
     Page<Engineer> findPageinated(int pageNo, int pageSize, String sortField, String sortDir);
+
+    Engineer findByName(String engineer);
 }

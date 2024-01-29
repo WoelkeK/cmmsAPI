@@ -22,4 +22,9 @@ public interface DepartmentService {
     Department findDepartmentByName(String departmentName);
 
     Page<Department> findDepartmentPage(int pageNo, int size, String sortField, String sortDirection);
+
+    Department findByName(String name);
+
+    void deleteAll();
+
 }

@@ -23,4 +23,6 @@ public interface EngineerRepository extends JpaRepository<EngineerEntity, Long> 
 
     @Query("SELECT p from EngineerEntity p WHERE CONCAT(p.name, ' ', p.department.name, ' ',p.position ) LIKE %?1%")
     Page<EngineerEntity> searchEngineerByQuery(Pageable pageable, String query);
+
+    EngineerEntity findByName(String engineer);
 }

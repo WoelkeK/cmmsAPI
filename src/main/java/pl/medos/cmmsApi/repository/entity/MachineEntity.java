@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import pl.medos.cmmsApi.enums.Operate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,21 +31,16 @@ public class MachineEntity {
     private String model;
     private int manufactured;
     private String serialNumber;
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
-//    @Enumerated(EnumType.STRING)
-    private String status;
-
-//    @ManyToOne
-//    @JoinColumn(name = "maintenance_id")
-//    private MaintenenceEntity maintenence;
 
     @CreationTimestamp
     private LocalDateTime installDate;
 
-
     @OneToMany(mappedBy = "machine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobEntity> jobEntities;
+    private List<JobEntity> jobs = new ArrayList<>();
+
 }
