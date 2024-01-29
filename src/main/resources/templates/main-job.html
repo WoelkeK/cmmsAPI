@@ -471,6 +471,11 @@
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
+                                                <a th:href="@{'/jobs/page/' + ${currentPage} + '?sortField=jobStatus&sortDir=' + ${reverseSortDir}}">
+                                                    Typ
+
+                                                <th scope="col"
+                                                    class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
                                                     Opis
                                                     usterki/miejsce
 
@@ -541,6 +546,13 @@
                                                 <td th:text="${job.machine.name}"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Maszyna
                                                 </td>
+
+                                                <td th:text="${job?.jobStatus}"
+                                                    class="align-text-top px-3 py-4 text-lm text-gray-900">Typ
+                                                </td>
+
+
+
                                                 <td th:text="${job.message}"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Opis
                                                     usterki
