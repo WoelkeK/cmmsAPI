@@ -770,7 +770,7 @@
 </div>
 
 <div th:unless="${isAdmin} or ${jRead}">
-    <div th:insert="/error-page.html"></div>
+    <div th:insert="@{/error-page.html}"></div>
 </div>
 
 
