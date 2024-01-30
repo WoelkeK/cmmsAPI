@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
 import pl.medos.cmmsApi.repository.entity.MachineEntity;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface MachineRepository extends JpaRepository<MachineEntity, Long> {
     Page<MachineEntity> findByQueryPagable(String query, Pageable pageable);
 
     MachineEntity findByName(String machine);
+
+    List<MachineEntity> findByDepartment(DepartmentEntity department);
 }
+

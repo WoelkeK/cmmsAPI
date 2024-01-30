@@ -133,11 +133,17 @@ public class WebJobController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-        LOGGER.info(job.getEmployee().getId().toString());
-        model.addAttribute("job", job);
-        model.addAttribute("pageNo", pageNo);
-        LOGGER.info("updateView(...)" + job.getRequestDate());
-        return "update-job";
+        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
+
+            job.setStatus("przetwarzanie");
+            LOGGER.info(job.getEmployee().getId().toString());
+            model.addAttribute("job", job);
+            model.addAttribute("pageNo", pageNo);
+            LOGGER.info("updateView(...)" + job.getRequestDate());
+            return "update-job";
+        } else {
+            return "redirect:/dashboards";
+        }
     }
 
     @PostMapping(value = "/update/{id}")
@@ -173,6 +179,20 @@ public class WebJobController {
             model.addAttribute("job", job);
             return "update-job";
         }
+
+        if ((job.getJobStartTime() != null) && (job.getJobStopTime() != null)) {
+
+            if (job.getJobStopTime().isAfter(job.getJobStartTime())) {
+                job.setStatus("zakończono");
+            } else {
+                return "update-job";
+            }
+        } else if ((job.getJobStartTime() != null) && (job.getJobStopTime() == null)) {
+            job.setStatus("oczekiwanie");
+        } else {
+            return "update-job";
+        }
+
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
         LOGGER.info("update(...)");

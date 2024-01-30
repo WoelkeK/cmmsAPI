@@ -32,5 +32,7 @@ public interface MachineService {
     Page<Machine> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 
     Machine findByName(String machine);
+
+    List<Machine> findMachinesByDepartmentId(Long id);
 }
 

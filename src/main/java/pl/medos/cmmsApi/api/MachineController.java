@@ -45,8 +45,8 @@ public class MachineController {
     }
 
     @PutMapping("/update/{id}")
-    public Machine update(@PathVariable (name = "id") Long id,
-            @RequestBody Machine machine) throws MachineNotFoundException {
+    public Machine update(@PathVariable(name = "id") Long id,
+                          @RequestBody Machine machine) throws MachineNotFoundException {
         LOGGER.info("updateMachine(" + machine + ")");
         Machine updatedMachine = machineServiceImpl.updateMachine(machine, id);
         LOGGER.info("updateMachine(...) " + updatedMachine);
@@ -59,5 +59,13 @@ public class MachineController {
         LOGGER.info("deleteMachine(" + id + ")");
         machineServiceImpl.deleteMachine(id);
         LOGGER.info("deleteMachine(...)");
+    }
+
+    @GetMapping("byDepartment")
+    public List<Machine> findByDepartment(@RequestParam(name = "departmentId") Long id) {
+        LOGGER.info("findByDepartmentId()");
+        List<Machine> machinesByDepartment = machineServiceImpl.findMachinesByDepartmentId(id);
+        LOGGER.info("findByDepartment(...)");
+        return machinesByDepartment;
     }
 }
