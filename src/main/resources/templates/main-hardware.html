@@ -15,7 +15,7 @@
 </head>
 <body class="bg-gray-400">
 
-<div>
+<div th:if="${isAdmin}">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -526,7 +526,9 @@
     </div>
 </div>
 
-
+<div th:unless="${isAdmin}">
+    <div th:replace="~{fragments/errorPage}"></div>
+</div>
 
 <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
      style="display: none;">
@@ -597,73 +599,6 @@
         </div>
     </div>
 </div>
-
-<div id="myModal" class="modal">
-    <div class="modal-content">
-
-        <div class="shadow sm:rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-base md:text-2xl font-medium leading-6 text-red-600">Brak uprawnień!</h3>
-                <div class="mt-2 sm:flex sm:items-start sm:justify-between">
-                    <div class="max-w-xl text-md text-gray-500">
-                        <p>Dostęp do aplikacji niemożliwy.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-3 bg-gray-400 shadow sm:rounded-lg">
-            <div class="sm:col-span-3">
-                <div class="px-4 py-5 sm:px-2">
-
-                    <fieldset>
-                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Moduł IT
-                        </legend>
-                        <div class="mt-4 divide-y divide-gray-200">
-                            <div class="shadow sm:rounded-lg">
-                                <div class="px-4 py-5 sm:p-6">
-                                    <h3 class="text-base md:text-md font-medium leading-6 text-gray-600">Nastąpi
-                                        przekierowanie na stronę główną Medos.pl</h3>
-                                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
-                                        <div class="max-w-xl text-md text-gray-500">
-                                            <p>Skontaktuj się z działem IT w celu uzyskania dostępu do aplikacji.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal-footer">
-
-            <div class="shadow sm:rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>
-                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
-                        <div class="max-w-xl text-sm text-gray-500">
-                            <p class="md:text-lg font-semibold">Twoj adres IP:</p>
-                            <p class="md:text-lg font-semibold text-blue-600" th:text="${userIP}"
-                               No ip></p>
-                        </div>
-                        <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
-                            <button type="button" id="saveChanges" data-dismiss="modal"
-                                    class="defaultPage inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                                Zamknij
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script th:if="${noAccess}" th:src="@{/js/alert.js}"></script>
-<script th:src="@{/js/redirect.js}"></script>
 
 <script type="text/javascript" th:src="@{/js/deleteModal.js}"></script>
 </body>

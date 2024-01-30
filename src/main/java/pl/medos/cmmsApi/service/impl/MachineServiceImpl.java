@@ -137,4 +137,14 @@ public class MachineServiceImpl implements MachineService {
         LOGGER.info("findPaginated(...)");
         return machines;
     }
+
+    @Override
+    public Machine findByName(String name) {
+        LOGGER.info("findByName" + name);
+        List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
+        MachineEntity machineEntity = machineEntities.stream().findAny().orElse(new MachineEntity());
+        Machine machine = machineMapper.entityToModel(machineEntity);
+        LOGGER.info("findByName(...)");
+        return machine;
+    }
 }

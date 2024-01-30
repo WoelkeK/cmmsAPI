@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
+import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.EngineerRepository;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.EngineerEntity;
+import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.EngineerService;
 import pl.medos.cmmsApi.service.mapper.EngineerMapper;
 
@@ -81,6 +83,16 @@ public class EngineerServiceImpl implements EngineerService {
         Page<Engineer> engineerPage = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
         LOGGER.info("findPageinated(...)");
         return engineerPage;
+    }
+
+    @Override
+    public Engineer findByName(String name) {
+        LOGGER.info("findByName" + name);
+        List<EngineerEntity> engineerEntities = engineerRepository.searchEngineerByName(name);
+        EngineerEntity engineerEntity = engineerEntities.stream().findAny().orElse(new EngineerEntity());
+        Engineer engineer = engineerMapper.entityToModel(engineerEntity);
+        LOGGER.info("findByName(...)");
+        return engineer;
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import pl.medos.cmmsApi.enums.JobStatus;
+import pl.medos.cmmsApi.enums.Permission;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.model.Job;
@@ -162,6 +164,14 @@ public class ExportToServiceImpl implements ExportService {
                 createCell(row, columnCount++, record.getRequestDate(), dateCellStyle);
             }
             createCell(row, columnCount++, record.getEmployee().getName(), style);
+
+            if (record.getEngineer() == null) {
+
+                createCell(row, columnCount++, null, style);
+            } else {
+                createCell(row, columnCount++, record.getEngineer().getName(), style);
+            }
+
             createCell(row, columnCount++, record.getDepartment().getName(), style);
             createCell(row, columnCount++, record.getMachine().getName(), style);
             createCell(row, columnCount++, record.getMessage(), style);
@@ -178,6 +188,31 @@ public class ExportToServiceImpl implements ExportService {
             } else {
                 createCell(row, columnCount++, record.getJobStopTime(), dateCellStyle);
             }
+
+            if(record.getJobStatus()!=null) {
+
+                createCell(row, columnCount++, record.getJobStatus().toString(), style);
+            }else{
+                createCell(row, columnCount++, null, style);
+
+            }
+
+            if (record.getJobShedule() == null) {
+                createCell(row, columnCount++, record.getJobShedule(), style);
+            } else {
+                createCell(row, columnCount++, record.getJobShedule(), dateCellStyle);
+            }
+
+            createCell(row, columnCount++, record.getDecision().toString(), style);
+
+            if (record.getDateOffset() != null) {
+                createCell(row, columnCount++, record.getDateOffset().toString(), style);
+            }else{
+                createCell(row, columnCount++, null, style);
+
+            }
+            createCell(row, columnCount++, record.getStatus(), style);
+            createCell(row, columnCount++, record.getOffset(), style);
         }
         LOGGER.info("writeJob(...)");
     }
@@ -192,12 +227,20 @@ public class ExportToServiceImpl implements ExportService {
         style.setFont(font);
         createCell(row, 0, "Data zgłoszenia", style);
         createCell(row, 1, "Zgłaszający", style);
-        createCell(row, 2, "Dział", style);
-        createCell(row, 3, "Maszyna", style);
-        createCell(row, 4, "Usterka.", style);
-        createCell(row, 5, "Zakres czynności.", style);
-        createCell(row, 6, "Rozpoczęcie prac.", style);
-        createCell(row, 7, "Zakończenie prac", style);
+        createCell(row, 2, "Mechanik", style);
+        createCell(row, 3, "Dział", style);
+        createCell(row, 4, "Maszyna", style);
+        createCell(row, 5, "Usterka", style);
+        createCell(row, 6, "Opis prac", style);
+        createCell(row, 7, "Rozpoczęcie prac", style);
+        createCell(row, 8, "Zakończenie prac", style);
+        createCell(row, 9, "Typ zgłoszenia", style);
+        createCell(row, 10, "Data przeglądu", style);
+        createCell(row, 11, "Cykliczny", style);
+        createCell(row, 12, "Jednostka", style);
+        createCell(row, 13, "Status", style);
+        createCell(row, 14, "Przesunięcie", style);
+
         LOGGER.info("Header create complete! ");
     }
 
@@ -249,6 +292,29 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 18, "Klucz szyfrujący                  ", style);
         createCell(row, 19, "Uprawnienia Awizacje", style);
 
+
+        /*Uprawnienia*/
+
+        createCell(row, 20, "Awizacje Odczyt", style);
+        createCell(row, 21, "Awizacje Zapis", style);
+        createCell(row, 22, "Awizacje Usuwanie", style);
+        createCell(row, 23, "Pracownicy Odczyt", style);
+        createCell(row, 24, "Pracownicy Zapis", style);
+        createCell(row, 25, "Pracownicy Usuwanie", style);
+        createCell(row, 26, "Przepustki Odczyt", style);
+        createCell(row, 27, "Przepustki Zapis", style);
+        createCell(row, 28, "Przepustki Usuwanie", style);
+        createCell(row, 29, "Wydziały Odczyt", style);
+        createCell(row, 30, "Wydziały  Zapis", style);
+        createCell(row, 31, "Wydziały  Usuwanie", style);
+        createCell(row, 32, "Maszyny Odczyt", style);
+        createCell(row, 33, "Maszyny Zapis", style);
+        createCell(row, 34, "Maszyny Usuwanie", style);
+        createCell(row, 35, "Awarie Odczyt", style);
+        createCell(row, 36, "Awarie Zapis", style);
+        createCell(row, 37, "Awarie Usuwanie", style);
+
+
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
 
@@ -280,7 +346,6 @@ public class ExportToServiceImpl implements ExportService {
             cell.setCellValue(empty);
         }
     }
-
 
     private void writeMachine() {
         LOGGER.info("writeMachine()");
@@ -348,7 +413,39 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getDescription(), style);
             createCell(row, columnCount++, record.getBitLockKey(), style);
             createCell(row, columnCount++, record.getBitRecoveryKey(), style);
-            createCell(row, columnCount++, record.getPermission().toString(), style);
+
+            if (record.getPermission() == null) {
+                createCell(row, columnCount++, "USER", style);
+            } else {
+
+                createCell(row, columnCount++, record.getPermission().toString(), style);
+            }
+
+
+            createCell(row, columnCount++, record.isNRead(), style);
+            createCell(row, columnCount++, record.isNEdit(), style);
+            createCell(row, columnCount++, record.isNDelete(), style);
+
+            createCell(row, columnCount++, record.isERead(), style);
+            createCell(row, columnCount++, record.isEEdit(), style);
+            createCell(row, columnCount++, record.isEDelete(), style);
+
+            createCell(row, columnCount++, record.isPRead(), style);
+            createCell(row, columnCount++, record.isPEdit(), style);
+            createCell(row, columnCount++, record.isPDelete(), style);
+
+            createCell(row, columnCount++, record.isDRead(), style);
+            createCell(row, columnCount++, record.isDEdit(), style);
+            createCell(row, columnCount++, record.isDDelete(), style);
+
+            createCell(row, columnCount++, record.isMRead(), style);
+            createCell(row, columnCount++, record.isMEdit(), style);
+            createCell(row, columnCount++, record.isMDelete(), style);
+
+            createCell(row, columnCount++, record.isJRead(), style);
+            createCell(row, columnCount++, record.isJEdit(), style);
+            createCell(row, columnCount++, record.isJDelete(), style);
+
         }
         LOGGER.info("writeHardware(...)");
     }

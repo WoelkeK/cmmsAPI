@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.medos.cmmsApi.model.Employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,7 +25,11 @@ public class DepartmentEntity {
     private String name;
     private String location;
 
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private
+    List<MachineEntity> machines = new ArrayList<>();
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobEntity> jobEntities;
+    private
+    List<JobEntity> jobs = new ArrayList<>();
 }

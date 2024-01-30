@@ -7,10 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.EmployeeRepository;
 import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.EmployeeService;
 import pl.medos.cmmsApi.service.mapper.EmployeeMapper;
 
@@ -127,5 +125,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteAll() {
         LOGGER.info("deleteAll");
         employeeRepository.deleteAll();
+    }
+
+    @Override
+    public Employee findByEmployee(String employeeName) {
+        LOGGER.info("findEmployeeByName()" + employeeName);
+        EmployeeEntity byEmployee = employeeRepository.findByName(employeeName);
+        Employee employee = employeeMapper.entityToModel(byEmployee);
+        LOGGER.info("findEmployeeByName(...)");
+        return employee;
     }
 }

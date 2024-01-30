@@ -23,7 +23,5 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> 
     List<EmployeeEntity> searchEmployeeByRawQuery(String query);
 
     Page<EmployeeEntity> findAll(Pageable pageable);
-
-
-
+    EmployeeEntity findByName(String name);
 }
