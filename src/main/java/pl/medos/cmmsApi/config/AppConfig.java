@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 @Configuration
 public class AppConfig {

@@ -505,7 +505,7 @@
 
 
 <div th:unless="${isAdmin} or ${nRead}">
-    <div th:insert="@{/error-page.html}"></div>
+    <div th:replace="~{fragments/errorPage}"></div>
 
 </div>
 
