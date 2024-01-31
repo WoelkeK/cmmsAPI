@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.enums.DateOffset;
 import pl.medos.cmmsApi.enums.Decision;
 import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.exception.*;
@@ -126,9 +127,10 @@ public class DashboardController {
         LOGGER.info("createView()");
         Job job = new Job();
         job.setStatus("zgłoszenie");
+        job.setJobStatus(JobStatus.AWARIA);
         job.setSolution(" ");
         model.addAttribute("job", job);
-        return "create-dashboard";
+        return "create-dashboard2";
     }
 
     @PostMapping(value = "/create")
@@ -157,8 +159,13 @@ public class DashboardController {
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            return "create-dashboard";
+            return "create-dashboard2";
         }
+        job.setDecision(Decision.NIE);
+        job.setOffset(0);
+        job.setDateOffset(DateOffset.DNI);
+        job.setRequestDate(LocalDateTime.now());
+
         model.addAttribute("job", job);
         jobService.createJob(job);
         LOGGER.info("create(...)");
@@ -171,7 +178,6 @@ public class DashboardController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-
         if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
 
             job.setStatus("przetwarzanie");

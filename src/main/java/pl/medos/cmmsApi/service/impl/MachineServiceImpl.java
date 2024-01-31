@@ -9,6 +9,7 @@ import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.MachineRepository;
+import pl.medos.cmmsApi.repository.entity.DepartmentEntity;
 import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.MachineService;
 import pl.medos.cmmsApi.service.mapper.MachineMapper;
@@ -146,5 +147,16 @@ public class MachineServiceImpl implements MachineService {
         Machine machine = machineMapper.entityToModel(machineEntity);
         LOGGER.info("findByName(...)");
         return machine;
+    }
+
+    @Override
+    public List<Machine> findMachinesByDepartmentId(Long id) {
+        LOGGER.info("findMachinesByDepartmentId()");
+        DepartmentEntity department = new DepartmentEntity();
+        department.setId(id);
+        List<MachineEntity> machineEntities = machineRepository.findByDepartment(department);
+        List<Machine> machines = machineMapper.listModels(machineEntities);
+        LOGGER.info("findMachinesByDepartmentId(...)");
+        return machines;
     }
 }
