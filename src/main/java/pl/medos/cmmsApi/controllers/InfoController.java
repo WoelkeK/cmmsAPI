@@ -9,6 +9,6 @@ public class InfoController {
 
     @GetMapping("/info")
     public String redirect(){
-        return "main-employees";
+        return "main-job";
     }
 }
