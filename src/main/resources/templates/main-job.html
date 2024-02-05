@@ -472,7 +472,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
                                                 <a th:href="@{'/jobs/page/' + ${currentPage} + '?sortField=jobStatus&sortDir=' + ${reverseSortDir}}">
-                                                    Typ
+                                                    Typ</a>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
@@ -528,8 +528,9 @@
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="job : ${jobs}"
-                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
+                                            <tr th:each="job : ${jobs}" style="cursor: pointer"
+                                                th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
+                                                class="border-t border-gray-300 text-lg font-medium transition ease-in-out delay-50 bg-gray-100 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-200">
 
                                                 <!--                                            <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"-->
                                                 <td th:text="${#temporals.format(job.requestDate, 'dd MM yyyy HH:mm')}"
@@ -775,7 +776,7 @@
 
 
 <script type="text/javascript" th:src="@{/js/deleteJobModal.js}"></script>
-
+<script type="text/javascript" th:src="@{/js/clickrow.js}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         setInterval(function() {
@@ -785,7 +786,6 @@
             });
         }, 100000); // send GET request every 5 seconds
     });
-
 
 </script>
 </body>

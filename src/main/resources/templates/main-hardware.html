@@ -153,8 +153,8 @@
                         Utrzymanie Ruchu
                     </a>
 
-                    <a  th:if="${isAdmin} or ${jRead}" th:href="@{/engineers}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/engineers}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -165,8 +165,8 @@
                         Technicy
                     </a>
 
-                    <a  th:if="${isAdmin} or ${jRead}" th:href="@{/dashboards}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/dashboards}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -247,9 +247,9 @@
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>
                                             <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/export}"
                                                class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
-<!--                                                                                        <a href="#" th:href="@{/hardwares/deleteAll}"-->
-<!--                                                                                           class="deleteAllBtn rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń-->
-<!--                                                                                            wszystko</a>-->
+                                            <!--                                                                                        <a href="#" th:href="@{/hardwares/deleteAll}"-->
+                                            <!--                                                                                           class="deleteAllBtn rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń-->
+                                            <!--                                                                                            wszystko</a>-->
 
                                             <button th:if="${isAdmin}" id="deleteAllBtn"
                                                     class="text-red-600 hover:text-red-300 deleteAllBtn">
@@ -359,11 +359,14 @@
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="hardware: ${hardwares}"
-                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
+                                            <tr th:each="hardware: ${hardwares}" style="cursor: pointer"
+                                                th:onclick="'javascript:rowClicked(\'' + ${hardware.id} + '\');'"
+                                                class="border-t border-gray-300 text-lg font-medium transition ease-in-out delay-50 bg-gray-100 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-200">
 
-                                                <td th:hidden="${hardware.id}" th:id="${'hardware-id-' + hardware.id}"
-                                                    className="id"></td>
+                                                <td th:hidden="${hardware.id}"
+                                                    th:id="${'hardware-id-' + hardware.id}"
+                                                    className="id">
+                                                </td>
 
 
                                                 <td th:text="${hardware.inventoryNo}"
@@ -414,18 +417,18 @@
                                                 <td class="relative whitespace-nowrap align-text-top py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
 
-                                                    <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">
-                                                        <button class="mr-4" title="Szczegóły">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                 viewBox="0 0 24 24" stroke-width="1.5"
-                                                                 stroke="currentColor" class="w-7 h-7">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>
-                                                            </svg>
+<!--                                                    <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"-->
+<!--                                                       class="text-indigo-800 hover:text-indigo-300">-->
+<!--                                                        <button class="mr-4" title="Szczegóły">-->
+<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"-->
+<!--                                                                 viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                                                                 stroke="currentColor" class="w-7 h-7">-->
+<!--                                                                <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>-->
+<!--                                                            </svg>-->
 
-                                                        </button>
-                                                    </a>
+<!--                                                        </button>-->
+<!--                                                    </a>-->
 
                                                     <a th:if="${isAdmin}"
                                                        th:href="@{/hardwares/update/{id}(id=${hardware.id})}"
@@ -453,6 +456,7 @@
 
                                                     </button>
                                                 </td>
+
                                             </tr>
                                             <!-- More people... -->
                                             </tbody>
@@ -565,7 +569,6 @@
 </div>
 
 
-
 <div id="deleteAllModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
      style="display: none;">
     <!-- Modal Overlay -->
@@ -600,6 +603,7 @@
     </div>
 </div>
 
+<script type="text/javascript" th:src="@{/js/clickrow.js}"></script>
 <script type="text/javascript" th:src="@{/js/deleteModal.js}"></script>
 </body>
 </html>
