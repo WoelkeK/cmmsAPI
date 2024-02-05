@@ -94,4 +94,10 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("findHardwarePageByQuery(...)");
         return notifications;
     }
+
+    @Override
+    public void deleteAll() {
+        log.info("deleteAll()");
+        notificationRepository.deleteAll();
+    }
 }

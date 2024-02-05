@@ -7,22 +7,14 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import pl.medos.cmmsApi.enums.JobStatus;
-import pl.medos.cmmsApi.enums.Permission;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.model.Job;
-import pl.medos.cmmsApi.model.Machine;
+import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.ExportService;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 @Service
@@ -33,6 +25,7 @@ public class ExportToServiceImpl implements ExportService {
     private List<Hardware> hardwares;
     private List<Employee> employees;
     private List<Job> jobs;
+    private List<Notification> notifications;
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
 
@@ -103,6 +96,81 @@ public class ExportToServiceImpl implements ExportService {
         workbook.close();
         outputStream.close();
 
+    }
+
+    @Override
+    public void excelNotificationModelGenerator(List<Notification> notifications) {
+        this.notifications = notifications;
+        workbook = new XSSFWorkbook();
+    }
+
+    @Override
+    public void generateExcelNotificationFile(HttpServletResponse response) throws IOException {
+        writeNotificationHeader();
+        writeNotification();
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+    }
+
+
+
+    private void writeNotificationHeader() {
+
+        sheet = workbook.createSheet("Awizacje");
+        Row row = sheet.createRow(0);
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+        createCell(row, 0, "Data", style);
+        createCell(row, 1, "Kategoria", style);
+        createCell(row, 2, "Status", style);
+        createCell(row, 3, "Firma", style);
+        createCell(row, 4, "Towar", style);
+        createCell(row, 5, "Ilość", style);
+        createCell(row, 6, "Nr rejestracyjny", style);
+        createCell(row, 7, "Kierowca", style);
+        createCell(row, 8, "Telefon kierowcy", style);
+        createCell(row, 9, "Osoba kontaktowa", style);
+        createCell(row, 10, "Telefon pracownika", style);
+        createCell(row, 11, "Informacje", style);
+
+        LOGGER.info("Header create complete! ");
+
+    }
+
+    private void writeNotification() {
+        LOGGER.info("writeEmployee()");
+        int rowCount = 1;
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        short dateFormat = workbook.createDataFormat().getFormat("dd/mm/yyyy hh:mm");
+        dateCellStyle.setDataFormat(dateFormat);
+
+        font.setFontHeight(14);
+        style.setFont(font);
+        dateCellStyle.setFont(font);
+        for (Notification record : notifications) {
+            Row row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            createCell(row, columnCount++, record.getVisitDate(), dateCellStyle);
+            createCell(row, columnCount++, record.getType().toString(), style);
+            createCell(row, columnCount++, record.getStatus().toString(), style);
+            createCell(row, columnCount++, record.getSupplier(), style);
+            createCell(row, columnCount++, record.getItem(), style);
+            createCell(row, columnCount++, record.getItemDetails(), style);
+            createCell(row, columnCount++, record.getCarPlates(), style);
+            createCell(row, columnCount++, record.getDriverName(), style);
+            createCell(row, columnCount++, record.getDriverPhone(), style);
+            createCell(row, columnCount++, record.getEmployee(), style);
+            createCell(row, columnCount++, record.getEmployeePhone(), style);
+            createCell(row, columnCount++, record.getDescription(), style);
+        }
+        LOGGER.info("writeEmployees(...)");
     }
 
     private void writeEmployee() {

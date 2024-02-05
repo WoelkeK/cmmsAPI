@@ -1,5 +1,5 @@
 package pl.medos.cmmsApi.model;
 
-public enum Status {
+public enum NotificationStatus {
     WJAZD,WYJAZD
 }

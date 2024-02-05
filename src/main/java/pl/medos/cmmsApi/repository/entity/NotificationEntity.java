@@ -3,7 +3,7 @@ package pl.medos.cmmsApi.repository.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import pl.medos.cmmsApi.model.Status;
+import pl.medos.cmmsApi.model.NotificationStatus;
 import pl.medos.cmmsApi.model.Type;
 
 import java.time.LocalDateTime;
@@ -36,7 +36,7 @@ public class NotificationEntity {
     private String description;
     private String comment;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private NotificationStatus status;
     @Enumerated(EnumType.STRING)
     private Type type;
     private LocalDateTime visitDate;
