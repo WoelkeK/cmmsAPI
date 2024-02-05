@@ -52,4 +52,13 @@ public class NotificationController {
         return notificationService.getAllNotifications();
     }
 
+    @DeleteMapping("/deleteAll")
+    void deleteAll(){
+        log.info("deleteall()");
+        notificationService.deleteAll();
+
+    }
+
+
+
 }

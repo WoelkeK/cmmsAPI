@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class DateConverter {
 
     private static final Logger LOGGER = Logger.getLogger(DateConverter.class.getName());
-    static LocalDate convertDate(String date) {
+    public static LocalDate convertDate(String date) {
         LOGGER.info("DataXLS_String " + date);
         LOGGER.info("Start parsing string to date " + date.toString());
 
@@ -21,7 +21,7 @@ public class DateConverter {
         return localDate;
     }
 
-        static LocalDateTime convertDateTime(String date) {
+        public static LocalDateTime convertDateTime(String date) {
         LOGGER.info("DataXLS_String " + date);
         LOGGER.info("Start parsing string to date " + date.toString());
 

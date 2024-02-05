@@ -15,21 +15,19 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.model.Department;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Job;
-import pl.medos.cmmsApi.model.Notification;
+import pl.medos.cmmsApi.model.*;
+import pl.medos.cmmsApi.service.ExportService;
 import pl.medos.cmmsApi.service.ImageService;
 import pl.medos.cmmsApi.service.NotificationService;
 import pl.medos.cmmsApi.service.RaportService;
+import pl.medos.cmmsApi.util.imports.ImportNotification;
 
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/awizacje")
@@ -43,6 +41,8 @@ public class NotificationWebcontroller {
 //    private final ImageService imageService;
 
     private final RaportService raportService;
+    private final ExportService exportService;
+    private final ImportNotification importNotification;
 
 
     @GetMapping("/read/{id}")
@@ -160,26 +160,6 @@ public class NotificationWebcontroller {
         return "redirect:/awizacje";
     }
 
-//    @GetMapping(value = "/downloadfile")
-//    public void downloadFile(@Param(value = "id") Long id, Model model, HttpServletResponse response) throws IOException {
-//        Notification notificationById = notificationService.findNotificationById(id);
-//        response.setContentType("application/octet-stream");
-//        String headerKey = "Content-Disposition";
-//        String headerValue = "attachment; filename = " + notificationById.getVisitDate() + ".jpg";
-//        response.setHeader(headerKey, headerValue);
-//        ServletOutputStream outputStream = response.getOutputStream();
-//        outputStream.write(notificationById.getOriginalImage());
-//        outputStream.close();
-//    }
-
-//    @GetMapping("/search/{query}")
-//    public String searchByQuery(@RequestParam(name = "query") String query, Model model) {
-//        log.info("searchByQuery()");
-//        List<Notification> notifications = notificationService.findNotifiByQuery(query);
-//        model.addAttribute("notifications", notifications);
-//        return "main-notification.html";
-//    }
-
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Notification notification) throws JRException, IOException {
         log.info("exportPdf()" + notification.getId());
@@ -211,5 +191,43 @@ public class NotificationWebcontroller {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("notifications", notifications);
         return "main-notification";
+    }
+
+    @GetMapping(value = "/export")
+    public void exportHardwares(HttpServletResponse response) throws Exception {
+        log.info("export()");
+        List<Notification> notifications=notificationService.getAllNotifications();
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=awizacje" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+        exportService.excelNotificationModelGenerator(notifications);
+        exportService.generateExcelNotificationFile(response);
+        response.flushBuffer();
+        log.info("export(...)");
+    }
+
+    @GetMapping(value = "/file")
+    public String showUploadForm() {
+        return "uploadNotifi-form";
+    }
+
+    @PostMapping(value = "/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        log.info("importNotifications()");
+        if (file.isEmpty()) {
+            log.info("Proszę wybrać plik do importu");
+            return "redirect/awizacje";
+        }
+
+        List<Notification> notifications = importNotification.importNotificationFromXLS(file);
+        notifications.forEach(notificationService::createNotification);
+        log.info("importNotifications(...) ");
+        return "redirect:/awizacje";
     }
 }
