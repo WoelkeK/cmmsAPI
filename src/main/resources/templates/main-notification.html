@@ -436,7 +436,8 @@
                                                     </button>
                                                     </a>
 
-                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"
+<!--                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"-->
+                                                    <a th:if="${isAdmin} or ${nFull}" th:attr="data-id=${notification.id}"
                                                        class="deleteBtn text-red-600 hover:text-red-300">
                                                     <button class="mr-4" title="Usuń" data-toggle="modal" data-target="#editModal">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -665,6 +666,6 @@
 
 <!--<script th:if="${noAccess}" th:src="@{/js/alert.js}"></script>-->
 <!--<script th:src="@{/js/redirect.js}"></script>-->
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<script th:src="@{/js/deleteNotification.js}"></script>
 </body>
 </html>
