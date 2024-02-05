@@ -1,13 +1,11 @@
-function rowClicked(value) {
-        location.href = "/hardwares/read/" + value;
+function rowClickHard(value, pageNo) {
+        location.href = "/hardwares/read/" + value + "?pageNo="+ pageNo;
     }
 
-function rowClickNotifi(value) {
-            location.href = "/awizacje/read/" + value;
+function rowClickNotifi(value, pageNo) {
+            location.href = "/awizacje/read/" + value+ "?pageNo="+ pageNo;
         }
 function rowClickJob(value, pageNo) {
-
-//            console.log("redirect:" + value + "/" + pageNo);
 
             location.href = "/jobs/update/" + value + "?pageNo="+ pageNo;
         }
