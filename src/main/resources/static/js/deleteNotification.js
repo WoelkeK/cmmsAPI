@@ -13,8 +13,8 @@
 
     function executeDeleteAll() {
         console.log("executeDeleteAll()");
-    fetch(`/notifications/deleteAll`, {
-        method: 'GET'
+    fetch(`/api/notifications/deleteAll`, {
+        method: 'DELETE'
     })
         .then(response => location.reload());
 }
@@ -34,7 +34,7 @@
 
     function executeDelete() {
         console.log("executeDelete()");
-    fetch(`/api/notifications/delete/${selectedId}`, {
+    fetch(`/api/notifications/delete?id=${selectedId}`, {
         method: 'DELETE'
     })
         .then(response => location.reload());

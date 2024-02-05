@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/notifications")
 @Tag(name = "AwizacjeAPI")
 @Slf4j
 @RequiredArgsConstructor
@@ -22,31 +22,31 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @PostMapping("notifications/create")
+    @PostMapping("/create")
     Notification createNotification(@RequestBody Notification notification) {
         log.info("createNotification()");
         return notificationService.createNotification(notification);
     }
 
-    @GetMapping("notifications/findById")
+    @GetMapping("/findById")
     Notification findNotificationById(@RequestParam Long id) {
         log.info("findNotificationById()");
         return notificationService.findNotificationById(id);
     }
 
-    @PutMapping("notifications/update")
+    @PutMapping("/update")
     Notification updateNotification(@RequestBody Notification notification, Long id) {
         log.info("updateNotification()");
         return notificationService.updateNotification(notification, id);
     }
 
-    @DeleteMapping("notifications/delete")
+    @DeleteMapping("/delete")
     void deleteNotification(@RequestParam Long id) {
         log.info("deleteNotification()");
         notificationService.deleteNotification(id);
     }
 
-    @GetMapping("notifications/getList")
+    @GetMapping("/getList")
     List<Notification> findAllNotifications() {
         log.info("findallNotifications()");
         return notificationService.getAllNotifications();
@@ -58,7 +58,4 @@ public class NotificationController {
         notificationService.deleteAll();
 
     }
-
-
-
 }
