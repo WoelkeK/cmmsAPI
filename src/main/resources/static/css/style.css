@@ -54,7 +54,7 @@
             animation: fadeout 5s
         }
 
-s.blink {animation: blinker 1s ease infinite;}
+.blink {animation: blinker 1s ease infinite;}
 @keyframes blinker {0% { background-color: red; }}
 
 .warning{
