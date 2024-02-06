@@ -370,54 +370,64 @@
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="notification: ${notifications}" style="cursor: pointer"
-                                                th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'"
+                                            <tr th:each="notification: ${notifications}"
                                                 class="border-t border-gray-300 text-lg font-medium transition ease-in-out delay-50 bg-gray-100 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-200">
 
                                                 <td th:text="${#temporals.format(notification.visitDate, 'dd-MM-yyyy HH:mm')}"
-                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
+                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Data
                                                     Zgłoszenia
+
                                                 </td>
                                                 <td th:text="${notification.type}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Typ
                                                 </td>
                                                 <td th:text="${notification.status}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Status
                                                 </td>
                                                 <td th:text="${notification.supplier}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Dostawca
                                                 </td>
                                                 <td th:text="${notification.item}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Towar
                                                 </td>
                                                 <td th:text="${notification.itemDetails}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     ilość /
                                                     Waga
                                                 </td>
                                                 <td th:text="${notification.carPlates}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium  text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Nr
                                                     rejestracyjny
                                                 </td>
                                                 <td th:text="${notification.driverName}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Kierowca
                                                 </td>
 
                                                 <td th:text="${notification.driverPhone}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Telefon do
                                                     kierowcy
                                                 </td>
 
                                                 <td th:text="${notification.employee}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Osoba
                                                     zlecająca
                                                 </td>
