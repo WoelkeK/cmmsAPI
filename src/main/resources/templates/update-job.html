@@ -65,11 +65,11 @@
                             </div>
 
                             <div class="sm:col-span-1">
-                                <label for="department"
+                                <label for="departmentId"
                                        class="block text-sl font-medium leading-6 text-gray-500">Wydział</label>
 
                                 <div class="mt-2">
-                                    <select name="department" id="department" autocomplete="type"
+                                    <select name="departmentId" id="departmentId" autocomplete="type" onchange="selectMachine()"
                                             th:field="${job.department.id}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
@@ -81,12 +81,12 @@
                                 </div>
                             </div>
 
-                            <div class="sm:col-span-1">
-                                <label for="department"
+                            <div class="invisible sm:col-span-1">
+                                <label for="machineId"
                                        class="block text-sl font-medium leading-6 text-gray-500">Maszyna</label>
 
                                 <div class="mt-2">
-                                    <select name="machine" id="machine" autocomplete="type"
+                                    <select id="machineId" name="machineId" onchange="updateMachineIdAttribute(this.value)" autocomplete="type"
                                             th:field="${job.machine.id}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
@@ -95,6 +95,8 @@
                                                 th:value="${machine.id}">
                                         </option>
                                     </select>
+                                    <input type="hidden" th:field="${job.machine.id}" id="selectedMachineValue"
+                                           name="selectedMachineValue"/>
                                 </div>
                             </div>
                         </div>
@@ -204,5 +206,7 @@
     </div>
 </form>
 </div>
+
+<script th:src="@{/js/selectDepAndMach.js}"></script>
 </body>
 </html>

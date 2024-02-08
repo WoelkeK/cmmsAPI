@@ -133,7 +133,7 @@ public class WebJobController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
+        if (!(job.getStatus() ==null)) {
 
             job.setStatus("przetwarzanie");
             LOGGER.info(job.getEmployee().getId().toString());
@@ -142,7 +142,7 @@ public class WebJobController {
             LOGGER.info("updateView(...)" + job.getRequestDate());
             return "update-job";
         } else {
-            return "redirect:/dashboards";
+            return "redirect:/jobs?pageNo=" + pageNo;
         }
     }
 
@@ -185,6 +185,7 @@ public class WebJobController {
             if (job.getJobStopTime().isAfter(job.getJobStartTime())) {
                 job.setStatus("zakończono");
             } else {
+                LOGGER.info("Nieprawidłowo wypełniony czas pracy");
                 return "update-job";
             }
         } else if ((job.getJobStartTime() != null) && (job.getJobStopTime() == null)) {
