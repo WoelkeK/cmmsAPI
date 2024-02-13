@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Utwórz Awizo</title>
-    <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
-    <link rel="stylesheet" th:href="@{/css/mainold.css}"/>
+        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
+<!--    <link rel="stylesheet" th:href="@{/css/mainold.css}"/>-->
 
 </head>
 <body class="bg-gray-400">
@@ -15,12 +15,21 @@
     <form action="#" th:action="@{/jobs/update/{id}(id=${job.id}, pageNo=${pageNo})}" th:object="${job}" method="post"
           enctype="multipart/form-data">
 
-    <input type="hidden" th:field="${job.id}">
-    <input type="hidden" th:field="*{status}">
-    <input type="hidden" th:field="${job.resizedImage}">
-    <input type="hidden" th:field="${job.originalImage}">
-    <input type="hidden" th:field="${job.requestDate}">
-    <input type="hidden" th:field="${job.jobStatus}">
+        <input type="hidden" th:field="*{requestDate}">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{department.id}">
+        <input type="hidden" th:field="*{machine.id}">
+        <input type="hidden" th:field="*{employee.id}">
+        <input type="hidden" th:field="*{status}">
+        <input type="hidden" th:field="*{resizedImage}">
+        <input type="hidden" th:field="*{originalImage}">
+        <input type="hidden" th:field="*{calcCost}">
+        <input type="hidden" th:field="*{decision}">
+        <input type="hidden" th:field="*{dateOffset}">
+        <input type="hidden" th:field="*{offset}">
+        <input type="hidden" th:field="*{jobShedule}">
+        <input type="hidden" th:field="*{jobStatus}">
+        <input type="hidden" th:field="*{open}">
 
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
@@ -81,7 +90,7 @@
                                 </div>
                             </div>
 
-                            <div class="invisible sm:col-span-1">
+                            <div class="sm:col-span-1">
                                 <label for="machineId"
                                        class="block text-sl font-medium leading-6 text-gray-500">Maszyna</label>
 
@@ -102,7 +111,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
+                    <div class="viewable mt-4 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">Zdjęcie</dt>
                             <dd class="mt-1 text-sm text-gray-900">
@@ -131,7 +140,7 @@
                     </div>
 
 
-                    <div class="sm:col-span-1">
+                    <div class="viewable sm:col-span-1">
                         <label for="jobStartTime" class="block text-sl font-medium leading-6 text-gray-500">Data
                             rozpoczęcia naprawy</label>
                         <div class="mt-2">
@@ -143,7 +152,7 @@
                         </div>
                     </div>
 
-                    <div class="sm:col-span-1">
+                    <div class="viewable sm:col-span-1">
                         <label for="jobStopTime" class="block text-sl font-medium leading-6 text-gray-500">Data
                             rozpoczęcia naprawy</label>
                         <div class="mt-2">
@@ -156,7 +165,7 @@
                     </div>
                 </div>
 
-                <div class="mt-4 px-4 py-5 sm:px-6">
+                <div class="viewable mt-4 px-4 py-5 sm:px-6">
                     <dl class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                         <div class="sm:col-span-1">
                             <div class="space-y-6 sm:space-y-5">
@@ -196,7 +205,7 @@
                             <a th:href="@{/jobs?pageNo={pageNo}(pageNo=${pageNo})}">Wstecz</a>
                         </button>
                         <button type="submit"
-                                class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                class="viewable ml-3 inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white shadow-sm  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-indigo-600 hover:bg-indigo-700">
                             Zapisz
                         </button>
                     </div>
@@ -210,3 +219,16 @@
 <script th:src="@{/js/selectDepAndMach.js}"></script>
 </body>
 </html>
+
+<!--<div class="flex gap-2">-->
+<!--    &lt;!&ndash; HTML &ndash;&gt;-->
+<!--    <button class="bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50" disabled>-->
+<!--        Disabled Button-->
+<!--    </button>-->
+
+<!--    &lt;!&ndash; HTML &ndash;&gt;-->
+<!--    <button class="bg-green-500 hover:bg-green-700 active:bg-green-800 px-4 py-2 rounded-md text-white">-->
+<!--        Active Button-->
+<!--    </button>-->
+
+<!--</div>-->

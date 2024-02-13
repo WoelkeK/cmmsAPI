@@ -101,8 +101,8 @@ public class ImageServiceImpl implements ImageService {
             } else {
                 LOGGER.info("procesed Image() ");
                 byte[] orginalImage = multipartToByteArray(image);
-                byte[] resizeImage = simpleResizeImage(orginalImage, 300);
-                byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
+                byte[] resizeImage = simpleResizeImage(orginalImage, 100);
+                byte[] resizeMaxImage = simpleResizeImage(orginalImage, 300);
                 pass.setOriginalImage(orginalImage);
                 pass.setResizedImage(resizeMaxImage);
             }

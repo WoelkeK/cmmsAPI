@@ -74,6 +74,6 @@ public class JobEntity {
     private byte[] originalImage;
     @Lob()
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "resizedImage", columnDefinition = "BLOB")
+    @Column(name = "resizedImage", columnDefinition = "MEDIUMBLOB")
     private byte[] resizedImage;
 }

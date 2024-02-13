@@ -133,17 +133,23 @@ public class WebJobController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-        if (!(job.getStatus() ==null)) {
-
-            job.setStatus("przetwarzanie");
+//        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
+//
+//            job.setStatus("przetwarzanie");
             LOGGER.info(job.getEmployee().getId().toString());
             model.addAttribute("job", job);
             model.addAttribute("pageNo", pageNo);
             LOGGER.info("updateView(...)" + job.getRequestDate());
+
+
+            Map<Long, String> jobBase64Images = new HashMap<>();
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+            model.addAttribute("images", jobBase64Images);
+
             return "update-job";
-        } else {
-            return "redirect:/jobs?pageNo=" + pageNo;
-        }
+//        } else {
+//            return "redirect:/jobs?pageNo=" + pageNo;
+//        }
     }
 
     @PostMapping(value = "/update/{id}")
@@ -167,7 +173,7 @@ public class WebJobController {
         } else {
             LOGGER.info("procesed Image() ");
             byte[] orginalImage = imageService.multipartToByteArray(image);
-            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
             byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
             job.setOriginalImage(orginalImage);
             job.setResizedImage(resizeMaxImage);
@@ -218,10 +224,10 @@ public class WebJobController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
 
-        String status = job.getJobStatus().toString();
-        if (status.equalsIgnoreCase("przegląd")) {
-            job.setStatus("przegląd");
-        }
+//        String status = job.getJobStatus().toString();
+//        if (status.equalsIgnoreCase("przegląd")) {
+//            job.setStatus("przegląd");
+//        }
 
 
         if (image.getSize() == 0 && job.getOriginalImage() == null) {
@@ -236,10 +242,10 @@ public class WebJobController {
             } else {
                 LOGGER.info("procesed Image() ");
                 byte[] orginalImage = imageService.multipartToByteArray(image);
-                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
                 byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-                job.setOriginalImage(orginalImage);
-                job.setResizedImage(resizeMaxImage);
+                job.setOriginalImage(resizeMaxImage);
+                job.setResizedImage(resizeImage);
             }
         }
         if (result.hasErrors()) {

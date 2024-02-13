@@ -115,7 +115,7 @@ public class DashboardController {
 
         Map<Long, String> jobBase64Images = new HashMap<>();
         for (Job job : jobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
         }
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
@@ -183,6 +183,9 @@ public class DashboardController {
             job.setStatus("przetwarzanie");
             model.addAttribute("job", job);
             LOGGER.info("updateView(...)" + job.getStatus());
+            Map<Long, String> jobBase64Images = new HashMap<>();
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
+            model.addAttribute("images", jobBase64Images);
             return "update-dashboard";
         } else {
             return "redirect:/dashboards";
@@ -205,8 +208,9 @@ public class DashboardController {
                          BindingResult result,
                          Model model) throws CostNotFoundException, JobNotFoundException {
         LOGGER.info("update()" + job.getId());
+
         if (result.hasErrors()) {
-            LOGGER.info("update: result has erorr()" + result.getFieldError());
+            LOGGER.info("update: result has erorr() - redirect");
             model.addAttribute("job", job);
             return "update-dashboard";
         }

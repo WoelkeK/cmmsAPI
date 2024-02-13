@@ -2,6 +2,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         // No initial call here, as we want to trigger on user selection only
 
+
     });
 
     function selectMachine() {
@@ -20,15 +21,28 @@
         var machineSelect = document.getElementById('machineId');
         var selectedMachineValueInput = document.getElementById('selectedMachineValue');
         var jobstatusField = document.getElementById("jobStatus");
+        var viewable = document.getElementsByClassName("viewable");
+
+
 
         machineSelect.innerHTML = ''; // Clear previous options
 
        if(machines.length>0){
         machineSelect.style.visibility = "visible";
         jobstatusField.style.visibility = "visible";
+
+
+        for(let i=0; i<viewable.length; i++){
+        viewable[i].style.visibility="visible";
+        }
+
        }else{
         machineSelect.style.visibility = "hidden";
         jobstatusField.style.visibility = "hidden";
+
+         for(let i=0; i<viewable.length; i++){
+                 viewable[i].style.visibility="hidden";
+                 }
        }
         // Create a list of machines
             machines.forEach(function (machine) {
@@ -50,6 +64,7 @@
 console.log('disableSelectBoxJob')
 var field1Value = document.getElementById("jobStatus").value;
 var field2Select = document.getElementById("hideDate");
+
 
 if ((field1Value === "PRZEGLĄD") || (field1Value === "SZKOLENIE")) {
 field2Select.style.visibility = "visible";
