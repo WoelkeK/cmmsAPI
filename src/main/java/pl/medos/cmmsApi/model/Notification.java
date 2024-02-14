@@ -21,6 +21,7 @@ public class Notification {
     private String supplier;
     private String item;
     private String itemDetails;
+    @NotEmpty(message = "Pole nie może być puste!")
     private String carPlates;
     private String driverName;
     private String driverPhone;
@@ -28,7 +29,6 @@ public class Notification {
     private String employee;
     @NotEmpty(message = "Pole nie może być puste!")
     private String employeePhone;
-    @NotEmpty(message = "Pole nie może być puste!")
     private String description;
     private String comment;
     private int piece;

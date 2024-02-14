@@ -68,13 +68,12 @@ public class WebHardwareController {
     public String listView(Model model){
         LOGGER.info("listView()");
         return findHardwarePage(1, "inventoryNo", "asc", model);
-//        return listViewAllSorted("inventoryNo", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
     public String findHardwarePage(@PathVariable(value = "pageNo") int pageNo,
-                                   @RequestParam("sortField") String sortField,
-                                   @RequestParam("sortDir") String sortDirection,
+                                   @RequestParam(value = "sortField", defaultValue = "inventoryNo") String sortField,
+                                   @RequestParam(value = "sortDir",defaultValue = "asc") String sortDirection,
                                    Model model) {
 
         LOGGER.info("findHardwarePage()");
@@ -114,10 +113,12 @@ public class WebHardwareController {
 
     @GetMapping(value = "/read/{id}")
     public String findHardware(@PathVariable(name = "id") Long id,
+                               @RequestParam(name = "pageNo") int pageNo,
                                Model model) throws HardwareNotFoundException {
         LOGGER.info("findHardware(" + id + ")");
         Hardware findHardware = hardwareService.read(id);
         model.addAttribute("hardware", findHardware);
+        model.addAttribute("pageNo", pageNo);
         LOGGER.info("findHardware(...)" + findHardware);
         return "view-hardware";
     }

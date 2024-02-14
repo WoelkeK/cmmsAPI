@@ -83,10 +83,11 @@ public class WebJobController {
 
     @GetMapping
     public String listView(
-            @RequestParam(name = "pageNo", defaultValue = "1") int page,
+            @RequestParam(name = "pageNo", defaultValue = "1", required = false) String page,
             Model model) throws IOException {
         LOGGER.info("listView()");
-        return findJobsPages(page, "requestDate", "asc", model);
+        int pageNo = Integer.parseInt(page);
+        return findJobsPages(pageNo, "requestDate", "asc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -133,27 +134,34 @@ public class WebJobController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
-
-            job.setStatus("przetwarzanie");
+//        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
+//
+//            job.setStatus("przetwarzanie");
             LOGGER.info(job.getEmployee().getId().toString());
             model.addAttribute("job", job);
             model.addAttribute("pageNo", pageNo);
             LOGGER.info("updateView(...)" + job.getRequestDate());
+
+
+            Map<Long, String> jobBase64Images = new HashMap<>();
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+            model.addAttribute("images", jobBase64Images);
+
             return "update-job";
-        } else {
-            return "redirect:/dashboards";
-        }
+//        } else {
+//            return "redirect:/jobs?pageNo=" + pageNo;
+//        }
     }
 
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
-                         @RequestParam(name = "pageNo") int pageNo,
+                         @RequestParam(name = "pageNo") String page,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
                          Model model,
                          MultipartFile image) throws JobNotFoundException, IOException {
-        LOGGER.info("update()" + job.getId());
+        LOGGER.info("update()" + job.getId() + " " + page);
+        int pageNo = Integer.parseInt(page);
 
         if (image.isEmpty() || image.getBytes() == null) {
             LOGGER.info("multipart file not present");
@@ -167,7 +175,7 @@ public class WebJobController {
         } else {
             LOGGER.info("procesed Image() ");
             byte[] orginalImage = imageService.multipartToByteArray(image);
-            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
             byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
             job.setOriginalImage(orginalImage);
             job.setResizedImage(resizeMaxImage);
@@ -180,17 +188,20 @@ public class WebJobController {
             return "update-job";
         }
 
-        if ((job.getJobStartTime() != null) && (job.getJobStopTime() != null)) {
 
+        if(job.getJobStartTime()==null) {
+            LOGGER.info("Nieprawidłowo wybrany początkowy czas pracy");
+            return "update-job";
+
+        }else if((job.getJobStartTime()!=null) && (job.getJobStopTime()==null)){
+            job.setStatus("oczekiwanie");
+        }else{
             if (job.getJobStopTime().isAfter(job.getJobStartTime())) {
                 job.setStatus("zakończono");
             } else {
+                LOGGER.info("Nieprawidłowo wypełniony czas pracy");
                 return "update-job";
             }
-        } else if ((job.getJobStartTime() != null) && (job.getJobStopTime() == null)) {
-            job.setStatus("oczekiwanie");
-        } else {
-            return "update-job";
         }
 
         model.addAttribute("job", job);
@@ -217,10 +228,10 @@ public class WebJobController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
 
-        String status = job.getJobStatus().toString();
-        if (status.equalsIgnoreCase("przegląd")) {
-            job.setStatus("przegląd");
-        }
+//        String status = job.getJobStatus().toString();
+//        if (status.equalsIgnoreCase("przegląd")) {
+//            job.setStatus("przegląd");
+//        }
 
 
         if (image.getSize() == 0 && job.getOriginalImage() == null) {
@@ -235,10 +246,10 @@ public class WebJobController {
             } else {
                 LOGGER.info("procesed Image() ");
                 byte[] orginalImage = imageService.multipartToByteArray(image);
-                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 300);
+                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
                 byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-                job.setOriginalImage(orginalImage);
-                job.setResizedImage(resizeMaxImage);
+                job.setOriginalImage(resizeMaxImage);
+                job.setResizedImage(resizeImage);
             }
         }
         if (result.hasErrors()) {

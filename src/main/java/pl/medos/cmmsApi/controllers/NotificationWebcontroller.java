@@ -46,10 +46,13 @@ public class NotificationWebcontroller {
 
 
     @GetMapping("/read/{id}")
-    public String findNotificationById(@PathVariable(name = "id") Long id, Model model) {
+    public String findNotificationById(@PathVariable(name = "id") Long id,
+                                       @RequestParam(name = "pageNo") int pageNo,
+                                       Model model) {
         log.info("findNotificationById() " + id);
         Notification notificationById = notificationService.findNotificationById(id);
         model.addAttribute("notification", notificationById);
+        model.addAttribute("pageNo", pageNo);
         return "view-notification.html";
     }
 
@@ -103,8 +106,8 @@ public class NotificationWebcontroller {
 
     @GetMapping(value = "/page/{pageNo}")
     public String findPagesNotifications(@PathVariable(name = "pageNo") int pageNo,
-                                         @RequestParam(name = "sortField") String sortField,
-                                         @RequestParam(name = "sortDir") String sortDir,
+                                         @RequestParam(name = "sortField", defaultValue = "visitDate") String sortField,
+                                         @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir,
                                          Model model) {
         log.info("findPagesNotifications()");
         int size =10;

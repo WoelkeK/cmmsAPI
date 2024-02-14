@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Moduł awizacji</title>
-<!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
+    <!--        <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
@@ -15,9 +15,7 @@
 <body class="bg-gray-400">
 
 
-
-
-<div  th:if="${isAdmin} or ${nRead}">
+<div th:if="${isAdmin} or ${nRead}">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -95,7 +93,7 @@
                         Pracownicy
                     </a>
 
-                    <a  th:if="${isAdmin} or ${pRead}"href="/przepustki"
+                    <a th:if="${isAdmin} or ${pRead}" href="/przepustki"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -107,34 +105,42 @@
                         Przepustki Stałe
                     </a>
 
-                    <a  th:if="${isAdmin}" href="/hardwares"
+                    <a th:if="${isAdmin}" href="/hardwares"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/>
                         </svg>
                         IT
                     </a>
-                    <a  th:if="${isAdmin} or ${dRead}" href="/departments"
+                    <a th:if="${isAdmin} or ${dRead}" href="/departments"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor"
+                             class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/>
                         </svg>
                         Wydziały
                     </a>
 
-                    <a  th:if="${isAdmin} or ${mRead}" href="/machines"
+                    <a th:if="${isAdmin} or ${mRead}" href="/machines"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor"
+                             class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"/>
                         </svg>
                         Maszyny
                     </a>
 
-                    <a  th:if="${isAdmin} or ${jRead}"th:href="@{/jobs}"
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/jobs}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
@@ -146,8 +152,8 @@
                         Utrzymanie Ruchu
                     </a>
 
-                    <a  th:if="${isAdmin} or ${jRead}" th:href="@{/engineers}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/engineers}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -158,8 +164,8 @@
                         Technicy
                     </a>
 
-                    <a  th:if="${isAdmin} or ${jRead}" th:href="@{/dashboards}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <a th:if="${isAdmin} or ${jRead}" th:href="@{/dashboards}"
+                       class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -227,8 +233,8 @@
 
                                         <img class="block h-14 w-auto lg:hidden" th:src="@{/images/car.png}"
                                              alt="device">
-                                                                                <img class="hidden h-14 w-auto lg:block" th:src="@{/images/car.png}"
-                                                                                     alt="device">
+                                        <img class="hidden h-14 w-auto lg:block" th:src="@{/images/car.png}"
+                                             alt="device">
 
                                     </div>
                                     <div class="hidden lg:ml-10 lg:block">
@@ -346,10 +352,10 @@
                                                         Osoba kontaktowa ↑↓</a>
                                                 </th>
 
-<!--                                                <th scope="col"-->
-<!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
-<!--                                                    Zdjęcie-->
-<!--                                                </th>-->
+                                                <!--                                                <th scope="col"-->
+                                                <!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
+                                                <!--                                                    Zdjęcie-->
+                                                <!--                                                </th>-->
 
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
                                                     <span class="sr-only">Edit</span>
@@ -365,89 +371,122 @@
                                             </tr>
 
                                             <tr th:each="notification: ${notifications}"
-                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
+                                                class="border-t border-gray-300 text-lg font-medium transition ease-in-out delay-50 bg-gray-100 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-200">
 
                                                 <td th:text="${#temporals.format(notification.visitDate, 'dd-MM-yyyy HH:mm')}"
-                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800">
+                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Data
                                                     Zgłoszenia
+
                                                 </td>
                                                 <td th:text="${notification.type}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Typ
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Typ
                                                 </td>
                                                 <td th:text="${notification.status}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Status
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Status
                                                 </td>
                                                 <td th:text="${notification.supplier}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Dostawca
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Dostawca
                                                 </td>
                                                 <td th:text="${notification.item}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Towar
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Towar
                                                 </td>
                                                 <td th:text="${notification.itemDetails}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">ilość /
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    ilość /
                                                     Waga
                                                 </td>
                                                 <td th:text="${notification.carPlates}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium  text-gray-900">Nr
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Nr
                                                     rejestracyjny
                                                 </td>
                                                 <td th:text="${notification.driverName}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Kierowca
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Kierowca
                                                 </td>
 
                                                 <td th:text="${notification.driverPhone}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Telefon do
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Telefon do
                                                     kierowcy
                                                 </td>
 
                                                 <td th:text="${notification.employee}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900">Osoba
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
+                                                    Osoba
                                                     zlecająca
                                                 </td>
 
-<!--                                                <td>-->
-<!--                                                    <div class="container mt-2 mb-2">-->
-<!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
-<!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
-<!--                                                                 width="70px" height="30px" alt="person">-->
-<!--                                                        </a>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
+                                                <!--                                                <td>-->
+                                                <!--                                                    <div class="container mt-2 mb-2">-->
+                                                <!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
+                                                <!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
+                                                <!--                                                                 width="70px" height="30px" alt="person">-->
+                                                <!--                                                        </a>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </td>-->
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-lg font-medium sm:pr-8">
 
-                                                    <a th:if="${isAdmin} or ${nRead}" or th:href="@{/awizacje/read/{id}(id=${notification.id})}"
-                                                       class="text-indigo-800 hover:text-indigo-300">
-                                                    <button class="mr-4" title="Szczegóły">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
-                                                        </svg>
+<!--                                                    <a th:if="${isAdmin} or ${nRead}" or-->
+<!--                                                       th:href="@{/awizacje/read/{id}(id=${notification.id})}"-->
+<!--                                                       class="text-indigo-800 hover:text-indigo-300">-->
+<!--                                                        <button class="mr-4" title="Szczegóły">-->
+<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"-->
+<!--                                                                 viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                                                                 stroke="currentColor" class="w-7 h-7">-->
+<!--                                                                <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>-->
+<!--                                                            </svg>-->
 
-                                                    </button>
-                                                    </a>
+<!--                                                        </button>-->
+<!--                                                    </a>-->
 
-                                                    <a th:if="${isAdmin} or ${nEdit}" th:href="@{/awizacje/update/{id}(id=${notification.id})}"
+                                                    <a th:if="${isAdmin} or ${nEdit}"
+                                                       th:href="@{/awizacje/update/{id}(id=${notification.id})}"
                                                        class="text-green-600 hover:text-green-300">
-                                                    <button class="mr-4" title="Edycja">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                        </svg>
+                                                        <button class="mr-4" title="Edycja">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                 viewBox="0 0 24 24" stroke-width="1.5"
+                                                                 stroke="currentColor" class="w-7 h-7">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                                            </svg>
 
-                                                    </button>
+                                                        </button>
                                                     </a>
 
-<!--                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"-->
-                                                    <a th:if="${isAdmin} or ${nFull}" th:attr="data-id=${notification.id}"
+                                                    <!--                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"-->
+                                                    <a th:if="${isAdmin} or ${nFull}"
+                                                       th:attr="data-id=${notification.id}"
                                                        class="deleteBtn text-red-600 hover:text-red-300">
-                                                    <button class="mr-4" title="Usuń" data-toggle="modal" data-target="#editModal">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                        </svg>
+                                                        <button class="mr-4" title="Usuń" data-toggle="modal"
+                                                                data-target="#editModal">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                 viewBox="0 0 24 24" stroke-width="1.5"
+                                                                 stroke="currentColor" class="w-7 h-7">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                                            </svg>
 
-                                                    </button>
+                                                        </button>
 
                                                     </a>
-                                               </td>
+                                                </td>
 
                                             </tr>
                                             <!-- More people... -->
@@ -597,9 +636,6 @@
 </div>
 
 
-
-
-
 <!--<div id="myModal" class="modal">-->
 <!--    <div class="modal-content">-->
 
@@ -666,6 +702,7 @@
 
 <!--<script th:if="${noAccess}" th:src="@{/js/alert.js}"></script>-->
 <!--<script th:src="@{/js/redirect.js}"></script>-->
+<script type="text/javascript" th:src="@{/js/clickrow.js}"></script>
 <script th:src="@{/js/deleteNotification.js}"></script>
 </body>
 </html>

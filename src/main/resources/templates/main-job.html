@@ -472,7 +472,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
                                                 <a th:href="@{'/jobs/page/' + ${currentPage} + '?sortField=jobStatus&sortDir=' + ${reverseSortDir}}">
-                                                    Typ
+                                                    Typ</a>
 
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-yellow-500">
@@ -529,31 +529,37 @@
                                             </tr>
 
                                             <tr th:each="job : ${jobs}"
-                                                class="border-t border-gray-300 text-lg font-medium bg-gray-100">
+                                                class="border-t border-gray-300 text-lg font-medium transition ease-in-out delay-50 bg-gray-100 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-200">
 
                                                 <!--                                            <td th:text="${#temporals.format(job.requestDate, 'dd MMMM yyyy HH:mm')}"-->
-                                                <td th:text="${#temporals.format(job.requestDate, 'dd MM yyyy HH:mm')}"
+                                                <td th:text="${#temporals.format(job.requestDate, 'dd MM yyyy HH:mm')}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">
                                                     Data
                                                     Zgłoszenia
                                                 </td>
-                                                <td th:text="${job.employee.name}"
+                                                <td th:text="${job.employee.name}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Osoba
                                                 </td>
-                                                <td th:text="${job?.department?.name}"
+                                                <td th:text="${job?.department?.name}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Dział
                                                 </td>
-                                                <td th:text="${job.machine.name}"
+                                                <td th:text="${job.machine.name}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Maszyna
                                                 </td>
 
-                                                <td th:text="${job?.jobStatus}"
+                                                <td th:text="${job?.jobStatus}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Typ
                                                 </td>
 
 
 
-                                                <td th:text="${job.message}"
+                                                <td th:text="${job.message}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Opis
                                                     usterki
                                                 </td>
@@ -565,12 +571,14 @@
                                                 <!--                                                class="whitespace-nowrap px-3 py-4 text-lm text-gray-900">Podjęte-->
                                                 <!--                                                działania-->
                                                 <!--                                            </td>-->
-                                                <td th:text="${#temporals.format(job.jobStartTime, 'dd MM yyyy HH:mm')}"
+                                                <td th:text="${#temporals.format(job.jobStartTime, 'dd MM yyyy HH:mm')}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">
                                                     Data
                                                     podjęcia działań
                                                 </td>
-                                                <td th:text="${#temporals.format(job.jobStopTime, 'dd MM yyyy HH:mm')}"
+                                                <td th:text="${#temporals.format(job.jobStopTime, 'dd MM yyyy HH:mm')}" style="cursor: pointer"
+                                                    th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="whitespace-nowrap align-text-top px-3 py-4 text-lm text-gray-900">
                                                     Data
                                                     zakończenia naprawy
@@ -606,19 +614,19 @@
                                                     <!--                                                    </button>-->
                                                     <!--                                                </a>-->
 
-                                                    <a th:if="${isAdmin} or ${jEdit}"
-                                                       th:href="@{/jobs/update/{id}(id=${job.id}, pageNo=${currentPage})}"
-                                                       class="text-green-600 hover:text-green-300">
-                                                        <button class="mr-4" title="Edycja">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                 viewBox="0 0 24 24" stroke-width="1.5"
-                                                                 stroke="currentColor" class="w-7 h-7">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
-                                                            </svg>
+<!--                                                    <a th:if="${isAdmin} or ${jEdit}"-->
+<!--                                                       th:href="@{/jobs/update/{id}(id=${job.id}, pageNo=${currentPage})}"-->
+<!--                                                       class="text-green-600 hover:text-green-300">-->
+<!--                                                        <button class="mr-4" title="Edycja">-->
+<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"-->
+<!--                                                                 viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                                                                 stroke="currentColor" class="w-7 h-7">-->
+<!--                                                                <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>-->
+<!--                                                            </svg>-->
 
-                                                        </button>
-                                                    </a>
+<!--                                                        </button>-->
+<!--                                                    </a>-->
 
                                                     <a th:if="${isAdmin} or ${jFull}"
                                                        class="text-red-600 hover:text-red-300">
@@ -775,7 +783,7 @@
 
 
 <script type="text/javascript" th:src="@{/js/deleteJobModal.js}"></script>
-
+<script type="text/javascript" th:src="@{/js/clickrow.js}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         setInterval(function() {
@@ -785,7 +793,6 @@
             });
         }, 100000); // send GET request every 5 seconds
     });
-
 
 </script>
 </body>

@@ -115,7 +115,7 @@ public class DashboardController {
 
         Map<Long, String> jobBase64Images = new HashMap<>();
         for (Job job : jobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
         }
         model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
@@ -144,8 +144,8 @@ public class DashboardController {
         if (!image.isEmpty()) {
             LOGGER.info("image processing()");
             byte[] orginalImage = imageService.multipartToByteArray(image);
-            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 200);
-            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 1000);
+            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
+            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
             job.setResizedImage(resizeImage);
             job.setOriginalImage(resizeMaxImage);
             LOGGER.info("image processing(...)");
@@ -178,15 +178,21 @@ public class DashboardController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
-
-            job.setStatus("przetwarzanie");
+//        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
+//
+//            job.setStatus("przetwarzanie");
             model.addAttribute("job", job);
             LOGGER.info("updateView(...)" + job.getStatus());
+//            Map<Long, String> jobBase64Images = new HashMap<>();
+//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
+        String encoded = Base64.getEncoder().encodeToString(job.getOriginalImage());
+
+
+        model.addAttribute("image", encoded);
             return "update-dashboard";
-        } else {
-            return "redirect:/dashboards";
-        }
+//        } else {
+//            return "redirect:/dashboards";
+//        }
     }
 
     @GetMapping(value = "/read/{id}")
@@ -205,8 +211,9 @@ public class DashboardController {
                          BindingResult result,
                          Model model) throws CostNotFoundException, JobNotFoundException {
         LOGGER.info("update()" + job.getId());
+
         if (result.hasErrors()) {
-            LOGGER.info("update: result has erorr()" + result.getFieldError());
+            LOGGER.info("update: result has erorr() - redirect");
             model.addAttribute("job", job);
             return "update-dashboard";
         }
