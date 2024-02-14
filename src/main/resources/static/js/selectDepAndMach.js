@@ -47,10 +47,14 @@
         // Create a list of machines
             machines.forEach(function (machine) {
 
-            var option = document.createElement('option');
-            option.value = machine.id;
-            option.text = machine.name;
-            machineSelect.appendChild(option);
+            var option1 = document.createElement('option');
+            var option2 = document.createElement('option');
+            option1.text = "Wybierz";
+            option1.value ="";
+            machineSelect.appendChild(option1);
+            option2.value = machine.id;
+            option2.text = machine.name;
+            machineSelect.appendChild(option2);
 
         });
     }

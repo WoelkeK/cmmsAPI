@@ -83,10 +83,11 @@ public class WebJobController {
 
     @GetMapping
     public String listView(
-            @RequestParam(name = "pageNo", defaultValue = "1") int page,
+            @RequestParam(name = "pageNo", defaultValue = "1", required = false) String page,
             Model model) throws IOException {
         LOGGER.info("listView()");
-        return findJobsPages(page, "requestDate", "asc", model);
+        int pageNo = Integer.parseInt(page);
+        return findJobsPages(pageNo, "requestDate", "asc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -154,12 +155,13 @@ public class WebJobController {
 
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
-                         @RequestParam(name = "pageNo") int pageNo,
+                         @RequestParam(name = "pageNo") String page,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
                          Model model,
                          MultipartFile image) throws JobNotFoundException, IOException {
-        LOGGER.info("update()" + job.getId());
+        LOGGER.info("update()" + job.getId() + " " + page);
+        int pageNo = Integer.parseInt(page);
 
         if (image.isEmpty() || image.getBytes() == null) {
             LOGGER.info("multipart file not present");
@@ -186,18 +188,20 @@ public class WebJobController {
             return "update-job";
         }
 
-        if ((job.getJobStartTime() != null) && (job.getJobStopTime() != null)) {
 
+        if(job.getJobStartTime()==null) {
+            LOGGER.info("Nieprawidłowo wybrany początkowy czas pracy");
+            return "update-job";
+
+        }else if((job.getJobStartTime()!=null) && (job.getJobStopTime()==null)){
+            job.setStatus("oczekiwanie");
+        }else{
             if (job.getJobStopTime().isAfter(job.getJobStartTime())) {
                 job.setStatus("zakończono");
             } else {
                 LOGGER.info("Nieprawidłowo wypełniony czas pracy");
                 return "update-job";
             }
-        } else if ((job.getJobStartTime() != null) && (job.getJobStopTime() == null)) {
-            job.setStatus("oczekiwanie");
-        } else {
-            return "update-job";
         }
 
         model.addAttribute("job", job);

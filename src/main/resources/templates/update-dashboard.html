@@ -105,9 +105,10 @@
                         <div class="bg-gray-300 mx-2 shadow sm:rounded-lg">
                             <section aria-labelledby="features-heading" class="relative">
 
+<!--                                    <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ ${image}}"-->
 
                                 <div class="aspect-h-2 aspect-w-3 overflow-hidden sm:aspect-w-5 lg:aspect-none lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-16 sm:rounded-lg">
-                                    <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(job.id)}"
+                                    <img src="data:image/jpeg;charset=utf8;base64," th:attrappend="src=${image}"
                                          alt="Issued machine photo"
                                          class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                                 </div>

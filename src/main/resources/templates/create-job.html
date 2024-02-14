@@ -53,6 +53,7 @@
                                     th:field="${job.employee.id}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
+                                <option value="">Wybierz</option>
                                 <option th:each="employee : ${employees}"
                                         th:text="${employee.name}"
                                         th:value="${employee.id}">
@@ -72,7 +73,7 @@
                                     class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
-
+                                <option value="">Wybierz</option>
                                 <option th:each="department : ${departments}"
                                         th:text="${department.name}"
                                         th:value="${department.id}">
@@ -90,6 +91,7 @@
                                     class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
+                                <option value="">Wybierz</option>
                             </select>
                             <input type="hidden" th:field="${job.machine.id}" id="selectedMachineValue"
                                    name="selectedMachineValue"/>
@@ -106,7 +108,7 @@
                                     th:field="*{jobStatus}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6" onchange="disableSelectBoxJob()">
-
+                                <option value="">Wybierz</option>
                                 <option th:each="jobStatus : ${T(pl.medos.cmmsApi.enums.JobStatus).values()}"
                                         th:value="${jobStatus}" th:text="${jobStatus}">
 

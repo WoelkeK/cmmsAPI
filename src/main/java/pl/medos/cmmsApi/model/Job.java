@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.model;
 
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,9 @@ public class Job {
     private Boolean directContact;
     @NotEmpty(message = "Należy uzuzpełnić opis wykonanych czynności!")
     private String solution;
+//    @NotNull(message = "Należy wybrać odpowiednia datę!")
     private LocalDateTime jobStartTime;
+//    @NotNull(message = "Należy wybrać odpowiednia datę!")
     private LocalDateTime jobStopTime;
 
     private LocalDateTime jobShedule;
