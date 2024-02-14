@@ -31,6 +31,10 @@
         machineSelect.style.visibility = "visible";
         jobstatusField.style.visibility = "visible";
 
+                    var option1 = document.createElement('option');
+                     option1.text = "Wybierz";
+                     option1.value ="";
+                     machineSelect.appendChild(option1);
 
         for(let i=0; i<viewable.length; i++){
         viewable[i].style.visibility="visible";
@@ -45,13 +49,11 @@
                  }
        }
         // Create a list of machines
-            machines.forEach(function (machine) {
 
-            var option1 = document.createElement('option');
+
+
+            machines.forEach(function (machine) {
             var option2 = document.createElement('option');
-            option1.text = "Wybierz";
-            option1.value ="";
-            machineSelect.appendChild(option1);
             option2.value = machine.id;
             option2.text = machine.name;
             machineSelect.appendChild(option2);
