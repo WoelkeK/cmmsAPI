@@ -79,6 +79,7 @@
                                         th:value="${department.id}">
                                 </option>
                             </select>
+                            <p id="error2" style="color: red;"></p>
                         </div>
                     </div>
 
@@ -91,11 +92,11 @@
                                     class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
-                                <option value="">Wybierz</option>
                             </select>
-                            <input type="hidden" th:field="${job.machine.id}" id="selectedMachineValue"
+                            <input type="hidden" th:field="*{machine.id}" id="selectedMachineValue"
                                    name="selectedMachineValue"/>
                         </div>
+                        <p id="error1" style="color: red;"></p>
                     </div>
                 </div>
 
@@ -288,5 +289,6 @@
 
 
 <script th:src="@{/js/selectDepAndMach.js}"></script>
+<script th:src="@{/js/validate.js}"></script>
 </body>
 </html>

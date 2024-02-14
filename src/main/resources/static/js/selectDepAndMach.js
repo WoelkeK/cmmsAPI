@@ -26,15 +26,14 @@
 
 
         machineSelect.innerHTML = ''; // Clear previous options
+        var option1 = document.createElement('option');
+        option1.text = "Wybierz";
+        option1.value ="";
+        machineSelect.appendChild(option1);
 
        if(machines.length>0){
         machineSelect.style.visibility = "visible";
         jobstatusField.style.visibility = "visible";
-
-                    var option1 = document.createElement('option');
-                     option1.text = "Wybierz";
-                     option1.value ="";
-                     machineSelect.appendChild(option1);
 
         for(let i=0; i<viewable.length; i++){
         viewable[i].style.visibility="visible";
@@ -56,12 +55,13 @@
             var option2 = document.createElement('option');
             option2.value = machine.id;
             option2.text = machine.name;
+            option2.selected;
             machineSelect.appendChild(option2);
 
         });
     }
 
-            function updateMachineIdAttribute(selectedMachineValue) {
+    function updateMachineIdAttribute(selectedMachineValue) {
         // Update the hidden input field with the selected machine value
         document.getElementById('selectedMachineValue').value = selectedMachineValue;
     }
