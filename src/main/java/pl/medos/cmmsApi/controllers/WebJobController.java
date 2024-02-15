@@ -311,7 +311,19 @@ public class WebJobController {
         LOGGER.info("findJobByQuery()");
         model.addAttribute("jobs", jobByQuery);
         model.addAttribute("currentPage", pageNo);
+
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineService.findAllMachines();
+        model.addAttribute("machines", machines);
         actualJobs = jobByQuery.getContent();
+        Map<Long, String> jobBase64Images = new HashMap<>();
+        for (Job job : actualJobs) {
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+        }
+        model.addAttribute("images", jobBase64Images);
         return "main-job";
     }
 
