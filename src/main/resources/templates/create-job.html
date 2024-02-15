@@ -50,7 +50,7 @@
 
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                             <select name="employee" id="employee" autocomplete="employee"
-                                    th:field="${job.employee.id}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
+                                    th:field="${job.employee.id}" class="validate block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
                                 <option value="">Wybierz</option>
@@ -59,6 +59,7 @@
                                         th:value="${employee.id}">
                                 </option>
                             </select>
+                            <p class="error" id="error3" style="color: red;"></p>
                         </div>
                     </div>
 
@@ -70,7 +71,7 @@
                                     onchange="selectMachine()"
                                     name="departmentId"
                                     autocomplete="department"
-                                    class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
+                                    class="validate block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
                                 <option value="">Wybierz</option>
@@ -79,7 +80,7 @@
                                         th:value="${department.id}">
                                 </option>
                             </select>
-                            <p id="error2" style="color: red;"></p>
+                            <p class="error" id="error2" style="color: red;"></p>
                         </div>
                     </div>
 
@@ -89,14 +90,14 @@
 
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                             <select id="machineId" name="machineId" onchange="updateMachineIdAttribute(this.value)"
-                                    class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
+                                    class="validate block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6">
                             </select>
                             <input type="hidden" th:field="*{machine.id}" id="selectedMachineValue"
                                    name="selectedMachineValue"/>
                         </div>
-                        <p id="error1" style="color: red;"></p>
+                        <p class="error" id="error1" style="color: red;"></p>
                     </div>
                 </div>
 
@@ -106,7 +107,7 @@
                                class="block text-sl font-medium leading-6 text-gray-500">Status</label>
                         <div class="mt-2">
                             <select name="jobStatus" id="jobStatus" autocomplete="off"
-                                    th:field="*{jobStatus}" class="block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
+                                    th:field="*{jobStatus}" class="validate block w-fit rounded-md border-0 bg-white/3 py-1.5 text-blue-700 shadow-sm ring-1
                                 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 px-2
                                 sm:text-xl sm:leading-6" onchange="disableSelectBoxJob()">
                                 <option value="">Wybierz</option>
@@ -115,6 +116,7 @@
 
                                 </option>
                             </select>
+                            <p class="error" style="color: red;"></p>
                         </div>
                     </div>
 
@@ -195,12 +197,14 @@
                                 <div class="space-y-6 sm:space-y-5">
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
                                         <label for="message"
-                                               class="block-w-full text-xl font-medium text-red-600 sm:mt-px sm:pt-2">Temat zgłoszenia</label>
+                                               class="block-w-full text-xl font-medium text-blue-600 sm:mt-px sm:pt-2">Temat zgłoszenia</label>
                                         <div class="mt-1 sm:col-span-3 sm:mt-0">
                                         <textarea th:field="*{message}" id="message" rows="4"
-                                                  class="block p-2.5 w-full text-xl text-blue-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                  class="validate block p-2.5 w-full text-xl text-blue-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                   placeholder="Opisz problem jaki wystepuje na maszynie lub urządzeniu"></textarea>
+                                            <p class="error"  style="color: red;"></p>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
