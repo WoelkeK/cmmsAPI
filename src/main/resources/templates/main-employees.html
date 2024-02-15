@@ -475,10 +475,10 @@
                                                     </button>
                                                 </a>
 
+<!--                                                   th:href="@{/employees/delete/{id}(id=${employee.id}, pageNo=${currentPage})}"-->
                                                 <a th:if="${isAdmin} or ${eFull}"
-                                                   th:href="@{/employees/delete/{id}(id=${employee.id}, pageNo=${currentPage})}"
                                                    class="text-red-600 hover:text-red-300">
-                                                    <button class="mr-4 deleteBtn" title="Usuń">
+                                                    <button class="deleteBtn mr-4 " title="Usuń" th:attr="data-id=${employee.id}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                              viewBox="0 0 24 24" stroke-width="1.5"
                                                              stroke="currentColor" class="w-7 h-7">
@@ -578,6 +578,6 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/deleteModal.js}"></script>
+<script type="text/javascript" th:src="@{/js/deleteEmployeeModal.js}"></script>
 </body>
 </html>

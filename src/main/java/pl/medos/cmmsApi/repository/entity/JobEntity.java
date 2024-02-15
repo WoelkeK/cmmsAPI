@@ -34,7 +34,6 @@ public class JobEntity {
     @Nullable
     private EngineerEntity engineer;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;

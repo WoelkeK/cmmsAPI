@@ -39,6 +39,8 @@ public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
 
+    private List<Job> actualJobs = new ArrayList<>();
+
     private JobService jobService;
     private EmployeeService employeeService;
     private DepartmentService departmentService;
@@ -309,6 +311,19 @@ public class WebJobController {
         LOGGER.info("findJobByQuery()");
         model.addAttribute("jobs", jobByQuery);
         model.addAttribute("currentPage", pageNo);
+
+        List<Department> departments = departmentService.findAllDepartments();
+        model.addAttribute("departments", departments);
+        List<Employee> employees = employeeService.finadAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Machine> machines = machineService.findAllMachines();
+        model.addAttribute("machines", machines);
+        actualJobs = jobByQuery.getContent();
+        Map<Long, String> jobBase64Images = new HashMap<>();
+        for (Job job : actualJobs) {
+            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+        }
+        model.addAttribute("images", jobBase64Images);
         return "main-job";
     }
 
@@ -336,8 +351,8 @@ public class WebJobController {
         return "redirect:/jobs";
     }
 
-    @GetMapping(value = "/export")
-    public void exportJobs(HttpServletResponse response, Model model) throws Exception {
+    @GetMapping(value = "/exportAll")
+    public void exportJobsAll(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
 
         List<Job> jobs = jobService.findAllJobs();
@@ -351,6 +366,26 @@ public class WebJobController {
         response.setHeader(headerKey, headerValue);
 
         exportService.excelJobsModelGenerator(jobs);
+        exportService.generateExcelJobFile(response);
+        response.flushBuffer();
+        LOGGER.info("export(...)");
+    }
+
+    @GetMapping(value = "/export")
+    public void exportJobs(HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+
+//        List<Job> jobs = jobService.findAllJobs();
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=awarie" + currentDateTime + ".xlsx";
+
+        response.setHeader(headerKey, headerValue);
+
+        exportService.excelJobsModelGenerator(actualJobs);
         exportService.generateExcelJobFile(response);
         response.flushBuffer();
         LOGGER.info("export(...)");
