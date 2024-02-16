@@ -87,8 +87,6 @@
         <input type="hidden" th:field="*{message}">
         <input type="hidden" th:field="*{employee.id}">
         <input type="hidden" th:field="*{status}">
-        <input type="hidden" th:field="*{resizedImage}">
-        <input type="hidden" th:field="*{originalImage}">
         <input type="hidden" th:field="*{calcCost}">
         <input type="hidden" th:field="*{decision}">
         <input type="hidden" th:field="*{dateOffset}">
@@ -108,7 +106,8 @@
 <!--                                    <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ ${image}}"-->
 
                                 <div class="aspect-h-2 aspect-w-3 overflow-hidden sm:aspect-w-5 lg:aspect-none lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-16 sm:rounded-lg">
-                                    <img src="data:image/jpeg;charset=utf8;base64," th:attrappend="src=${image}"
+                                    <img th:src="@{'/dashboards/images/' + ${job.photoFileName}}"
+
                                          alt="Issued machine photo"
                                          class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                                 </div>

@@ -622,9 +622,9 @@
 
                                                         <div class="container mt-2 mb-2 align-text-top">
                                                             <div class="group flex relative">
-                                                            <a th:href="@{'/jobs/downloadfile?id=' + ${job.id}}">
+                                                            <a th:href="@{'/dashboards/images/' + ${job.photoFileName}}" target="_self">
                                                                 <!--                                                    <img th:src="@{'/images/image?id='+ ${job.id}}" width="100px" height="50px">-->
-                                                                <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(job.id)}"
+                                                                <img th:src="@{'/dashboards/images/' + ${job.photoFileName}}"
                                                                      width="70px" height="30px" alt="person">
                                                             </a>
                                                                 <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-1/2 left-1/2

@@ -26,6 +26,9 @@ import pl.medos.cmmsApi.service.*;
 import pl.medos.cmmsApi.util.imports.ImportJob;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -38,6 +41,7 @@ import java.util.logging.Logger;
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
+    private static final String UPLOAD_DIR="C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
 
     private List<Job> actualJobs = new ArrayList<>();
 
@@ -74,11 +78,11 @@ public class WebJobController {
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Job job : jobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Job job : jobs) {
+//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+//        }
+//        model.addAttribute("images", jobBase64Images);
         LOGGER.info("listViewAll(...)" + jobs);
         return "list-job";
     }
@@ -120,11 +124,11 @@ public class WebJobController {
 //        List<Engineer> engineers = engineerService.finadAllEmployees();
 //        model.addAttribute("engineers", engineers);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Job job : jobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Job job : jobs) {
+//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+//        }
+//        model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "main-job";
     }
@@ -145,9 +149,9 @@ public class WebJobController {
             LOGGER.info("updateView(...)" + job.getRequestDate());
 
 
-            Map<Long, String> jobBase64Images = new HashMap<>();
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-            model.addAttribute("images", jobBase64Images);
+//            Map<Long, String> jobBase64Images = new HashMap<>();
+//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+//            model.addAttribute("images", jobBase64Images);
 
             return "update-job";
 //        } else {
@@ -165,23 +169,34 @@ public class WebJobController {
         LOGGER.info("update()" + job.getId() + " " + page);
         int pageNo = Integer.parseInt(page);
 
-        if (image.isEmpty() || image.getBytes() == null) {
-            LOGGER.info("multipart file not present");
+        if(image != null && !image.isEmpty()) {
 
-            if (image.getSize() == 0 && job.getOriginalImage() == null) {
-                LOGGER.info("default image");
-                byte[] bytes = imageService.imageToByteArray();
-                job.setResizedImage(bytes);
-                job.setOriginalImage(bytes);
-            }
-        } else {
-            LOGGER.info("procesed Image() ");
-            byte[] orginalImage = imageService.multipartToByteArray(image);
-            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
-            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-            job.setOriginalImage(orginalImage);
-            job.setResizedImage(resizeMaxImage);
+            String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+            job.setPhotoFileName(fileName);
+            Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+            Files.write(filePath, image.getBytes());
+        }else{
+            job.setPhotoFileName("DEAFULT_IMAGE_FILENAME");
         }
+
+
+//        if (image.isEmpty() || image.getBytes() == null) {
+//            LOGGER.info("multipart file not present");
+//
+//            if (image.getSize() == 0 && job.getOriginalImage() == null) {
+//                LOGGER.info("default image");
+//                byte[] bytes = imageService.imageToByteArray();
+//                job.setResizedImage(bytes);
+//                job.setOriginalImage(bytes);
+//            }
+//        } else {
+//            LOGGER.info("procesed Image() ");
+//            byte[] orginalImage = imageService.multipartToByteArray(image);
+//            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
+//            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
+//            job.setOriginalImage(orginalImage);
+//            job.setResizedImage(resizeMaxImage);
+//        }
         LOGGER.info("image prepared");
 
         if (result.hasErrors()) {
@@ -230,30 +245,35 @@ public class WebJobController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
 
-//        String status = job.getJobStatus().toString();
-//        if (status.equalsIgnoreCase("przegląd")) {
-//            job.setStatus("przegląd");
-//        }
+        if(image != null && !image.isEmpty()) {
 
-
-        if (image.getSize() == 0 && job.getOriginalImage() == null) {
-            LOGGER.info("default image");
-            byte[] bytes = imageService.imageToByteArray();
-            job.setResizedImage(bytes);
-            job.setOriginalImage(bytes);
-        } else {
-            LOGGER.info("multipart file present");
-            if (image.isEmpty() || image.getBytes() == null) {
-                return "create-job";
-            } else {
-                LOGGER.info("procesed Image() ");
-                byte[] orginalImage = imageService.multipartToByteArray(image);
-                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
-                byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-                job.setOriginalImage(resizeMaxImage);
-                job.setResizedImage(resizeImage);
-            }
+            String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+            job.setPhotoFileName(fileName);
+            Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+            Files.write(filePath, image.getBytes());
+        }else{
+            job.setPhotoFileName("DEAFULT_IMAGE_FILENAME");
         }
+
+
+//        if (image.getSize() == 0 && job.getOriginalImage() == null) {
+//            LOGGER.info("default image");
+//            byte[] bytes = imageService.imageToByteArray();
+//            job.setResizedImage(bytes);
+//            job.setOriginalImage(bytes);
+//        } else {
+//            LOGGER.info("multipart file present");
+//            if (image.isEmpty() || image.getBytes() == null) {
+//                return "create-job";
+//            } else {
+//                LOGGER.info("procesed Image() ");
+//                byte[] orginalImage = imageService.multipartToByteArray(image);
+//                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
+//                byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
+//                job.setOriginalImage(resizeMaxImage);
+//                job.setResizedImage(resizeImage);
+//            }
+//        }
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);

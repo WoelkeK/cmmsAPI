@@ -4,9 +4,13 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.imgscalr.Scalr;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -22,15 +26,13 @@ import pl.medos.cmmsApi.service.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Controller
@@ -39,6 +41,8 @@ import java.util.logging.Logger;
 public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
+    private static final String UPLOAD_DIR="C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
+
 
     private JobService jobService;
     private EmployeeService employeeService;
@@ -69,11 +73,11 @@ public class DashboardController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Job job : jobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Job job : jobs) {
+//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
+//        }
+//        model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "main-dashboard.html";
     }
@@ -113,14 +117,30 @@ public class DashboardController {
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
 
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Job job : jobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+//        Map<Long, String> jobBase64Images = new HashMap<>();
+//        for (Job job : jobs) {
+//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
+//        }
+//        model.addAttribute("images", jobBase64Images);
+
         LOGGER.info("listView(...)" + jobs);
         return "dashboard-list.html";
     }
+    @GetMapping("/images/{fileName:.+}")
+    public ResponseEntity<UrlResource> getImage(@PathVariable String fileName) throws MalformedURLException {
+        Path filePath = Paths.get(UPLOAD_DIR).resolve(fileName).normalize();
+        UrlResource resource = new UrlResource(filePath.toUri());
+
+        if (!resource.exists()) {
+            throw new RuntimeException("Image not found: " + fileName);
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
 
     @GetMapping(value = "/create")
     public String createView(Model model) {
@@ -141,20 +161,30 @@ public class DashboardController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()");
 
-        if (!image.isEmpty()) {
-            LOGGER.info("image processing()");
-            byte[] orginalImage = imageService.multipartToByteArray(image);
-            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
-            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-            job.setResizedImage(resizeImage);
-            job.setOriginalImage(resizeMaxImage);
-            LOGGER.info("image processing(...)");
-        } else {
-            LOGGER.info("default image processing()");
-            byte[] bytes = imageService.imageToByteArray();
-            job.setResizedImage(bytes);
-            job.setOriginalImage(bytes);
+        if(image != null && !image.isEmpty()) {
+
+            String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+            job.setPhotoFileName(fileName);
+            Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+            Files.write(filePath, image.getBytes());
+        }else{
+            job.setPhotoFileName("DEAFULT_IMAGE_FILENAME");
         }
+
+//        if (!image.isEmpty()) {
+//            LOGGER.info("image processing()");
+//            byte[] orginalImage = imageService.multipartToByteArray(image);
+//            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
+//            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
+//            job.setResizedImage(resizeImage);
+//            job.setOriginalImage(resizeMaxImage);
+//            LOGGER.info("image processing(...)");
+//        } else {
+//            LOGGER.info("default image processing()");
+//            byte[] bytes = imageService.imageToByteArray();
+//            job.setResizedImage(bytes);
+//            job.setOriginalImage(bytes);
+//        }
 
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
@@ -185,10 +215,10 @@ public class DashboardController {
             LOGGER.info("updateView(...)" + job.getStatus());
 //            Map<Long, String> jobBase64Images = new HashMap<>();
 //            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
-        String encoded = Base64.getEncoder().encodeToString(job.getOriginalImage());
+//        String encoded = Base64.getEncoder().encodeToString(job.getOriginalImage());
 
 
-        model.addAttribute("image", encoded);
+//        model.addAttribute("image", encoded);
             return "update-dashboard";
 //        } else {
 //            return "redirect:/dashboards";

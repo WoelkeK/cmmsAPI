@@ -67,6 +67,8 @@ public class JobEntity {
     @Enumerated(EnumType.STRING)
     private JobStatus jobStatus;
 
+    private String photoFileName;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
