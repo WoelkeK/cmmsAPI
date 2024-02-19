@@ -22,3 +22,5 @@ services:
       - mysql_db_service
     links:
       - mysql_db_service
+    volumes:
+      - /home/cris/images:/home/cris/images

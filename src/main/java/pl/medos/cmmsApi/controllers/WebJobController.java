@@ -35,7 +35,8 @@ import java.util.logging.Logger;
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
-    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
+    //    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
+    private static final String UPLOAD_DIR = "/home/cris/images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 
     private List<Job> actualJobs = new ArrayList<>();
@@ -144,6 +145,7 @@ public class WebJobController {
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
             job.setPhotoFileName(fileName);
             Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+            LOGGER.info("zapis: " + fileName);
             Files.write(filePath, image.getBytes());
         } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
@@ -202,6 +204,7 @@ public class WebJobController {
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
             job.setPhotoFileName(fileName);
             Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+            LOGGER.info("zapis: " + filePath);
             Files.write(filePath, image.getBytes());
         } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
