@@ -264,13 +264,13 @@ public class WebJobController {
     }
 
 
-    @GetMapping(value = "/downloadfile")
-    public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
-        Job jobById = jobService.findJobById(id);
-        InputStream inputStream = new ByteArrayInputStream(jobById.getOriginalImage());
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        IOUtils.copy(inputStream, response.getOutputStream());
-    }
+//    @GetMapping(value = "/downloadfile")
+//    public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
+//        Job jobById = jobService.findJobById(id);
+//        InputStream inputStream = new ByteArrayInputStream(jobById.getOriginalImage());
+//        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+//        IOUtils.copy(inputStream, response.getOutputStream());
+//    }
 
     @GetMapping("/search/query")
     public String searchJobByName(
@@ -280,6 +280,7 @@ public class WebJobController {
         LOGGER.info("search()");
         int pagesize = 10;
         Page<Job> jobByQuery = jobService.findJobByQuery(pageNo, pagesize, query);
+        actualJobs = jobByQuery.getContent();
         LOGGER.info("findJobByQuery()");
         model.addAttribute("jobs", jobByQuery);
         model.addAttribute("currentPage", pageNo);
@@ -290,12 +291,7 @@ public class WebJobController {
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-        actualJobs = jobByQuery.getContent();
-        Map<Long, String> jobBase64Images = new HashMap<>();
-        for (Job job : actualJobs) {
-            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-        }
-        model.addAttribute("images", jobBase64Images);
+
         return "main-job";
     }
 

@@ -31,11 +31,7 @@ public class ImportJobFromXls implements ImportJob {
     private static final Logger LOGGER = Logger.getLogger(ImportJobFromXls.class.getName());
     private List<String> jobs = new ArrayList<>(Arrays.asList
             ("requestDate", "employee", "engineer", "department", "machine", "message", "solution", "jobStartTime",
-                    "jobStopTime", "jobStatus", "jobShedule","decision","dateOffset", "status", "offset"));
-
-
-//                    , "decision", "offset", "dateOffset","status"));
-
+                    "jobStopTime", "jobStatus", "jobShedule","decision","dateOffset", "status", "offset", "photoFileName"));
     private EmployeeService employeeService;
     private EngineerService engineerService;
     private DepartmentService departmentService;
@@ -78,7 +74,7 @@ public class ImportJobFromXls implements ImportJob {
                     switch (cell.getCellType()) {
                         case NUMERIC:
 
-                            if (k == row.getLastCellNum()-1) {
+                            if (k == row.getLastCellNum()-2) {
                                 LOGGER.info("Cell Number value");
                                 rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
 
@@ -138,13 +134,6 @@ public class ImportJobFromXls implements ImportJob {
 
                                     job.setMessage(m.getMessage());
                                     job.setSolution(m.getSolution());
-
-                                    if (job.getOriginalImage() == null) {
-                                        LOGGER.info("default image");
-                                        byte[] bytes = imageService.imageToByteArray();
-                                        job.setResizedImage(bytes);
-                                        job.setOriginalImage(bytes);
-                                    }
 
                                     LOGGER.info("image prepared");
 
@@ -211,6 +200,14 @@ public class ImportJobFromXls implements ImportJob {
                                         job.setOffset(Integer.parseInt(m.getOffset()));
                                     }
 
+
+                                    if(m.getPhotoFileName()==null || m.getPhotoFileName().isBlank()){
+                                    job.setPhotoFileName("default.jpg");
+                                    }else{
+                                        job.setPhotoFileName(m.getPhotoFileName());
+                                    }
+
+
                                     LOGGER.info("Offset: " + m.getOffset());
 
 //                                    job.setOpen(true); // TODO: 26.01.2024 napisać konwersje podobnie jak permissions
@@ -225,12 +222,13 @@ public class ImportJobFromXls implements ImportJob {
         return newJobs;
     }
 
-
     static DateOffset convertXLSDateOffsetField(String condition) {
 
         if (condition != null) {
 
             switch (condition) {
+                case "GODZINY":
+                    return DateOffset.GODZINY;
                 case "DNI":
                     return DateOffset.DNI;
                 case "TYGODNIE":

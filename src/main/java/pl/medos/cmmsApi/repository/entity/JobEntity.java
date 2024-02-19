@@ -69,12 +69,12 @@ public class JobEntity {
 
     private String photoFileName;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
-    private byte[] originalImage;
-    @Lob()
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "resizedImage", columnDefinition = "MEDIUMBLOB")
-    private byte[] resizedImage;
+//    @Lob
+//    @Basic(fetch = FetchType.LAZY)
+//    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
+//    private byte[] originalImage;
+//    @Lob()
+//    @Basic(fetch = FetchType.LAZY)
+//    @Column(name = "resizedImage", columnDefinition = "MEDIUMBLOB")
+//    private byte[] resizedImage;
 }

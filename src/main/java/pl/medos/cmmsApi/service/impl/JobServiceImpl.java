@@ -215,8 +215,8 @@ public class JobServiceImpl implements JobService {
                             cycleJob.setJobShedule(futureJobDate);
                             cycleJob.setOffset(job.getOffset());
                             cycleJob.setOpen(true);
-                            cycleJob.setOriginalImage(job.getOriginalImage());
-                            cycleJob.setResizedImage(job.getResizedImage());
+//                            cycleJob.setOriginalImage(job.getOriginalImage());
+//                            cycleJob.setResizedImage(job.getResizedImage());
                             cycleJob.setJobStatus(JobStatus.PRZEGLĄD);
 
 //                            LOGGER.info("Create new cyclic job ");

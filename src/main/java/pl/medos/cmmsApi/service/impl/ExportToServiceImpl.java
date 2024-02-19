@@ -281,6 +281,7 @@ public class ExportToServiceImpl implements ExportService {
             }
             createCell(row, columnCount++, record.getStatus(), style);
             createCell(row, columnCount++, record.getOffset(), style);
+            createCell(row, columnCount++, record.getPhotoFileName(), style);
         }
         LOGGER.info("writeJob(...)");
     }
@@ -308,6 +309,7 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 12, "Jednostka", style);
         createCell(row, 13, "Status", style);
         createCell(row, 14, "Przesunięcie", style);
+        createCell(row, 15, "Zdjęcie", style);
 
         LOGGER.info("Header create complete! ");
     }
