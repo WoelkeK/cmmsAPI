@@ -1,13 +1,8 @@
 package pl.medos.cmmsApi.controllers;
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.imgscalr.Scalr;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +15,20 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.enums.DateOffset;
 import pl.medos.cmmsApi.enums.Decision;
 import pl.medos.cmmsApi.enums.JobStatus;
-import pl.medos.cmmsApi.exception.*;
+import pl.medos.cmmsApi.exception.CostNotFoundException;
+import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Controller
@@ -41,8 +37,8 @@ import java.util.logging.Logger;
 public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
-    private static final String UPLOAD_DIR="C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
-
+    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
+    private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 
     private JobService jobService;
     private EmployeeService employeeService;
@@ -73,11 +69,6 @@ public class DashboardController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
-//        Map<Long, String> jobBase64Images = new HashMap<>();
-//        for (Job job : jobs) {
-//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getResizedImage()));
-//        }
-//        model.addAttribute("images", jobBase64Images);
         LOGGER.info("listView(...)" + jobs);
         return "main-dashboard.html";
     }
@@ -117,15 +108,10 @@ public class DashboardController {
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
 
-//        Map<Long, String> jobBase64Images = new HashMap<>();
-//        for (Job job : jobs) {
-//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
-//        }
-//        model.addAttribute("images", jobBase64Images);
-
         LOGGER.info("listView(...)" + jobs);
         return "dashboard-list.html";
     }
+
     @GetMapping("/images/{fileName:.+}")
     public ResponseEntity<UrlResource> getImage(@PathVariable String fileName) throws MalformedURLException {
         Path filePath = Paths.get(UPLOAD_DIR).resolve(fileName).normalize();
@@ -140,7 +126,6 @@ public class DashboardController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
-
 
     @GetMapping(value = "/create")
     public String createView(Model model) {
@@ -161,30 +146,15 @@ public class DashboardController {
             MultipartFile image) throws Exception {
         LOGGER.info("create()");
 
-        if(image != null && !image.isEmpty()) {
+        if (image != null && !image.isEmpty()) {
 
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
             job.setPhotoFileName(fileName);
             Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
             Files.write(filePath, image.getBytes());
-        }else{
-            job.setPhotoFileName("DEAFULT_IMAGE_FILENAME");
+        } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
+            job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
-
-//        if (!image.isEmpty()) {
-//            LOGGER.info("image processing()");
-//            byte[] orginalImage = imageService.multipartToByteArray(image);
-//            byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
-//            byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-//            job.setResizedImage(resizeImage);
-//            job.setOriginalImage(resizeMaxImage);
-//            LOGGER.info("image processing(...)");
-//        } else {
-//            LOGGER.info("default image processing()");
-//            byte[] bytes = imageService.imageToByteArray();
-//            job.setResizedImage(bytes);
-//            job.setOriginalImage(bytes);
-//        }
 
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
@@ -208,21 +178,10 @@ public class DashboardController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-//        if (job.getStatus().equals("zgłoszenie") || job.getStatus().equals("oczekiwanie") || job.getStatus().equals("przegląd")) {
-//
-//            job.setStatus("przetwarzanie");
-            model.addAttribute("job", job);
-            LOGGER.info("updateView(...)" + job.getStatus());
-//            Map<Long, String> jobBase64Images = new HashMap<>();
-//            jobBase64Images.put(job.getId(), Base64.getEncoder().encodeToString(job.getOriginalImage()));
-//        String encoded = Base64.getEncoder().encodeToString(job.getOriginalImage());
+        model.addAttribute("job", job);
+        LOGGER.info("updateView(...)" + job.getStatus());
+        return "update-dashboard";
 
-
-//        model.addAttribute("image", encoded);
-            return "update-dashboard";
-//        } else {
-//            return "redirect:/dashboards";
-//        }
     }
 
     @GetMapping(value = "/read/{id}")
@@ -255,35 +214,13 @@ public class DashboardController {
             } else {
                 return "update-dashboard";
             }
-        }else if((job.getJobStartTime()!=null) && (job.getJobStopTime()==null)){
-                job.setStatus("oczekiwanie");
-        }else {
+        } else if ((job.getJobStartTime() != null) && (job.getJobStopTime() == null)) {
+            job.setStatus("oczekiwanie");
+        } else {
             return "update-dashboard";
         }
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
-
-//        if(job.getDecision().equals(Decision.TAK)){
-//
-//            LocalDateTime futureJobDate = jobService.calculateFutureDate(job.getJobShedule(), job.getDateOffset(), job.getOffset());
-//            Job cycleJob = new Job();
-//            cycleJob.setMessage(job.getMessage());
-//            cycleJob.setMachine(job.getMachine());
-//            cycleJob.setStatus("przegląd");
-//            cycleJob.setDepartment(job.getDepartment());
-//            cycleJob.setEmployee(job.getEmployee());
-//            cycleJob.setDecision(job.getDecision());
-//            cycleJob.setDateOffset(job.getDateOffset());
-//            cycleJob.setJobShedule(futureJobDate);
-//            cycleJob.setOffset(job.getOffset());
-//            cycleJob.setOpen(job.isOpen());
-//            cycleJob.setOriginalImage(job.getOriginalImage());
-//            cycleJob.setResizedImage(job.getResizedImage());
-//            cycleJob.setJobStatus(JobStatus.PRZEGLĄD);
-//            LOGGER.info("Create new job based on cyclic");
-//            jobService.createJob(cycleJob);
-//        }
-
         LOGGER.info("update(...)");
         return "redirect:/dashboards";
     }
@@ -296,14 +233,4 @@ public class DashboardController {
         jobService.deleteJob(id);
         return "redirect:/jobs";
     }
-
-//        @GetMapping("/search/message")
-//        public String searchJobsByMessage (@RequestParam(value = "query") String query,
-//                Model model){
-//            LOGGER.info("search()" + query);
-//
-//            List<Job> jobs = jobService.findJobByQuery(query);
-//            model.addAttribute("jobs", jobs);
-//            return "list-job";
-//        }
 }

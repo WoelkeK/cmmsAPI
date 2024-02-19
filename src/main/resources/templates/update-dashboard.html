@@ -94,6 +94,7 @@
         <input type="hidden" th:field="*{jobShedule}">
         <input type="hidden" th:field="*{jobStatus}">
         <input type="hidden" th:field="*{open}">
+        <input type="hidden" th:field="*{photoFileName}">
         <input type="hidden" id="dateTimeField" name="dateTimeField"/>
 
         <main class="mt-2">
@@ -109,7 +110,7 @@
                                     <img th:src="@{'/dashboards/images/' + ${job.photoFileName}}"
 
                                          alt="Issued machine photo"
-                                         class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                                         class="h-full w-full object-cover object-center lg:h-max lg:w-auto">
                                 </div>
 
                                 <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 sm:pb-12 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-12 lg:px-8 lg:pt-4">
