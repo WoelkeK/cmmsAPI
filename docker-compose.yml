@@ -9,9 +9,13 @@ services:
     environment:
       MYSQL_DATABASE: cmms_db
       MYSQL_ROOT_PASSWORD: root
-#      MYSQL_USER: cmms
-      MYSQL_PASSWORD: root
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_USER: apps
+      MYSQL_PASSWORD: medos2023
+    #      MYSQL_ALLOW_EMPTY_PASSWORD: false
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
   web_cmms:
     build: .
@@ -20,7 +24,27 @@ services:
       - "8881:8080"
     depends_on:
       - mysql_db_service
-    links:
-      - mysql_db_service
     volumes:
       - /home/cris/images:/home/cris/images
+    networks:
+      - mynetwork
+
+  backup:
+    image: mysql:latest
+    volumes:
+      - /home/cris/backups:/backup
+    depends_on:
+      - mysql_db_service
+    networks:
+      - mynetwork
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        bash -c 'while true; do mysqldump -h mysql_db_service -uroot -proot --all-databases > /backup/dump.sql; sleep 300; done'
+networks:
+  mynetwork:
+
+volumes:
+  db_data:
+
