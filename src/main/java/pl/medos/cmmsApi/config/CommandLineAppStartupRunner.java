@@ -70,16 +70,17 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         });
 
 
-//        String relativePath = "static/images/default.jpg";
-//
-//        try {
-//            ClassPathResource resource = new ClassPathResource(relativePath);
-//            Path filePath = resource.getFile().toPath();
-//            Files.copy(filePath, Paths.get(UPLOAD_DIR));
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        String relativePath = "static/images/default.jpg";
+
+        try {
+            ClassPathResource resource = new ClassPathResource(relativePath);
+            log.info("");
+            Path filePath = resource.getFile().toPath();
+            Files.copy(filePath, Paths.get(UPLOAD_DIR));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
