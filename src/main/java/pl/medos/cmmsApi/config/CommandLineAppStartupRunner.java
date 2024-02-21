@@ -26,10 +26,6 @@ import java.util.Optional;
 public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     private static final String UPLOAD_DIR = "/home/images";
-
-    @Autowired
-    private ApplicationContext ctx;
-
     @Autowired
     HardwareRepository hardwareRepository;
 
