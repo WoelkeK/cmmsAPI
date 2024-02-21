@@ -26,14 +26,14 @@ services:
     depends_on:
       - mysql_db_service
     volumes:
-      - /home/cris/images:/home/cris/images
+      - /home/images:/home/images
     networks:
       - mynetwork
 
   backup:
     image: mysql:latest
     volumes:
-      - /home/cris/backups:/backup
+      - /home/backups:/backup
     depends_on:
       - mysql_db_service
     networks:
