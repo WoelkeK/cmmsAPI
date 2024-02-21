@@ -24,6 +24,8 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class CommandLineAppStartupRunner implements CommandLineRunner {
+    @Autowired
+    ImageLoader imageLoader;
 
     private static final String UPLOAD_DIR = "/home/images";
     @Autowired
