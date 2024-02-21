@@ -74,8 +74,9 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
         try {
             ClassPathResource resource = new ClassPathResource(relativePath);
-            log.info("");
             Path filePath = resource.getFile().toPath();
+            log.info("upoloadPath " + Paths.get(UPLOAD_DIR));
+            log.info("myfilePath " + filePath);
             Files.copy(filePath, Paths.get(UPLOAD_DIR));
 
         } catch (IOException e) {
