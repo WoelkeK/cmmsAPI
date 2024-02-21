@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
-    private static final String UPLOAD_DIR = "/home/cris/images";
+    private static final String UPLOAD_DIR = "/home/images";
 //    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 

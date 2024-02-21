@@ -6,6 +6,7 @@ services:
     restart: always
     ports:
       - "3307:3306"
+    command: --log_error_verbosity=2   # errors and warnings
     environment:
       MYSQL_DATABASE: cmms_db
       MYSQL_ROOT_PASSWORD: root

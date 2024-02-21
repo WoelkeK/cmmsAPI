@@ -4,16 +4,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import pl.medos.cmmsApi.enums.Device;
 import pl.medos.cmmsApi.enums.Permission;
 import pl.medos.cmmsApi.enums.Status;
-import pl.medos.cmmsApi.model.Hardware;
-import pl.medos.cmmsApi.model.Type;
 import pl.medos.cmmsApi.repository.HardwareRepository;
 import pl.medos.cmmsApi.repository.entity.HardwareEntity;
-import pl.medos.cmmsApi.service.HardwareService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,12 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class CommandLineAppStartupRunner implements CommandLineRunner {
+
+    private static final String UPLOAD_DIR = "/home/images";
+
+    @Autowired
+    private ApplicationContext ctx;
+
     @Autowired
     HardwareRepository hardwareRepository;
 
@@ -63,5 +72,18 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
                 }
             }
         });
+
+
+        String relativePath = "static/images/default.jpg";
+
+        try {
+            ClassPathResource resource = new ClassPathResource(relativePath);
+            Path filePath = resource.getFile().toPath();
+            Files.copy(filePath, Paths.get(UPLOAD_DIR));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }

@@ -2,7 +2,9 @@ package pl.medos.cmmsApi.service.impl;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.ExportService;
 
-import java.io.*;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -113,7 +115,6 @@ public class ExportToServiceImpl implements ExportService {
         workbook.close();
         outputStream.close();
     }
-
 
 
     private void writeNotificationHeader() {
@@ -257,10 +258,10 @@ public class ExportToServiceImpl implements ExportService {
                 createCell(row, columnCount++, record.getJobStopTime(), dateCellStyle);
             }
 
-            if(record.getJobStatus()!=null) {
+            if (record.getJobStatus() != null) {
 
                 createCell(row, columnCount++, record.getJobStatus().toString(), style);
-            }else{
+            } else {
                 createCell(row, columnCount++, null, style);
 
             }
@@ -275,13 +276,20 @@ public class ExportToServiceImpl implements ExportService {
 
             if (record.getDateOffset() != null) {
                 createCell(row, columnCount++, record.getDateOffset().toString(), style);
-            }else{
+            } else {
                 createCell(row, columnCount++, null, style);
 
             }
             createCell(row, columnCount++, record.getStatus(), style);
             createCell(row, columnCount++, record.getOffset(), style);
-            createCell(row, columnCount++, record.getPhotoFileName(), style);
+
+            if (record.getPhotoFileName() == null || record.getPhotoFileName().isBlank()) {
+                record.setPhotoFileName("default.jpg");
+            } else {
+
+                createCell(row, columnCount++, record.getPhotoFileName(), style);
+            }
+
         }
         LOGGER.info("writeJob(...)");
     }
