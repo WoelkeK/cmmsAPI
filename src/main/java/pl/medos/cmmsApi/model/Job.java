@@ -48,15 +48,9 @@ public class Job {
     private DateOffset dateOffset;
 
     private boolean open;
-
     private double calcCost;
     private String status;
-
     private JobStatus jobStatus;
-
     private String photoFileName;
-//
-//    private byte[] originalImage;
-//    private byte[] resizedImage;
 
 }

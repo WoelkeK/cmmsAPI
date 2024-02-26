@@ -1,18 +1,27 @@
 package pl.medos.cmmsApi.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
 import pl.medos.cmmsApi.service.DepartmentService;
 import pl.medos.cmmsApi.service.EngineerService;
+import pl.medos.cmmsApi.service.ExportService;
+import pl.medos.cmmsApi.util.imports.ImportEmployee;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,10 +34,17 @@ public class WebEngineerController {
     private String fileName = "c:/XL/sheet6.xlsx";
     private EngineerService engineerService;
     private DepartmentService departmentService;
+    private ModelMapper mapper;
+    private ExportService exportService;
 
-    public WebEngineerController(EngineerService engineerService, DepartmentService departmentService) {
+    private ImportEmployee importEmployee;
+
+    public WebEngineerController(EngineerService engineerService, DepartmentService departmentService, ModelMapper mapper, ExportService exportService, ImportEmployee importEmployee) {
         this.engineerService = engineerService;
         this.departmentService = departmentService;
+        this.mapper = mapper;
+        this.exportService = exportService;
+        this.importEmployee = importEmployee;
     }
 
     @GetMapping("/list")
@@ -47,7 +63,7 @@ public class WebEngineerController {
 //            @RequestParam(defaultValue = "10") int pageSize,
             Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPaginated(page, "name", "desc",model);
+        return findPaginated(page, "name", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -58,7 +74,7 @@ public class WebEngineerController {
 //            @PathVariable(value = "pageSize") int pageSize,
             Model model) throws IOException {
         int pageSize = 10;
-        LOGGER.info("findPage()" +pageNo +" "+ sortField + " " + sortDir);
+        LOGGER.info("findPage()" + pageNo + " " + sortField + " " + sortDir);
         Page<Engineer> pageEngineers = engineerService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Engineer> engineers = pageEngineers.getContent();
         model.addAttribute("currentPage", pageNo);
@@ -78,10 +94,10 @@ public class WebEngineerController {
     public String findEngineerByname(
             @RequestParam(value = "engineerName") String query,
             Model model) throws IOException {
-        int pageSize=10;
-        int pageNo=1;
-        String sortField="name";
-        String sortDir="desc";
+        int pageSize = 10;
+        int pageNo = 1;
+        String sortField = "name";
+        String sortDir = "desc";
 
         LOGGER.info("findPage()");
         Page<Engineer> engineerPage = engineerService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
@@ -118,7 +134,7 @@ public class WebEngineerController {
             @ModelAttribute(name = "engineer") Engineer engineer) throws EmployeeNotFoundException {
         LOGGER.info("update()" + engineer);
         Engineer updatedEngineer = engineerService.updateEngineer(engineer, id);
-        LOGGER.info("update(...)" +updatedEngineer);
+        LOGGER.info("update(...)" + updatedEngineer);
         return "redirect:/engineers?pageNo=" + pageNo;
     }
 
@@ -162,9 +178,9 @@ public class WebEngineerController {
     public String searchEmployeeByName(
             @RequestParam(value = "query") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            Model model){
+            Model model) {
         LOGGER.info("search()");
-        int pagesize =10;
+        int pagesize = 10;
         Page<Engineer> engineerByName = engineerService.findEngineerByName(pageNo, pagesize, query);
         LOGGER.info("findEngineerByName()");
         model.addAttribute("engineer", engineerByName);
@@ -173,8 +189,53 @@ public class WebEngineerController {
     }
 
     @GetMapping("/deleteAll")
-    public void deleteAll(){
+    public void deleteAll() {
         LOGGER.info("deleteAll");
-       engineerService.deleteAll();
+        engineerService.deleteAll();
     }
+
+
+    @GetMapping("/file")
+    public String showUploadForm() {
+        return "uploadEng-form";
+    }
+
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+        LOGGER.info("importEngineers()");
+        if (file.isEmpty()) {
+            LOGGER.info("Please select file to upload");
+            return "redirect:/engineers";
+        }
+        List<Employee> employees = importEmployee.importExcelEmployeesData(file);
+        List<Engineer> engineers = employees.stream().map(employee -> mapper.map(employee, Engineer.class)).toList();
+
+        engineers.forEach((engineer) -> {
+            engineerService.createEngineer(engineer);
+        });
+        LOGGER.info("importEmployees(...) ");
+        return "redirect:/employees";
+    }
+
+    @GetMapping(value = "/export")
+    public void exportEngineers(@ModelAttribute(name = "engineers") List<Engineer> engineers,
+                                HttpServletResponse response, Model model) throws Exception {
+        LOGGER.info("export()");
+
+        engineers = engineerService.finadAllEngineers();
+        response.setContentType("application/octet-stream");
+        DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateTimeFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=employee" + currentDateTime + ".xlsx";
+
+        List<Employee> employees = engineers.stream().map(engineer -> mapper.map(engineer, Employee.class)).toList();
+        response.setHeader(headerKey, headerValue);
+        exportService.excelEmployeeModelGenerator(employees);
+        exportService.generateExcelEmployeeFile(response);
+        response.flushBuffer();
+        LOGGER.info("export(...)");
+    }
+
 }
