@@ -33,7 +33,7 @@ services:
   backup:
     image: mysql:latest
     volumes:
-     - /home/backups:/backup
+      - /home/backups:/backup
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -46,13 +46,20 @@ services:
       - /bin/bash
       - -c
       - |
+        count=0
         while true; do
-          timestamp=$(date +%Y%m%d%H%M%S)
-          mysqldump -h mysql_db_service -uroot -proot --all-databases \
-          | gzip > /backup/dump_${timestamp}_$((count++)).sql.gz
-          sleep 43200
+          current_hour=$(date +%H)
+          target_hour="02"
+          if [ "$current_hour" == "$target_hour" ]; then
+            timestamp=$(date +%Y%m%d%H%M%S)
+            mysqldump -h mysql_db_service -uroot -proot --all-databases \
+            | gzip > /backup/dump_${timestamp}_$((count++)).sql.gz
+            sleep 86400
+         else
+            sleep 3600
+          fi
         done
-       
+  
 
   phpmyadmin:
     container_name: phpmyadmin
