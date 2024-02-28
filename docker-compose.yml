@@ -47,7 +47,8 @@ services:
       - -c
       - |
        bash -c "while true; do
-       mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S).sql --all-databases;
+       mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S)_$count.sql --all-databases;
+       ((count++)) 
        sleep 300; done"
        
 
