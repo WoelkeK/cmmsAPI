@@ -48,7 +48,7 @@ services:
       - |
        while true; do
        mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S)_$((count++)).sql --all-databases;
-       sleep 300; done
+       sleep 43200; done
        
 
   phpmyadmin:
