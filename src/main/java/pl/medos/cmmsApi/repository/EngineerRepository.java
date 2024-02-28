@@ -25,4 +25,6 @@ public interface EngineerRepository extends JpaRepository<EngineerEntity, Long> 
     Page<EngineerEntity> searchEngineerByQuery(Pageable pageable, String query);
 
     EngineerEntity findByName(String engineer);
+
+    Page<EngineerEntity> findByProfile(Pageable pageable, Boolean active);
 }

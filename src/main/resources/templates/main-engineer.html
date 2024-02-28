@@ -345,7 +345,6 @@
                                              alt="device">
                                         <img class="hidden h-14 w-auto lg:block" th:src="@{/images/people.png}"
                                              alt="device">
-
                                     </div>
 
                                     <div class="hidden lg:ml-10 lg:block">
@@ -394,7 +393,6 @@
 
                                             <div class="group flex relative">
                                                 <span>
-
                                             <a th:if="${isAdmin} or ${jFull}"
                                                class="deleteAllBtn text-white hover:text-red-300">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -408,26 +406,32 @@
                                                 <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
     -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Usuń wszystko</span>
                                             </div>
+
+                                            <div class="group flex relative">
+                                                <span>
+                                                    <button type="button" th:if="${isAdmin} or ${jFull}"
+                                                            data-toggle="modal" data-target="#optionModal" id="openModalButton">
+
+                                            <a th:if="${isAdmin} or ${jFull}"
+                                               class="optionBtn text-white hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+  <path stroke-linecap="round" stroke-linejoin="round"
+        d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg>
+                                            </a>
+                                                </button>
+                                                </span>
+
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Opcje</span>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-                                <!--                                <div class="hidden lg:ml-10 lg:block">-->
-                                <!--                                        <div th:if="${isAdmin} or ${eEdit}" class="flex space-x-4">-->
-                                <!--                                            &lt;!&ndash; Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" &ndash;&gt;-->
-                                <!--                                            <a href="#" th:href="@{/engineers/create}"-->
-                                <!--                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>-->
-                                <!--&lt;!&ndash;                                            <a href="#" th:href="@{/employees/file}"&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>&ndash;&gt;-->
-                                <!--                                            <a  th:if="${isAdmin} or ${eFull}" href="#" th:href="@{/engineers/export}"-->
-                                <!--                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>-->
-                                <!--&lt;!&ndash;                                            <a href="#" th:href="@{/employees/deleteAll}"&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                wszystko</a>&ndash;&gt;-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
@@ -494,10 +498,12 @@
                                                     Aktywny / Niekatywny
                                                 </th>
 
+
                                                 <th th:if="${isAdmin}" scope="col"
                                                     class="relative py-3.5 pl-3 pr-4 lm:pr-6">
                                                     <span class="sr-only">Edit</span>
                                                 </th>
+
                                             </tr>
                                             </thead>
                                             <tbody class="bg-gray">
@@ -508,7 +514,8 @@
                                                 </th>
                                             </tr>
 
-                                            <tr th:each="engineer : ${engineers}" th:if="${engineer.active} or ${isAdmin}"
+                                            <tr th:each="engineer : ${engineers}"
+                                                th:if="${engineer.profile} or ${isAdmin}"
                                                 class="border-t border-gray-300 text-base font-medium bg-gray-100">
 
                                                 <td th:text="${engineer.name}"
@@ -533,7 +540,10 @@
                                                 </td>
 
                                                 <td class="whitespace-nowrap align-text-top text-center px-3 py-4 text-gray-900">
-                                                        <input checked id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox" th:checked="${engineer.active}" disabled class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <input checked id="bordered-checkbox-2" type="checkbox" value=""
+                                                           name="bordered-checkbox" th:checked="${engineer.profile}"
+                                                           disabled
+                                                           class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 </td>
 
                                                 <td th:if="${isAdmin} or ${jFull}"
@@ -621,6 +631,65 @@
     </div>
 </div>
 
+<div id="optionModal" class="modal">
+    <div class="modal-content">
+        <form th:action="@{/engineers}" method="get">
+
+        <div class="shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-base md:text-xl font-medium leading-6 text-gray-900">Opcje wyświetlania.</h3>
+                <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                    <div class="max-w-xl text-md text-gray-500">
+                        <p>Ustawienie, które pozwala skonfigurować jaki typ rekordów w tabeli ma być widoczny.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-6 bg-gray-400 shadow sm:rounded-lg">
+            <div class="sm:col-span-1">
+                <div class="px-4 py-5 sm:px-2">
+
+                    <fieldset>
+                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Typ profilu
+                        </legend>
+                        <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                            <div class="relative flex items-start py-4">
+                                <div class="min-w-0 flex-1 text-md leading-6">
+
+                                    <div class="form-check">
+                                        <input type="checkbox" th:checked="${status}" th:value="${status}" onclick="this.value = this.checked"
+                                               class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                               id="filterCheckBox">
+                                        <label class="form-check-label select-none font-medium text-gray-900"
+                                               for="filterCheckBox">Tylko aktywne</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+
+            <div class="shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>
+                    <div class="mt-2 sm:flex sm:items-end sm:justify-end">
+
+                        <button type="submit" id="saveChanges"
+                                class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:text-gray-800 hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                            Zamknij
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
 
 <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
      style="display: none;">
@@ -656,7 +725,6 @@
     </div>
 </div>
 
-
 <div id="deleteAllModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
      style="display: none;">
     <!-- Modal Overlay -->
@@ -691,11 +759,28 @@
     </div>
 </div>
 
-
 <div th:unless="${isAdmin} or ${jRead}">
     <div th:replace="~{fragments/errorPage}"></div>
 </div>
 
+<script>
+    // Obsługa zdarzenia zmiany checkbox
+    $('#filterCheckbox').change(function() {
+        // Jeśli checkbox jest zaznaczony, ukryj nieaktywnych pracowników
+        if (this.checked) {
+            $('#employeeList li').each(function() {
+                if ($(this).find('span:last').text() !== 'Aktywny') {
+                    $(this).hide();
+                }
+            });
+        } else {
+            // Jeśli checkbox nie jest zaznaczony, pokaż wszystkich pracowników
+            $('#employeeList li').show();
+        }
+    });
+</script>
+
+<!--<script type="text/javascript" th:src="@{/js/optionModal.js}"></script>-->
 <script type="text/javascript" th:src="@{/js/deleteEngineerModal.js}"></script>
 </body>
 </html>

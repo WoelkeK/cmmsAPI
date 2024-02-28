@@ -30,4 +30,6 @@ public interface EngineerService {
     Page<Engineer> findPageinated(int pageNo, int pageSize, String sortField, String sortDir);
 
     Engineer findByName(String engineer);
+
+    Page<Engineer> findByProfile(int pageNo, int pageSize, String sortField, String sortDir, Boolean active);
 }

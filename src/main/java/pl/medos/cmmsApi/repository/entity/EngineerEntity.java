@@ -21,7 +21,7 @@ public class EngineerEntity {
     private String userName;
     private String phone;
     private String email;
-    private Boolean active;
+    private Boolean profile;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")

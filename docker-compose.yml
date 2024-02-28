@@ -43,6 +43,18 @@ services:
       - -c
       - |
         bash -c 'while true; do mysqldump -h mysql_db_service -uroot -proot --all-databases > /backup/dump.sql; sleep 300; done'
+        
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - 8081:80
+    depends_on:
+      - mysql_db_service
+    networks:
+      - mynetwork
+
 networks:
   mynetwork:
 

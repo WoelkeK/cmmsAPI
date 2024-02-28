@@ -96,6 +96,17 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
+    public Page<Engineer> findByProfile(int pageNo, int pageSize, String sortField, String sortDir,Boolean profile) {
+        LOGGER.info("findPagesEnginnerByProfileStatus()");
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Page<EngineerEntity> engineerEntityPage = engineerRepository.findByProfile(pageable, profile);
+        Page<Engineer> engineers = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
+        LOGGER.info("findPaginated(...)");
+        return engineers;
+    }
+
+    @Override
     public Engineer updateEngineer(Engineer engineer, Long id) throws EmployeeNotFoundException {
         LOGGER.info("update( " + engineer.getId() + " )");
         Optional<EngineerEntity> optionalEngineerEntity = engineerRepository.findById(id);

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
@@ -60,10 +59,11 @@ public class WebEngineerController {
     @GetMapping
     public String listView(
             @RequestParam(name = "pageNo", defaultValue = "1") int page,
-//            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(name = "status", required = false) Boolean status,
             Model model) throws IOException {
-        LOGGER.info("listView()");
-        return findPaginated(page, "name", "desc", model);
+        LOGGER.info("listView() " + status);
+
+        return findPaginated(page, "name", "desc", model, status);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -71,19 +71,26 @@ public class WebEngineerController {
             @PathVariable(value = "pageNo") int pageNo,
             @RequestParam(name = "sortField") String sortField,
             @RequestParam(name = "sortDir") String sortDir,
-//            @PathVariable(value = "pageSize") int pageSize,
-            Model model) throws IOException {
+            Model model, Boolean status) {
         int pageSize = 10;
-        LOGGER.info("findPage()" + pageNo + " " + sortField + " " + sortDir);
-        Page<Engineer> pageEngineers = engineerService.findPageinated(pageNo, pageSize, sortField, sortDir);
-        List<Engineer> engineers = pageEngineers.getContent();
+        LOGGER.info("findPage()" + pageNo + " " + sortField + " " + sortDir + status);
+
+        Page<Engineer> engineerPages;
+
+        if (status != null && status) {
+            engineerPages = engineerService.findByProfile(pageNo, pageSize, sortField, sortDir, status);
+        } else {
+            LOGGER.info("All entities");
+            engineerPages = engineerService.findPageinated(pageNo, pageSize, sortField, sortDir);
+        }
+
+        List<Engineer> engineers = engineerPages.getContent();
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", pageEngineers.getTotalPages());
-        model.addAttribute("totalItems", pageEngineers.getTotalElements());
+        model.addAttribute("totalPages", engineerPages.getTotalPages());
+        model.addAttribute("totalItems", engineerPages.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("engineers", engineers);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
@@ -152,6 +159,7 @@ public class WebEngineerController {
         LOGGER.info("create(" + engineer + ")");
 //        LOGGER.info("create(" + lastName + ")");
 //        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
+        engineer.setProfile(true);
         engineerService.createEngineer(engineer);
         return "redirect:/engineers";
     }
@@ -193,7 +201,6 @@ public class WebEngineerController {
         LOGGER.info("deleteAll");
         engineerService.deleteAll();
     }
-
 
     @GetMapping("/file")
     public String showUploadForm() {
@@ -237,5 +244,4 @@ public class WebEngineerController {
         response.flushBuffer();
         LOGGER.info("export(...)");
     }
-
 }
