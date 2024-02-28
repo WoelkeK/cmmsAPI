@@ -46,8 +46,8 @@ services:
       - /bin/bash
       - -c
       - |
-       bash -c "while true; do timestamp=$(date +%Y%m%d%H%M%S);
-       mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(timestamp).sql --all-databases;
+       bash -c "while true; do
+       mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S).sql --all-databases;
        sleep 300; done"
        
 
