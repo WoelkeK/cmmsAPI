@@ -54,6 +54,9 @@ services:
       PMA_HOST: mysql_db_service
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 300M
+    links:
+      - mysql_db_service
     networks:
       - mynetwork
     depends_on:
