@@ -49,7 +49,7 @@ services:
         count=0
         while true; do
           current_hour=$(date +%H)
-          target_hour="02"
+          target_hour="18"
           if [ "$current_hour" == "$target_hour" ]; then
             timestamp=$(date +%Y%m%d%H%M%S)
             mysqldump -h mysql_db_service -uroot -proot --all-databases \
