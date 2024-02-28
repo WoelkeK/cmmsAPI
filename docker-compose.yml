@@ -50,10 +50,11 @@ services:
     restart: always
     ports:
       - 8081:80
+    environment:
+      MYSQL_USERNAME: 'apps'
+      MYSQL_ROOT_PASSWORD: 'root'
     depends_on:
       - mysql_db_service
-    networks:
-      - mynetwork
 
 networks:
   mynetwork:
