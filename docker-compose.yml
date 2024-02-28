@@ -36,7 +36,7 @@ services:
      - /home/backups:/backup
     command:
       - --character-set-server=utf8mb4
-      - --collation-server=utf8_bin
+      - --collation-server=utf8mb4_unicode_ci
       - --skip-character-set-client-handshake
     depends_on:
       - mysql_db_service
@@ -46,7 +46,7 @@ services:
       - /bin/bash
       - -c
       - |
-       bash -c "while true; do timestamp=$(date +%Y%m%d%H%M%S); mysqldump -h mysql_db_service -uroot -proot--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-character-set-client-handshake --result-file=/backup/dump_\$timestamp.sql --all-databases; sleep 300; done"
+       bash -c "while true; do timestamp=$(date +%Y%m%d%H%M%S); mysqldump -h mysql_db_service -uroot -proot --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-character-set-client-handshake --result-file=/backup/dump_\$timestamp.sql --all-databases; sleep 300; done"
        
 
   phpmyadmin:
