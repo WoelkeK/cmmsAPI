@@ -157,6 +157,10 @@ public class DashboardController {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
 
+        if(job.getMachine()==null){
+            LOGGER.info("Machine is null");
+        }
+
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);

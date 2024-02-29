@@ -124,6 +124,8 @@
                                                     th:value="${employee.id}">
                                             </option>
                                         </select>
+                                        <p th:errors="*{employee}" class="text-danger mt-2 text-lm text-red-500"
+                                           th:if="${#fields.hasErrors('employee')}"></p>
                                     </div>
                                 </div>
 
@@ -160,17 +162,21 @@
                                                     th:value="${department.id}">
                                             </option>
                                         </select>
+                                        <p th:errors="*{department}" class="text-danger mt-2 text-lm text-red-500"
+                                           th:if="${#fields.hasErrors('department')}"></p>
                                     </div>
                                 </div>
 
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                                    <label for="machineId"
+                                    <label for="machine"
                                            class="block text-lg font-medium text-gray-700 sm:mt-px sm:pt-2">Maszyna</label>
                                     <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <select id="machineId" name="machineId" onchange="updateMachineIdAttribute(this.value)"
+                                        <select id="machine" name="machine" onchange="updateMachineIdAttribute(this.value)"
                                                 class="block w-full max-w-lg rounded-md text-blue-800 border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-xl">
                                         </select>
                                         <input type="hidden" th:field ="${job.machine.id}" id="selectedMachineValue" name="selectedMachineValue"/>
+                                        <p th:errors="*{machine}" class="text-danger mt-2 text-lm text-red-500"
+                                           th:if="${#fields.hasErrors('machine')}"></p>
                                     </div>
                                 </div>
 
@@ -245,7 +251,7 @@
     }
 
     function displayMachineList(machines) {
-        var machineSelect = document.getElementById('machineId');
+        var machineSelect = document.getElementById('machine');
         var selectedMachineValueInput = document.getElementById('selectedMachineValue');
 
         machineSelect.innerHTML = ''; // Clear previous options

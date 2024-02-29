@@ -1,23 +1,23 @@
     let selectedId = null;
 
-//    function openDeleteAllModal() {
-//        console.log("openDeleteAll ");
-//    let modal2 = document.getElementById('deleteAllModal');
-//    modal2.style.display = "block";
-//}
+    function openDeleteAllModal() {
+        console.log("openDeleteAll ");
+    let modal2 = document.getElementById('deleteAllModal');
+    modal2.style.display = "block";
+}
 
-//    function closeAllModal() {
-//    let modal2 = document.getElementById('deleteAllModal');
-//    modal2.style.display = "none";
-//}
+    function closeAllModal() {
+    let modal2 = document.getElementById('deleteAllModal');
+    modal2.style.display = "none";
+}
 
-//    function executeDeleteAll() {
-//        console.log("executeDeleteAll()");
-//    fetch(`/hardwares/deleteAll`, {
-//        method: 'GET'
-//    })
-//        .then(response => location.reload());
-//}
+    function executeDeleteAll() {
+        console.log("executeDeleteAll()");
+    fetch(`/employees/deleteAll`, {
+        method: 'GET'
+    })
+        .then(response => location.reload());
+}
 
     function openDeleteModal(id) {
         console.log("openDeleteModal " + id);
@@ -51,25 +51,22 @@
 });
 }
 
-
-//    let deleteAllButtons = document.getElementsByClassName('deleteAllBtn');
-//    for(let btn of deleteAllButtons) {
-//    btn.addEventListener('click', function(e) {
-//    e.preventDefault();
-//    openDeleteAllModal();
-//});
-//}
-
+    let deleteAllButtons = document.getElementsByClassName('deleteAllBtn');
+    for(let btn of deleteAllButtons) {
+    btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openDeleteAllModal();
+});
+}
 
     // Confirm the Delete
     document.getElementById('confirmDelete').addEventListener('click', function() {
     executeDelete();
 });
 
-
-//    // Confirm the Delete
-//    document.getElementById('confirmDeleteAll').addEventListener('click', function() {
-//    executeDeleteAll();
-//});
+    // Confirm the Delete
+    document.getElementById('confirmDeleteAll').addEventListener('click', function() {
+    executeDeleteAll();
+});
 
 }

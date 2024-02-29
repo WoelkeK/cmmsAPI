@@ -25,7 +25,7 @@ public class JobEntity {
     private Long id;
 //    @CreationTimestamp
     private LocalDateTime requestDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
 

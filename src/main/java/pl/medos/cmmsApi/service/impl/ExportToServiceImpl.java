@@ -189,6 +189,12 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getDepartment().getName(), style);
             createCell(row, columnCount++, record.getPhone(), style);
             createCell(row, columnCount++, record.getEmail(), style);
+
+            if (record.getProfile() == null) {
+                createCell(row, columnCount++, true, style);
+            } else {
+                createCell(row, columnCount++, record.getProfile(), style);
+            }
         }
         LOGGER.info("writeEmployees(...)");
     }
@@ -206,6 +212,7 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 2, "Wydział", style);
         createCell(row, 3, "Telefon", style);
         createCell(row, 4, "Email.", style);
+        createCell(row, 5, "Status.", style);
         LOGGER.info("Header create complete! ");
     }
 

@@ -27,9 +27,12 @@ public class Job {
     private Long id;
     private LocalDateTime requestDate;
     private User user;
+    @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Employee employee;
     private Engineer engineer;
+    @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Department department;
+    @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Machine machine;
     //    private Cost cost;
     @NotEmpty(message = "Należy wprowadzić informację, czego dotyczy problem.")
