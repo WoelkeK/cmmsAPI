@@ -13,7 +13,6 @@
         window.jobs = /*[[${jobs}]]*/ 'default';
         /*]]>*/
     </script>
-    <audio id="audio" th:src="@{/audio/warning.mp3}" type="audio/mpeg"></audio>
 </head>
 <body class="bg-gray-400">
 <div class="min-h-full">
@@ -35,25 +34,6 @@
                                         Awarię</a>
                                 </div>
                             </div>
-
-                            <!--                            <div class="mr-2 flex md:hidden">-->
-                            <!--                                <button type="button"-->
-                            <!--                                        class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text:xl text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"-->
-                            <!--                                        aria-controls="mobile-menu" aria-expanded="false">-->
-                            <!--                                    <span class="sr-only">Open main menu</span>-->
-                            <!--                                    &lt;!&ndash; Menu open: "hidden", Menu closed: "block" &ndash;&gt;-->
-                            <!--                                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                            <!--                                         stroke="currentColor" aria-hidden="true">-->
-                            <!--                                        <path stroke-linecap="round" stroke-linejoin="round"-->
-                            <!--                                              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>-->
-                            <!--                                    </svg>-->
-                            <!--                                    &lt;!&ndash; Menu open: "block", Menu closed: "hidden" &ndash;&gt;-->
-                            <!--                                    <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
-                            <!--                                         stroke="currentColor" aria-hidden="true">-->
-                            <!--                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>-->
-                            <!--                                    </svg>-->
-                            <!--                                </button>-->
-                            <!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -80,12 +60,12 @@
     <main class="mt-2">
         <div class="mx-auto max-w-full px-4 pb-6 sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-transparent shadow-xl rounded-3xl">
-
                 <ul role="list" class="divide-y-1 divide-transparent space-y-2 rounded-3xl">
 
                     <li th:each="job : ${jobs}" th:if="${(job.jobShedule ==null) || (job.jobShedule !=null && job.jobShedule.isBefore(T(java.time.LocalDateTime).now()))}">
 
                         <div th:attr="class=${job.status=='zgłoszenie'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl': (job.status=='przegląd'?'bg-blue-500 rounded-3xl':'hidden'))}">
+
                             <a th:href="@{/dashboards/update/{id}(id=${job.id})}" th:object="${job}" method="get"
                                class="block hover:bg-blue-50 rounded-3xl">
 
@@ -146,69 +126,10 @@
                     </li>
                 </ul>
             </div>
-
-
-            <!--            <div class="pt-2 px-2">-->
-
-            <!--                <div class="flex justify-end">-->
-            <!--                    <div class="px-2">-->
-            <!--                        <button type="button"-->
-            <!--                                class="rounded-md border border-gray-300 bg-green-600 py-2 px-8 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-            <!--                            <a th:href="@{'/dashboards/page/' + ${currentPage} + '?sortField=requestDate&sortDir=' + ${reverseSortDir}}">-->
-            <!--                                Narastająco / Malejąco</a>-->
-            <!--                        </button>-->
-            <!--                    </div>-->
-
-            <!--                    <button type="button"-->
-            <!--                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-            <!--                        <a th:if="${currentPage >1}"-->
-            <!--                           th:href="@{'/dashboards/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Poprzedni</a>-->
-            <!--                        <span th:unless="${currentPage >1}">Poprzedni</span>-->
-            <!--                    </button>-->
-
-            <!--                    <button type="button"-->
-            <!--                            class="rounded-md border border-gray-300 bg-indigo-600 py-2 px-4 text-sm font-medium text-gray-100 hover:text-indigo-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-            <!--                        <a th:if="${currentPage < totalPages}"-->
-            <!--                           th:href="@{'/dashboards/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Następny</a>-->
-            <!--                        <span th:unless="${currentPage < totalPages}">Następny</span>-->
-            <!--                    </button>-->
-            <!--                </div>-->
-            <!--            </div>-->
-
-
-            <!--            <div th:if="${totalPages > 1}">-->
-            <!--                <div class="row col-sm-10">-->
-            <!--                    <div class="col-sm-2">-->
-            <!--                        Wszystkich wpisów: [[${totalItems}]]-->
-            <!--                    </div>-->
-            <!--                    <div class="col-sm-1">-->
-            <!--            <span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
-            <!--      <a th:if="${currentPage != i}"-->
-            <!--         th:href="@{'/dashboards/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
-            <!--      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;-->
-            <!--            </span>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
     </main>
 </div>
 
-<!-- The Modal -->
-<!--<div id="myModal" class="modal">-->
-<!--    <div class="modal-content">-->
-<!--        <span class="close">&times;</span>-->
-<!--        <form action="/updateReport" method="post">-->
-<!--            <input type="hidden" id="modal-report-id" name="reportId">-->
-<!--            &lt;!&ndash; Include other form fields corresponding to Report properties &ndash;&gt;-->
-<!--            <label for="status">Status:</label><br>-->
-<!--            <input type="text" id="status" name="status"><br>-->
-<!--            <button type="submit" onClick="changeStatus()">Submit</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<script th:src="@{/js/UpdateHandler.js}"></script>-->
 <script th:src="@{/js/Refresh.js}"></script>
 
 </body>
