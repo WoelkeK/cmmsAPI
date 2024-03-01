@@ -53,7 +53,7 @@ services:
           if [ "$current_hour" == "$target_hour" ]; then
             timestamp=$(date +%Y%m%d%H%M%S)
             filename="/backup/dump_${timestamp}.sql.gz"
-            mysqldump -h mysql_db_service -uroot -proot --all-databases \ | gzip > "$filename"
+            mysqldump -h mysql_db_service -uroot -proot --all-databases  | gzip > "$filename"
             echo "Backup created: $filename"
             sleep 300  # 86400 Sleep for 24 hours until the next backup
           else
