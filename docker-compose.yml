@@ -47,8 +47,12 @@ services:
       - -c
       - |
         while true; do
-        mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S)_$((count++)).sql --all-databases;
-        sleep 43200; done
+        now=$(date +%T);
+        expected="02:00:00";
+        if [ "$now" = "$expected" ]; then
+        mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S).sql --all-databases;
+        fi
+        sleep 60; done
 
   phpmyadmin:
     container_name: phpmyadmin
