@@ -2,27 +2,28 @@ package pl.medos.cmmsApi.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.medos.cmmsApi.model.Employee;
-import pl.medos.cmmsApi.model.Engineer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "tasks")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
-@Table(name = "DEPARTMENTS")
-public class DepartmentEntity {
+public class TaskEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String location;
+    @OneToOne
+    private DepartmentEntity source;
+    @OneToOne
+    private DepartmentEntity destination;
+    private Boolean confirmed;
+    private LocalDateTime startTime;
+    private LocalDateTime stopTime;
 }
