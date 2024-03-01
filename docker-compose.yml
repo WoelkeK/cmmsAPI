@@ -47,19 +47,8 @@ services:
       - -c
       - |
         while true; do
-          target_hour="18"
-          current_hour=$(date +%H)
-        
-          if [ "$current_hour" == "$target_hour" ]; then
-            timestamp=$(date +%Y%m%d%H%M%S)
-            filename="/backup/dump_${timestamp}.sql.gz"
-            mysqldump -h mysql_db_service -uroot -proot --all-databases  | gzip > "$filename"
-            echo "Backup created: $filename"
-            sleep 300  # 86400 Sleep for 24 hours until the next backup
-          else
-            sleep 180  # 3600 Check every hour if it's the target hour for backup
-          fi
-        done
+        mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S)_$((count++)).sql --all-databases;
+        sleep 43200; done
 
   phpmyadmin:
     container_name: phpmyadmin
