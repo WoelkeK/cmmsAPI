@@ -56,10 +56,17 @@ services:
             | gzip > /backup/dump_${timestamp}_$((count++)).sql.gz
             sleep 86400
          else
-            sleep 3600
-          fi
+           if [ $count -eq 0 ]; then
+             timestamp=$(date +%Y%m%d%H%M%S)
+             mysqldump -h mysql_db_service -uroot -proot --all-databases \
+             | gzip > /backup/dump_${timestamp}_$((count++)).sql.gz
+           else
+             mysqldump -h mysql_db_service -uroot -proot --all-databases \
+             | gzip > /backup/dump_${timestamp}_$((count++)).sql.gz
+           fi
+           sleep 3600
+         fi
         done
-  
 
   phpmyadmin:
     container_name: phpmyadmin
