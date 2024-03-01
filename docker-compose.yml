@@ -47,7 +47,7 @@ services:
       - -c
       - |
         target_hour="18"
-       while true; do
+        while true; do
           current_hour=$(date +%H)
 
           if [ "$current_hour" == "$target_hour" ]; then
