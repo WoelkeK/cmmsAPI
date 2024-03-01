@@ -47,18 +47,17 @@ services:
       - -c
       - |
         target_hour="18"
+       while true; do
+          current_hour=$(date +%H)
 
-  while true; do
-    current_hour=$(date +%H)
-
-    if [ "$current_hour" == "$target_hour" ]; then
-      timestamp=$(date +%Y%m%d%H%M%S)
-      mysqldump -h mysql_db_service -uroot -proot --all-databases \ | gzip > "/backup/dump_${timestamp}.sql.gz"
-      sleep 300  # 86400 Sleep for 24 hours until the next backup
-    else
-      sleep 180  # 3600 Check every hour if it's the target hour for backup
-    fi
-  done
+          if [ "$current_hour" == "$target_hour" ]; then
+            timestamp=$(date +%Y%m%d%H%M%S)
+            mysqldump -h mysql_db_service -uroot -proot --all-databases \ | gzip > "/backup/dump_${timestamp}.sql.gz"
+            sleep 300  # 86400 Sleep for 24 hours until the next backup
+          else
+            sleep 180  # 3600 Check every hour if it's the target hour for backup
+          fi
+       done
 
   phpmyadmin:
     container_name: phpmyadmin
