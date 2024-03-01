@@ -9,7 +9,7 @@ import pl.medos.cmmsApi.service.TaskService;
 import java.util.List;
 
 @RestController
-@Tag(name = "Task")
+@Tag(name = "Tasks")
 @Slf4j
 @RequestMapping("/api/tasks")
 public class TaskController {
