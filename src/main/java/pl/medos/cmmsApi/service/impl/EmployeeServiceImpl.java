@@ -40,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee createEmployee(Employee employee) {
         LOGGER.info("createEmployee()");
-        employee.setProfile(true);
+        employee.setIsActive(true);
         EmployeeEntity employeeEntity = employeeMapper.modelToEntity(employee);
         EmployeeEntity savedEmployeeEntity = employeeRepository.save(employeeEntity);
         Employee savedEmployeeModel = employeeMapper.entityToModel(savedEmployeeEntity);

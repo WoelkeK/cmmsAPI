@@ -190,10 +190,10 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getPhone(), style);
             createCell(row, columnCount++, record.getEmail(), style);
 
-            if (record.getProfile() == null) {
+            if (record.getIsActive() == null) {
                 createCell(row, columnCount++, true, style);
             } else {
-                createCell(row, columnCount++, record.getProfile(), style);
+                createCell(row, columnCount++, record.getIsActive(), style);
             }
         }
         LOGGER.info("writeEmployees(...)");

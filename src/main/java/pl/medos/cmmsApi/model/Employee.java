@@ -17,6 +17,6 @@ public class Employee {
     private String email;
     private String position;
     private Department department;
-    private Boolean profile;
+    private Boolean isActive;
 
 }

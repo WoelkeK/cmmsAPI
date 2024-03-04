@@ -78,7 +78,7 @@ public class WebEngineerController {
         Page<Engineer> engineerPages;
 
         if (status != null && status) {
-            engineerPages = engineerService.findByProfile(pageNo, pageSize, sortField, sortDir, status);
+            engineerPages = engineerService.findByActive(pageNo, pageSize, sortField, sortDir, status);
         } else {
             LOGGER.info("All entities");
             engineerPages = engineerService.findPageinated(pageNo, pageSize, sortField, sortDir);
@@ -159,7 +159,7 @@ public class WebEngineerController {
         LOGGER.info("create(" + engineer + ")");
 //        LOGGER.info("create(" + lastName + ")");
 //        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
-        engineer.setProfile(true);
+        engineer.setIsActive(true);
         engineerService.createEngineer(engineer);
         return "redirect:/engineers";
     }

@@ -13,6 +13,8 @@ public interface EngineerService {
 
     Engineer createEngineer(Engineer engineer);
 
+    Page<Engineer> findByActive(int pageNo, int pageSize, String sortField, String sortDir, Boolean profile);
+
     Engineer updateEngineer(Engineer engineer, Long id) throws EmployeeNotFoundException;
 
     void deleteEngineer(Long id);
@@ -31,5 +33,4 @@ public interface EngineerService {
 
     Engineer findByName(String engineer);
 
-    Page<Engineer> findByProfile(int pageNo, int pageSize, String sortField, String sortDir, Boolean active);
 }

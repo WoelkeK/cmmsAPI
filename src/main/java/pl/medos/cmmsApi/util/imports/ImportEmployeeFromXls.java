@@ -28,7 +28,7 @@ public class ImportEmployeeFromXls implements ImportEmployee {
     private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
     @Autowired
     private DepartmentService departmentService;
-    private List<String> persons = new ArrayList<>(Arrays.asList("name", "position", "department", "phone", "email", "profile"));
+    private List<String> persons = new ArrayList<>(Arrays.asList("name", "position", "department", "phone", "email", "isActive"));
 
     @Override
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
@@ -96,9 +96,9 @@ public class ImportEmployeeFromXls implements ImportEmployee {
                                     employee.setEmail(String.valueOf(m.getEmail()));
 
                                     if (m.getProfile() == null) {
-                                        employee.setProfile(true);
+                                        employee.setIsActive(true);
                                     } else {
-                                        employee.setProfile(m.getProfile());
+                                        employee.setIsActive(m.getProfile());
                                     }
                                     LOGGER.info("departmentNameNull (...)");
                                     return employee;

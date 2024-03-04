@@ -6,13 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
-import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
-import pl.medos.cmmsApi.model.Machine;
 import pl.medos.cmmsApi.repository.EngineerRepository;
-import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.EngineerEntity;
-import pl.medos.cmmsApi.repository.entity.MachineEntity;
 import pl.medos.cmmsApi.service.EngineerService;
 import pl.medos.cmmsApi.service.mapper.EngineerMapper;
 
@@ -96,11 +92,11 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public Page<Engineer> findByProfile(int pageNo, int pageSize, String sortField, String sortDir,Boolean profile) {
+    public Page<Engineer> findByActive(int pageNo, int pageSize, String sortField, String sortDir, Boolean profile) {
         LOGGER.info("findPagesEnginnerByProfileStatus()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
-        Page<EngineerEntity> engineerEntityPage = engineerRepository.findByProfile(pageable, profile);
+        Page<EngineerEntity> engineerEntityPage = engineerRepository.findByIsActive(pageable, profile);
         Page<Engineer> engineers = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
         LOGGER.info("findPaginated(...)");
         return engineers;
