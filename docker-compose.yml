@@ -43,17 +43,17 @@ services:
     networks:
       - mynetwork
     entrypoint:
-      - /bin/bash
-      - -c
-      - |
-        while true; do
-        now=$(date +%T);
-        expected="02:00:00";
-        if [ "$now" = "$expected" ]; then
-          mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$(date +%Y%m%d%H%M%S).sql --all-databases;
-          sleep 86400;
-        fi
-        sleep 60; done
+    - /bin/bash
+    - -c
+    - |
+      while true; do
+      now=$$(date +%T);
+      expected="02:00:00";
+      if [ "$$now" = "$$expected" ]; then
+        mysqldump -h mysql_db_service -uroot -proot --result-file=/backup/dump_$$(date +%Y%m%d%H%M%S).sql --all-databases;
+        sleep 86400;
+      fi
+      sleep 60; done
 
   phpmyadmin:
     container_name: phpmyadmin
