@@ -2,6 +2,8 @@ package pl.medos.cmmsApi.model;
 
 
 import jakarta.persistence.Transient;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -32,9 +34,11 @@ public class Job {
     private Engineer engineer;
     @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Department department;
+
     @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
+    @Valid
     private Machine machine;
-    //    private Cost cost;
+
     @NotEmpty(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private String message;
     private Boolean directContact;

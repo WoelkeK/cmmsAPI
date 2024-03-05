@@ -129,24 +129,6 @@
                                     </div>
                                 </div>
 
-                                <!--                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">-->
-                                <!--                                    <label for="machineId"-->
-                                <!--                                           class="block text-lg font-medium text-gray-700 sm:mt-px sm:pt-2">Maszyna-->
-                                <!--                                        /-->
-                                <!--                                        Przedmiot</label>-->
-                                <!--                                    <div class="mt-1 sm:col-span-2 sm:mt-0">-->
-                                <!--                                        <select th:field="${job.machine.id}" id="machineId" name="machineId"-->
-                                <!--                                                autocomplete="machine"-->
-                                <!--                                                class="block w-full max-w-lg rounded-md text-blue-800  border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-xl">-->
-
-                                <!--                                            <option th:each="machine : ${machines}"-->
-                                <!--                                                    th:text="${machine.name}"-->
-                                <!--                                                    th:value="${machine.id}">-->
-                                <!--                                            </option>-->
-                                <!--                                        </select>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
                                     <label for="departmentId"
                                            class="block text-lg font-medium text-gray-700 sm:mt-px sm:pt-2">Wydział</label>
@@ -171,12 +153,12 @@
                                     <label for="machine"
                                            class="block text-lg font-medium text-gray-700 sm:mt-px sm:pt-2">Maszyna</label>
                                     <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <select id="machine" name="machine" onchange="updateMachineIdAttribute(this.value)"
+                                        <select id="machineId" name="machineId" onchange="updateMachineIdAttribute(this.value)"
                                                 class="block w-full max-w-lg rounded-md text-blue-800 border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-xl">
                                         </select>
-                                        <input type="hidden" th:field ="${job.machine.id}" id="selectedMachineValue" name="selectedMachineValue"/>
-                                        <p th:errors="*{machine}" class="text-danger mt-2 text-lm text-red-500"
-                                           th:if="${#fields.hasErrors('machine')}"></p>
+                                        <p th:errors="*{machine.id}" class="text-danger mt-2 text-lm text-red-500"
+                                           th:if="${#fields.hasErrors('machine.id')}"></p>
+                                        <input type="hidden" th:field ="${job.machine.id}" id="machine" name="machine"/>
                                     </div>
                                 </div>
 
@@ -229,9 +211,6 @@
     </main>
 </div>
 
-
-<!--<div style="none" id="machineList"></div>-->
-
 <script th:inline="javascript">
     /*<![CDATA[*/
     document.addEventListener('DOMContentLoaded', function () {
@@ -251,24 +230,22 @@
     }
 
     function displayMachineList(machines) {
-        var machineSelect = document.getElementById('machine');
-        var selectedMachineValueInput = document.getElementById('selectedMachineValue');
+        var machineSelect = document.getElementById('machineId');
+        var selectedMachineValueInput = document.getElementById('machine');
 
         machineSelect.innerHTML = ''; // Clear previous options
 
-        // Create a list of machines
             machines.forEach(function (machine) {
-
             var option = document.createElement('option');
             option.value = machine.id;
             option.text = machine.name;
             machineSelect.appendChild(option);
         });
     }
-
-            function updateMachineIdAttribute(selectedMachineValue) {
+            function updateMachineIdAttribute(machine) {
         // Update the hidden input field with the selected machine value
-        document.getElementById('selectedMachineValue').value = selectedMachineValue;
+        document.getElementById('machine').value = machine;
+        console.log(machine)
     }
 
     /*]]>*/

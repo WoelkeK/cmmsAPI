@@ -17,6 +17,7 @@ import pl.medos.cmmsApi.enums.Decision;
 import pl.medos.cmmsApi.enums.JobStatus;
 import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
+import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
 import pl.medos.cmmsApi.service.*;
 
@@ -38,7 +39,7 @@ public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
     private static final String UPLOAD_DIR = "/home/images";
-//    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
+    //    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 
     private JobService jobService;
@@ -157,8 +158,19 @@ public class DashboardController {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
 
-        if(job.getMachine()==null){
-            LOGGER.info("Machine is null");
+
+        LOGGER.info("Machine " + job.getMachine().toString());
+
+        try {
+            if (job.getMachine() != null && job.getMachine().getId()!=null) {
+                Machine machineById = machineService.findMachineById(job.getMachine().getId());
+                job.setMachine(machineById);
+            } else {
+                LOGGER.info("Machine is NULL");
+
+            }
+        } catch (MachineNotFoundException e) {
+            e.printStackTrace();
         }
 
         if (result.hasErrors()) {
