@@ -240,33 +240,89 @@
 
                                     <div class="hidden lg:ml-10 lg:block">
                                         <div class="flex space-x-4">
-                                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                            <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/create}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>
-                                            <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/file}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>
-                                            <a th:if="${isAdmin}" href="#" th:href="@{/hardwares/export}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
-                                            <!--                                                                                        <a href="#" th:href="@{/hardwares/deleteAll}"-->
-                                            <!--                                                                                           class="deleteAllBtn rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-red-500 text-gray-400 hover:text-gray-100">Usuń-->
-                                            <!--                                                                                            wszystko</a>-->
+                                            <div class="group flex relative">
+                                                <span> <a th:if="${isAdmin}" th:href="@{/hardwares/create}"
+                                                          class="text-white hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke-width="2"
+                                                     stroke="currentColor" class="w-12 h-12">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M12 4v16m8-8H4"/>
+                                                </svg></a></span>
 
-                                            <button th:if="${isAdmin}" id="deleteAllBtn"
-                                                    class="text-red-600 hover:text-red-300 deleteAllBtn">
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Dodaj</span>
+                                            </div>
+
+                                            <div class="group flex relative">
+                                                <a th:if="${isAdmin}" th:href="@{/hardwares/file}"
+                                                   class="text-white hover:text-red-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="2"
+                                                         stroke="currentColor" class="w-12 h-12">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                                    </svg>
+                                                </a>
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Importuj</span>
+                                            </div>
+
+                                            <div class="group flex relative">
+                                                <a th:if="${isAdmin}" th:href="@{/hardwares/export}"
+                                                   class="text-white hover:text-red-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="2"
+                                                         stroke="currentColor" class="w-12 h-12">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                                    </svg>
+                                                </a>
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Exportuj</span>
+                                            </div>
+
+                                            <div class="group flex relative">
+                                                <span>
+                                            <a class="deleteAllBtn text-white hover:text-red-300"
+                                               th:if="${isAdmin}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                      viewBox="0 0 24 24" stroke-width="1.5"
                                                      stroke="currentColor" class="w-12 h-12">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                           d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                                 </svg>
+                                            </a>
+                                                </span>
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Usuń wszystko</span>
+                                            </div>
 
-                                            </button>
+                                            <div class="group flex relative">
+                                                <span>
+                                                    <button type="button" th:if="${isAdmin}"
+                                                            data-toggle="modal" data-target="#optionModal"
+                                                            id="openModalButton">
 
+                                            <a th:if="${isAdmin}"
+                                               class="optionBtn text-white hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+  <path stroke-linecap="round" stroke-linejoin="round"
+        d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg>
+                                            </a>
+                                                </button>
+                                                </span>
 
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Opcje</span>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
@@ -274,7 +330,7 @@
                                             <label for="search" class="sr-only">Szukaj</label>
                                             <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <svg class="h-5 w-5 text-gray-800" viewBox="0 0 20 20"
+                                                    <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20"
                                                          fill="currentColor"
                                                          aria-hidden="true">
                                                         <path fill-rule="evenodd"
@@ -283,7 +339,7 @@
                                                     </svg>
                                                 </div>
                                                 <input id="search" name="query"
-                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-gray-900 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
+                                                       class="block w-full rounded-md border-0 bg-gray-300 py-1.5 pl-10 pr-3 text-gray-900 placeholder:text-gray-800 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-lg sm:leading-6"
                                                        placeholder="Szukaj" type="search">
                                             </div>
                                         </form>
@@ -423,18 +479,18 @@
                                                 <td class="relative whitespace-nowrap align-text-top py-4 pl-2 pr-4 text-left text-lg font-medium sm:pr-8">
 
 
-<!--                                                    <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"-->
-<!--                                                       class="text-indigo-800 hover:text-indigo-300">-->
-<!--                                                        <button class="mr-4" title="Szczegóły">-->
-<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"-->
-<!--                                                                 viewBox="0 0 24 24" stroke-width="1.5"-->
-<!--                                                                 stroke="currentColor" class="w-7 h-7">-->
-<!--                                                                <path stroke-linecap="round" stroke-linejoin="round"-->
-<!--                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>-->
-<!--                                                            </svg>-->
+                                                    <!--                                                    <a th:href="@{/hardwares/read/{id}(id=${hardware.id})}"-->
+                                                    <!--                                                       class="text-indigo-800 hover:text-indigo-300">-->
+                                                    <!--                                                        <button class="mr-4" title="Szczegóły">-->
+                                                    <!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"-->
+                                                    <!--                                                                 viewBox="0 0 24 24" stroke-width="1.5"-->
+                                                    <!--                                                                 stroke="currentColor" class="w-7 h-7">-->
+                                                    <!--                                                                <path stroke-linecap="round" stroke-linejoin="round"-->
+                                                    <!--                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>-->
+                                                    <!--                                                            </svg>-->
 
-<!--                                                        </button>-->
-<!--                                                    </a>-->
+                                                    <!--                                                        </button>-->
+                                                    <!--                                                    </a>-->
 
                                                     <a th:if="${isAdmin}"
                                                        th:href="@{/hardwares/update/{id}(id=${hardware.id})}"

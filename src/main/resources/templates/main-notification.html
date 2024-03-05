@@ -237,33 +237,95 @@
                                              alt="device">
 
                                     </div>
+
                                     <div class="hidden lg:ml-10 lg:block">
-                                        <!--    <link rel="stylesheet" th:href="@{/css/mainold.css}" />-->
                                         <div th:if="(${isAdmin} or ${nEdit})" class="flex space-x-4">
 
 
-                                            <a th:if="${isAdmin} or ${nEdit}" href="#" th:href="@{/awizacje/create}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Dodaj</a>
-                                            <a th:if="${isAdmin} or ${nFull}" href="#" th:href="@{/awizacje/file}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Import</a>
-                                            <a th:if="${isAdmin} or ${nFull}" href="#" th:href="@{/awizacje/export}"
-                                               class="rounded-md bg-blue-800 px-3 py-2 text-lg font-medium hover:bg-gray-700 text-gray-400 hover:text-gray-100">Export</a>
+                                            <div class="group flex relative">
+                                                <span> <a th:if="${isAdmin} or ${nEdit}"
+                                                          th:href="@{/awizacje/create}"
+                                                          class="text-white hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke-width="2"
+                                                     stroke="currentColor" class="w-12 h-12">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M12 4v16m8-8H4"/>
+                                                </svg></a></span>
 
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Dodaj</span>
+                                            </div>
 
-                                            <button th:if="${isAdmin} or ${jFull}"
-                                                    class="deleteAllBtn text-red-600 hover:text-red-300">
+                                            <div class="group flex relative">
+                                                <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/file}"
+                                                   class="text-white hover:text-red-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="2"
+                                                         stroke="currentColor" class="w-12 h-12">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                                    </svg>
+                                                </a>
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Importuj</span>
+                                            </div>
+
+                                            <div class="group flex relative">
+                                                <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/export}"
+                                                   class="text-white hover:text-red-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="2"
+                                                         stroke="currentColor" class="w-12 h-12">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                                    </svg>
+                                                </a>
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Exportuj</span>
+                                            </div>
+
+                                            <div class="group flex relative">
+                                                <span>
+                                            <a class="deleteAllBtn text-white hover:text-red-300"
+                                               th:if="${isAdmin} or ${nFull}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                      viewBox="0 0 24 24" stroke-width="1.5"
                                                      stroke="currentColor" class="w-12 h-12">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                           d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                                 </svg>
-                                            </button>
+                                            </a>
+                                                </span>
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Usuń wszystko</span>
+                                            </div>
 
+                                            <div class="group flex relative">
+                                                <span>
+                                                    <button type="button" th:if="${isAdmin} or ${nFull}"
+                                                            data-toggle="modal" data-target="#optionModal"
+                                                            id="openModalButton">
+
+                                            <a th:if="${isAdmin} or ${nFull}"
+                                               class="optionBtn text-white hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+  <path stroke-linecap="round" stroke-linejoin="round"
+        d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg>
+                                            </a>
+                                                </button>
+                                                </span>
+
+                                                <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Opcje</span>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                                     <div class="w-full max-w-lg lg:max-w-xs">
@@ -352,11 +414,6 @@
                                                         Osoba kontaktowa ↑↓</a>
                                                 </th>
 
-                                                <!--                                                <th scope="col"-->
-                                                <!--                                                    class="px-3 py-3.5 text-left font-semibold text-yellow-500">-->
-                                                <!--                                                    Zdjęcie-->
-                                                <!--                                                </th>-->
-
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-4">
                                                     <span class="sr-only">Edit</span>
                                                 </th>
@@ -374,87 +431,75 @@
                                                 class="border-t border-gray-300 text-lg font-medium transition ease-in-out delay-50 bg-gray-100 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-200">
 
                                                 <td th:text="${#temporals.format(notification.visitDate, 'dd-MM-yyyy HH:mm')}"
-                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800" style="cursor: pointer"
+                                                    class="align-text-top whitespace-nowrap px-3 py-4 text-lg font-medium text-gray-800"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Data
                                                     Zgłoszenia
 
                                                 </td>
                                                 <td th:text="${notification.type}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Typ
                                                 </td>
                                                 <td th:text="${notification.status}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Status
                                                 </td>
                                                 <td th:text="${notification.supplier}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Dostawca
                                                 </td>
                                                 <td th:text="${notification.item}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Towar
                                                 </td>
                                                 <td th:text="${notification.itemDetails}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     ilość /
                                                     Waga
                                                 </td>
                                                 <td th:text="${notification.carPlates}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Nr
                                                     rejestracyjny
                                                 </td>
                                                 <td th:text="${notification.driverName}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Kierowca
                                                 </td>
 
                                                 <td th:text="${notification.driverPhone}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Telefon do
                                                     kierowcy
                                                 </td>
 
                                                 <td th:text="${notification.employee}"
-                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900" style="cursor: pointer"
+                                                    class="align-text-top px-3 py-4 text-lg font-medium text-gray-900"
+                                                    style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickNotifi(\'' + ${notification.id} + '\' , \'' + ${currentPage}+ '\');'">
                                                     Osoba
                                                     zlecająca
                                                 </td>
 
-                                                <!--                                                <td>-->
-                                                <!--                                                    <div class="container mt-2 mb-2">-->
-                                                <!--                                                        <a th:href="@{'/awizacje/downloadfile?id=' + ${notification.id}}">-->
-                                                <!--                                                            <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ images.get(notification.id)}"-->
-                                                <!--                                                                 width="70px" height="30px" alt="person">-->
-                                                <!--                                                        </a>-->
-                                                <!--                                                    </div>-->
-                                                <!--                                                </td>-->
                                                 <td class="relative whitespace-nowrap py-4 pl-2 pr-4 text-lg font-medium sm:pr-8">
-
-<!--                                                    <a th:if="${isAdmin} or ${nRead}" or-->
-<!--                                                       th:href="@{/awizacje/read/{id}(id=${notification.id})}"-->
-<!--                                                       class="text-indigo-800 hover:text-indigo-300">-->
-<!--                                                        <button class="mr-4" title="Szczegóły">-->
-<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"-->
-<!--                                                                 viewBox="0 0 24 24" stroke-width="1.5"-->
-<!--                                                                 stroke="currentColor" class="w-7 h-7">-->
-<!--                                                                <path stroke-linecap="round" stroke-linejoin="round"-->
-<!--                                                                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/>-->
-<!--                                                            </svg>-->
-
-<!--                                                        </button>-->
-<!--                                                    </a>-->
 
                                                     <a th:if="${isAdmin} or ${nEdit}"
                                                        th:href="@{/awizacje/update/{id}(id=${notification.id})}"
@@ -470,7 +515,6 @@
                                                         </button>
                                                     </a>
 
-                                                    <!--                                                    <a th:if="${isAdmin} or ${nFull}" th:href="@{/awizacje/delete/{id}(id=${notification.id})}"-->
                                                     <a th:if="${isAdmin} or ${nFull}"
                                                        th:attr="data-id=${notification.id}"
                                                        class="deleteBtn text-red-600 hover:text-red-300">
@@ -482,9 +526,7 @@
                                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                                       d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                                             </svg>
-
                                                         </button>
-
                                                     </a>
                                                 </td>
 
@@ -635,73 +677,6 @@
     </div>
 </div>
 
-
-<!--<div id="myModal" class="modal">-->
-<!--    <div class="modal-content">-->
-
-<!--        <div class="shadow sm:rounded-lg">-->
-<!--            <div class="px-4 py-5 sm:p-6">-->
-<!--                <h3 class="text-base md:text-2xl font-medium leading-6 text-red-600">Brak uprawnień!</h3>-->
-<!--                <div class="mt-2 sm:flex sm:items-start sm:justify-between">-->
-<!--                    <div class="max-w-xl text-md text-gray-500">-->
-<!--                        <p>Dostęp do aplikacji niemożliwy.</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-3 bg-gray-400 shadow sm:rounded-lg">-->
-<!--            <div class="sm:col-span-3">-->
-<!--                <div class="px-4 py-5 sm:px-2">-->
-
-<!--                    <fieldset>-->
-<!--                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Moduł awizacje-->
-<!--                        </legend>-->
-<!--                        <div class="mt-4 divide-y divide-gray-200">-->
-<!--                            <div class="shadow sm:rounded-lg">-->
-<!--                                <div class="px-4 py-5 sm:p-6">-->
-<!--                                    <h3 class="text-base md:text-md font-medium leading-6 text-gray-600">Nastąpi-->
-<!--                                        przekierowanie na stronę główną Medos.pl</h3>-->
-<!--                                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">-->
-<!--                                        <div class="max-w-xl text-md text-gray-500">-->
-<!--                                            <p>Skontaktuj się z działem IT w celu uzyskania dostępu do aplikacji.</p>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </fieldset>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
-<!--        <div class="modal-footer">-->
-
-<!--            <div class="shadow sm:rounded-lg">-->
-<!--                <div class="px-4 py-5 sm:p-6">-->
-<!--                    <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>-->
-<!--                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">-->
-<!--                        <div class="max-w-xl text-sm text-gray-500">-->
-<!--                            <p class="md:text-lg font-semibold">Twoj adres IP:</p>-->
-<!--                            <p class="md:text-lg font-semibold text-blue-600" th:text="${userIP}"-->
-<!--                               No ip></p>-->
-<!--                        </div>-->
-<!--                        <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">-->
-<!--                            <button type="button" id="saveChanges" data-dismiss="modal"-->
-<!--                                    class="defaultPage inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">-->
-<!--                                Zamknij-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<script th:if="${noAccess}" th:src="@{/js/alert.js}"></script>-->
-<!--<script th:src="@{/js/redirect.js}"></script>-->
 <script type="text/javascript" th:src="@{/js/clickrow.js}"></script>
 <script th:src="@{/js/deleteNotification.js}"></script>
 </body>
