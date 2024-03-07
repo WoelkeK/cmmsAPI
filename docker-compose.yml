@@ -42,15 +42,9 @@ services:
       - mysql_db_service
     networks:
       - mynetwork
+
     entrypoint:
-      - /bin/bash
-      - -c
-      - |
-        while true; do
-          mysqldump -h mysql_db_service -uroot -proot --all-databases \
-          | gzip > /backup/dump_$${date +%Y%m%d%H%M%S}_$((count++)).sql.gz
-          sleep 180
-        done
+      - /bin/bash - -c - | count=1 while true; do mysqldump -h mysql_db_service -uroot -proot --all-databases \ | gzip > /backupp/dump_`date +%Y%m%d%H%M%S`_${count}.sql.gz count=`expr $count + 1` sleep 180 done
 
   phpmyadmin:
     container_name: phpmyadmin
