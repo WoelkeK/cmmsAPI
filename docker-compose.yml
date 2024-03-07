@@ -49,7 +49,7 @@ services:
       - |
         count=1
         while true; do
-           file_name="/backup/dump_`date +%Y_%m_%d__%H_%M`_${count}.sql.gz"
+           file_name="/backup/dump_`date +%Y_%m_%d__%H%M`_${count}.sql.gz"
            mysqldump -h mysql_db_service -uroot -proot --all-databases \
            | gzip > $$file_name
            echo "Backup file $$file_name has been generated."
