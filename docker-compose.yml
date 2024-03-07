@@ -47,10 +47,9 @@ services:
       - -c
       - |
         while true; do
-          timestamp=$(date +%Y%m%d%H%M%S)
           mysqldump -h mysql_db_service -uroot -proot --all-databases \
-          | gzip > /backup/dump_${timestamp}_$((count++)).sql.gz
-          sleep 86400
+          | gzip > /backup/dump_${date +%Y%m%d%H%M%S}_$((count++)).sql.gz
+          sleep 180
         done
 
   phpmyadmin:
