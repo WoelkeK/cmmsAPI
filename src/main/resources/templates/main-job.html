@@ -579,7 +579,7 @@
                                                     Data
                                                     Zgłoszenia
                                                 </td>
-                                                <td th:text="${job.employee.name}" style="cursor: pointer"
+                                                <td th:text="${job.employee?.name}" style="cursor: pointer"
                                                     th:onclick="'javascript:rowClickJob(\'' + ${job.id} + '\' , \'' + ${currentPage}+ '\');'"
                                                     class="align-text-top px-3 py-4 text-lm text-gray-900">Osoba
                                                 </td>
