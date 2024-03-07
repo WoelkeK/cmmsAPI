@@ -48,7 +48,7 @@ services:
       - |
         while true; do
           mysqldump -h mysql_db_service -uroot -proot --all-databases \
-          | gzip > /backup/dump_${date +%Y%m%d%H%M%S}_$((count++)).sql.gz
+          | gzip > /backup/dump_$${date +%Y%m%d%H%M%S}_$((count++)).sql.gz
           sleep 180
         done
 
