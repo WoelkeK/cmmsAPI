@@ -507,7 +507,7 @@
                                             </th>
                                         </tr>
 
-                                        <tr th:each="employee : ${employees}"
+                                        <tr th:each="employee : ${employees}" th:id="'engineer_' + ${employee.id}" th:data-active="${employee.isActive}"
                                             class="border-t border-gray-300 text-base font-medium bg-gray-100">
                                             <td th:text="${employee.name}"
                                                 class="whitespace-nowrap align-text-top py-4 pl-4 pr-3 text-gray-900 sm:pl-6">
@@ -684,6 +684,90 @@
     </div>
 </div>
 
+
+<div id="optionModal" class="modal">
+    <div class="modal-content">
+        <form th:action="@{/employees}" method="get">
+
+            <div class="shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-base md:text-xl font-medium leading-6 text-gray-900">Opcje wyświetlania.</h3>
+                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                        <div class="max-w-xl text-md text-gray-500">
+                            <p>Ustawienie, które pozwala skonfigurować jaki typ rekordów w tabeli ma być widoczny.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-6 bg-gray-400 shadow sm:rounded-lg">
+                <div class="sm:col-span-1">
+                    <div class="px-4 py-5 sm:px-2">
+
+                        <fieldset>
+                            <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Typ profilu
+                            </legend>
+                            <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                                <div class="relative flex items-start py-4">
+                                    <div class="min-w-0 flex-1 text-md leading-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" th:checked="${status}" th:value="${status}" onclick="this.value = this.checked"
+                                                   class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                   id="showInactive">
+                                            <label class="form-check-label select-none font-medium text-gray-900"
+                                                   for="showInactive">Pokaż wszystkie</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <div class="shadow sm:rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>
+                        <div class="mt-2 sm:flex sm:items-end sm:justify-end">
+
+                            <button type="submit" id="saveChanges"
+                                    class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:text-gray-800 hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                                Zamknij
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function(){
+        var showInactive = localStorage.getItem('showInactive') === 'true';
+        $('#showInactive').prop('checked', showInactive);
+        if(showInactive) {
+            $('tr[data-active=false]').show();
+        } else {
+            $('tr[data-active=false]').hide();
+        }
+
+        $('#showInactive').change(function(){
+            localStorage.setItem('showInactive', this.checked);
+            if(this.checked) {
+                $('tr[data-active=false]').show();
+            } else {
+                $('tr[data-active=false]').hide();
+            }
+        });
+    });
+</script>
 <script type="text/javascript" th:src="@{/js/deleteEmployeeModal.js}"></script>
 </body>
 </html>
