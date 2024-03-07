@@ -44,7 +44,18 @@ services:
       - mynetwork
 
     entrypoint:
-      - /bin/bash - -c - | count=1 while true; do mysqldump -h mysql_db_service -uroot -proot --all-databases \ | gzip > /backupp/dump_`date +%Y%m%d%H%M%S`_${count}.sql.gz count=`expr $count + 1` sleep 180 done
+      - /bin/bash
+      - -c
+      - |
+        count=1
+        while true; do
+           file_name="/backup/dump_`date +%Y%m%d%H%M%S`_${count}.sql.gz"
+           mysqldump -h mysql_db_service -uroot -proot --all-databases \
+           | gzip > $$file_name
+           echo "Backup file $$file_name has been generated."
+           count=`expr $$count + 1`
+           sleep 180
+        done
 
   phpmyadmin:
     container_name: phpmyadmin
