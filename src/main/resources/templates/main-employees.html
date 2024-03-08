@@ -432,6 +432,28 @@
     -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Opcje</span>
 
                                         </div>
+
+                                        <div class="group flex relative">
+                                                <span>
+                                                    <button type="button"
+                                                            data-toggle="modal" data-target="#option2Modal"
+                                                            id="openModal2Button">
+
+                                            <a th:if="${isAdmin} or ${eFull}"
+                                               class="optionBtn text-white hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+</svg>
+                                            </a>
+                                                </button>
+                                                </span>
+
+                                            <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Salki</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -507,7 +529,9 @@
                                             </th>
                                         </tr>
 
-                                        <tr th:each="employee : ${employees}" th:id="'engineer_' + ${employee.id}" th:data-active="${employee.isActive}"
+                                        <tr th:each="employee : ${employees}"
+                                            th:id="'engineer_' + ${employee.id}"
+                                            th:data-active="${employee.isActive}"
                                             class="border-t border-gray-300 text-base font-medium bg-gray-100">
                                             <td th:text="${employee.name}"
                                                 class="whitespace-nowrap align-text-top py-4 pl-4 pr-3 text-gray-900 sm:pl-6">
@@ -712,7 +736,8 @@
                                     <div class="min-w-0 flex-1 text-md leading-6">
 
                                         <div class="form-check">
-                                            <input type="checkbox" th:checked="${status}" th:value="${status}" onclick="this.value = this.checked"
+                                            <input type="checkbox" th:checked="${status}" th:value="${status}"
+                                                   onclick="this.value = this.checked"
                                                    class="form-check-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                                    id="showInactive">
                                             <label class="form-check-label select-none font-medium text-gray-900"
@@ -745,22 +770,140 @@
     </div>
 </div>
 
+<div id="option2Modal" class="modal">
+    <div class="modal-content">
+        <div class="shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-base md:text-xl font-medium leading-6 text-gray-900">Salki konferencyjne.</h3>
+                <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                    <div class="max-w-xl text-md text-gray-500">
+                        <p>Rezerwacje salek konferencyjnych. Kliknij wybraną lokalizację, aby otworzyć kalendarz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="mt-2 grid grid-cols-1 gap-x-1 gap-y-8 sm:grid-cols-3 bg-gray-400 shadow sm:rounded-lg">
+            <div class="sm:col-span-1">
+                <div class="px-4 py-5 sm:px-2">
+
+                    <fieldset>
+                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Salka biurowiec
+                        </legend>
+                        <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                            <div class="relative flex items-start py-4">
+                                <div class="min-w-0 flex-1 text-md leading-6">
+
+
+                                    <div class="group flex relative">
+                                        <a href="https://poczta.home.pl/ajax/share/0be3fce40abde5adbe316d6abde54b5e98ca3057b13624d8/1/2/Y2FsOi8vMC8xODgz"
+                                           class="optionBtn text-white hover:text-red-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+                                            </svg>
+                                        </a>
+
+                                        <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/3
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Rezerwuj</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="sm:col-span-1">
+                <div class="px-4 py-5 sm:px-2">
+                    <fieldset>
+                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Salka księgowość
+                        </legend>
+                        <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                            <div class="relative flex items-start py-4">
+                                <div class="min-w-0 flex-1 text-md leading-6">
+
+
+                                    <div class="group flex relative">
+                                        <a href="https://poczta.home.pl/ajax/share/017ea2050bd34eaf17e4837bd34e4833938f6af20ec1c065/1/2/Y2FsOi8vMC8xODk0"
+                                           class="optionBtn text-white hover:text-red-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+                                            </svg>
+                                        </a>
+
+                                        <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/3
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Rezerwuj</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="sm:col-span-1">
+                <div class="px-4 py-5 sm:px-2">
+                    <fieldset>
+                        <legend class="text-base md:text-xl font-semibold leading-6 text-gray-900">Salka kadry
+                        </legend>
+                        <div class="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                            <div class="relative flex items-center py-4">
+                                <div class="min-w-0 flex-1 text-md leading-6">
+
+                                    <a href="https://poczta.home.pl/ajax/share/0348e40903a7127e3480e3b3a713429784d812670696ed6b/1/2/Y2FsOi8vMC8yNzk0"
+                                       class="optionBtn text-white hover:text-red-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+                                        </svg>
+                                    </a>
+
+                                    <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-2/3 left-1/3
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Rezerwuj</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+
+            <div class="shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900"></h3>
+                    <div class="mt-2 sm:flex sm:items-end sm:justify-end">
+
+                        <button type="button" data-dismiss="modal"
+                                class="w-fit inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 max-w-20 md:text-md">
+                            Zamknij
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         var showInactive = localStorage.getItem('showInactive') === 'true';
         $('#showInactive').prop('checked', showInactive);
-        if(showInactive) {
+        if (showInactive) {
             $('tr[data-active=false]').show();
         } else {
             $('tr[data-active=false]').hide();
         }
 
-        $('#showInactive').change(function(){
+        $('#showInactive').change(function () {
             localStorage.setItem('showInactive', this.checked);
-            if(this.checked) {
+            if (this.checked) {
                 $('tr[data-active=false]').show();
             } else {
                 $('tr[data-active=false]').hide();
