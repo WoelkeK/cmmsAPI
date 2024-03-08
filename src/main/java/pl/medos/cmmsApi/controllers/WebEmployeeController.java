@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,15 @@ public class WebEmployeeController {
         this.exportService = exportService;
     }
 
+    @Value("${link1}")
+    private String link1;
+
+    @Value("${link2}")
+    private String link2;
+
+    @Value("${link3}")
+    private String link3;
+
     @GetMapping(value = "/list")
     public String listViewAll(ModelMap modelMap) throws IOException {
         LOGGER.info("listView()");
@@ -82,6 +92,9 @@ public class WebEmployeeController {
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
+        model.addAttribute("link1", link1);
+        model.addAttribute("link2", link3);
+        model.addAttribute("link3", link3);
         return "main-employees";
     }
 
