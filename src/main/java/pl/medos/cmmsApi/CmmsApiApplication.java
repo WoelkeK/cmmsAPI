@@ -12,6 +12,7 @@ import org.springframework.util.unit.DataSize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 @SpringBootApplication
 @EnableScheduling
+@PropertySource("classpath:app.properties")
 public class  CmmsApiApplication{
 
     public static void main(String[] args) {
