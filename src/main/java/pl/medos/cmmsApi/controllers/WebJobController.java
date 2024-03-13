@@ -209,25 +209,6 @@ public class WebJobController {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
 
-
-//        if (image.getSize() == 0 && job.getOriginalImage() == null) {
-//            LOGGER.info("default image");
-//            byte[] bytes = imageService.imageToByteArray();
-//            job.setResizedImage(bytes);
-//            job.setOriginalImage(bytes);
-//        } else {
-//            LOGGER.info("multipart file present");
-//            if (image.isEmpty() || image.getBytes() == null) {
-//                return "create-job";
-//            } else {
-//                LOGGER.info("procesed Image() ");
-//                byte[] orginalImage = imageService.multipartToByteArray(image);
-//                byte[] resizeImage = imageService.simpleResizeImage(orginalImage, 100);
-//                byte[] resizeMaxImage = imageService.simpleResizeImage(orginalImage, 800);
-//                job.setOriginalImage(resizeMaxImage);
-//                job.setResizedImage(resizeImage);
-//            }
-//        }
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);

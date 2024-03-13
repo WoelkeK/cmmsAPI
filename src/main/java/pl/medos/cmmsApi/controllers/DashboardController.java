@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/dashboards")
@@ -124,7 +125,7 @@ public class DashboardController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
 
@@ -195,6 +196,14 @@ public class DashboardController {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
+        List<Engineer> engineers = engineerService.finadAllEngineers();
+
+        List<Engineer> selectedEngineers = engineers.stream()
+                        .filter(Engineer::getIsActive)
+                                .toList();
+
+        model.addAttribute("engineers", selectedEngineers);
+
         LOGGER.info("updateView(...)" + job.getStatus());
         return "update-dashboard";
 

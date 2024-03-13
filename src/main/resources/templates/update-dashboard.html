@@ -6,50 +6,33 @@
     <title>Panel Zlecenia</title>
     <!--    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">-->
 
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
     <link th:href="@{/css/mainold.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-500">
 <div class="min-h-full">
     <div class="bg-gray-800 pb-2">
+
         <nav class="bg-gray-800">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-18">
-                <div class="border-b border-blue-800">
-                    <div class="flex h-16 items-center justify-between px-4 sm:px-0">
+
+
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-18 lg:py-4">
+                <div class="p-2 border-b border-blue-800">
+                    <div class="flex h-12 items-center justify-between px-4 sm:px-0">
+
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
                                 <img class="h-12 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                            </div>
+                        </div>
 
-                                <div class="hidden md:block">
-                                    <div class="ml-24 flex items-baseline space-x-4">
-                                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hidden md:block">
-                                <div class="ml-4 flex items-center md:ml-6">
-
-                                </div>
-                            </div>
-                            <div class="-mr-2 flex md:hidden">
-                                <!-- Mobile menu button -->
-                                <button type="button"
-                                        class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                        aria-controls="mobile-menu" aria-expanded="false">
-                                    <span class="sr-only">Open main menu</span>
-                                    <!-- Menu open: "hidden", Menu closed: "block" -->
-                                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                         stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-                                    </svg>
-                                    <!-- Menu open: "block", Menu closed: "hidden" -->
-                                    <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                         stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                </button>
-                            </div>
+                        <div class="text-center">
+                            <p id="time" class="text-3xl font-mono font-bold text-blue-200">Godzina</p>
+                            <p id="date" class="mb-2 text-2xl font-semibold text-white">Data</p>
                         </div>
                     </div>
                 </div>
@@ -62,6 +45,7 @@
                 </div>
             </div>
         </nav>
+
         <header class="py-4">
 
 
@@ -104,13 +88,19 @@
                         <div class="bg-gray-300 mx-2 shadow sm:rounded-lg">
                             <section aria-labelledby="features-heading" class="relative">
 
-<!--                                    <img th:src="${'data:image/jpeg;charset=utf8;base64,'+ ${image}}"-->
-
                                 <div class="aspect-h-2 aspect-w-3 overflow-hidden sm:aspect-w-5 lg:aspect-none lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-16 sm:rounded-lg">
-                                    <img th:src="@{'/dashboards/images/' + ${job.photoFileName}}"
 
-                                         alt="Issued machine photo"
-                                         class="h-full w-full object-cover object-center lg:h-max lg:w-auto">
+                                    <a th:href="@{'/dashboards/images/' + ${job.photoFileName}}"
+                                       target="_blank">
+                                        <!--                                                    <img th:src="@{'/images/image?id='+ ${job.id}}" width="100px" height="50px">-->
+                                        <img th:src="@{'/dashboards/images/' + ${job.photoFileName}}"
+                                             alt="photo"
+                                             class="h-full w-full object-cover object-center lg:h-max lg:w-auto"
+                                             title="Powiększ">
+                                    </a>
+                                    <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute bottom-1/2 left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">Podgląd</span>
+
                                 </div>
 
                                 <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 sm:pb-12 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-12 lg:px-8 lg:pt-4">
@@ -170,9 +160,10 @@
                                                                                               name="solution" rows="5"
                                                                                               class="block  bg-white w-full max-w-fit text-sm text-blue-800 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-2xl"></textarea>
 
-                                                                                        <p
-                                                                                           class="text-danger mt-2 text-lm text-red-500"
-                                                                                           th:if="${#fields.hasErrors('solution')}" th:errorclass="error" th:errors="*{solution}"></p>
+                                            <p
+                                                    class="text-danger mt-2 text-lm text-red-500"
+                                                    th:if="${#fields.hasErrors('solution')}" th:errorclass="error"
+                                                    th:errors="*{solution}"></p>
 
                                         </div>
                                     </div>
@@ -258,6 +249,7 @@
         </main>
     </form>
 </div>
+<script th:src="@{/js/date.js}"></script>
 </body>
 </html>
 

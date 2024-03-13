@@ -37,6 +37,7 @@
                         <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                     </div>
 
+
                 </div>
                 <div class="flex flex-shrink-0 bg-gray-700 p-4">
                     <a href="#" class="group block flex-shrink-0">
@@ -207,8 +208,16 @@
         <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
+                    <img class="h-10 w-auto" th:src="@{/images/logo.svg}" alt="Medos"/>
                 </div>
+
+                <div class="flex items-center justify-center h-fit">
+                    <div class="mt-10 text-center">
+                        <p id="time" class="text-5xl font-mono font-bold text-blue-200">Godzina</p>
+                        <p id="date" class="mb-2 text-2xl font-semibold text-white">Data</p>
+                    </div>
+                </div>
+
                 <nav class="mt-5 flex-1 space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <a th:if="${isAdmin} or ${nRead}" href="/awizacje"
@@ -811,5 +820,6 @@
 
 
 <script type="text/javascript" th:src="@{/js/deleteMachine.js}"></script>
+<script th:src="@{/js/date.js}"></script>
 </body>
 </html>

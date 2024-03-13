@@ -141,7 +141,6 @@ public class WebEmployeeController {
         LOGGER.info("findPage()");
         Page<Employee> employeePage = employeeService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Employee> employees = employeePage.getContent();
-//        List<Employee> employeeByRawName = employeeService.findEmployeeByRawName(query);
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", employeePage.getTotalPages());

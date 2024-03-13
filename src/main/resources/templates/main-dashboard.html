@@ -21,6 +21,7 @@
         <nav class="bg-gray-800">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="border-b border-gray-700">
+
                     <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div class="flex items-center">
                             <div class="flex flex-shrink-0 items-center px-4">
@@ -33,6 +34,12 @@
                                        class="bg-red-600 text-white hover:bg-gray-700 hover:text-white rounded-md px-20 py-4 text-xl font-medium">Zgłoś
                                         Awarię</a>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center h-fit">
+                            <div class="mt-10 text-center">
+                                <p id="time" class="text-5xl font-mono font-bold text-blue-200">Godzina</p>
+                                <p id="date" class="mb-2 text-2xl font-semibold text-white">Data</p>
                             </div>
                         </div>
                     </div>
@@ -62,7 +69,8 @@
             <div class="overflow-hidden bg-transparent shadow-xl rounded-3xl">
                 <ul role="list" class="divide-y-1 divide-transparent space-y-2 rounded-3xl">
 
-                    <li th:each="job : ${jobs}" th:if="${(job.jobShedule ==null) || (job.jobShedule !=null && job.jobShedule.isBefore(T(java.time.LocalDateTime).now()))}">
+                    <li th:each="job : ${jobs}"
+                        th:if="${(job.jobShedule ==null) || (job.jobShedule !=null && job.jobShedule.isBefore(T(java.time.LocalDateTime).now()))}">
 
                         <div th:attr="class=${job.status=='zgłoszenie'?'blink rounded-3xl':(job.status=='oczekiwanie'?'bg-yellow-500 rounded-3xl': (job.status=='przegląd'?'bg-blue-500 rounded-3xl':'hidden'))}">
 
@@ -131,7 +139,7 @@
 </div>
 
 <script th:src="@{/js/Refresh.js}"></script>
-
+<script th:src="@{/js/date.js}"></script>
 </body>
 </html>
 
