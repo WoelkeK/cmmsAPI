@@ -54,7 +54,7 @@ services:
            | gzip > $$file_name
            echo "Backup file $$file_name has been generated."
            count=`expr $$count + 1`
-           sleep 180
+           sleep 86400
         done
 
   phpmyadmin:
