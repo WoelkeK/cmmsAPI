@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 public class WebEmployeeController {
 
     private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
-    private String fileName = "c:/XL/sheet6.xlsx";
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private ImportEmployee importEmployee;
@@ -43,14 +42,36 @@ public class WebEmployeeController {
         this.exportService = exportService;
     }
 
+    @Value("${name1}")
+    private String name1;
     @Value("${link1}")
     private String link1;
 
+    @Value("${name2}")
+    private String name2;
     @Value("${link2}")
     private String link2;
 
+    @Value("${name3}")
+    private String name3;
     @Value("${link3}")
     private String link3;
+
+    @Value("${name4}")
+    private String name4;
+    @Value("${link4}")
+    private String link4;
+
+    @Value("${name5}")
+    private String name5;
+    @Value("${link5}")
+    private String link5;
+
+    @Value("${name6}")
+    private String name6;
+    @Value("${link6}")
+    private String link6;
+
 
     @GetMapping(value = "/list")
     public String listViewAll(ModelMap modelMap) throws IOException {
@@ -93,8 +114,17 @@ public class WebEmployeeController {
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         model.addAttribute("link1", link1);
-        model.addAttribute("link2", link3);
+        model.addAttribute("link2", link2);
         model.addAttribute("link3", link3);
+        model.addAttribute("link4", link4);
+        model.addAttribute("link5", link5);
+        model.addAttribute("link6", link6);
+        model.addAttribute("name1", name1);
+        model.addAttribute("name2", name2);
+        model.addAttribute("name3", name3);
+        model.addAttribute("name4", name4);
+        model.addAttribute("name5", name5);
+        model.addAttribute("name6", name6);
         return "main-employees";
     }
 

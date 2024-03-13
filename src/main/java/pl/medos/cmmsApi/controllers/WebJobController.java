@@ -35,8 +35,7 @@ import java.util.logging.Logger;
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
-    //    private static final String UPLOAD_DIR = "C:\\Users\\Krzysztof\\IdeaProjects\\cmmsAPI\\src\\images";
-    private static final String UPLOAD_DIR = "/home/images";
+    private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator+"images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 
     private List<Job> actualJobs = new ArrayList<>();

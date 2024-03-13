@@ -27,7 +27,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     @Autowired
     ImageLoader imageLoader;
 
-    private static final String UPLOAD_DIR = "/home/images";
     @Autowired
     HardwareRepository hardwareRepository;
 
@@ -70,20 +69,5 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
                 }
             }
         });
-
-
-//        String relativePath = "static/images/default.jpg";
-
-//        try {
-//            ClassPathResource resource = new ClassPathResource(relativePath);
-//            Path filePath = resource.getFile().toPath();
-//            log.info("upoloadPath " + Paths.get(UPLOAD_DIR));
-//            log.info("myfilePath " + filePath);
-//            Files.copy(filePath, Paths.get(UPLOAD_DIR));
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
     }
-
 }
