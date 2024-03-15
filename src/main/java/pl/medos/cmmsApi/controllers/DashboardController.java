@@ -3,7 +3,6 @@ package pl.medos.cmmsApi.controllers;
 import jakarta.validation.Valid;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.enums.DateOffset;
 import pl.medos.cmmsApi.enums.Decision;
 import pl.medos.cmmsApi.enums.JobStatus;
-import pl.medos.cmmsApi.exception.CostNotFoundException;
 import pl.medos.cmmsApi.exception.JobNotFoundException;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.*;
@@ -31,7 +29,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/dashboards")
@@ -223,7 +220,7 @@ public class DashboardController {
     public String update(@PathVariable(name = "id") Long id,
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
-                         Model model) throws CostNotFoundException, JobNotFoundException {
+                         Model model) throws JobNotFoundException {
         LOGGER.info("update()" + job.getId());
 
         if (result.hasErrors()) {

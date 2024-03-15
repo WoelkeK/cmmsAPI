@@ -28,7 +28,7 @@ public class Job {
 
     private Long id;
     private LocalDateTime requestDate;
-    private User user;
+//    private User user;
     @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Employee employee;
     private Engineer engineer;

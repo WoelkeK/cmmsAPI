@@ -13,6 +13,8 @@ import java.nio.file.StandardCopyOption;
 @Component
 public class ImageLoader {
 
+    private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator+"images";
+
     public ImageLoader() {
         loadFileFromClasspath();
     }
@@ -22,6 +24,7 @@ public class ImageLoader {
         Path destinationPathObj = null;
 
         try {
+            System.out.println("Home dir: " + UPLOAD_DIR);
             ClassPathResource resource = new ClassPathResource(relativePath);
             InputStream inputStream = resource.getInputStream();
             String destinationPath = System.getProperty("user.home") + File.separator + "images" + File.separator + "default.jpg";
