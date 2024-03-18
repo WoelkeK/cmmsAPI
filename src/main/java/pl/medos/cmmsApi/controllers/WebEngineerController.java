@@ -35,7 +35,6 @@ public class WebEngineerController {
     private DepartmentService departmentService;
     private ModelMapper mapper;
     private ExportService exportService;
-
     private ImportEmployee importEmployee;
 
     public WebEngineerController(EngineerService engineerService, DepartmentService departmentService, ModelMapper mapper, ExportService exportService, ImportEmployee importEmployee) {
@@ -62,7 +61,6 @@ public class WebEngineerController {
             @RequestParam(name = "status", required = false) Boolean status,
             Model model) throws IOException {
         LOGGER.info("listView() " + status);
-
         return findPaginated(page, "name", "desc", model, status);
     }
 
@@ -74,16 +72,13 @@ public class WebEngineerController {
             Model model, Boolean status) {
         int pageSize = 10;
         LOGGER.info("findPage()" + pageNo + " " + sortField + " " + sortDir + status);
-
         Page<Engineer> engineerPages;
-
         if (status != null && status) {
             engineerPages = engineerService.findByActive(pageNo, pageSize, sortField, sortDir, status);
         } else {
             LOGGER.info("All entities");
             engineerPages = engineerService.findPageinated(pageNo, pageSize, sortField, sortDir);
         }
-
         List<Engineer> engineers = engineerPages.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", engineerPages.getTotalPages());
@@ -100,23 +95,21 @@ public class WebEngineerController {
     @GetMapping(value = "/search/name")
     public String findEngineerByname(
             @RequestParam(value = "engineerName") String query,
-            Model model) throws IOException {
+            Model model) {
         int pageSize = 10;
         int pageNo = 1;
         String sortField = "name";
         String sortDir = "desc";
-
         LOGGER.info("findPage()");
         Page<Engineer> engineerPage = engineerService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Engineer> engineers = engineerPage.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", engineerPage.getTotalPages());
         model.addAttribute("totalItems", engineerPage.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        model.addAttribute("employees", engineers);
+        model.addAttribute("engineers", engineers);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         return "main-engineer";
@@ -157,8 +150,6 @@ public class WebEngineerController {
             String department,
             @ModelAttribute(name = "engineer") Engineer engineer) {
         LOGGER.info("create(" + engineer + ")");
-//        LOGGER.info("create(" + lastName + ")");
-//        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
         engineer.setIsActive(true);
         engineerService.createEngineer(engineer);
         return "redirect:/engineers";
@@ -183,7 +174,7 @@ public class WebEngineerController {
     }
 
     @GetMapping("/search/query")
-    public String searchEmployeeByName(
+    public String searchEngineerByName(
             @RequestParam(value = "query") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             Model model) {
@@ -191,7 +182,7 @@ public class WebEngineerController {
         int pagesize = 10;
         Page<Engineer> engineerByName = engineerService.findEngineerByName(pageNo, pagesize, query);
         LOGGER.info("findEngineerByName()");
-        model.addAttribute("engineer", engineerByName);
+        model.addAttribute("engineers", engineerByName);
         model.addAttribute("currentPage", pageNo);
         return "main-engineer";
     }
@@ -216,7 +207,6 @@ public class WebEngineerController {
         }
         List<Employee> employees = importEmployee.importExcelEmployeesData(file);
         List<Engineer> engineers = employees.stream().map(employee -> mapper.map(employee, Engineer.class)).toList();
-
         engineers.forEach((engineer) -> {
             engineerService.createEngineer(engineer);
         });
@@ -228,15 +218,12 @@ public class WebEngineerController {
     public void exportEngineers(@ModelAttribute(name = "engineers") List<Engineer> engineers,
                                 HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-
         engineers = engineerService.finadAllEngineers();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
-
         String headerKey = "Content-Disposition";
         String headerValue = "attachment;filename=employee" + currentDateTime + ".xlsx";
-
         List<Employee> employees = engineers.stream().map(engineer -> mapper.map(engineer, Employee.class)).toList();
         response.setHeader(headerKey, headerValue);
         exportService.excelEmployeeModelGenerator(employees);

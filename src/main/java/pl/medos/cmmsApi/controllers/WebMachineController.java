@@ -57,7 +57,7 @@ public class WebMachineController {
     @GetMapping
     public String listView(@RequestParam(name = "pageNo", defaultValue = "1") int page, Model model) throws IOException {
         LOGGER.info("listView()");
-        return findPageinated(page,"name", "desc", model);
+        return findPageinated(page, "name", "desc", model);
     }
 
     @GetMapping(value = "/page/{pageNo}")
@@ -66,16 +66,14 @@ public class WebMachineController {
                                  @RequestParam(name = "sortDir") String sortDir,
                                  Model model) throws IOException {
         LOGGER.info("findPage()");
-        int pageSize=10;
+        int pageSize = 10;
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         Page<Machine> machinePage = machineService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Machine> machines = machinePage.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", machinePage.getTotalPages());
         model.addAttribute("totalItems", machinePage.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
@@ -87,22 +85,19 @@ public class WebMachineController {
 
     @GetMapping(value = "/search/query")
     public String searchMachineByQuery(@RequestParam(value = "query") String query,
-                                      Model model) {
+                                       Model model) {
         LOGGER.info("search()");
-        int pageSize=10;
-        int pageNo=1;
-        String sortField="name";
-        String sortDir="desc";
-
+        int pageSize = 10;
+        int pageNo = 1;
+        String sortField = "name";
+        String sortDir = "desc";
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         Page<Machine> machinePage = machineService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Machine> machines = machinePage.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", machinePage.getTotalPages());
         model.addAttribute("totalItems", machinePage.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
@@ -190,16 +185,7 @@ public class WebMachineController {
         LOGGER.info("delete()");
         machineService.deleteMachine(id);
         return "redirect:/machines?pageNo=" + pageNo;
-    }    
-//
-//
-//    @GetMapping(value = "/delete/{id}")
-//    public String delete(
-//            @PathVariable(name = "id") Long id) {
-//        LOGGER.info("delete()");
-//        machineService.deleteMachine(id);
-//        return "redirect:/machines";
-//    }
+    }
 
     @GetMapping(value = "/shedule/{id}")
     public String sheduleView(
@@ -217,14 +203,12 @@ public class WebMachineController {
     public void exportMachines(@ModelAttribute(name = "machines") List<Machine> machines,
                                HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-        machines= machineService.findAllMachines();
+        machines = machineService.findAllMachines();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
-
         String headerKey = "Content-Disposition";
         String headerValue = "attachment;filename=maszyny" + currentDateTime + ".xlsx";
-
         response.setHeader(headerKey, headerValue);
         exportService.excelMachineModelGenerator(machines);
         exportService.generateExcelFile(response);
@@ -238,7 +222,7 @@ public class WebMachineController {
     }
 
     @GetMapping("/deleteAll")
-    public String deleteAll(){
+    public String deleteAll() {
         LOGGER.info("deleteAll()");
         machineService.deleteAllMachine();
         LOGGER.info("deleteAll(...)");
@@ -248,20 +232,16 @@ public class WebMachineController {
 
     @PostMapping(value = "/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-
         LOGGER.info("importMachines()");
         if (file.isEmpty()) {
             LOGGER.info("Please select file to upload");
             return "redirect/machines";
         }
-
-//        List<Machine> machines = importService.importExcelMachineData(file);
         List<Machine> machines = importMachine.importExcelMachineData(file);
         machines.forEach((machine) -> {
             machineService.createMachine(machine);
         });
         LOGGER.info("importMachines(...) ");
-
         return "redirect:/machines";
     }
 }

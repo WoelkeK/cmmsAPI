@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 public class DashboardController {
 
     private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
-    private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator+"images";
+    private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator + "images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 
     private JobService jobService;
@@ -88,16 +88,13 @@ public class DashboardController {
         String query = "zgłoszenie";
         Page<Job> jobPages = jobService.findByStatusWithPagination(query, pageNo, size, sortField, sortDirection);
         List<Job> jobs = jobPages.getContent();
+        model.addAttribute("jobs", jobs);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", jobPages.getTotalPages());
         model.addAttribute("totalItems", jobPages.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDirection);
         model.addAttribute("reverseSortDir", sortDirection.equals("desc") ? "asc" : "desc");
-
-        model.addAttribute("jobs", jobs);
-
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         List<Employee> employees = employeeService.finadAllEmployees();
@@ -106,7 +103,6 @@ public class DashboardController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
-
         LOGGER.info("listView(...)" + jobs);
         return "dashboard-list.html";
     }
@@ -115,14 +111,11 @@ public class DashboardController {
     public ResponseEntity<UrlResource> getImage(@PathVariable String fileName) throws MalformedURLException {
         Path filePath = Paths.get(UPLOAD_DIR).resolve(fileName).normalize();
         UrlResource resource = new UrlResource(filePath.toUri());
-
         if (!resource.exists()) {
             throw new RuntimeException("Image not found: " + fileName);
         }
-
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
 
@@ -134,7 +127,7 @@ public class DashboardController {
         job.setJobStatus(JobStatus.AWARIA);
         job.setSolution(" ");
         model.addAttribute("job", job);
-        return "create-dashboard2";
+        return "create-dashboard";
     }
 
     @PostMapping(value = "/create")
@@ -146,7 +139,6 @@ public class DashboardController {
         LOGGER.info("create()");
 
         if (image != null && !image.isEmpty()) {
-
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
             job.setPhotoFileName(fileName);
             Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
@@ -154,12 +146,10 @@ public class DashboardController {
         } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
-
-
         LOGGER.info("Machine " + job.getMachine().toString());
 
         try {
-            if (job.getMachine() != null && job.getMachine().getId()!=null) {
+            if (job.getMachine() != null && job.getMachine().getId() != null) {
                 Machine machineById = machineService.findMachineById(job.getMachine().getId());
                 job.setMachine(machineById);
             } else {
@@ -173,13 +163,12 @@ public class DashboardController {
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
-            return "create-dashboard2";
+            return "create-dashboard";
         }
         job.setDecision(Decision.NIE);
         job.setOffset(0);
         job.setDateOffset(DateOffset.DNI);
         job.setRequestDate(LocalDateTime.now());
-
         model.addAttribute("job", job);
         jobService.createJob(job);
         LOGGER.info("create(...)");
@@ -194,16 +183,12 @@ public class DashboardController {
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
         List<Engineer> engineers = engineerService.finadAllEngineers();
-
         List<Engineer> selectedEngineers = engineers.stream()
-                        .filter(Engineer::getIsActive)
-                                .toList();
-
+                .filter(Engineer::getIsActive)
+                .toList();
         model.addAttribute("engineers", selectedEngineers);
-
         LOGGER.info("updateView(...)" + job.getStatus());
         return "update-dashboard";
-
     }
 
     @GetMapping(value = "/read/{id}")
@@ -222,15 +207,12 @@ public class DashboardController {
                          BindingResult result,
                          Model model) throws JobNotFoundException {
         LOGGER.info("update()" + job.getId());
-
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr() - redirect");
             model.addAttribute("job", job);
             return "update-dashboard";
         }
-
         if ((job.getJobStartTime() != null) && (job.getJobStopTime() != null)) {
-
             if (job.getJobStopTime().isAfter(job.getJobStartTime())) {
                 job.setStatus("zakończono");
             } else {
@@ -246,7 +228,6 @@ public class DashboardController {
         LOGGER.info("update(...)");
         return "redirect:/dashboards";
     }
-
 
     @GetMapping(value = "/delete/{id}")
     public String delete(

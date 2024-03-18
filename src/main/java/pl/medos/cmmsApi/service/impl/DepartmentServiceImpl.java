@@ -63,8 +63,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department findByName(String name) {
         LOGGER.info("findDeaprtmentsByName()" + name);
-
-
         DepartmentEntity departmentEntity = departmentRepository.findByName(name);
         LOGGER.info("Repository found " + departmentEntity.getName());
         Department department = departmentMapper.entityToModel(departmentEntity);

@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 public class EmployeeController {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeController.class.getName());
-
     private EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
@@ -51,6 +50,7 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         LOGGER.info("delete(...)");
     }
+
     @GetMapping("/findByName/{name}")
     public List<Employee> findEmployeeByName(@PathVariable(name = "name") String query) {
         LOGGER.info("findEmployeeByName");

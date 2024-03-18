@@ -7,40 +7,40 @@ import pl.medos.cmmsApi.model.Task;
 import pl.medos.cmmsApi.service.TaskService;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @Tag(name = "Tasks")
-@Slf4j
 @RequestMapping("/api/tasks")
 public class TaskController {
 
+    private static final Logger LOGGER = Logger.getLogger(TaskController.class.getName());
     private TaskService taskService;
-
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
     @GetMapping("/list")
     public List<Task> getAllTasks() {
-        log.debug("getAllTasks()");
+        LOGGER.info("getAllTasks()");
         return taskService.getAllTasks();
     }
 
     @PostMapping("/add")
     public Task addTask(@RequestBody Task task) {
-        log.debug("addTask()");
+        LOGGER.info("addTask()");
         return taskService.addTask(task);
     }
 
     @PutMapping("/edit/{id}")
     public Task editTask(@RequestBody Task task, @PathVariable Long id) {
-        log.debug("editTask()");
+        LOGGER.info("editTask()");
         return taskService.editTask(task, id);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteTask(@PathVariable Long id) {
-        log.debug("deleteTask()");
+        LOGGER.info("deleteTask()");
         taskService.deleteTask(id);
     }
 }

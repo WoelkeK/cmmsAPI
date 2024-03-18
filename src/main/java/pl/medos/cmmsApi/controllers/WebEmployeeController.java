@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Employee;
@@ -74,7 +73,7 @@ public class WebEmployeeController {
 
 
     @GetMapping(value = "/list")
-    public String listViewAll(ModelMap modelMap) throws IOException {
+    public String listViewAll(ModelMap modelMap) {
         LOGGER.info("listView()");
         List<Employee> employees = employeeService.finadAllEmployees();
         modelMap.addAttribute("employees", employees);
@@ -86,7 +85,6 @@ public class WebEmployeeController {
     @GetMapping
     public String listView(
             @RequestParam(name = "pageNo", defaultValue = "1") int page,
-//            @RequestParam(defaultValue = "10") int pageSize,
             Model model) throws IOException {
         LOGGER.info("listView()");
         return findPaginated(page, "name", "desc",model);
@@ -97,10 +95,10 @@ public class WebEmployeeController {
             @PathVariable(value = "pageNo") int pageNo,
             @RequestParam(name = "sortField") String sortField,
             @RequestParam(name = "sortDir") String sortDir,
-//            @PathVariable(value = "pageSize") int pageSize,
             Model model) throws IOException {
         int pageSize = 10;
         LOGGER.info("findPage()");
+
         Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Employee> employees = pageEmployees.getContent();
         model.addAttribute("currentPage", pageNo);
@@ -109,7 +107,6 @@ public class WebEmployeeController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
@@ -131,7 +128,6 @@ public class WebEmployeeController {
     @GetMapping(value = "/search/name")
     public String findEmployeeByname(
             @RequestParam(value = "employeeName") String query,
-//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
             Model model) throws IOException {
         int pageSize=10;
         int pageNo=1;
@@ -141,7 +137,6 @@ public class WebEmployeeController {
         LOGGER.info("findPage()");
         Page<Employee> employeePage = employeeService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Employee> employees = employeePage.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", employeePage.getTotalPages());
         model.addAttribute("totalItems", employeePage.getTotalElements());
@@ -189,8 +184,6 @@ public class WebEmployeeController {
             String department,
             @ModelAttribute(name = "employee") Employee employee) {
         LOGGER.info("create(" + employee + ")");
-//        LOGGER.info("create(" + lastName + ")");
-//        employee.setPassword(passwordEncoder.encode(clientModel.getPassword()));
         employeeService.createEmployee(employee);
         return "redirect:/employees";
     }
@@ -226,13 +219,7 @@ public class WebEmployeeController {
             LOGGER.info("Please select file to upload");
             return "redirect:/employees";
         }
-
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-
-//        List<Employee> readedEmployees = importService.importExcelEmployeesData(file);
         List<Employee> employees = importEmployee.importExcelEmployeesData(file);
-
-
         employees.forEach((employee) -> {
             employeeService.createEmployee(employee);
         });
@@ -244,22 +231,18 @@ public class WebEmployeeController {
     public void exportEmployees(@ModelAttribute(name = "employees") List<Employee> employees,
                                 HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-
         employees = employeeService.finadAllEmployees();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
-
         String headerKey = "Content-Disposition";
         String headerValue = "attachment;filename=employee" + currentDateTime + ".xlsx";
-
         response.setHeader(headerKey, headerValue);
         exportService.excelEmployeeModelGenerator(employees);
         exportService.generateExcelEmployeeFile(response);
         response.flushBuffer();
         LOGGER.info("export(...)");
     }
-
 
     @GetMapping("/search/query")
     public String searchEmployeeByName(

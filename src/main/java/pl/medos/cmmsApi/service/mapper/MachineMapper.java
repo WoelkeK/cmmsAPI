@@ -17,9 +17,7 @@ import java.util.stream.Collectors;
 public class MachineMapper {
 
     private static final Logger LOGGER = Logger.getLogger(MachineMapper.class.getName());
-
     private MachineEntity machineEntity;
-
 
     public List<Machine> listModels(List<MachineEntity> machineEntities) {
         LOGGER.info("list()" + machineEntities);

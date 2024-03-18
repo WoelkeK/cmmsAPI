@@ -26,7 +26,6 @@ public class DepartmentMapper {
         return departmentModels;
     }
 
-
     public Department entityToModel(DepartmentEntity departmentEntity) {
         LOGGER.info("entityToModel" + departmentEntity);
         ModelMapper modelMapper = new ModelMapper();

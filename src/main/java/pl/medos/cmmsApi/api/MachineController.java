@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 public class MachineController {
 
     private static final Logger LOGGER = Logger.getLogger(MachineController.class.getName());
-
     private MachineServiceImpl machineServiceImpl;
 
     public MachineController(MachineServiceImpl machineServiceImpl) {
@@ -51,7 +50,6 @@ public class MachineController {
         Machine updatedMachine = machineServiceImpl.updateMachine(machine, id);
         LOGGER.info("updateMachine(...) " + updatedMachine);
         return updatedMachine;
-
     }
 
     @DeleteMapping("/delete/{id}")

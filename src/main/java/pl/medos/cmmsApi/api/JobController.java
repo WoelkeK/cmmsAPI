@@ -19,12 +19,14 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/jobs")
-@AllArgsConstructor
 public class JobController {
 
     private static final Logger LOGGER = Logger.getLogger(JobController.class.getName());
-
     private final JobService jobService;
+
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
+    }
 
     @GetMapping("/jobs")
     public List findAllJobs() {

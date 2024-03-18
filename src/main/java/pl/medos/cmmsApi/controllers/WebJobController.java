@@ -35,11 +35,9 @@ import java.util.logging.Logger;
 public class WebJobController {
 
     private static final Logger LOGGER = Logger.getLogger(WebJobController.class.getName());
-    private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator+"images";
+    private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator + "images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
-
     private List<Job> actualJobs = new ArrayList<>();
-
     private JobService jobService;
     private EmployeeService employeeService;
     private DepartmentService departmentService;
@@ -97,13 +95,10 @@ public class WebJobController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", jobPages.getTotalPages());
         model.addAttribute("totalItems", jobPages.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDirection);
         model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("jobs", jobs);
-
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         List<Employee> employees = employeeService.finadAllEmployees();
@@ -121,7 +116,6 @@ public class WebJobController {
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
-
         LOGGER.info(job.getEmployee().getId().toString());
         model.addAttribute("job", job);
         model.addAttribute("pageNo", pageNo);
@@ -138,9 +132,7 @@ public class WebJobController {
                          MultipartFile image) throws JobNotFoundException, IOException {
         LOGGER.info("update()" + job.getId() + " " + page);
         int pageNo = Integer.parseInt(page);
-
         if (image != null && !image.isEmpty()) {
-
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
             job.setPhotoFileName(fileName);
             Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
@@ -149,20 +141,15 @@ public class WebJobController {
         } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
-
         LOGGER.info("image prepared");
-
         if (result.hasErrors()) {
             LOGGER.info("update: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
             return "update-job";
         }
-
-
         if (job.getJobStartTime() == null) {
             LOGGER.info("Nieprawidłowo wybrany początkowy czas pracy");
             return "update-job";
-
         } else if ((job.getJobStartTime() != null) && (job.getJobStopTime() == null)) {
             job.setStatus("oczekiwanie");
         } else {
@@ -173,7 +160,6 @@ public class WebJobController {
                 return "update-job";
             }
         }
-
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
         LOGGER.info("update(...)");
@@ -197,9 +183,7 @@ public class WebJobController {
             Model model,
             MultipartFile image) throws Exception {
         LOGGER.info("create()" + job.getId());
-
         if (image != null && !image.isEmpty()) {
-
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
             job.setPhotoFileName(fileName);
             Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
@@ -208,7 +192,6 @@ public class WebJobController {
         } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
-
         if (result.hasErrors()) {
             LOGGER.info("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
@@ -246,15 +229,6 @@ public class WebJobController {
         return "redirect:/jobs";
     }
 
-
-//    @GetMapping(value = "/downloadfile")
-//    public void downloadFile(@Param("id") Long id, Model model, HttpServletResponse response) throws IOException, JobNotFoundException {
-//        Job jobById = jobService.findJobById(id);
-//        InputStream inputStream = new ByteArrayInputStream(jobById.getOriginalImage());
-//        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-//        IOUtils.copy(inputStream, response.getOutputStream());
-//    }
-
     @GetMapping("/search/query")
     public String searchJobByName(
             @RequestParam(value = "query") String query,
@@ -267,17 +241,14 @@ public class WebJobController {
         LOGGER.info("findJobByQuery()");
         model.addAttribute("jobs", jobByQuery);
         model.addAttribute("currentPage", pageNo);
-
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         List<Employee> employees = employeeService.finadAllEmployees();
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
-
         return "main-job";
     }
-
 
     @GetMapping(value = "/file")
     public String showUploadForm() {
@@ -286,15 +257,12 @@ public class WebJobController {
 
     @PostMapping(value = "/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-
         LOGGER.info("importJobs()");
         if (file.isEmpty()) {
             LOGGER.info("Proszę wybrać plik do importu");
             return "redirect/jobs";
         }
-
         List<Job> jobs = importJob.importExcelJobData(file);
-
         jobs.forEach((job) -> {
             jobService.createJob(job);
         });
@@ -305,17 +273,13 @@ public class WebJobController {
     @GetMapping(value = "/exportAll")
     public void exportJobsAll(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-
         List<Job> jobs = jobService.findAllJobs();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
-
         String headerKey = "Content-Disposition";
         String headerValue = "attachment;filename=awarie" + currentDateTime + ".xlsx";
-
         response.setHeader(headerKey, headerValue);
-
         exportService.excelJobsModelGenerator(jobs);
         exportService.generateExcelJobFile(response);
         response.flushBuffer();
@@ -325,17 +289,12 @@ public class WebJobController {
     @GetMapping(value = "/export")
     public void exportJobs(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-
-//        List<Job> jobs = jobService.findAllJobs();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
-
         String headerKey = "Content-Disposition";
         String headerValue = "attachment;filename=awarie" + currentDateTime + ".xlsx";
-
         response.setHeader(headerKey, headerValue);
-
         exportService.excelJobsModelGenerator(actualJobs);
         exportService.generateExcelJobFile(response);
         response.flushBuffer();

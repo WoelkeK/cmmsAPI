@@ -29,12 +29,10 @@ public class EmployeeMapper {
         return employeeModels;
     }
 
-
     public Employee entityToModel(EmployeeEntity employeeEntity) {
         LOGGER.info("entityToModel" + employeeEntity);
         ModelMapper modelMapper = new ModelMapper();
         Employee employeeModel = modelMapper.map(employeeEntity, Employee.class);
-//        employeeModel.setPassword(null);
         return employeeModel;
     }
 

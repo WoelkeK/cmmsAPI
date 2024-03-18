@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.medos.cmmsApi.dto.EmployeesImportDto;
 import pl.medos.cmmsApi.exception.DepartmentNotFoundException;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.service.DepartmentService;
@@ -51,17 +50,14 @@ public class DepartmentWebController {
                                  Model model)  {
         LOGGER.info("findPage()");
         int pageSize=10;
-
         Page<Department> departmentPage = departmentService.findDepartmentPage(pageNo, pageSize, sortField, sortDir);
         List<Department> departments = departmentPage.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", departmentPage.getTotalPages());
         model.addAttribute("totalItems", departmentPage.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("departments", departments);
         LOGGER.info("listView(...)" + departments);
         return "main-department.html";
@@ -122,7 +118,6 @@ public class DepartmentWebController {
         return "redirect:/departments";
     }
 
-
     @GetMapping("/file")
     public String showUploadForm() {
         return "uploadDep-form";
@@ -136,16 +131,11 @@ public class DepartmentWebController {
             LOGGER.info("Please select file to upload");
             return "redirect:/departments";
         }
-
-        EmployeesImportDto employeesImportDto = new EmployeesImportDto();
-
         List<Department> departments = importDepartment.importExcelDepartmentsData(file);
-
         departments.forEach((department) -> {
             departmentService.createDepartment(department);
         });
         LOGGER.info("importDepartments(...) ");
-
         return "redirect:/departments";
     }
 }

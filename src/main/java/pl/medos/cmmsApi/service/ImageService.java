@@ -9,11 +9,8 @@ import java.io.IOException;
 public interface ImageService {
 
     byte[] simpleResizeImage(byte[] originalImage, int targetWidth) throws IOException;
-
     byte[] multipartToByteArray(MultipartFile multipartFile) throws IOException;
-
     byte[] imageToByteArray();
-
     Notification prepareImage(Notification notification, MultipartFile image) throws IOException;
     Pass prepareImage(Pass pass, MultipartFile image) throws IOException;
 

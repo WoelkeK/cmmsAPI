@@ -10,12 +10,7 @@ import java.util.List;
 public interface MachineService {
 
     List<Machine> findAllMachines();
-
-    List<Machine> findMachinesByName(String name);
-
     List<Machine> findMachinesByDepartment(Department department);
-
-    List<Machine> findMachinesByQuery(String query);
 
     Machine createMachine(Machine machine);
 

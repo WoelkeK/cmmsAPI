@@ -75,20 +75,16 @@ public class WebHardwareController {
                                    @RequestParam(value = "sortField", defaultValue = "inventoryNo") String sortField,
                                    @RequestParam(value = "sortDir",defaultValue = "asc") String sortDirection,
                                    Model model) {
-
         LOGGER.info("findHardwarePage()");
         int size = 10;
         Page<Hardware> hardwaresPage = hardwareService.pagesHardware(pageNo, size, sortField, sortDirection) ;
         List<Hardware> hardwares = hardwaresPage.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", hardwaresPage.getTotalPages());
         model.addAttribute("totalItems", hardwaresPage.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDirection);
         model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("pageing(...)");
         return "main-hardware";
@@ -158,7 +154,6 @@ public class WebHardwareController {
 
     @PostMapping("/exportPdf")
     public void generateReport(HttpServletResponse response, Hardware hardware) throws JRException, IOException {
-
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"hardware_"+hardware.getInventoryNo()+".pdf\""));
         OutputStream out = response.getOutputStream();
@@ -173,10 +168,8 @@ public class WebHardwareController {
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
-
         String headerKey = "Content-Disposition";
         String headerValue = "attachment;filename=hardware" + currentDateTime + ".xlsx";
-
         response.setHeader(headerKey, headerValue);
         exportService.excelHardwaresModelGenerator(hardwares);
         exportService.generateExcelHardwareFile(response);
@@ -197,9 +190,7 @@ public class WebHardwareController {
             LOGGER.info("Proszę wybrać plik do importu");
             return "redirect/hardwares";
         }
-
         List<Hardware> hardwares = importHardware.importHardware(file);
-
         hardwares.forEach((hardware) -> {
             hardwareService.create(hardware);
         });
@@ -210,17 +201,14 @@ public class WebHardwareController {
     @GetMapping(value = "/search/query")
     public String findHardwareByQuery(
             @RequestParam(value = "query") String query,
-//            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
             Model model) throws IOException {
         int pageSize=10;
         int pageNo=1;
         String sortField="name";
         String sortDir="desc";
-
         LOGGER.info("findPage()");
         Page<Hardware> hardwarePage =hardwareService.findHardwarePageByQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Hardware> hardware = hardwarePage.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", hardwarePage.getTotalPages());
         model.addAttribute("totalItems", hardwarePage.getTotalElements());

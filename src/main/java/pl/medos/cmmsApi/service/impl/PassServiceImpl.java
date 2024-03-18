@@ -16,19 +16,19 @@ import pl.medos.cmmsApi.service.PassService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class PassServiceImpl implements PassService {
 
-
+    private static final Logger LOGGER = Logger.getLogger(PassServiceImpl.class.getName());
     private final PassRepository passRepository;
     private final ModelMapper modelMapper;
 
     @Override
     public Page<Pass> findPagePasses(int pageNo, int size, String sortField, String sortDirection) {
-        log.info("findPagesPasses()");
+        LOGGER.info("findPagesPasses()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<PassEntity> passEntities = passRepository.findAll(pageable);
@@ -37,13 +37,13 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public Pass createPass(Pass pass) {
-        log.info("createPass()");
+        LOGGER.info("createPass()");
         return modelMapper.map(passRepository.save(modelMapper.map(pass, PassEntity.class)), Pass.class);
     }
 
     @Override
     public Pass findPassById(Long id) {
-        log.info("findPassById()");
+        LOGGER.info("findPassById()");
         Optional<PassEntity> optionalPassEntity = passRepository.findById(id);
         PassEntity passEntity = optionalPassEntity.orElseThrow(EntityNotFoundException::new);
         return modelMapper.map(passEntity, Pass.class);
@@ -58,13 +58,13 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public void deletePass(Long id) {
-        log.info("detelePass()");
+        LOGGER.info("detelePass()");
         passRepository.deleteById(id);
     }
 
     @Override
     public List<Pass> findPassByQuery(String query) {
-        log.info("findPassByQuery()");
+        LOGGER.info("findPassByQuery()");
         List<PassEntity> passEntities = passRepository.searchPassesByQuery(query);
         return passEntities.stream().map(
                         passEntity -> modelMapper.map(passEntity, Pass.class))

@@ -13,9 +13,7 @@ import java.util.logging.Logger;
 public class HardwareController {
 
     private static final Logger LOGGER = Logger.getLogger(HardwareController.class.getName());
-
     private HardwareService hardwareService;
-
     public HardwareController(HardwareService hardwareService) {
         this.hardwareService = hardwareService;
     }

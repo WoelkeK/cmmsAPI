@@ -22,17 +22,14 @@ public class RaportServiceImpl implements RaportService {
     private String content = "stanowiącego własność firmy MEDOS. Sprzęt w/w zobowiązuję się zwrócić na każde żądanie właściciela w takim samym stanie, " +
             "jakim został mi przekazany w dniu wypożyczenia uwzględniając mechaniczne uszkodzenia wynikające z naturalnego eksploatowania sprzętu.";
 
-    public JasperPrint getJobJasperPrint(Hardware hardware, JasperReport jasperReport) throws FileNotFoundException, JRException {
+    public JasperPrint getJobJasperPrint(Hardware hardware, JasperReport jasperReport) throws JRException {
 
         LOGGER.info("getJasperPrint()");
-
         Map<String, Object> parameters = new HashMap<>();
-        ;
         parameters.put("employeeName", hardware.getEmployee());
         parameters.put("hardwareName", hardware.getName());
         parameters.put("hardwareType", hardware.getType().toString());
         parameters.put("inventoryNo", hardware.getInventoryNo());
-
         parameters.put("serialNo", hardware.getSerialNumber());
         parameters.put("comment", hardware.getDescription());
 
@@ -51,15 +48,12 @@ public class RaportServiceImpl implements RaportService {
                 parameters.put("employeeSign", "podpis osoby przyjmującej");
                 parameters.put("managerSign", "podpis osoby wypożyczającej");
         }
-
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
         return jasperPrint;
     }
-
     public JasperPrint getJasperPrint(Notification notification, JasperReport jasperReport) throws FileNotFoundException, JRException {
 
         LOGGER.info("getJasperPrint()" + notification.getId());
-
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("employee", notification.getEmployee());
         parameters.put("employeePhone", notification.getEmployeePhone());
@@ -74,7 +68,6 @@ public class RaportServiceImpl implements RaportService {
         parameters.put("driverPhone", notification.getDriverPhone());
         parameters.put("managerSign", "podpis portiera");
         parameters.put("employeeSign", "podpis kierowcy");
-
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
         return jasperPrint;
     }
@@ -97,7 +90,6 @@ public class RaportServiceImpl implements RaportService {
     public void exportReport(Notification notification, OutputStream outputStream) throws JRException, FileNotFoundException {
 
         Resource resource = new ClassPathResource("reports/awizo.jrxml");
-
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
             JasperPrint jasperPrint = getJasperPrint(notification, jasperReport);

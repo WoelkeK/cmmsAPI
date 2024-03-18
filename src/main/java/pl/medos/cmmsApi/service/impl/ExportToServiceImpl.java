@@ -116,7 +116,6 @@ public class ExportToServiceImpl implements ExportService {
         outputStream.close();
     }
 
-
     private void writeNotificationHeader() {
 
         sheet = workbook.createSheet("Awizacje");
@@ -138,9 +137,7 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 9, "Osoba kontaktowa", style);
         createCell(row, 10, "Telefon pracownika", style);
         createCell(row, 11, "Informacje", style);
-
         LOGGER.info("Header create complete! ");
-
     }
 
     private void writeNotification() {
@@ -189,7 +186,6 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getDepartment().getName(), style);
             createCell(row, columnCount++, record.getPhone(), style);
             createCell(row, columnCount++, record.getEmail(), style);
-
             if (record.getIsActive() == null) {
                 createCell(row, columnCount++, true, style);
             } else {
@@ -216,7 +212,6 @@ public class ExportToServiceImpl implements ExportService {
         LOGGER.info("Header create complete! ");
     }
 
-
     private void writeJob() {
         LOGGER.info("writeJob()");
 
@@ -226,7 +221,6 @@ public class ExportToServiceImpl implements ExportService {
         CellStyle dateCellStyle = workbook.createCellStyle();
         short dateFormat = workbook.createDataFormat().getFormat("dd/mm/yyyy hh:mm");
         dateCellStyle.setDataFormat(dateFormat);
-
         font.setFontHeight(14);
         style.setFont(font);
         dateCellStyle.setFont(font);
@@ -240,14 +234,12 @@ public class ExportToServiceImpl implements ExportService {
                 createCell(row, columnCount++, record.getRequestDate(), dateCellStyle);
             }
             createCell(row, columnCount++, record.getEmployee().getName(), style);
-
             if (record.getEngineer() == null) {
 
                 createCell(row, columnCount++, null, style);
             } else {
                 createCell(row, columnCount++, record.getEngineer().getName(), style);
             }
-
             createCell(row, columnCount++, record.getDepartment().getName(), style);
             createCell(row, columnCount++, record.getMachine().getName(), style);
             createCell(row, columnCount++, record.getMessage(), style);
@@ -325,7 +317,6 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 13, "Status", style);
         createCell(row, 14, "Przesunięcie", style);
         createCell(row, 15, "Zdjęcie", style);
-
         LOGGER.info("Header create complete! ");
     }
 
@@ -355,7 +346,6 @@ public class ExportToServiceImpl implements ExportService {
         font.setBold(true);
         font.setFontHeight(16);
         style.setFont(font);
-//        createCell(row, 0, "ID", style);
         createCell(row, 0, "Numer inwentarzowy", style);
         createCell(row, 1, "Dział             ", style);
         createCell(row, 2, "Stan urządzenia", style);
@@ -377,9 +367,6 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 18, "Klucz szyfrujący                  ", style);
         createCell(row, 19, "Uprawnienia Awizacje", style);
 
-
-        /*Uprawnienia*/
-
         createCell(row, 20, "Awizacje Odczyt", style);
         createCell(row, 21, "Awizacje Zapis", style);
         createCell(row, 22, "Awizacje Usuwanie", style);
@@ -398,8 +385,6 @@ public class ExportToServiceImpl implements ExportService {
         createCell(row, 35, "Awarie Odczyt", style);
         createCell(row, 36, "Awarie Zapis", style);
         createCell(row, 37, "Awarie Usuwanie", style);
-
-
         LOGGER.info("Header create complete! " + sheet.getPhysicalNumberOfRows() + " \n");
     }
 
@@ -451,7 +436,6 @@ public class ExportToServiceImpl implements ExportService {
             createCell(row, columnCount++, record.getDepartment().getName(), style);
         }
         LOGGER.info("writeMachine(...)");
-
     }
 
     private void writeHardware() {
@@ -459,8 +443,6 @@ public class ExportToServiceImpl implements ExportService {
         int rowCount = 1;
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
-
-        // Create a cell style with date format
         CellStyle dateCellStyle = workbook.createCellStyle();
         dateCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("dd/mm/yyyy"));
 
@@ -506,27 +488,21 @@ public class ExportToServiceImpl implements ExportService {
                 createCell(row, columnCount++, record.getPermission().toString(), style);
             }
 
-
             createCell(row, columnCount++, record.isNRead(), style);
             createCell(row, columnCount++, record.isNEdit(), style);
             createCell(row, columnCount++, record.isNDelete(), style);
-
             createCell(row, columnCount++, record.isERead(), style);
             createCell(row, columnCount++, record.isEEdit(), style);
             createCell(row, columnCount++, record.isEDelete(), style);
-
             createCell(row, columnCount++, record.isPRead(), style);
             createCell(row, columnCount++, record.isPEdit(), style);
             createCell(row, columnCount++, record.isPDelete(), style);
-
             createCell(row, columnCount++, record.isDRead(), style);
             createCell(row, columnCount++, record.isDEdit(), style);
             createCell(row, columnCount++, record.isDDelete(), style);
-
             createCell(row, columnCount++, record.isMRead(), style);
             createCell(row, columnCount++, record.isMEdit(), style);
             createCell(row, columnCount++, record.isMDelete(), style);
-
             createCell(row, columnCount++, record.isJRead(), style);
             createCell(row, columnCount++, record.isJEdit(), style);
             createCell(row, columnCount++, record.isJDelete(), style);

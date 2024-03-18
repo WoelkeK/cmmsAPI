@@ -22,10 +22,8 @@ import java.util.logging.Logger;
 public class MachineServiceImpl implements MachineService {
 
     private static final Logger LOGGER = Logger.getLogger(MachineServiceImpl.class.getName());
-
     private MachineRepository machineRepository;
     private MachineMapper machineMapper;
-
 
     private List<Machine> sortedMachines;
 
@@ -44,14 +42,14 @@ public class MachineServiceImpl implements MachineService {
         return machineModels;
     }
 
-    @Override
-    public List<Machine> findMachinesByName(String name) {
-        LOGGER.info("findMachinesByName()" + name);
-        List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
-        sortedMachines = machineMapper.listModels(machineEntities);
-        LOGGER.info("findMachinesByName(...)" + name);
-        return sortedMachines;
-    }
+//    @Override
+//    public List<Machine> findMachinesByName(String name) {
+//        LOGGER.info("findMachinesByName()" + name);
+//        List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
+//        sortedMachines = machineMapper.listModels(machineEntities);
+//        LOGGER.info("findMachinesByName(...)" + name);
+//        return sortedMachines;
+//    }
 
     @Override
     public List<Machine> findMachinesByDepartment(Department department) {
@@ -62,17 +60,7 @@ public class MachineServiceImpl implements MachineService {
         return sortedMachines;
     }
 
-    @Override
-    public List<Machine> findMachinesByQuery(String query) {
-        LOGGER.info("findMachinesByQuery()" + query);
-        List<MachineEntity> machineEntities = machineRepository.searchMachineByQuery(query);
-        List<Machine> machines = machineMapper.listModels(machineEntities);
-        LOGGER.info("findMachinesByQuery(...)");
-        return machines;
-    }
-
     public Machine createMachine(Machine machine) {
-
         LOGGER.info("create(" + machine + ")");
         MachineEntity machineEntity = machineMapper.modelToEntity(machine);
         MachineEntity createdMachineEntity = machineRepository.save(machineEntity);
@@ -96,7 +84,6 @@ public class MachineServiceImpl implements MachineService {
         Optional<MachineEntity> optionalMachineEntity = machineRepository.findById(id);
         MachineEntity machineEntity = optionalMachineEntity.orElseThrow(
                 () -> new MachineNotFoundException("Brak maszyny o podanym id " + id));
-
         MachineEntity editedMachineEntity = machineMapper.modelToEntity(machine);
         MachineEntity updatedMachineEntity = machineRepository.save(editedMachineEntity);
         Machine updatedMachineModel = machineMapper.entityToModel(updatedMachineEntity);
@@ -114,7 +101,7 @@ public class MachineServiceImpl implements MachineService {
     public Page<Machine> findPageinated(int pageNo, int size, String sortField, String sortDirection) {
         LOGGER.info("findPaginated()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
         Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
         LOGGER.info("findPaginated(...)");
@@ -131,9 +118,8 @@ public class MachineServiceImpl implements MachineService {
     public Page<Machine> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
         LOGGER.info("findPaginated()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<MachineEntity> machineEntityPage = machineRepository.findByQueryPagable(query, pageable);
-//        Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
         Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
         LOGGER.info("findPaginated(...)");
         return machines;

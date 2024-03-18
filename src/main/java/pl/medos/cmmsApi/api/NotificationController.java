@@ -3,7 +3,6 @@ package pl.medos.cmmsApi.api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -12,50 +11,52 @@ import pl.medos.cmmsApi.service.NotificationService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("api/notifications")
 @Tag(name = "AwizacjeAPI")
-@Slf4j
-@RequiredArgsConstructor
 public class NotificationController {
 
+    private static final Logger LOGGER = Logger.getLogger(NotificationController.class.getName());
     private final NotificationService notificationService;
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     @PostMapping("/create")
     Notification createNotification(@RequestBody Notification notification) {
-        log.info("createNotification()");
+        LOGGER.info("createNotification()");
         return notificationService.createNotification(notification);
     }
 
     @GetMapping("/findById")
     Notification findNotificationById(@RequestParam Long id) {
-        log.info("findNotificationById()");
+        LOGGER.info("findNotificationById()");
         return notificationService.findNotificationById(id);
     }
 
     @PutMapping("/update")
     Notification updateNotification(@RequestBody Notification notification, Long id) {
-        log.info("updateNotification()");
+        LOGGER.info("updateNotification()");
         return notificationService.updateNotification(notification, id);
     }
 
     @DeleteMapping("/delete")
     void deleteNotification(@RequestParam Long id) {
-        log.info("deleteNotification()");
+        LOGGER.info("deleteNotification()");
         notificationService.deleteNotification(id);
     }
 
     @GetMapping("/getList")
     List<Notification> findAllNotifications() {
-        log.info("findallNotifications()");
+        LOGGER.info("findallNotifications()");
         return notificationService.getAllNotifications();
     }
 
     @DeleteMapping("/deleteAll")
     void deleteAll(){
-        log.info("deleteall()");
+        LOGGER.info("deleteall()");
         notificationService.deleteAll();
-
     }
 }

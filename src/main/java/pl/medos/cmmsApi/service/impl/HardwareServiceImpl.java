@@ -29,7 +29,6 @@ public class HardwareServiceImpl implements HardwareService {
     private final HardwareRepository hardwareRepository;
     private final HardwareMapper hardwareMapper;
 
-
     public List<Hardware> listAll() {
         LOGGER.info("listAll()");
         List<HardwareEntity> hardwareEntities = hardwareRepository.findAll();
@@ -45,15 +44,6 @@ public class HardwareServiceImpl implements HardwareService {
         Page<HardwareEntity> hardwareEntities = hardwareRepository.findAll(pageable);
         Page<Hardware> hardwares = hardwareMapper.pageEntityToModels(hardwareEntities);
         LOGGER.info("pagesHardware(...)");
-        return hardwares;
-    }
-
-    @Override
-    public List<Hardware> findHardwaresByQuery(String query) {
-        LOGGER.info("findHardwaresByQuery()" + query);
-        List<HardwareEntity> hardwareEntities = hardwareRepository.findHardwareByquery(query.toUpperCase());
-        List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
-        LOGGER.info("findHardwaresByQuery(...)");
         return hardwares;
     }
 
@@ -116,29 +106,12 @@ public class HardwareServiceImpl implements HardwareService {
         LOGGER.info("deleteAllHardware(...)");
     }
 
-//    @Override
-//    public Boolean findHardwareByIpAddress(String clientIp) {
-//        LOGGER.info("findHardwareByIpAddress()" + clientIp);
-//        return hardwareRepository.existsByIpAddressAndPermission(clientIp);
-//    }
-
-//    @Override
-//    public Hardware findByIpAddress(String ipAddres) {
-//        LOGGER.info("findByIpAddress");
-//        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElseThrow(
-//                ()-> new NoSuchElementException("Brak adresu IP w bazie danych")
-//        );
-//        return hardwareMapper.mapEntityToModel(byIpAddress);
-//    }
-
     @Override
     public Hardware findByIpAddress(String ipAddres) {
         LOGGER.info("findByIpAddress");
         HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElse(new HardwareEntity());
         return hardwareMapper.mapEntityToModel(byIpAddress);
     }
-
-
 
     @Override
     public Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {

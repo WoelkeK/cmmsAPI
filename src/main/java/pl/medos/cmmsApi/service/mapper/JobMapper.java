@@ -19,7 +19,6 @@ public class JobMapper {
     private static final Logger LOGGER = Logger.getLogger(JobMapper.class.getName());
     private JobEntity jobEntity;
 
-
     public List<Job> listModels(List<JobEntity> jobEntities) {
 
         LOGGER.info("list()" + jobEntities);

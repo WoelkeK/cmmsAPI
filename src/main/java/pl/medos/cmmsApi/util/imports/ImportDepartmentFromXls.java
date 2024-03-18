@@ -24,7 +24,6 @@ public class ImportDepartmentFromXls implements ImportDepartment{
     private static final Logger LOGGER = Logger.getLogger(ImportDepartmentFromXls.class.getName());
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
 
-
     @Override
     public List<Department> importExcelDepartmentsData(MultipartFile fileName) throws IOException {
 
@@ -53,7 +52,6 @@ public class ImportDepartmentFromXls implements ImportDepartment{
                             rowDataMap.put(departments.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             break;
                         case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(departments.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
                             break;
                     }

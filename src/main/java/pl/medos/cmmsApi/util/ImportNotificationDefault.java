@@ -20,17 +20,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Component
-@Slf4j
 public class ImportNotificationDefault implements ImportNotification {
 
+
+    private static final Logger LOGGER = Logger.getLogger(ImportNotificationDefault.class.getName());
     private List<String> notifications = new ArrayList<>(Arrays.asList("visitDate", "type", "status", "supplier", "item", "itemDetails", "carPlates", "driverName", "driverPhone", "employee", "employeePhone", "description"));
 
     @Override
     public List<Notification> importNotificationFromXLS(MultipartFile fileName) throws IOException {
 
-        log.info("importExcelNotificationData()");
+        LOGGER.info("importExcelNotificationData()");
         List<NotificationJson> rawDataList = new ArrayList<>();
 
         InputStream file = new BufferedInputStream(fileName.getInputStream());
@@ -54,7 +56,6 @@ public class ImportNotificationDefault implements ImportNotification {
                 if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-//                            rowDataMap.put(notifications.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             rowDataMap.put(notifications.get(k), (cell.getDateCellValue().toString()));
                             break;
                         case STRING:
@@ -73,27 +74,25 @@ public class ImportNotificationDefault implements ImportNotification {
 
             NotificationJson rawData = mapper.convertValue(rowDataMap, NotificationJson.class);
             rawDataList.add(rawData);
-            log.info("rawData " + rawData);
+            LOGGER.info("rawData " + rawData);
         }
         List<Notification> convertedNotifications = notificationDataExcelConverter(rawDataList);
         return convertedNotifications;
     }
 
     private List<Notification> notificationDataExcelConverter(List<NotificationJson> notifications) {
-        log.info("notificationDataExcelConverter()");
+        LOGGER.info("notificationDataExcelConverter()");
 
         List<Notification> convertedNotifications =
                 notifications.stream().map(m -> {
 
                                     Notification notification = new Notification();
-
                                     if (m.getVisitDate() == null || m.getVisitDate().isEmpty()) {
                                         notification.setVisitDate(null);
                                     } else {
                                         LocalDateTime visitDate = DateConverter.convertDateTime(m.getVisitDate());
                                         notification.setVisitDate(visitDate);
                                     }
-
                                     notification.setType(m.getType());
                                     notification.setStatus(m.getStatus());
                                     notification.setSupplier(m.getSupplier());
@@ -105,13 +104,11 @@ public class ImportNotificationDefault implements ImportNotification {
                                     notification.setEmployee(m.getEmployee());
                                     notification.setEmployeePhone(m.getEmployeePhone());
                                     notification.setDescription(m.getDescription());
-
-                                    log.info("convertedNotification(...)");
                                     return notification;
                                 }
                         )
                         .toList();
-        log.info("notificationDataExcelConverter(...)");
+        LOGGER.info("notificationDataExcelConverter(...)");
         return convertedNotifications;
     }
 }

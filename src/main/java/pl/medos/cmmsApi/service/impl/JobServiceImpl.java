@@ -30,7 +30,6 @@ public class JobServiceImpl implements JobService {
     private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class.getName());
     private JobRepository jobRepository;
     private JobMapper jobMapper;
-
     private ImageService imageService;
 
     public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper, ImageService imageService) {
@@ -111,29 +110,6 @@ public class JobServiceImpl implements JobService {
         return updatedJobModel;
     }
 
-//    @Override
-//    public Job updateJob(Job job, Long id) throws JobNotFoundException {
-//        LOGGER.info("update()" + job);
-//        JobEntity readedJobEntity = getJobEntity(id);
-//        JobEntity editedJobEntity = jobMapper.modelToEntity(job);
-//        editedJobEntity.setId(readedJobEntity.getId());
-
-//        LOGGER.info("editedJobentity()" + readedJobEntity.getId() + "in/out " + editedJobEntity.getId());
-//        Cost cost = costService.searchCostByUnit("h");
-//        LOGGER.info("cost" + cost.getUnit());
-//        LocalDateTime jobStartTime = job.getJobStartTime();
-//        LocalDateTime jobStopTime = job.getJobStopTime();
-//        long minutes = ChronoUnit.MINUTES.between(jobStartTime, jobStopTime);
-//        double jobTimeCost = (double) Math.round(((cost.getNetCost() / 60) * minutes) * 100) / 100;
-//        editedJobEntity.setCalcCost(jobTimeCost);
-
-//        LOGGER.info("editedCostCalc " + editedJobEntity.getCalcCost());
-//        JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);
-//        Job updatedJobModel = jobMapper.entityToModel(updatedJobEntity);
-//        LOGGER.info("update(...) " + updatedJobModel);
-//        return updatedJobModel;
-//    }
-
     @Override
     public void deleteJob(Long id) {
         LOGGER.info("delete()");
@@ -191,16 +167,11 @@ public class JobServiceImpl implements JobService {
 
     @Scheduled(fixedRate = 10000)
     public void checkAndUpdate() {
-//        LOGGER.info("checkAndUpdate()");
 
         List<JobEntity> jobs = jobRepository.findAll();
-
-
         jobs.stream().forEach(job -> {
 
                     if (job.getJobStatus().equals(JobStatus.PRZEGLĄD) && job.getStatus().equalsIgnoreCase("zakończono")) {
-//                        LOGGER.info("Is open " + job.isOpen());
-
                         if (job.getDecision().equals(Decision.TAK) && (job.isOpen())) {
 
                             LocalDateTime futureJobDate = calculateFutureDate(job.getJobShedule(), job.getDateOffset(), job.getOffset());
@@ -215,13 +186,8 @@ public class JobServiceImpl implements JobService {
                             cycleJob.setJobShedule(futureJobDate);
                             cycleJob.setOffset(job.getOffset());
                             cycleJob.setOpen(true);
-//                            cycleJob.setOriginalImage(job.getOriginalImage());
-//                            cycleJob.setResizedImage(job.getResizedImage());
                             cycleJob.setJobStatus(JobStatus.PRZEGLĄD);
-
-//                            LOGGER.info("Create new cyclic job ");
                             jobRepository.save(cycleJob);
-//                            LOGGER.info("Set prevoius record to close");
                             job.setOpen(false);
                             jobRepository.save(job);
                         }
@@ -229,7 +195,5 @@ public class JobServiceImpl implements JobService {
                     }
                 }
         );
-//
-//        LOGGER.info("checkAndUpdate(...)");
     }
 }

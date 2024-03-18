@@ -9,12 +9,7 @@ import pl.medos.cmmsApi.util.SimpleReportFiller;
 
 @Configuration
 public class JasperReportSimpleConfig {
-//
-//    @Bean
-//    public DataSource dataSource() {
-//        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("classpath:employee-schema.sql").build();
-//
-//    }
+
 
     @Bean
     public SimpleReportFiller reportFiller() {

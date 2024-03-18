@@ -14,7 +14,6 @@ import java.nio.file.StandardCopyOption;
 public class ImageLoader {
 
     private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator+"images";
-
     public ImageLoader() {
         loadFileFromClasspath();
     }

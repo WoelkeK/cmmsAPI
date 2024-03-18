@@ -8,45 +8,46 @@ import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
 import pl.medos.cmmsApi.model.Engineer;
 import pl.medos.cmmsApi.service.EngineerService;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequestMapping("/api/engineers/")
-@Slf4j
 public class EngineerController {
 
+    private static final Logger LOGGER = Logger.getLogger(EngineerController.class.getName());
     private EngineerService engineerService;
-
     public EngineerController(EngineerService engineerService) {
         this.engineerService = engineerService;
     }
 
     @PostMapping("/create")
     public Engineer createEngineer(@RequestBody Engineer engineer) {
-        log.debug("createEngineer()");
+        LOGGER.info("createEngineer()");
         return engineerService.createEngineer(engineer);
     }
 
     @GetMapping("/findById")
     public Engineer findEngineerById(@PathVariable Long id) throws EmployeeNotFoundException {
-        log.debug("findEngineerById({})", id);
+        LOGGER.info("findEngineerById() " + id);
         return engineerService.findEngineerById(id);
     }
 
     @PatchMapping("/update")
     public Engineer updateEngineer(@RequestBody Engineer engineer, @PathVariable Long id) throws EmployeeNotFoundException {
-        log.debug("updateEngineer({})", id);
+        LOGGER.info("updateEngineer()" + id);
         return engineerService.updateEngineer(engineer, id);
     }
 
     @DeleteMapping("/deleteAll")
     public ResponseEntity deleteAll() {
-        log.debug("deleteAll()");
+        LOGGER.info("deleteAll()");
         engineerService.deleteAll();
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity deleteById(@PathVariable Long id) {
-        log.debug("deleteById({})", id);
+        LOGGER.info("deleteById(" +id + ")");
         engineerService.deleteEngineer(id);
         return new ResponseEntity(HttpStatus.OK);
     }

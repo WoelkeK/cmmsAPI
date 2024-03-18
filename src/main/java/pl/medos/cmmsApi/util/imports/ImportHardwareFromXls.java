@@ -26,8 +26,12 @@ import java.util.logging.Logger;
 public class ImportHardwareFromXls implements ImportHardware {
 
     private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
-    @Autowired
+
     private HardwareService hardwareService;
+
+    public ImportHardwareFromXls(HardwareService hardwareService) {
+        this.hardwareService = hardwareService;
+    }
 
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
             "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo",
@@ -61,11 +65,9 @@ public class ImportHardwareFromXls implements ImportHardware {
                 if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-//                            rowDataMap.put(hardwares.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             rowDataMap.put(hardwares.get(k), (cell.getDateCellValue().toString()));
                             break;
                         case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
                             break;
                         case BOOLEAN:
@@ -143,27 +145,21 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     hardware.setNRead(convertXLSField(m.getNRead()));
                                     hardware.setNEdit(convertXLSField(m.getNEdit()));
                                     hardware.setNDelete(convertXLSField(m.getNDelete()));
-
                                     hardware.setERead(convertXLSField(m.getERead()));
                                     hardware.setEEdit(convertXLSField(m.getEEdit()));
                                     hardware.setEDelete(convertXLSField(m.getEDelete()));
-
                                     hardware.setDRead(convertXLSField(m.getPRead()));
                                     hardware.setDEdit(convertXLSField(m.getPEdit()));
                                     hardware.setDDelete(convertXLSField(m.getPDelete()));
-
                                     hardware.setPRead(convertXLSField(m.getDRead()));
                                     hardware.setPEdit(convertXLSField(m.getDEdit()));
                                     hardware.setPDelete(convertXLSField(m.getDDelete()));
-
                                     hardware.setMRead(convertXLSField(m.getMRead()));
                                     hardware.setMEdit(convertXLSField(m.getMEdit()));
                                     hardware.setMDelete(convertXLSField(m.getMDelete()));
-
                                     hardware.setJRead(convertXLSField(m.getJRead()));
                                     hardware.setJEdit(convertXLSField(m.getJRead()));
                                     hardware.setJDelete(convertXLSField(m.getJRead()));
-
                                     LOGGER.info("Row create(...)");
                                     return hardware;
                                 }

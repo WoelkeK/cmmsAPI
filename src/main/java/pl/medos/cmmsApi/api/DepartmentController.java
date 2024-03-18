@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class DepartmentController {
 
     private static final Logger LOGGER = Logger.getLogger(DepartmentController.class.getName());
-
     private DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {

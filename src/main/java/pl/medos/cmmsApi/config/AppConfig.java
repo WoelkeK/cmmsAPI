@@ -14,17 +14,14 @@ import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 @Configuration
 public class AppConfig {
-
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
-
     @Bean
-    public ObjectMapper objectMapper() {ObjectMapper mapper = JsonMapper.builder().findAndAddModules().build();
-        return mapper;}
-
-
-
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = JsonMapper.builder().findAndAddModules().build();
+        return mapper;
+    }
 }

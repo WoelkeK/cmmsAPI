@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.EmployeeNotFoundException;
+import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Engineer;
 import pl.medos.cmmsApi.repository.EngineerRepository;
+import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.EngineerEntity;
 import pl.medos.cmmsApi.service.EngineerService;
 import pl.medos.cmmsApi.service.mapper.EngineerMapper;
@@ -63,7 +65,7 @@ public class EngineerServiceImpl implements EngineerService {
     public Page<Engineer> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
         LOGGER.info("findPaginated()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<EngineerEntity> engineerEntityPage = engineerRepository.findByQueryPagable(query, pageable);
         Page<Engineer> engineers = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
         LOGGER.info("findPaginated(...)");
@@ -74,7 +76,7 @@ public class EngineerServiceImpl implements EngineerService {
     public Page<Engineer> findPageinated(int pageNo, int pageSize, String sortField, String sortDir) {
         LOGGER.info("findPageinated()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize,sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<EngineerEntity> engineerEntityPage = engineerRepository.findAll(pageable);
         Page<Engineer> engineerPage = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
         LOGGER.info("findPageinated(...)");
@@ -95,7 +97,7 @@ public class EngineerServiceImpl implements EngineerService {
     public Page<Engineer> findByActive(int pageNo, int pageSize, String sortField, String sortDir, Boolean profile) {
         LOGGER.info("findPagesEnginnerByProfileStatus()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<EngineerEntity> engineerEntityPage = engineerRepository.findByIsActive(pageable, profile);
         Page<Engineer> engineers = engineerMapper.mapPageEntitiestoModels(engineerEntityPage);
         LOGGER.info("findPaginated(...)");
@@ -108,7 +110,6 @@ public class EngineerServiceImpl implements EngineerService {
         Optional<EngineerEntity> optionalEngineerEntity = engineerRepository.findById(id);
         EngineerEntity engineerEntity = optionalEngineerEntity.orElseThrow(
                 () -> new EmployeeNotFoundException("Brak pracownika o podanym id " + id));
-
         EngineerEntity editedEngineerEntity = engineerMapper.modelToEntity(engineer);
         editedEngineerEntity.setId(engineerEntity.getId());
         EngineerEntity updatedEngineerEntity = engineerRepository.save(editedEngineerEntity);
@@ -120,13 +121,18 @@ public class EngineerServiceImpl implements EngineerService {
     @Override
     public void deleteEngineer(Long id) {
         LOGGER.info("delete(" + id + ")");
-       engineerRepository.deleteById(id);
+        engineerRepository.deleteById(id);
         LOGGER.info("delete(...)");
     }
 
     @Override
     public Page<Engineer> findEngineerByName(int pageNo, int pagesize, String query) {
-        return null;
+        LOGGER.info("findEmployeeByName()" + query);
+        Pageable pageable = PageRequest.of(pageNo - 1, pagesize);
+        Page<EngineerEntity> engineerEntities = engineerRepository.searchEngineerByQuery(pageable, query);
+        Page<Engineer> engineers = engineerMapper.mapPageEntitiestoModels(engineerEntities);
+        LOGGER.info("findEmployeeByName(...)");
+        return engineers;
     }
 
     @Override
@@ -142,5 +148,5 @@ public class EngineerServiceImpl implements EngineerService {
     public void deleteAll() {
         LOGGER.info("deleteAll");
         engineerRepository.deleteAll();
-            }
+    }
 }

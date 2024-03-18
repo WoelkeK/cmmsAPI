@@ -42,13 +42,11 @@ public class ImportMachineFromXls implements ImportMachine{
 
         List<MachineDep> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
-
         IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
         Person person = new Person();
         Iterator<Row> rowIterator = sheet.iterator();
-
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
@@ -75,7 +73,6 @@ public class ImportMachineFromXls implements ImportMachine{
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
             MachineDep rawData = mapper.convertValue(rowDataMap, MachineDep.class);
             rawDataList.add(rawData);
             LOGGER.info("rawData " + rawData);
@@ -91,7 +88,6 @@ public class ImportMachineFromXls implements ImportMachine{
                 machineDeps.stream().map(m -> {
 
                                     Machine machine = new Machine();
-//                                    machine.setId(Long.parseLong((String.valueOf(m.getId()))));
                                     machine.setName(String.valueOf(m.getName()));
                                     machine.setModel(String.valueOf(m.getModel()));
                                     machine.setManufactured(Integer.valueOf(m.getManufactured()));
@@ -100,7 +96,6 @@ public class ImportMachineFromXls implements ImportMachine{
                                     machine.setDepartment(departmentByName);
                                     machine.setStatus(m.getStatus());
                                     machine.setInstallDate(LocalDateTime.now());
-
                                     LOGGER.info("convertedMachine(...)");
                                     return machine;
                                 }

@@ -18,9 +18,7 @@ import java.util.stream.Collectors;
 public class NotificationMapper {
 
     private static final Logger LOGGER = Logger.getLogger(NotificationMapper.class.getName());
-
     private NotificationEntity notificationEntity;
-
 
     public List<Notification> listModels(List<NotificationEntity> notificationEntities) {
         LOGGER.info("list()" + notificationEntities);

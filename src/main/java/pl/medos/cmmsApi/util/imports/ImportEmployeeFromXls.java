@@ -26,8 +26,13 @@ import java.util.logging.Logger;
 public class ImportEmployeeFromXls implements ImportEmployee {
 
     private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
-    @Autowired
+
     private DepartmentService departmentService;
+
+    public ImportEmployeeFromXls(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
+
     private List<String> persons = new ArrayList<>(Arrays.asList("name", "position", "department", "phone", "email", "isActive"));
 
     @Override
@@ -89,12 +94,10 @@ public class ImportEmployeeFromXls implements ImportEmployee {
 
                                     employee.setName(String.valueOf(m.getName()));
                                     employee.setPosition(String.valueOf(m.getPosition()));
-
                                     Department departmentByName = departmentService.findDepartmentByName(m.getDepartment());
                                     employee.setDepartment(departmentByName);
                                     employee.setPhone(String.valueOf(m.getPhone()));
                                     employee.setEmail(String.valueOf(m.getEmail()));
-
                                     if (m.getProfile() == null) {
                                         employee.setIsActive(true);
                                     } else {
