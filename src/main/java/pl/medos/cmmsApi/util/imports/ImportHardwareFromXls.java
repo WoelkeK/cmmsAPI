@@ -75,7 +75,6 @@ public class ImportHardwareFromXls implements ImportHardware {
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
                             break;
                         case BOOLEAN:
-                            LOGGER.info("Bool cell = " + cell.getBooleanCellValue());
                             rowDataMap.put(hardwares.get(k), String.valueOf(cell.getBooleanCellValue()));
                             break;
                         case _NONE:

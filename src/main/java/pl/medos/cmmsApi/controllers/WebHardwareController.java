@@ -41,14 +41,28 @@ public class WebHardwareController {
         this.hardwareRepository = hardwareRepository;
     }
 
-    @GetMapping("/list")
-    public String listViewAll(Model model) {
+    @GetMapping
+    public String listViewAll( @RequestParam(value = "sortField", defaultValue = "inventoryNo") String sortField,
+                               @RequestParam(value = "sortDir",defaultValue = "asc") String direction,
+                                    Model model) {
         LOGGER.info("listViewAll()");
-        List<Hardware> hardwares = hardwareService.listAll();
+        List<Hardware> hardwares = hardwareService.findAllSorted(direction, sortField);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", direction);
+        model.addAttribute("reverseSortDir", direction.equals("asc") ? "desc" : "asc");
         model.addAttribute("hardwares", hardwares);
         LOGGER.info("listViewAll(...)");
-        return "list-hardware";
+        return "main-hardware2";
     }
+
+//    @GetMapping
+//    public String listViewAll(Model model) {
+//        LOGGER.info("listViewAll()");
+//        List<Hardware> hardwares = hardwareService.listAll();
+//        model.addAttribute("hardwares", hardwares);
+//        LOGGER.info("listViewAll(...)");
+//        return "main-hardware2";
+//    }
 
     @GetMapping("/sort/")
     public String listViewAllSorted(@RequestParam("sortField") String sortField,
@@ -64,31 +78,31 @@ public class WebHardwareController {
         return "sort-hardware";
     }
 
-    @GetMapping
-    public String listView(Model model){
-        LOGGER.info("listView()");
-        return findHardwarePage(1, "inventoryNo", "asc", model);
-    }
+//    @GetMapping("/list")
+//    public String listView(Model model){
+//        LOGGER.info("listView()");
+//        return findHardwarePage(1, "inventoryNo", "asc", model);
+//    }
 
-    @GetMapping(value = "/page/{pageNo}")
-    public String findHardwarePage(@PathVariable(value = "pageNo") int pageNo,
-                                   @RequestParam(value = "sortField", defaultValue = "inventoryNo") String sortField,
-                                   @RequestParam(value = "sortDir",defaultValue = "asc") String sortDirection,
-                                   Model model) {
-        LOGGER.info("findHardwarePage()");
-        int size = 10;
-        Page<Hardware> hardwaresPage = hardwareService.pagesHardware(pageNo, size, sortField, sortDirection) ;
-        List<Hardware> hardwares = hardwaresPage.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", hardwaresPage.getTotalPages());
-        model.addAttribute("totalItems", hardwaresPage.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDirection);
-        model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
-        model.addAttribute("hardwares", hardwares);
-        LOGGER.info("pageing(...)");
-        return "main-hardware";
-    }
+//    @GetMapping(value = "/page/{pageNo}")
+//    public String findHardwarePage(@PathVariable(value = "pageNo") int pageNo,
+//                                   @RequestParam(value = "sortField", defaultValue = "inventoryNo") String sortField,
+//                                   @RequestParam(value = "sortDir",defaultValue = "asc") String sortDirection,
+//                                   Model model) {
+//        LOGGER.info("findHardwarePage()");
+//        int size = 10;
+//        Page<Hardware> hardwaresPage = hardwareService.pagesHardware(pageNo, size, sortField, sortDirection) ;
+//        List<Hardware> hardwares = hardwaresPage.getContent();
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", hardwaresPage.getTotalPages());
+//        model.addAttribute("totalItems", hardwaresPage.getTotalElements());
+//        model.addAttribute("sortField", sortField);
+//        model.addAttribute("sortDir", sortDirection);
+//        model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+//        model.addAttribute("hardwares", hardwares);
+//        LOGGER.info("pageing(...)");
+//        return "main-hardware";
+//    }
 
     @GetMapping("/create")
     public String createView(Model model) {
@@ -109,14 +123,12 @@ public class WebHardwareController {
 
     @GetMapping(value = "/read/{id}")
     public String findHardware(@PathVariable(name = "id") Long id,
-                               @RequestParam(name = "pageNo") int pageNo,
                                Model model) throws HardwareNotFoundException {
         LOGGER.info("findHardware(" + id + ")");
         Hardware findHardware = hardwareService.read(id);
         model.addAttribute("hardware", findHardware);
-        model.addAttribute("pageNo", pageNo);
         LOGGER.info("findHardware(...)" + findHardware);
-        return "view-hardware";
+        return "view-hardware2";
     }
 
     @GetMapping("/update/{id}")
@@ -201,8 +213,8 @@ public class WebHardwareController {
     @GetMapping(value = "/search/query")
     public String findHardwareByQuery(
             @RequestParam(value = "query") String query,
-            Model model) throws IOException {
-        int pageSize=10;
+            Model model)  {
+        int pageSize=1000;
         int pageNo=1;
         String sortField="name";
         String sortDir="desc";
@@ -216,6 +228,6 @@ public class WebHardwareController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("hardwares", hardware);
-        return "main-hardware";
+        return "main-hardware2";
     }
 }

@@ -7,16 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
-import pl.medos.cmmsApi.model.Employee;
 import pl.medos.cmmsApi.model.Hardware;
 import pl.medos.cmmsApi.repository.HardwareRepository;
-import pl.medos.cmmsApi.repository.entity.EmployeeEntity;
 import pl.medos.cmmsApi.repository.entity.HardwareEntity;
 import pl.medos.cmmsApi.service.HardwareService;
 import pl.medos.cmmsApi.service.mapper.HardwareMapper;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -117,7 +114,7 @@ public class HardwareServiceImpl implements HardwareService {
     public Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
         LOGGER.info("findHardwarePageByQuery()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<HardwareEntity> hardwareEntityPage = hardwareRepository.findByQueryPagable(query, pageable);
         Page<Hardware> hardware = hardwareMapper.pageEntityToModels(hardwareEntityPage);
         LOGGER.info("findHardwarePageByQuery(...)");

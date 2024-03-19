@@ -55,4 +55,5 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
             "LOWER(p.ipAddress) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(p.type) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     Page<HardwareEntity> findByQueryPagable(String keyword, Pageable pageable);
+
 }

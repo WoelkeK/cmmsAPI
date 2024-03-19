@@ -20,5 +20,6 @@ public interface HardwareService {
     void deleteAll();
     Hardware findByIpAddress(String remoteIP);
     Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
+
 }
 
