@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,9 +30,11 @@ public class ImportHardwareFromXls implements ImportHardware {
     private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
 
     private HardwareService hardwareService;
+    private ModelMapper modelMapper;
 
-    public ImportHardwareFromXls(HardwareService hardwareService) {
+    public ImportHardwareFromXls(HardwareService hardwareService, ModelMapper modelMapper) {
         this.hardwareService = hardwareService;
+        this.modelMapper = modelMapper;
     }
 
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
@@ -71,7 +75,9 @@ public class ImportHardwareFromXls implements ImportHardware {
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
                             break;
                         case BOOLEAN:
+                            LOGGER.info("Bool cell = " + cell.getBooleanCellValue());
                             rowDataMap.put(hardwares.get(k), String.valueOf(cell.getBooleanCellValue()));
+                            break;
                         case _NONE:
                             rowDataMap.put(hardwares.get(k), empty);
                             break;
@@ -79,15 +85,9 @@ public class ImportHardwareFromXls implements ImportHardware {
                     }
                 }
             }
-
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
-            JsonHardware rawData = mapper.convertValue(rowDataMap, JsonHardware.class);
+            JsonHardware rawData = modelMapper.map(rowDataMap, JsonHardware.class);
             rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
+
         }
         List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
         return hardwares;
@@ -95,10 +95,9 @@ public class ImportHardwareFromXls implements ImportHardware {
 
     private List<Hardware> hardwareDataExcelConverter(List<JsonHardware> hardwares) {
         LOGGER.info("hardwareDataExcelConverter()");
-
         List<Hardware> convertedHardwares =
                 hardwares.stream().map(m -> {
-                                    LOGGER.info("Row create()");
+
                                     Hardware hardware = new Hardware();
                                     hardware.setInventoryNo(m.getInventoryNo());
                                     hardware.setDepartment(m.getDepartment());
@@ -174,7 +173,7 @@ public class ImportHardwareFromXls implements ImportHardware {
 
         if (condition != null) {
 
-            if (condition.equalsIgnoreCase("fałsz")) {
+            if (condition.equalsIgnoreCase("false")) {
                 return false;
             } else {
                 return true;
