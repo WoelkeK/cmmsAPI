@@ -75,5 +75,5 @@ input .form-control{
 }
 
 #progressBar .animate-progress {
-    animation: progress 3s linear infinite;
+    animation: progress 2s linear infinite;
 }
