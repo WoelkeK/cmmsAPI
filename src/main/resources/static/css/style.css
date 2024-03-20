@@ -68,3 +68,12 @@ ul{
 input .form-control{
     font-size: 4rem;
 }
+
+@keyframes progress {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+#progressBar .animate-progress {
+    animation: progress 3s linear infinite;
+}
