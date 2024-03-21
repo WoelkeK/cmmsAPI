@@ -89,7 +89,7 @@ public class WebJobController {
                                 @RequestParam("sortDir") String sortDirection,
                                 Model model) {
         LOGGER.info("listView()");
-        int size = 5;
+        int size = 10;
         Page<Job> jobPages = jobService.findJobPages(pageNo, size, sortField, sortDirection);
         List<Job> jobs = jobPages.getContent();
         model.addAttribute("currentPage", pageNo);
@@ -112,7 +112,7 @@ public class WebJobController {
     @GetMapping(value = "/update/{id}")
     public String updateView(
             @PathVariable(name = "id") Long id,
-            @RequestParam(name = "pageNo") int pageNo,
+            @RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo,
             Model model) throws Exception {
         LOGGER.info("updateView()");
         Job job = jobService.findJobById(id);
@@ -230,25 +230,55 @@ public class WebJobController {
     }
 
     @GetMapping("/search/query")
-    public String searchJobByName(
-            @RequestParam(value = "query") String query,
-            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            Model model) {
-        LOGGER.info("search()");
-        int pagesize = 10;
-        Page<Job> jobByQuery = jobService.findJobByQuery(pageNo, pagesize, query);
-        actualJobs = jobByQuery.getContent();
-        LOGGER.info("findJobByQuery()");
+    public String searchJobByName(@RequestParam(name = "query") String query,
+                                  @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+                                  Model model) {
+
+        LOGGER.info("search() " + pageNo);
+        List<Job> jobByQuery = jobService.getJobList(query);
+
         model.addAttribute("jobs", jobByQuery);
-        model.addAttribute("currentPage", pageNo);
         List<Department> departments = departmentService.findAllDepartments();
         model.addAttribute("departments", departments);
         List<Employee> employees = employeeService.finadAllEmployees();
         model.addAttribute("employees", employees);
         List<Machine> machines = machineService.findAllMachines();
         model.addAttribute("machines", machines);
+        model.addAttribute("currentPage", pageNo);
+        LOGGER.info("listView(...)");
         return "main-job";
     }
+
+
+//
+//    @GetMapping("/search/query")
+//    public String searchJobByName(
+//            @RequestParam(value = "query") String query,
+//            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+//            Model model) {
+//        LOGGER.info("search()");
+//        int pagesize = 10;
+//        String sortField = "requestDate";
+//        String sortDirection = "asc";
+//        Page<Job> jobByQuery = jobService.findJobByQuery(pageNo, pagesize, query);
+//        actualJobs = jobByQuery.getContent();
+//        LOGGER.info("findJobByQuery()");
+//        model.addAttribute("jobs", jobByQuery);
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", jobByQuery.getTotalPages());
+//        model.addAttribute("totalItems", jobByQuery.getTotalElements());
+//        model.addAttribute("sortField", sortField);
+//        model.addAttribute("sortDir", sortDirection);
+//        model.addAttribute("reverseSortDir", sortDirection.equals("asc") ? "desc" : "asc");
+//        List<Department> departments = departmentService.findAllDepartments();
+//        model.addAttribute("departments", departments);
+//        List<Employee> employees = employeeService.finadAllEmployees();
+//        model.addAttribute("employees", employees);
+//        List<Machine> machines = machineService.findAllMachines();
+//        model.addAttribute("machines", machines);
+//        LOGGER.info("listView(...)");
+//        return "main-job";
+//    }
 
     @GetMapping(value = "/file")
     public String showUploadForm() {

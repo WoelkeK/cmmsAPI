@@ -20,4 +20,5 @@ public interface JobService {
     Page<Job> findJobByQuery(int pageNo, int pagesize, String query);
     void deleteAllJobs();
     LocalDateTime calculateFutureDate(LocalDateTime initialDate, DateOffset unit, int amount);
+    List<Job> getJobList(String query);
 }

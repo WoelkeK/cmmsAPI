@@ -165,6 +165,12 @@ public class JobServiceImpl implements JobService {
         }
     }
 
+    @Override
+    public List<Job> getJobList(String query) {
+        List<JobEntity> jobEntities = jobRepository.findByQuery(query);
+        return jobMapper.listModels(jobEntities);
+    }
+
     @Scheduled(fixedRate = 10000)
     public void checkAndUpdate() {
 
