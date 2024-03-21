@@ -13,6 +13,7 @@ import pl.medos.cmmsApi.repository.entity.HardwareEntity;
 import pl.medos.cmmsApi.service.HardwareService;
 import pl.medos.cmmsApi.service.mapper.HardwareMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -104,10 +105,15 @@ public class HardwareServiceImpl implements HardwareService {
     }
 
     @Override
-    public Hardware findByIpAddress(String ipAddres) {
+    public List<Hardware> findByIpAddress(String ipAddres) {
         LOGGER.info("findByIpAddress");
-        HardwareEntity byIpAddress = hardwareRepository.findByIpAddress(ipAddres).orElse(new HardwareEntity());
-        return hardwareMapper.mapEntityToModel(byIpAddress);
+        Optional<List<HardwareEntity>> byIpAddress = hardwareRepository.findByIpAddress(ipAddres);
+        if (byIpAddress.isPresent()) {
+            List<HardwareEntity> hardwareEntities = byIpAddress.get();
+            return hardwareMapper.litsEntityToModels(hardwareEntities);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override

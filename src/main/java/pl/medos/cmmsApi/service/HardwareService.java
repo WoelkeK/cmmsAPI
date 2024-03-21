@@ -18,7 +18,7 @@ public interface HardwareService {
     Page<Hardware> pagesHardware(int pageNo, int size, String sortField, String sortDirection);
     List<Hardware> findAllSorted(String direction, String field);
     void deleteAll();
-    Hardware findByIpAddress(String remoteIP);
+    List<Hardware> findByIpAddress(String remoteIP);
     Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query);
 
 }

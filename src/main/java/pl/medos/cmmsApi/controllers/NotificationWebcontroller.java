@@ -166,9 +166,9 @@ public class NotificationWebcontroller {
     }
 
     @GetMapping(value = "/export")
-    public void exportHardwares(HttpServletResponse response) throws Exception {
+    public void exportNotification(HttpServletResponse response, Model model) throws Exception {
         LOGGER.info("export()");
-        List<Notification> notifications = notificationService.getAllNotifications();
+        List<Notification>notifications = notificationService.getAllNotifications();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());

@@ -215,15 +215,14 @@ public class WebEngineerController {
     }
 
     @GetMapping(value = "/export")
-    public void exportEngineers(@ModelAttribute(name = "engineers") List<Engineer> engineers,
-                                HttpServletResponse response, Model model) throws Exception {
+    public void exportEngineers(HttpServletResponse response) throws Exception {
         LOGGER.info("export()");
-        engineers = engineerService.finadAllEngineers();
+        List<Engineer>engineers = engineerService.finadAllEngineers();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateTimeFormat.format(new Date());
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment;filename=employee" + currentDateTime + ".xlsx";
+        String headerValue = "attachment;filename=engineers" + currentDateTime + ".xlsx";
         List<Employee> employees = engineers.stream().map(engineer -> mapper.map(engineer, Employee.class)).toList();
         response.setHeader(headerKey, headerValue);
         exportService.excelEmployeeModelGenerator(employees);

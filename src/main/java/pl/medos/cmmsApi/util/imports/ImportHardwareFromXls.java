@@ -115,8 +115,11 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     hardware.setBitRecoveryKey(m.getBitRecoveryKey());
                                     hardware.setDescription(m.getDescription());
 
-                                    Hardware dbHardware = hardwareService.findByIpAddress(m.getIpAddress());
-                                    if(dbHardware.getIpAddress()==null) {
+                                    List<Hardware> byIpAddress = hardwareService.findByIpAddress(m.getIpAddress());
+
+                                    Hardware dbHardware = byIpAddress.stream().findFirst().orElse(new Hardware());
+
+                                    if (dbHardware.getIpAddress() == null) {
                                         hardware.setIpAddress(m.getIpAddress());
                                     }
 

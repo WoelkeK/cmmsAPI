@@ -18,6 +18,7 @@ import pl.medos.cmmsApi.service.HardwareService;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Component
@@ -40,7 +41,12 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         }
         LOGGER.info("IP Remote address: " + remoteIP);
         String requestURI = request.getRequestURI();
-        Hardware ipAddressRole = hardwareService.findByIpAddress(remoteIP);
+
+        List<Hardware> byIpAddress = hardwareService.findByIpAddress(remoteIP);
+        Hardware ipAddressRole = byIpAddress.stream().findFirst().orElse(
+                new Hardware()
+        );
+
         req.setAttribute("isAdmin", false);
         if (ipAddressRole.getId() == null) {
             LOGGER.info("No match found in the repository for IP: " + remoteIP);

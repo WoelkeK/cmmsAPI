@@ -287,7 +287,7 @@ public class WebJobController {
     }
 
     @GetMapping(value = "/export")
-    public void exportJobs(HttpServletResponse response, Model model) throws Exception {
+    public void exportJobs(HttpServletResponse response) throws Exception {
         LOGGER.info("export()");
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

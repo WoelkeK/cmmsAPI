@@ -43,7 +43,7 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
 
 //    Boolean existsByIpAddressAndPermission(String clientIp);
 
-   Optional<HardwareEntity> findByIpAddress(String ipAddress);
+   Optional<List<HardwareEntity>> findByIpAddress(String ipAddress);
 
 
     @Query("SELECT p FROM HardwareEntity  p WHERE " +

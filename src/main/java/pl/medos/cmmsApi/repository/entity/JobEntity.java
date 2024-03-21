@@ -25,11 +25,11 @@ public class JobEntity {
     private Long id;
 //    @CreationTimestamp
     private LocalDateTime requestDate;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "engineer_id")
     private EngineerEntity engineer;
 
