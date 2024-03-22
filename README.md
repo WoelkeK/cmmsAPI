@@ -16,7 +16,7 @@
 - IT hardware
 - Simple cmms
 
-
-
-
 ![image](https://github.com/WoelkeK/cmmsAPI/assets/79689140/6d891bec-7fa3-42c5-b092-cd9560ee2d64)
+
+There is swagger included for API as well
+![image](https://github.com/WoelkeK/cmmsAPI/assets/79689140/4017f88b-3c79-404a-b5e7-3a872dc80259)
