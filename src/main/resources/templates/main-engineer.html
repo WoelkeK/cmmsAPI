@@ -578,6 +578,7 @@
                                                     Email
                                                 </td>
 
+
                                                 <td class="whitespace-nowrap align-text-top text-center px-3 py-4 text-gray-900">
                                                     <input checked id="bordered-checkbox-2" type="checkbox" value=""
                                                            name="bordered-checkbox" th:checked="${engineer.isActive}"
@@ -587,6 +588,8 @@
 
                                                 <td th:if="${isAdmin} or ${jFull}"
                                                     class="relative whitespace-nowrap align-text-top py-4 pl-3 pr-4 text-right text-lg font-medium sm:pr-6">
+                                                <td th:if="${isAdmin} or ${jFull}" class="relative whitespace-nowrap align-text-top py-4 pl-3 pr-4 text-right text-lg font-medium sm:pr-6">
+
 
                                                     <a th:href="@{/engineers/update/{id}(id=${engineer.id}, pageNo=${currentPage})}"
                                                        class="text-green-600 hover:text-green-300">
