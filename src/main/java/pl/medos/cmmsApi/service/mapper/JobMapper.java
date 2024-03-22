@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -14,15 +15,14 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class JobMapper {
 
-    private static final Logger LOGGER = Logger.getLogger(JobMapper.class.getName());
     private JobEntity jobEntity;
-
 
     public List<Job> listModels(List<JobEntity> jobEntities) {
 
-        LOGGER.info("list()" + jobEntities);
+        log.debug("list()" + jobEntities);
         List<Job> jobModels = jobEntities.stream()
                 .map(this::entityToModel)
                 .collect(Collectors.toList());
@@ -30,16 +30,16 @@ public class JobMapper {
     }
 
     public Page<Job> entitiesJobToModelsPage(Page<JobEntity> jobPageEntities) {
-        LOGGER.info("entitiesJobToModelPage()");
+        log.debug("entitiesJobToModelPage()");
         ModelMapper modelMapper = new ModelMapper();
         Page<Job> jobPageModel = jobPageEntities.map(JobEntity -> modelMapper.map(JobEntity, Job.class));
-        LOGGER.info("entitiesJobToModelPage(...)");
+        log.debug("entitiesJobToModelPage(...)");
         return jobPageModel;
     }
 
     public Job entityToModel(JobEntity jobEntity) {
 
-        LOGGER.info("entityToModel" + jobEntity);
+        log.debug("entityToModel" + jobEntity);
         ModelMapper modelMapper = new ModelMapper();
         Job jobModel = modelMapper.map(jobEntity, Job.class);
         return jobModel;
@@ -47,7 +47,7 @@ public class JobMapper {
 
     public JobEntity modelToEntity(Job job) {
 
-        LOGGER.info("modelToEntity()" + job);
+        log.debug("modelToEntity()" + job);
         ModelMapper modelMapper = new ModelMapper();
         JobEntity jobEntity = modelMapper.map(job, JobEntity.class);
         return jobEntity;

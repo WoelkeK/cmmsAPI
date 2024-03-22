@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.util.imports;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.schemas.office.visio.x2012.main.CellType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.NumberToTextConverter;
@@ -26,16 +27,11 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 @Component
+@Slf4j
 public class ImportJobFromXls implements ImportJob {
-
-    private static final Logger LOGGER = Logger.getLogger(ImportJobFromXls.class.getName());
     private List<String> jobs = new ArrayList<>(Arrays.asList
             ("requestDate", "employee", "engineer", "department", "machine", "message", "solution", "jobStartTime",
-                    "jobStopTime", "jobStatus", "jobShedule","decision","dateOffset", "status", "offset"));
-
-
-//                    , "decision", "offset", "dateOffset","status"));
-
+                    "jobStopTime", "jobStatus", "jobShedule", "decision", "dateOffset", "status", "offset", "photoFileName"));
     private EmployeeService employeeService;
     private EngineerService engineerService;
     private DepartmentService departmentService;
@@ -53,12 +49,10 @@ public class ImportJobFromXls implements ImportJob {
     @Override
     public List<Job> importExcelJobData(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelJobsData()");
+       log.debug("importExcelJobsData()");
         String empty = "";
-
         List<JsonJob> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
-
         IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -78,24 +72,19 @@ public class ImportJobFromXls implements ImportJob {
                     switch (cell.getCellType()) {
                         case NUMERIC:
 
-                            if (k == row.getLastCellNum()-1) {
-                                LOGGER.info("Cell Number value");
+                            if (k == row.getLastCellNum() - 2) {
                                 rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
 
                             } else {
-                                LOGGER.info("Cell Data value");
                                 rowDataMap.put(jobs.get(k), (cell.getDateCellValue().toString()));
                             }
-
                             break;
                         case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(jobs.get(k), cell.getStringCellValue().replaceAll("  ", "").trim());
                             break;
                         case _NONE:
                             rowDataMap.put(jobs.get(k), empty);
                             break;
-
                     }
                 }
             }
@@ -105,55 +94,35 @@ public class ImportJobFromXls implements ImportJob {
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
             JsonJob rawData = mapper.convertValue(rowDataMap, JsonJob.class);
             rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
+            log.debug("rawData " + rawData);
         }
         List<Job> jobs = jobsDataExcelConverter(rawDataList);
         return jobs;
     }
 
     private List<Job> jobsDataExcelConverter(List<JsonJob> jobs) {
-        LOGGER.info("jobDataExcelConverter()");
+        log.debug("jobDataExcelConverter()");
 
         List<Job> newJobs =
                 jobs.stream().map(m -> {
 
                                     Job job = new Job();
-//                                    job.setId(Long.parseLong(String.valueOf(m.getId())));
-
                                     Employee employee = employeeService.findByEmployee(m.getEmployee());
-                                    LOGGER.info("Imported employee() " + employee);
                                     job.setEmployee(employee);
-
                                     Engineer engineer = engineerService.findByName(m.getEngineer());
-                                    LOGGER.info("Imported engineer() " + engineer);
                                     job.setEngineer(engineer);
-
                                     Department departmentByName = departmentService.findByName(m.getDepartment());
-                                    LOGGER.info("Imported department() " + departmentByName);
                                     job.setDepartment(departmentByName);
-
                                     Machine machine = machineService.findByName(m.getMachine());
-                                    LOGGER.info("Imported machine() " + machine);
                                     job.setMachine(machine);
-
                                     job.setMessage(m.getMessage());
                                     job.setSolution(m.getSolution());
-
-                                    if (job.getOriginalImage() == null) {
-                                        LOGGER.info("default image");
-                                        byte[] bytes = imageService.imageToByteArray();
-                                        job.setResizedImage(bytes);
-                                        job.setOriginalImage(bytes);
-                                    }
-
-                                    LOGGER.info("image prepared");
 
                                     if (m.getJobStartTime() == null || m.getJobStartTime().isEmpty()) {
                                         job.setJobStartTime(null);
                                     } else {
                                         LocalDateTime jobStartTime = DateConverter.convertDateTime(m.getJobStartTime());
                                         job.setJobStartTime(jobStartTime);
-                                        LOGGER.info(jobStartTime.toString());
                                     }
 
                                     if (m.getJobStopTime() == null || m.getJobStopTime().isEmpty()) {
@@ -161,16 +130,13 @@ public class ImportJobFromXls implements ImportJob {
                                     } else {
                                         LocalDateTime jobStopTime = DateConverter.convertDateTime(m.getJobStopTime());
                                         job.setJobStopTime(jobStopTime);
-                                        LOGGER.info(jobStopTime.toString());
                                     }
 
                                     if (m.getRequestDate() == null || m.getRequestDate().isEmpty()) {
-                                        LOGGER.info("RequestDate null");
                                         job.setRequestDate(null);
                                     } else {
                                         LocalDateTime requestDate = DateConverter.convertDateTime(m.getRequestDate());
                                         job.setRequestDate(requestDate);
-                                        LOGGER.info(requestDate.toString());
                                     }
 
                                     if (m.getJobStatus() == null) {
@@ -184,7 +150,6 @@ public class ImportJobFromXls implements ImportJob {
                                     } else {
                                         LocalDateTime jobShedule = DateConverter.convertDateTime(m.getJobShedule());
                                         job.setJobStopTime(jobShedule);
-                                        LOGGER.info(jobShedule.toString());
                                     }
 
                                     if (m.getDecision() == null) {
@@ -205,32 +170,33 @@ public class ImportJobFromXls implements ImportJob {
                                         job.setStatus(m.getStatus());
                                     }
 
-                                    if(m.getOffset()==null || m.getOffset().equals("")){
+                                    if (m.getOffset() == null || m.getOffset().equals("")) {
                                         job.setOffset(0);
-                                    }else{
+                                    } else {
                                         job.setOffset(Integer.parseInt(m.getOffset()));
                                     }
 
-                                    LOGGER.info("Offset: " + m.getOffset());
-
-//                                    job.setOpen(true); // TODO: 26.01.2024 napisać konwersje podobnie jak permissions
-                                    LOGGER.info("createJobMap(...)");
+                                    if (m.getPhotoFileName() == null || m.getPhotoFileName().isBlank()) {
+                                        job.setPhotoFileName("default.jpg");
+                                    } else {
+                                        job.setPhotoFileName(m.getPhotoFileName());
+                                    }
                                     return job;
                                 }
                         )
-
                         .toList();
 
-        LOGGER.info("employeeDataExcelConverter(...)");
+        log.debug("employeeDataExcelConverter(...)");
         return newJobs;
     }
-
 
     static DateOffset convertXLSDateOffsetField(String condition) {
 
         if (condition != null) {
 
             switch (condition) {
+                case "GODZINY":
+                    return DateOffset.GODZINY;
                 case "DNI":
                     return DateOffset.DNI;
                 case "TYGODNIE":

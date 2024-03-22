@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,8 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/api/departments")
 @CrossOrigin
+@Slf4j
 public class DepartmentController {
-
-    private static final Logger LOGGER = Logger.getLogger(DepartmentController.class.getName());
 
     private DepartmentService departmentService;
 
@@ -31,48 +31,48 @@ public class DepartmentController {
 
     @GetMapping
     public List list() {
-        LOGGER.info("departmentList()");
+        log.debug("departmentList()");
         List departments = departmentService.findAllDepartments();
-        LOGGER.info("departmentList(...)" + departments);
+        log.debug("departmentList(...)" + departments);
         return departments;
     }
 
     @PostMapping("/create")
     public Department create(@RequestBody Department department) {
-        LOGGER.info("createDepartment(" + department + ")");
+        log.debug("createDepartment(" + department + ")");
         Department createdDepartment = departmentService.createDepartment(department);
-        LOGGER.info("createDepartment(...)");
+        log.debug("createDepartment(...)");
         return createdDepartment;
     }
 
     @GetMapping("/read/{id}")
     public Department read(@PathVariable(name = "id") Long id) throws DepartmentNotFoundException {
-        LOGGER.info("readDepartment(" + id + ")");
+        log.debug("readDepartment(" + id + ")");
         Department readedMachine = departmentService.findDepartmentById(id);
-        LOGGER.info("readDepartment(...) " + readedMachine);
+        log.debug("readDepartment(...) " + readedMachine);
         return readedMachine;
     }
 
     @PutMapping("/update/{id}")
-    public Department update(@PathVariable (name = "id") Long id,
-            @RequestBody Department department) throws DepartmentNotFoundException {
-        LOGGER.info("updateDepartment(" + department + ")");
+    public Department update(@PathVariable(name = "id") Long id,
+                             @RequestBody Department department) throws DepartmentNotFoundException {
+        log.debug("updateDepartment(" + department + ")");
         Department updatedMachine = departmentService.updateDepartment(department, id);
-        LOGGER.info("updateDepartment(...) " + updatedMachine);
+        log.debug("updateDepartment(...) " + updatedMachine);
         return updatedMachine;
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        LOGGER.info("deleteDepartment(" + id + ")");
+        log.debug("deleteDepartment(" + id + ")");
         departmentService.deleteDepartment(id);
-        LOGGER.info("deleteDepartment(...)");
+        log.debug("deleteDepartment(...)");
     }
 
     @DeleteMapping("/deleteAll")
     public void delete() {
-        LOGGER.info("deleteAllDepartments()");
+        log.debug("deleteAllDepartments()");
         departmentService.deleteAll();
-        LOGGER.info("deleteAllDepartments(...)");
+        log.debug("deleteAllDepartments(...)");
     }
 }

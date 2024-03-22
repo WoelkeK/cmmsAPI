@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.util.imports;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.NumberToTextConverter;
@@ -9,6 +10,7 @@ import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.medos.cmmsApi.model.Department;
 import pl.medos.cmmsApi.model.Machine;
@@ -24,9 +26,9 @@ import java.util.*;
 import java.util.logging.Logger;
 
 @Component
-public class ImportMachineFromXls implements ImportMachine{
+@Slf4j
+public class ImportMachineFromXls implements ImportMachine {
 
-    private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
 
     private List<String> machines = new ArrayList<>(Arrays.asList("name", "model", "manufactured", "serialNumber", "installDate", "status", "department"));
 
@@ -38,17 +40,15 @@ public class ImportMachineFromXls implements ImportMachine{
 
     @Override
     public List<Machine> importExcelMachineData(MultipartFile fileName) throws IOException {
-        LOGGER.info("importExcelMAchinesData()");
+        log.debug("importExcelMAchinesData()");
 
         List<MachineDep> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
-
         IOUtils.setByteArrayMaxOverride(Integer.MAX_VALUE);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
         Person person = new Person();
         Iterator<Row> rowIterator = sheet.iterator();
-
         while (rowIterator.hasNext()) {
 
             Row row = rowIterator.next();
@@ -75,23 +75,20 @@ public class ImportMachineFromXls implements ImportMachine{
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
             MachineDep rawData = mapper.convertValue(rowDataMap, MachineDep.class);
             rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
         }
         List<Machine> machines = machineDataExcelConverter(rawDataList);
         return machines;
     }
 
     private List<Machine> machineDataExcelConverter(List<MachineDep> machineDeps) {
-        LOGGER.info("machineDataExcelConverter()");
+        log.debug("machineDataExcelConverter()");
 
         List<Machine> convertedMachines =
                 machineDeps.stream().map(m -> {
 
                                     Machine machine = new Machine();
-//                                    machine.setId(Long.parseLong((String.valueOf(m.getId()))));
                                     machine.setName(String.valueOf(m.getName()));
                                     machine.setModel(String.valueOf(m.getModel()));
                                     machine.setManufactured(Integer.valueOf(m.getManufactured()));
@@ -100,14 +97,13 @@ public class ImportMachineFromXls implements ImportMachine{
                                     machine.setDepartment(departmentByName);
                                     machine.setStatus(m.getStatus());
                                     machine.setInstallDate(LocalDateTime.now());
-
-                                    LOGGER.info("convertedMachine(...)");
+                                    log.debug("convertedMachine(...)");
                                     return machine;
                                 }
                         )
                         .toList();
 
-        LOGGER.info("machineDataExcelConverter(...)");
+        log.debug("machineDataExcelConverter(...)");
         return convertedMachines;
     }
 }

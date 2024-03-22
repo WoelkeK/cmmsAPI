@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.MachineNotFoundException;
 import pl.medos.cmmsApi.model.Machine;
@@ -10,9 +11,8 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/machines")
+@Slf4j
 public class MachineController {
-
-    private static final Logger LOGGER = Logger.getLogger(MachineController.class.getName());
 
     private MachineServiceImpl machineServiceImpl;
 
@@ -22,50 +22,49 @@ public class MachineController {
 
     @GetMapping
     public List list() {
-        LOGGER.info("machineList()");
+        log.debug("machineList()");
         List machines = machineServiceImpl.findAllMachines();
-        LOGGER.info("machineList(...)" + machines);
+        log.debug("machineList(...)" + machines);
         return machines;
     }
 
     @PostMapping("/create")
     public Machine create(@RequestBody Machine machine) {
-        LOGGER.info("createMachine(" + machine + ")");
+        log.debug("createMachine(" + machine + ")");
         Machine createdMachine = machineServiceImpl.createMachine(machine);
-        LOGGER.info("createMachine(...)");
+        log.debug("createMachine(...)");
         return createdMachine;
     }
 
     @GetMapping("/read/{id}")
     public Machine read(@PathVariable(name = "id") Long id) throws MachineNotFoundException {
-        LOGGER.info("readMachine(" + id + ")");
+        log.debug("readMachine(" + id + ")");
         Machine readedMachine = machineServiceImpl.findMachineById(id);
-        LOGGER.info("readMachine(...) " + readedMachine);
+        log.debug("readMachine(...) " + readedMachine);
         return readedMachine;
     }
 
     @PutMapping("/update/{id}")
     public Machine update(@PathVariable(name = "id") Long id,
                           @RequestBody Machine machine) throws MachineNotFoundException {
-        LOGGER.info("updateMachine(" + machine + ")");
+        log.debug("updateMachine(" + machine + ")");
         Machine updatedMachine = machineServiceImpl.updateMachine(machine, id);
-        LOGGER.info("updateMachine(...) " + updatedMachine);
+        log.debug("updateMachine(...) " + updatedMachine);
         return updatedMachine;
-
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        LOGGER.info("deleteMachine(" + id + ")");
+        log.debug("deleteMachine(" + id + ")");
         machineServiceImpl.deleteMachine(id);
-        LOGGER.info("deleteMachine(...)");
+        log.debug("deleteMachine(...)");
     }
 
     @GetMapping("byDepartment")
     public List<Machine> findByDepartment(@RequestParam(name = "departmentId") Long id) {
-        LOGGER.info("findByDepartmentId()");
+        log.debug("findByDepartmentId()");
         List<Machine> machinesByDepartment = machineServiceImpl.findMachinesByDepartmentId(id);
-        LOGGER.info("findByDepartment(...)");
+        log.debug("findByDepartment(...)");
         return machinesByDepartment;
     }
 }

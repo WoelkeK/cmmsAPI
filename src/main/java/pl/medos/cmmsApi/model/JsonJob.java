@@ -18,17 +18,14 @@ import java.time.LocalDateTime;
 public class JsonJob {
 
     private String requestDate;
-//    private String user;
     private String employee;
     private String engineer;
     private String department;
     private String machine;
     private String message;
-//    private String directContact;
     private String solution;
     private String jobStartTime;
     private String jobStopTime;
-
     private String jobShedule;
     private Decision decision;
     private String dateOffset;
@@ -36,11 +33,6 @@ public class JsonJob {
     private JobStatus jobStatus;
     private String open;
     private String offset;
-
-
-
-
-//    private byte[] originalImage;
-//    private byte[] resizedImage;
+    private String photoFileName;
 
 }

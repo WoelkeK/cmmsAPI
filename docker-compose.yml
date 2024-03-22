@@ -6,12 +6,17 @@ services:
     restart: always
     ports:
       - "3307:3306"
+    command: --log_error_verbosity=2   # errors and warnings
     environment:
       MYSQL_DATABASE: cmms_db
       MYSQL_ROOT_PASSWORD: root
-#      MYSQL_USER: cmms
-      MYSQL_PASSWORD: root
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_USER: apps
+      MYSQL_PASSWORD: medos2023
+    #      MYSQL_ALLOW_EMPTY_PASSWORD: false
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
   web_cmms:
     build: .
@@ -20,5 +25,58 @@ services:
       - "8881:8080"
     depends_on:
       - mysql_db_service
+    volumes:
+      - /home/images:/home/images
+    networks:
+      - mynetwork
+
+  backup:
+    image: mysql:latest
+    volumes:
+      - /home/backups:/backup
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --skip-character-set-client-handshake
+    depends_on:
+      - mysql_db_service
+    networks:
+      - mynetwork
+
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        count=1
+        while true; do
+           file_name="/backup/dump_`date +%Y_%m_%d__%H%M`_${count}.sql.gz"
+           mysqldump -h mysql_db_service -uroot -proot --all-databases \
+           | gzip > $$file_name
+           echo "Backup file $$file_name has been generated."
+           count=`expr $$count + 1`
+           sleep 86400
+        done
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: mysql_db_service
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 300M
     links:
       - mysql_db_service
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql_db_service
+
+networks:
+  mynetwork:
+
+volumes:
+  db_data:

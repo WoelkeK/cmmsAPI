@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 @SpringBootApplication
 @EnableScheduling
+@PropertySource("classpath:app.properties")
 public class  CmmsApiApplication{
 
     public static void main(String[] args) {

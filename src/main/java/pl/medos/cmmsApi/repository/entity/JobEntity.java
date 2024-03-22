@@ -25,13 +25,12 @@ public class JobEntity {
     private Long id;
 //    @CreationTimestamp
     private LocalDateTime requestDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private EmployeeEntity employee;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "engineer_id")
-    @Nullable
     private EngineerEntity engineer;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,8 +40,6 @@ public class JobEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     private MachineEntity machine;
-
-
 
 
     private String message;
@@ -63,16 +60,9 @@ public class JobEntity {
     private String status;
 
     private boolean open;
-
     @Enumerated(EnumType.STRING)
     private JobStatus jobStatus;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "originalImage", columnDefinition = "MEDIUMBLOB")
-    private byte[] originalImage;
-    @Lob()
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "resizedImage", columnDefinition = "MEDIUMBLOB")
-    private byte[] resizedImage;
+    private String photoFileName;
+
 }

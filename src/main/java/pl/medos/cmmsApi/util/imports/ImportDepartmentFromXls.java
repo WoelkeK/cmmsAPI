@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.util.imports;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.NumberToTextConverter;
@@ -19,16 +20,15 @@ import java.util.*;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class ImportDepartmentFromXls implements ImportDepartment{
 
-    private static final Logger LOGGER = Logger.getLogger(ImportDepartmentFromXls.class.getName());
     private List<String> departments = new ArrayList<>(Arrays.asList("id", "name", "location"));
-
 
     @Override
     public List<Department> importExcelDepartmentsData(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelDepartmentsData()");
+        log.debug("importExcelDepartmentsData()");
         List<Department> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
 
@@ -53,7 +53,6 @@ public class ImportDepartmentFromXls implements ImportDepartment{
                             rowDataMap.put(departments.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             break;
                         case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(departments.get(k), cell.getStringCellValue().replaceAll(" ", "").trim());
                             break;
                     }
@@ -65,14 +64,14 @@ public class ImportDepartmentFromXls implements ImportDepartment{
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
             Department rawData = mapper.convertValue(rowDataMap, Department.class);
             rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
+            log.debug("rawData " + rawData);
         }
         List<Department> departments = departmentsDataExcelConverter(rawDataList);
         return departments;
     }
 
     public List<Department> departmentsDataExcelConverter(List<Department> departments) {
-        LOGGER.info("employeeDataExcelConverter()");
+        log.debug("employeeDataExcelConverter()");
         List<Department> departmentsCon =
                 departments.stream().map(m -> {
 
@@ -84,7 +83,7 @@ public class ImportDepartmentFromXls implements ImportDepartment{
                         })
                         .toList();
 
-        LOGGER.info("employeeDataExcelConverter(...)");
+        log.debug("employeeDataExcelConverter(...)");
         return departments;
     }
 }

@@ -2,11 +2,14 @@ package pl.medos.cmmsApi.util.imports;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,11 +26,16 @@ import java.util.*;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class ImportHardwareFromXls implements ImportHardware {
 
-    private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
-    @Autowired
     private HardwareService hardwareService;
+    private ModelMapper modelMapper;
+
+    public ImportHardwareFromXls(HardwareService hardwareService, ModelMapper modelMapper) {
+        this.hardwareService = hardwareService;
+        this.modelMapper = modelMapper;
+    }
 
     private List<String> hardwares = new ArrayList<>(Arrays.asList(
             "inventoryNo", "department", "status", "employee", "type", "name", "installDate", "invoiceNo", "systemNo",
@@ -38,7 +46,7 @@ public class ImportHardwareFromXls implements ImportHardware {
     @Override
     public List<Hardware> importHardware(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelHardwareData()");
+        log.debug("importExcelHardwareData()");
         List<JsonHardware> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
 
@@ -61,15 +69,14 @@ public class ImportHardwareFromXls implements ImportHardware {
                 if (null != (cell = row.getCell(k))) {
                     switch (cell.getCellType()) {
                         case NUMERIC:
-//                            rowDataMap.put(hardwares.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
                             rowDataMap.put(hardwares.get(k), (cell.getDateCellValue().toString()));
                             break;
                         case STRING:
-//                            rowDataMap.put(persons.get(k), cell.getStringCellValue());
                             rowDataMap.put(hardwares.get(k), cell.getStringCellValue().replaceAll("  ", " ").trim());
                             break;
                         case BOOLEAN:
                             rowDataMap.put(hardwares.get(k), String.valueOf(cell.getBooleanCellValue()));
+                            break;
                         case _NONE:
                             rowDataMap.put(hardwares.get(k), empty);
                             break;
@@ -77,26 +84,18 @@ public class ImportHardwareFromXls implements ImportHardware {
                     }
                 }
             }
-
-            ObjectMapper mapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
-
-            JsonHardware rawData = mapper.convertValue(rowDataMap, JsonHardware.class);
+            JsonHardware rawData = modelMapper.map(rowDataMap, JsonHardware.class);
             rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
         }
         List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
         return hardwares;
     }
 
     private List<Hardware> hardwareDataExcelConverter(List<JsonHardware> hardwares) {
-        LOGGER.info("hardwareDataExcelConverter()");
-
+        log.debug("hardwareDataExcelConverter()");
         List<Hardware> convertedHardwares =
                 hardwares.stream().map(m -> {
-                                    LOGGER.info("Row create()");
+
                                     Hardware hardware = new Hardware();
                                     hardware.setInventoryNo(m.getInventoryNo());
                                     hardware.setDepartment(m.getDepartment());
@@ -115,8 +114,10 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     hardware.setBitRecoveryKey(m.getBitRecoveryKey());
                                     hardware.setDescription(m.getDescription());
 
-                                    Hardware dbHardware = hardwareService.findByIpAddress(m.getIpAddress());
-                                    if(dbHardware.getIpAddress()==null) {
+                                    List<Hardware> byIpAddress = hardwareService.findByIpAddress(m.getIpAddress());
+                                    Hardware dbHardware = byIpAddress.stream().findFirst().orElse(new Hardware());
+
+                                    if (dbHardware.getIpAddress() == null) {
                                         hardware.setIpAddress(m.getIpAddress());
                                     }
 
@@ -132,7 +133,7 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     } else {
                                         LocalDate installDate = DateConverter.convertDate(m.getInstallDate());
                                         hardware.setInstallDate(installDate);
-                                        LOGGER.info(installDate.toString());
+                                        log.debug(installDate.toString());
                                     }
                                     if (m.getActivateDate() == null || m.getActivateDate().isEmpty()) {
                                         hardware.setActivateDate(null);
@@ -143,34 +144,28 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     hardware.setNRead(convertXLSField(m.getNRead()));
                                     hardware.setNEdit(convertXLSField(m.getNEdit()));
                                     hardware.setNDelete(convertXLSField(m.getNDelete()));
-
                                     hardware.setERead(convertXLSField(m.getERead()));
                                     hardware.setEEdit(convertXLSField(m.getEEdit()));
                                     hardware.setEDelete(convertXLSField(m.getEDelete()));
-
                                     hardware.setDRead(convertXLSField(m.getPRead()));
                                     hardware.setDEdit(convertXLSField(m.getPEdit()));
                                     hardware.setDDelete(convertXLSField(m.getPDelete()));
-
                                     hardware.setPRead(convertXLSField(m.getDRead()));
                                     hardware.setPEdit(convertXLSField(m.getDEdit()));
                                     hardware.setPDelete(convertXLSField(m.getDDelete()));
-
                                     hardware.setMRead(convertXLSField(m.getMRead()));
                                     hardware.setMEdit(convertXLSField(m.getMEdit()));
                                     hardware.setMDelete(convertXLSField(m.getMDelete()));
-
                                     hardware.setJRead(convertXLSField(m.getJRead()));
                                     hardware.setJEdit(convertXLSField(m.getJRead()));
                                     hardware.setJDelete(convertXLSField(m.getJRead()));
-
-                                    LOGGER.info("Row create(...)");
+                                    log.debug("Row create(...)");
                                     return hardware;
                                 }
                         )
                         .toList();
 
-        LOGGER.info("hardwareDataExcelConverter(...)");
+       log.debug("hardwareDataExcelConverter(...)");
         return convertedHardwares;
     }
 
@@ -178,7 +173,7 @@ public class ImportHardwareFromXls implements ImportHardware {
 
         if (condition != null) {
 
-            if (condition.equalsIgnoreCase("fałsz")) {
+            if (condition.equalsIgnoreCase("false")) {
                 return false;
             } else {
                 return true;

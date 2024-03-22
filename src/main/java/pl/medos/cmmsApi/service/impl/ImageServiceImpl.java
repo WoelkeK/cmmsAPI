@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,9 +18,8 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class ImageServiceImpl implements ImageService {
-
-    private static final Logger LOGGER = Logger.getLogger(ImageServiceImpl.class.getName());
 
     @Override
     public byte[] simpleResizeImage(byte[] originalImage, int targetWidth) throws IOException {
@@ -41,7 +41,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public byte[] imageToByteArray() {
-        LOGGER.info("imageToByteArray()");
+        log.debug("imageToByteArray()");
         URL resource = getClass().getResource("/image.jpg");
         BufferedImage bf = null;
         try {
@@ -64,42 +64,21 @@ public class ImageServiceImpl implements ImageService {
         return null;
     }
 
-//    @Override
-//    public Notification prepareImage(Notification notification, MultipartFile image) throws IOException {
-//        LOGGER.info("prepareImage()");
-//
-//        if (image.getSize() == 0) {
-//            LOGGER.info("default image");
-//            byte[] bytes = imageToByteArray();
-//            notification.setResizedImage(bytes);
-//            notification.setOriginalImage(bytes);
-//        } else {
-//            LOGGER.info("multipart file present");
-//            byte[] orginalImage = multipartToByteArray(image);
-//            byte[] resizeImage = simpleResizeImage(orginalImage, 300);
-//            byte[] resizeMaxImage = simpleResizeImage(orginalImage, 800);
-//            notification.setResizedImage(resizeImage);
-//            notification.setOriginalImage(resizeMaxImage);
-//        }
-//        LOGGER.info("image prepared");
-//        return notification;
-//    }
-
     @Override
     public Pass prepareImage(Pass pass, MultipartFile image) throws IOException {
-        LOGGER.info("prepareImage()");
+        log.debug("prepareImage()");
 
         if (image.getSize() == 0 && pass.getOriginalImage()==null) {
-            LOGGER.info("default image");
+            log.debug("default image");
             byte[] bytes = imageToByteArray();
             pass.setResizedImage(bytes);
             pass.setOriginalImage(bytes);
         } else {
-            LOGGER.info("multipart file present");
+            log.debug("multipart file present");
             if (image.isEmpty() || image.getBytes()==null) {
                 return pass;
             } else {
-                LOGGER.info("procesed Image() ");
+                log.debug("procesed Image() ");
                 byte[] orginalImage = multipartToByteArray(image);
                 byte[] resizeImage = simpleResizeImage(orginalImage, 100);
                 byte[] resizeMaxImage = simpleResizeImage(orginalImage, 300);
@@ -107,10 +86,9 @@ public class ImageServiceImpl implements ImageService {
                 pass.setResizedImage(resizeMaxImage);
             }
         }
-        LOGGER.info("image prepared");
+        log.debug("image prepared");
         return pass;
     }
-
 
     byte[] toByteArray(BufferedImage bi, String format) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

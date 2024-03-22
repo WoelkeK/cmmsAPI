@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -12,41 +13,40 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class HardwareMapper {
 
-    private static final Logger LOGGER = Logger.getLogger(HardwareMapper.class.getName());
-
     public Hardware mapEntityToModel(HardwareEntity hardwareEntity) {
-        LOGGER.info("mapEntityToModel()");
+        log.debug("mapEntityToModel()");
         ModelMapper modelMapper = new ModelMapper();
         Hardware hardware = modelMapper.map(hardwareEntity, Hardware.class);
-        LOGGER.info("mapEntityToModel(...)");
+        log.debug("mapEntityToModel(...)");
         return hardware;
     }
 
     public HardwareEntity mapModelToEntity(Hardware hardware) {
-        LOGGER.info("mapModelToEntity()");
+        log.debug("mapModelToEntity()");
         ModelMapper modelMapper = new ModelMapper();
         HardwareEntity hardwareEntity = modelMapper.map(hardware, HardwareEntity.class);
-        LOGGER.info("mapModelToEntity(...)");
+        log.debug("mapModelToEntity(...)");
         return hardwareEntity;
     }
 
     public List<Hardware> litsEntityToModels(List<HardwareEntity> hardwareEntities) {
-        LOGGER.info("listEntityToModel()");
+        log.debug("listEntityToModel()");
         ModelMapper modelMapper = new ModelMapper();
         List<Hardware> hardwares = hardwareEntities.stream()
                 .map(this::mapEntityToModel)
                 .toList();
-        LOGGER.info("listEntityToModel(...)");
+        log.debug("listEntityToModel(...)");
         return hardwares;
     }
 
-    public Page<Hardware> pageEntityToModels(Page<HardwareEntity> hardwareEntities){
-        LOGGER.info("pageEntityToModels()");
+    public Page<Hardware> pageEntityToModels(Page<HardwareEntity> hardwareEntities) {
+        log.debug("pageEntityToModels()");
         ModelMapper modelMapper = new ModelMapper();
         Page<Hardware> hardwarePage = hardwareEntities.map(HardwareEntity -> modelMapper.map(HardwareEntity, Hardware.class));
-        LOGGER.info("pageEntityToModels(...)");
+        log.debug("pageEntityToModels(...)");
         return hardwarePage;
     }
 }

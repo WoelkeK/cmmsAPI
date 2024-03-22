@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import pl.medos.cmmsApi.exception.HardwareNotFoundException;
 import pl.medos.cmmsApi.model.Hardware;
@@ -10,9 +11,8 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/hardwares")
+@Slf4j
 public class HardwareController {
-
-    private static final Logger LOGGER = Logger.getLogger(HardwareController.class.getName());
 
     private HardwareService hardwareService;
 
@@ -22,41 +22,41 @@ public class HardwareController {
 
     @GetMapping("/list")
     public List<Hardware> listAllHardware() {
-        LOGGER.info("listAllHardwrae()");
+        log.debug("listAllHardwrae()");
         List<Hardware> hardwares = hardwareService.listAll();
-        LOGGER.info("listAllHardware()");
+        log.debug("listAllHardware()");
         return hardwares;
     }
 
     @GetMapping("/read/{id}")
     public Hardware findHardwareById(@PathVariable(name = "id") Long id) throws HardwareNotFoundException {
-        LOGGER.info("readHardwrae()");
+        log.debug("readHardwrae()");
         Hardware readedHardware = hardwareService.read(id);
-        LOGGER.info("readHardwrae(...)");
+        log.debug("readHardwrae(...)");
         return readedHardware;
     }
 
     @PostMapping("/create")
     public Hardware createHardware(@ModelAttribute(name = "hardware") Hardware hardware) {
-        LOGGER.info("createHardwrae()");
+        log.debug("createHardwrae()");
         Hardware createdHardware = createHardware(hardware);
-        LOGGER.info("createHardwrae(...)");
+        log.debug("createHardwrae(...)");
         return createdHardware;
     }
 
     @PutMapping("/update/{id}")
     public Hardware update(@PathVariable(name = "id") Long id,
                            @ModelAttribute(name = "hardware") Hardware hardware) throws HardwareNotFoundException {
-        LOGGER.info("updateHardwrae()");
+        log.debug("updateHardwrae()");
         Hardware savedHardware = hardwareService.update(hardware);
-        LOGGER.info("updateHardwrae(...)");
+        log.debug("updateHardwrae(...)");
         return savedHardware;
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        LOGGER.info("deleteHardwrae()");
+        log.debug("deleteHardwrae()");
         hardwareService.delete(id);
-        LOGGER.info("deleteHardwrae(...)");
+        log.debug("deleteHardwrae(...)");
     }
 }

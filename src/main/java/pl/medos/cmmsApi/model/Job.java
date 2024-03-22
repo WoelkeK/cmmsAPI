@@ -2,6 +2,8 @@ package pl.medos.cmmsApi.model;
 
 
 import jakarta.persistence.Transient;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -26,12 +28,17 @@ public class Job {
 
     private Long id;
     private LocalDateTime requestDate;
-    private User user;
+//    private User user;
+    @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Employee employee;
     private Engineer engineer;
+    @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private Department department;
+
+    @NotNull(message = "Należy wprowadzić informację, czego dotyczy problem.")
+    @Valid
     private Machine machine;
-    //    private Cost cost;
+
     @NotEmpty(message = "Należy wprowadzić informację, czego dotyczy problem.")
     private String message;
     private Boolean directContact;
@@ -48,13 +55,9 @@ public class Job {
     private DateOffset dateOffset;
 
     private boolean open;
-
     private double calcCost;
     private String status;
-
     private JobStatus jobStatus;
-
-    private byte[] originalImage;
-    private byte[] resizedImage;
+    private String photoFileName;
 
 }

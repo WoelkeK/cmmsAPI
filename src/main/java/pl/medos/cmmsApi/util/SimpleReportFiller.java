@@ -20,9 +20,6 @@ public class SimpleReportFiller {
 
     private JasperPrint jasperPrint;
 
-//   @Autowired
-//    private DataSource dataSource;
-
     private Map<String, Object> parameters;
 
     public SimpleReportFiller() {

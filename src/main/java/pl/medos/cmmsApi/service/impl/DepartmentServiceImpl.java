@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 @Service
+@Slf4j
 public class DepartmentServiceImpl implements DepartmentService {
-
-    private static final Logger LOGGER = Logger.getLogger(DepartmentServiceImpl.class.getName());
 
     private DepartmentRepository departmentRepository;
     private DepartmentMapper departmentMapper;
@@ -34,75 +34,73 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> findAllDepartments() {
-        LOGGER.info("findAllDepartments()");
+        log.debug("findAllDepartments()");
         List<DepartmentEntity> departmentEntities = departmentRepository.findAll();
         List<Department> departmentModels = departmentMapper.listModels(departmentEntities);
-        LOGGER.info("findAllDepartments(...)");
+        log.debug("findAllDepartments(...)");
         return departmentModels;
     }
     @Override
     public Department findDepartmentByName(String name) {
-        LOGGER.info("findDeaprtmentsByName()" + name);
+        log.debug("findDeaprtmentsByName()" + name);
         List<DepartmentEntity> departmentEntity = departmentRepository.searchDepartmentByName(name);
         Department department = departmentMapper.entityToModel(departmentEntity.get(0));
-        LOGGER.info("findDepartmentsByName(...)" + department.getName());
+        log.debug("findDepartmentsByName(...)" + department.getName());
         return department;
     }
 
     @Override
     public Page<Department> findDepartmentPage(int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("findDepartmentPage(" + pageNo + ")");
+        log.debug("findDepartmentPage(" + pageNo + ")");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, size, sort);
         Page<DepartmentEntity> departmentEntities = departmentRepository.findAll(pageable);
         Page<Department> departmentPage = departmentMapper.mapEntitiesToModelsPage(departmentEntities);
-        LOGGER.info("findDepartmentPage(...)");
+        log.debug("findDepartmentPage(...)");
         return departmentPage;
     }
 
     @Override
     public Department findByName(String name) {
-        LOGGER.info("findDeaprtmentsByName()" + name);
-
-
+        log.debug("findDeaprtmentsByName()" + name);
         DepartmentEntity departmentEntity = departmentRepository.findByName(name);
-        LOGGER.info("Repository found " + departmentEntity.getName());
+        log.debug("Repository found " + departmentEntity.getName());
         Department department = departmentMapper.entityToModel(departmentEntity);
-        LOGGER.info("findDepartmentsByName(...)" + department.getName());
+        log.debug("findDepartmentsByName(...)" + department.getName());
         return department;
     }
 
     @Override
     public void deleteAll() {
-        LOGGER.info("deleteAll()");
+        log.debug("deleteAll()");
         departmentRepository.deleteAll();
-        LOGGER.info("deleteAll(...)");
+        log.debug("deleteAll(...)");
     }
 
     @Override
     public Department createDepartment(Department department) {
-        LOGGER.info("create(" + department + ")");
+        log.debug("create(" + department + ")");
         DepartmentEntity departmentEntity = departmentMapper.modelToEntity(department);
         DepartmentEntity savedDepartmentEntity = departmentRepository.save(departmentEntity);
         Department savedDepartmentModel = departmentMapper.entityToModel(savedDepartmentEntity);
-        LOGGER.info("create(...)" + savedDepartmentModel);
+        log.debug("create(...)" + savedDepartmentModel);
         return savedDepartmentModel;
     }
 
     @Override
     public Department findDepartmentById(Long id) throws DepartmentNotFoundException {
-        LOGGER.info("read(" + id + ")");
+        log.debug("read(" + id + ")");
         Optional<DepartmentEntity> optionalDepartmentEntity = departmentRepository.findById(id);
         DepartmentEntity departmentEntity = optionalDepartmentEntity.orElseThrow(
                 () -> new DepartmentNotFoundException("Brak działu o podanym id " + id));
         Department departmentModel = departmentMapper.entityToModel(departmentEntity);
-        LOGGER.info("read(...)" + departmentModel);
+        log.debug("read(...)" + departmentModel);
         return departmentModel;
     }
 
     @Override
     public Department updateDepartment(Department department, Long id) throws DepartmentNotFoundException {
-        LOGGER.info("update()" + department);
+        log.debug("update()" + department);
         Optional<DepartmentEntity> optionalDepartmentEntity = departmentRepository.findById(id);
         DepartmentEntity departmentEntity = optionalDepartmentEntity.orElseThrow(
                 () -> new DepartmentNotFoundException("Brak działu o podanym id " + id));
@@ -110,15 +108,15 @@ public class DepartmentServiceImpl implements DepartmentService {
         editedDepartmentEntity.setId(id);
         DepartmentEntity updatedDepartmentEntity = departmentRepository.save(editedDepartmentEntity);
         Department updatedDepartmentModel = departmentMapper.entityToModel(updatedDepartmentEntity);
-        LOGGER.info("update(...) " + updatedDepartmentModel);
+        log.debug("update(...) " + updatedDepartmentModel);
         return updatedDepartmentModel;
     }
 
     @Override
     public void deleteDepartment(Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         departmentRepository.deleteById(id);
-        LOGGER.info("delete(...)");
+        log.debug("delete(...)");
 
     }
 }

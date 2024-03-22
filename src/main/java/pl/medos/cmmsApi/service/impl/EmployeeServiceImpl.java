@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 @Service
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
-
-    private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class.getName());
 
     private EmployeeRepository employeeRepository;
     private EmployeeMapper employeeMapper;
@@ -30,37 +30,38 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> finadAllEmployees() {
-        LOGGER.info("findAllEmployees()");
+        log.debug("findAllEmployees()");
         List<EmployeeEntity> employeeEntities = employeeRepository.findAll();
         List<Employee> employees = employeeMapper.listModels(employeeEntities);
-        LOGGER.info("findAllEmployee(...)");
+        log.debug("findAllEmployee(...)");
         return employees;
     }
 
     @Override
     public Employee createEmployee(Employee employee) {
-        LOGGER.info("createEmployee()");
+        log.debug("createEmployee()");
+        employee.setIsActive(true);
         EmployeeEntity employeeEntity = employeeMapper.modelToEntity(employee);
         EmployeeEntity savedEmployeeEntity = employeeRepository.save(employeeEntity);
         Employee savedEmployeeModel = employeeMapper.entityToModel(savedEmployeeEntity);
-        LOGGER.info("createEmployee(...) " + savedEmployeeModel);
+        log.debug("createEmployee(...) " + savedEmployeeModel);
         return savedEmployeeModel;
     }
 
     public Employee findEmployeeById(Long id) throws EmployeeNotFoundException {
 
-        LOGGER.info("read( " + id + " )");
+        log.debug("read( " + id + " )");
         Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findById(id);
         EmployeeEntity employeeEntity = optionalEmployeeEntity.orElseThrow(
                 () -> new EmployeeNotFoundException("Brak pracownika o podanym id " + id));
         Employee employeeModel = employeeMapper.entityToModel(employeeEntity);
-        LOGGER.info("read(...)" + employeeModel);
+        log.debug("read(...)" + employeeModel);
         return employeeModel;
     }
 
     @Override
     public Employee updateEmployee(Employee employee, Long id) throws EmployeeNotFoundException {
-        LOGGER.info("update( " + employee.getId() + " )");
+        log.debug("update( " + employee.getId() + " )");
         Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findById(id);
         EmployeeEntity employeeEntity = optionalEmployeeEntity.orElseThrow(
                 () -> new EmployeeNotFoundException("Brak pracownika o podanym id " + id));
@@ -69,70 +70,70 @@ public class EmployeeServiceImpl implements EmployeeService {
         editedEmployeeEntity.setId(employeeEntity.getId());
         EmployeeEntity updatedEmployeeEntity = employeeRepository.save(editedEmployeeEntity);
         Employee updatedEmployeeModel = employeeMapper.entityToModel(updatedEmployeeEntity);
-        LOGGER.info("update(...)" + updatedEmployeeModel.getId());
+        log.debug("update(...)" + updatedEmployeeModel.getId());
         return updatedEmployeeModel;
     }
 
     @Override
     public void deleteEmployee(Long id) {
-        LOGGER.info("delete(" + id + ")");
+        log.debug("delete(" + id + ")");
         employeeRepository.deleteById(id);
-        LOGGER.info("delete(...)");
+        log.debug("delete(...)");
     }
 
     @Override
     public Page<Employee> findEmployeeByName(int pageNo, int pagesize, String employeeName) {
-        LOGGER.info("findEmployeeByName()" + employeeName);
+        log.debug("findEmployeeByName()" + employeeName);
         Pageable pageable = PageRequest.of(pageNo-1, pagesize);
         Page<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByQuery(pageable,employeeName);
         Page<Employee> employees = employeeMapper.mapPageEntitiestoModels(employeeEntities);
-        LOGGER.info("findEmployeeByName(...)");
+        log.debug("findEmployeeByName(...)");
         return employees;
     }
 
     @Override
     public List<Employee> findEmployeeByRawName(String employeeName) {
-        LOGGER.info("findEmployeeByName()" + employeeName);
+        log.debug("findEmployeeByName()" + employeeName);
         List<EmployeeEntity> employeeEntities = employeeRepository.searchEmployeeByRawQuery(employeeName);
         List<Employee> employees = employeeMapper.listModels(employeeEntities);
-        LOGGER.info("findEmployeeByName(...)");
+        log.debug("findEmployeeByName(...)");
         return employees;
     }
 
     @Override
     public Page<Employee> findPageinated(int pageNo, int pagesize, String sortField, String sortDir) {
-        LOGGER.info("findPageinated()");
+        log.debug("findPageinated()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pagesize,sort);
         Page<EmployeeEntity> employeeEntityPage = employeeRepository.findAll(pageable);
         Page<Employee> employeePage = employeeMapper.mapPageEntitiestoModels(employeeEntityPage);
-        LOGGER.info("findPageinated(...)");
+        log.debug("findPageinated(...)");
         return employeePage;
     }
 
     @Override
     public Page<Employee> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
-        LOGGER.info("findPaginated()");
+        log.debug("findPaginated()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
         Page<EmployeeEntity> employeeEntityPage = employeeRepository.findByQueryPagable(query, pageable);
         Page<Employee> employees = employeeMapper.mapPageEntitiestoModels(employeeEntityPage);
-        LOGGER.info("findPaginated(...)");
+        log.debug("findPaginated(...)");
         return employees;
     }
 
     @Override
     public void deleteAll() {
-        LOGGER.info("deleteAll");
+        log.debug("deleteAll");
         employeeRepository.deleteAll();
     }
 
     @Override
     public Employee findByEmployee(String employeeName) {
-        LOGGER.info("findEmployeeByName()" + employeeName);
+        log.debug("findEmployeeByName()" + employeeName);
         EmployeeEntity byEmployee = employeeRepository.findByName(employeeName);
         Employee employee = employeeMapper.entityToModel(byEmployee);
-        LOGGER.info("findEmployeeByName(...)");
+        log.debug("findEmployeeByName(...)");
         return employee;
     }
 }

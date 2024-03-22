@@ -16,16 +16,13 @@ public class ApiTestController {
     public TestResponse apiTest() {
         LOGGER.info("test()");
         return new TestResponse("RestApi test message");
-
     }
 
     class TestResponse {
         private final String message;
-
         public TestResponse(String message) {
             this.message = message;
         }
-
         public String getMessage() {
             return message;
         }

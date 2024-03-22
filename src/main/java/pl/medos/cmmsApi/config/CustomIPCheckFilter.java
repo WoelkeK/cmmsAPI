@@ -18,15 +18,18 @@ import pl.medos.cmmsApi.service.HardwareService;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.List;
+import java.util.logging.Logger;
 
 @Component
-@AllArgsConstructor
 @Slf4j
 public class CustomIPCheckFilter extends GenericFilterBean {
 
+
     private final HardwareService hardwareService;
-
-
+    public CustomIPCheckFilter(HardwareService hardwareService) {
+        this.hardwareService = hardwareService;
+    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -37,32 +40,32 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         if (remoteIP == null) {
             remoteIP = request.getRemoteAddr();
         }
-
-        // Log the remote IP
-        log.info("IP Remote address: " + remoteIP);
-
+        log.debug("IP Remote address: " + remoteIP);
         String requestURI = request.getRequestURI();
-        Hardware ipAddressRole = hardwareService.findByIpAddress(remoteIP);
+
+        List<Hardware> byIpAddress = hardwareService.findByIpAddress(remoteIP);
+        Hardware ipAddressRole = byIpAddress.stream().findFirst().orElse(
+                new Hardware()
+        );
+
         req.setAttribute("isAdmin", false);
-
-
         if (ipAddressRole.getId() == null) {
-            log.info("No match found in the repository for IP: " + remoteIP);
+            log.debug("No match found in the repository for IP: " + remoteIP);
             req.setAttribute("isAdmin", false);
             req.setAttribute("noAccess", true);
-//            throw new ServletException("Unauthorized IP Access");
         }else if(ipAddressRole.getPermission()==null) {
-            log.info("No permission sets in the repository for IP: " + remoteIP + " default: NO_ACCESS");
+           log.debug("No permission sets in the repository for IP: " + remoteIP + " default: NO_ACCESS");
             Permission permission = Permission.USER;
-            log.info("Permission " + permission.toString());
+            log.debug("Permission " + permission.toString());
             ipAddressRole.setPermission(permission);
             access = ipAddressRole.getPermission().toString().toUpperCase();
         }else {
-            log.info("start set from db");
+            log.debug("start set from db");
             access = ipAddressRole.getPermission().toString().toUpperCase();
         }
-            log.info("Dostęp: " + access);
+        log.debug("Dostęp: " + access);
             switch (access) {
+
                 case "ADMIN":
                     req.setAttribute("isAdmin", true);
                     break;
@@ -73,14 +76,12 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                     req.setAttribute("dRead", ipAddressRole.isDRead());
                     req.setAttribute("mRead", ipAddressRole.isMRead());
                     req.setAttribute("jRead", ipAddressRole.isJRead());
-
                     req.setAttribute("nEdit", ipAddressRole.isNEdit());
                     req.setAttribute("eEdit", ipAddressRole.isEEdit());
                     req.setAttribute("pEdit", ipAddressRole.isPEdit());
                     req.setAttribute("dEdit", ipAddressRole.isDEdit());
                     req.setAttribute("mEdit", ipAddressRole.isMEdit());
                     req.setAttribute("jEdit", ipAddressRole.isJEdit());
-
                     req.setAttribute("nFull", ipAddressRole.isNDelete());
                     req.setAttribute("eFull", ipAddressRole.isEDelete());
                     req.setAttribute("pFull", ipAddressRole.isPDelete());
@@ -94,14 +95,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                     req.setAttribute("noAccess", true);
             }
 
-
-//        if (ipAddressRole.getPermission().toString().equalsIgnoreCase("admin")) {
-//            req.setAttribute("isAdmin", true);
-//
-//        } else {
-//            req.setAttribute("isAdmin", false);
-//        }
-        log.info("Send data to frontend " + access);
+        log.debug("Send data to frontend " + access);
         req.setAttribute("userIP", remoteIP);
         chain.doFilter(request, res);
     }

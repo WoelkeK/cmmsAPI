@@ -17,4 +17,5 @@ public class Person {
     private String email;
     private String position;
     private String department;
+    private Boolean profile;
 }
