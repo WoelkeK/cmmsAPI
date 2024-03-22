@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.util.imports;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.NumberToTextConverter;
@@ -23,9 +24,8 @@ import java.util.*;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class ImportEmployeeFromXls implements ImportEmployee {
-
-    private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
 
     private DepartmentService departmentService;
 
@@ -38,7 +38,7 @@ public class ImportEmployeeFromXls implements ImportEmployee {
     @Override
     public List<Employee> importExcelEmployeesData(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelEmployeesData()");
+        log.debug("importExcelEmployeesData()");
         List<Person> rawDataList = new ArrayList<>();
 
         InputStream file = new BufferedInputStream(fileName.getInputStream());
@@ -80,12 +80,12 @@ public class ImportEmployeeFromXls implements ImportEmployee {
             rawDataList.add(rawData);
         }
         List<Employee> employees = employeeDataExcelConverter(rawDataList);
-        LOGGER.info("importExcelEmployeesData(...)");
+        log.debug("importExcelEmployeesData(...)");
         return employees;
     }
 
     private List<Employee> employeeDataExcelConverter(List<Person> persons) {
-        LOGGER.info("employeeDataExcelConverter()");
+        log.debug("employeeDataExcelConverter()");
 
         List<Employee> employees =
                 persons.stream().map(m -> {
@@ -103,13 +103,13 @@ public class ImportEmployeeFromXls implements ImportEmployee {
                                     } else {
                                         employee.setIsActive(m.getProfile());
                                     }
-                                    LOGGER.info("departmentNameNull (...)");
+                                    log.debug("departmentNameNull (...)");
                                     return employee;
                                 }
                         )
                         .toList();
 
-        LOGGER.info("employeeDataExcelConverter(...)");
+        log.debug("employeeDataExcelConverter(...)");
         return employees;
     }
 }

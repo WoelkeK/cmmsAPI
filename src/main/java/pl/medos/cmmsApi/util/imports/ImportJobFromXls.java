@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.util.imports;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.schemas.office.visio.x2012.main.CellType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.NumberToTextConverter;
@@ -26,9 +27,8 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 @Component
+@Slf4j
 public class ImportJobFromXls implements ImportJob {
-
-    private static final Logger LOGGER = Logger.getLogger(ImportJobFromXls.class.getName());
     private List<String> jobs = new ArrayList<>(Arrays.asList
             ("requestDate", "employee", "engineer", "department", "machine", "message", "solution", "jobStartTime",
                     "jobStopTime", "jobStatus", "jobShedule", "decision", "dateOffset", "status", "offset", "photoFileName"));
@@ -49,7 +49,7 @@ public class ImportJobFromXls implements ImportJob {
     @Override
     public List<Job> importExcelJobData(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelJobsData()");
+       log.debug("importExcelJobsData()");
         String empty = "";
         List<JsonJob> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
@@ -73,14 +73,11 @@ public class ImportJobFromXls implements ImportJob {
                         case NUMERIC:
 
                             if (k == row.getLastCellNum() - 2) {
-                                LOGGER.info("Cell Number value");
                                 rowDataMap.put(jobs.get(k), NumberToTextConverter.toText(cell.getNumericCellValue()));
 
                             } else {
-                                LOGGER.info("Cell Data value");
                                 rowDataMap.put(jobs.get(k), (cell.getDateCellValue().toString()));
                             }
-
                             break;
                         case STRING:
                             rowDataMap.put(jobs.get(k), cell.getStringCellValue().replaceAll("  ", "").trim());
@@ -88,7 +85,6 @@ public class ImportJobFromXls implements ImportJob {
                         case _NONE:
                             rowDataMap.put(jobs.get(k), empty);
                             break;
-
                     }
                 }
             }
@@ -98,14 +94,14 @@ public class ImportJobFromXls implements ImportJob {
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
             JsonJob rawData = mapper.convertValue(rowDataMap, JsonJob.class);
             rawDataList.add(rawData);
-            LOGGER.info("rawData " + rawData);
+            log.debug("rawData " + rawData);
         }
         List<Job> jobs = jobsDataExcelConverter(rawDataList);
         return jobs;
     }
 
     private List<Job> jobsDataExcelConverter(List<JsonJob> jobs) {
-        LOGGER.info("jobDataExcelConverter()");
+        log.debug("jobDataExcelConverter()");
 
         List<Job> newJobs =
                 jobs.stream().map(m -> {
@@ -190,7 +186,7 @@ public class ImportJobFromXls implements ImportJob {
                         )
                         .toList();
 
-        LOGGER.info("employeeDataExcelConverter(...)");
+        log.debug("employeeDataExcelConverter(...)");
         return newJobs;
     }
 

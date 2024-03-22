@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -33,9 +34,8 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping("/dashboards")
 @SessionAttributes(names = {"departments", "employees", "machines", "engineers", "images"})
+@Slf4j
 public class DashboardController {
-
-    private static final Logger LOGGER = Logger.getLogger(DashboardController.class.getName());
     private static final String UPLOAD_DIR = System.getProperty("user.home") + File.separator + "images";
     private static final String DEAFULT_IMAGE_FILENAME = "default.jpg";
 
@@ -57,7 +57,7 @@ public class DashboardController {
 
     @GetMapping
     public String listViewAll(Model model) {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         List<Job> jobs = jobService.findAllJobs();
         model.addAttribute("jobs", jobs);
         List<Department> departments = departmentService.findAllDepartments();
@@ -68,13 +68,13 @@ public class DashboardController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
-        LOGGER.info("listView(...)" + jobs);
+        log.debug("listView(...)" + jobs);
         return "main-dashboard.html";
     }
 
     @GetMapping("/paged")
     public String listView(Model model) throws IOException {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         return findJobsPages(1, "requestDate", "asc", model);
     }
 
@@ -83,7 +83,7 @@ public class DashboardController {
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDirection,
                                 Model model) {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         int size = 5;
         String query = "zgłoszenie";
         Page<Job> jobPages = jobService.findByStatusWithPagination(query, pageNo, size, sortField, sortDirection);
@@ -103,7 +103,7 @@ public class DashboardController {
         model.addAttribute("machines", machines);
         List<Engineer> engineers = engineerService.finadAllEngineers();
         model.addAttribute("engineers", engineers);
-        LOGGER.info("listView(...)" + jobs);
+        log.debug("listView(...)" + jobs);
         return "dashboard-list.html";
     }
 
@@ -121,7 +121,7 @@ public class DashboardController {
 
     @GetMapping(value = "/create")
     public String createView(Model model) {
-        LOGGER.info("createView()");
+        log.debug("createView()");
         Job job = new Job();
         job.setStatus("zgłoszenie");
         job.setJobStatus(JobStatus.AWARIA);
@@ -136,7 +136,7 @@ public class DashboardController {
             BindingResult result,
             Model model,
             MultipartFile image) throws Exception {
-        LOGGER.info("create()");
+        log.debug("create()");
 
         if (image != null && !image.isEmpty()) {
             String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
@@ -146,14 +146,14 @@ public class DashboardController {
         } else if (job.getPhotoFileName() == null || job.getPhotoFileName().isEmpty()) {
             job.setPhotoFileName(DEAFULT_IMAGE_FILENAME);
         }
-        LOGGER.info("Machine " + job.getMachine().toString());
+        log.debug("Machine " + job.getMachine().toString());
 
         try {
             if (job.getMachine() != null && job.getMachine().getId() != null) {
                 Machine machineById = machineService.findMachineById(job.getMachine().getId());
                 job.setMachine(machineById);
             } else {
-                LOGGER.info("Machine is NULL");
+                log.debug("Machine is NULL");
 
             }
         } catch (MachineNotFoundException e) {
@@ -161,7 +161,7 @@ public class DashboardController {
         }
 
         if (result.hasErrors()) {
-            LOGGER.info("create: result has erorr()" + result.getFieldError());
+            log.debug("create: result has erorr()" + result.getFieldError());
             model.addAttribute("job", job);
             return "create-dashboard";
         }
@@ -171,7 +171,7 @@ public class DashboardController {
         job.setRequestDate(LocalDateTime.now());
         model.addAttribute("job", job);
         jobService.createJob(job);
-        LOGGER.info("create(...)");
+        log.debug("create(...)");
         return "redirect:/dashboards";
     }
 
@@ -179,7 +179,7 @@ public class DashboardController {
     public String updateView(
             @PathVariable(name = "id") Long id,
             Model model) throws Exception {
-        LOGGER.info("updateView()");
+        log.debug("updateView()");
         Job job = jobService.findJobById(id);
         model.addAttribute("job", job);
         List<Engineer> engineers = engineerService.finadAllEngineers();
@@ -187,7 +187,7 @@ public class DashboardController {
                 .filter(Engineer::getIsActive)
                 .toList();
         model.addAttribute("engineers", selectedEngineers);
-        LOGGER.info("updateView(...)" + job.getStatus());
+        log.debug("updateView(...)" + job.getStatus());
         return "update-dashboard";
     }
 
@@ -195,7 +195,7 @@ public class DashboardController {
     public String read(
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("read(" + id + ")");
+        log.debug("read(" + id + ")");
         Job job = jobService.findJobById(id);
         modelMap.addAttribute("job", job);
         return "update-dashboard";
@@ -206,9 +206,8 @@ public class DashboardController {
                          @Valid @ModelAttribute(name = "job") Job job,
                          BindingResult result,
                          Model model) throws JobNotFoundException {
-        LOGGER.info("update()" + job.getId());
+        log.debug("update()" + job.getId());
         if (result.hasErrors()) {
-            LOGGER.info("update: result has erorr() - redirect");
             model.addAttribute("job", job);
             return "update-dashboard";
         }
@@ -225,14 +224,14 @@ public class DashboardController {
         }
         model.addAttribute("job", job);
         jobService.updateJob(job, id);
-        LOGGER.info("update(...)");
+        log.debug("update(...)");
         return "redirect:/dashboards";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(
             @PathVariable(name = "id") Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         jobService.deleteJob(id);
         return "redirect:/jobs";
     }

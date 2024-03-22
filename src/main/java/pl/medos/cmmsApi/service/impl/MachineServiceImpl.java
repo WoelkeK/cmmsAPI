@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +20,9 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class MachineServiceImpl implements MachineService {
 
-    private static final Logger LOGGER = Logger.getLogger(MachineServiceImpl.class.getName());
     private MachineRepository machineRepository;
     private MachineMapper machineMapper;
 
@@ -35,114 +36,105 @@ public class MachineServiceImpl implements MachineService {
 
     public List<Machine> findAllMachines() {
 
-        LOGGER.info("listAllMachines()");
+        log.debug("listAllMachines()");
         List<MachineEntity> mechineEntities = machineRepository.findAll();
         List<Machine> machineModels = machineMapper.listModels(mechineEntities);
-        LOGGER.info("ListAllMachines(...)");
+        log.debug("ListAllMachines(...)");
         return machineModels;
     }
 
-//    @Override
-//    public List<Machine> findMachinesByName(String name) {
-//        LOGGER.info("findMachinesByName()" + name);
-//        List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
-//        sortedMachines = machineMapper.listModels(machineEntities);
-//        LOGGER.info("findMachinesByName(...)" + name);
-//        return sortedMachines;
-//    }
-
     @Override
     public List<Machine> findMachinesByDepartment(Department department) {
-        LOGGER.info("findMachinesByName()" + department);
+        log.debug("findMachinesByName()" + department);
         List<MachineEntity> machineEntities = machineRepository.searchMachineByDepartment(department.getId());
         sortedMachines = machineMapper.listModels(machineEntities);
-        LOGGER.info("findMachinesByName(...)" + department);
+        log.debug("findMachinesByName(...)" + department);
         return sortedMachines;
     }
 
     public Machine createMachine(Machine machine) {
-        LOGGER.info("create(" + machine + ")");
+        log.debug("create(" + machine + ")");
         MachineEntity machineEntity = machineMapper.modelToEntity(machine);
         MachineEntity createdMachineEntity = machineRepository.save(machineEntity);
         Machine savedMachineModel = machineMapper.entityToModel(createdMachineEntity);
-        LOGGER.info("create(...)" + savedMachineModel);
+        log.debug("create(...)" + savedMachineModel);
         return savedMachineModel;
     }
 
     public Machine findMachineById(Long id) throws MachineNotFoundException {
-        LOGGER.info("read(" + id + ")");
+        log.debug("read(" + id + ")");
         Optional<MachineEntity> optionalMachineEntity = machineRepository.findById(id);
         MachineEntity machineEntity = optionalMachineEntity.orElseThrow(
                 () -> new MachineNotFoundException("Brak maszyny o podanym id " + id));
         Machine machineModel = machineMapper.entityToModel(machineEntity);
-        LOGGER.info("read(...)" + machineModel);
+        log.debug("read(...)" + machineModel);
         return machineModel;
     }
 
     public Machine updateMachine(Machine machine, Long id) throws MachineNotFoundException {
-        LOGGER.info("update()" + machine);
+        log.debug("update()" + machine);
         Optional<MachineEntity> optionalMachineEntity = machineRepository.findById(id);
         MachineEntity machineEntity = optionalMachineEntity.orElseThrow(
                 () -> new MachineNotFoundException("Brak maszyny o podanym id " + id));
         MachineEntity editedMachineEntity = machineMapper.modelToEntity(machine);
         MachineEntity updatedMachineEntity = machineRepository.save(editedMachineEntity);
         Machine updatedMachineModel = machineMapper.entityToModel(updatedMachineEntity);
-        LOGGER.info("update(...) " + updatedMachineModel);
+        log.debug("update(...) " + updatedMachineModel);
         return updatedMachineModel;
     }
 
     public void deleteMachine(Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         machineRepository.deleteById(id);
-        LOGGER.info("delete(...)");
+        log.debug("delete(...)");
     }
 
     @Override
     public Page<Machine> findPageinated(int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("findPaginated()");
+        log.debug("findPaginated()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<MachineEntity> machineEntityPage = machineRepository.findAll(pageable);
         Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
-        LOGGER.info("findPaginated(...)");
+        log.debug("findPaginated(...)");
         return machines;
     }
 
     @Override
     public void deleteAllMachine() {
-        LOGGER.info("deleteAllMachines");
+        log.debug("deleteAllMachines");
         machineRepository.deleteAll();
     }
 
     @Override
     public Page<Machine> findPageinatedQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
-        LOGGER.info("findPaginated()");
+        log.debug("findPaginated()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<MachineEntity> machineEntityPage = machineRepository.findByQueryPagable(query, pageable);
         Page<Machine> machines = machineMapper.entititesToModelsPage(machineEntityPage);
-        LOGGER.info("findPaginated(...)");
+        log.debug("findPaginated(...)");
         return machines;
     }
 
     @Override
     public Machine findByName(String name) {
-        LOGGER.info("findByName" + name);
+        log.debug("findByName" + name);
         List<MachineEntity> machineEntities = machineRepository.searchMachineByName(name);
         MachineEntity machineEntity = machineEntities.stream().findAny().orElse(new MachineEntity());
         Machine machine = machineMapper.entityToModel(machineEntity);
-        LOGGER.info("findByName(...)");
+        log.debug("findByName(...)");
         return machine;
     }
 
     @Override
     public List<Machine> findMachinesByDepartmentId(Long id) {
-        LOGGER.info("findMachinesByDepartmentId()");
+        log.debug("findMachinesByDepartmentId()");
         DepartmentEntity department = new DepartmentEntity();
         department.setId(id);
         List<MachineEntity> machineEntities = machineRepository.findByDepartment(department);
         List<Machine> machines = machineMapper.listModels(machineEntities);
-        LOGGER.info("findMachinesByDepartmentId(...)");
+        log.debug("findMachinesByDepartmentId(...)");
         return machines;
     }
 }

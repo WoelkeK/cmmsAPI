@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -14,9 +15,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class RaportServiceImpl implements RaportService {
-
-    private static final Logger LOGGER = Logger.getLogger(RaportServiceImpl.class.getName());
     private String filePath1 = "src/main/resources/templates/Pzo.jrxml";
     private String filePath2 = "src/main/resources/templates/awizo.jrxml";
     private String content = "stanowiącego własność firmy MEDOS. Sprzęt w/w zobowiązuję się zwrócić na każde żądanie właściciela w takim samym stanie, " +
@@ -24,7 +24,7 @@ public class RaportServiceImpl implements RaportService {
 
     public JasperPrint getJobJasperPrint(Hardware hardware, JasperReport jasperReport) throws JRException {
 
-        LOGGER.info("getJasperPrint()");
+        log.debug("getJasperPrint()");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("employeeName", hardware.getEmployee());
         parameters.put("hardwareName", hardware.getName());
@@ -53,7 +53,7 @@ public class RaportServiceImpl implements RaportService {
     }
     public JasperPrint getJasperPrint(Notification notification, JasperReport jasperReport) throws FileNotFoundException, JRException {
 
-        LOGGER.info("getJasperPrint()" + notification.getId());
+        log.debug("getJasperPrint()" + notification.getId());
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("employee", notification.getEmployee());
         parameters.put("employeePhone", notification.getEmployeePhone());
@@ -76,7 +76,7 @@ public class RaportServiceImpl implements RaportService {
     public void exportReport(Hardware hardware, OutputStream outputStream) throws JRException, FileNotFoundException {
 
         Resource resource = new ClassPathResource("/reports/Pzo.jrxml");
-        LOGGER.info("exportRaport()" + hardware.getId());
+        log.debug("exportRaport()" + hardware.getId());
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource.getInputStream());
             JasperPrint jasperPrint = getJobJasperPrint(hardware, jasperReport);

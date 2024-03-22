@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@Slf4j
 public class TaskServiceDef implements TaskService {
 
-    private static final Logger LOGGER = Logger.getLogger(TaskServiceDef.class.getName());
     private TaskRepository taskRepository;
     private TaskMapper taskMapper;
 
@@ -29,7 +29,7 @@ public class TaskServiceDef implements TaskService {
 
     @Override
     public List<Task> getAllTasks() {
-        LOGGER.info("getAllTasks()");
+        log.debug("getAllTasks()");
         return taskRepository.findAll().stream()
                 .map(taskMapper::toDTO)
                 .collect(Collectors.toList());
@@ -37,7 +37,7 @@ public class TaskServiceDef implements TaskService {
 
     @Override
     public Task addTask(Task task) {
-        LOGGER.info("addTask()");
+        log.debug("addTask()");
         TaskEntity taskEntity = taskMapper.fromDTO(task);
         taskRepository.save(taskEntity);
         return taskMapper.toDTO(taskEntity);
@@ -45,7 +45,7 @@ public class TaskServiceDef implements TaskService {
 
     @Override
     public Task editTask(Task task, Long id) {
-        LOGGER.info("editTask()");
+        log.debug("editTask()");
         Optional<TaskEntity> optionalTaskEntity = taskRepository.findById(id);
         if (optionalTaskEntity.isPresent()) {
             TaskEntity taskEntity = optionalTaskEntity.get();
@@ -58,7 +58,7 @@ public class TaskServiceDef implements TaskService {
 
     @Override
     public Task findTaskById(Long id) {
-        LOGGER.info("findTaskById()");
+        log.debug("findTaskById()");
         Optional<TaskEntity> optionalTaskEntity = taskRepository.findById(id);
         if (optionalTaskEntity.isPresent()) {
             TaskEntity taskEntity = optionalTaskEntity.get();
@@ -70,7 +70,7 @@ public class TaskServiceDef implements TaskService {
 
     @Override
     public void deleteTask(Long id) {
-        LOGGER.info("deleteTask()");
+        log.debug("deleteTask()");
         taskRepository.deleteById(id);
     }
 }

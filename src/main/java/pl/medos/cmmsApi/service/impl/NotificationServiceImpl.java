@@ -18,9 +18,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
-
-    private static final Logger LOGGER = Logger.getLogger(NotificationServiceImpl.class.getName());
 
     private final NotificationMapper notificationMapper;
     private final NotificationRepository notificationRepository;
@@ -32,20 +31,20 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification createNotification(Notification notification) {
-        LOGGER.info("createNotification()");
+        log.debug("createNotification()");
         NotificationEntity savedNotification = notificationRepository.save(notificationMapper.modelToEntity(notification));
         return notificationMapper.entityToModel(savedNotification);
     }
 
     @Override
     public Notification findNotificationById(Long id) {
-        LOGGER.info("findNotificationById()");
+        log.debug("findNotificationById()");
         return notificationMapper.entityToModel(notificationRepository.findById(id).get());
     }
 
     @Override
     public Notification updateNotification(Notification notification, Long id) {
-        LOGGER.info("updateNotification()");
+        log.debug("updateNotification()");
         findNotificationById(id);
         NotificationEntity notificationEntity = notificationMapper.modelToEntity(notification);
         notificationEntity.setId(id);
@@ -54,36 +53,36 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void deleteNotification(Long id) {
-        LOGGER.info("deleteNotification()");
+        log.debug("deleteNotification()");
         notificationRepository.deleteById(id);
     }
 
     @Override
     public List<Notification> getAllNotifications() {
-        LOGGER.info("getNotifications()");
+        log.debug("getNotifications()");
         List<NotificationEntity> notificationEntities = notificationRepository.findAll();
         return notificationMapper.listModels(notificationEntities);
     }
 
     @Override
     public List<Notification> findNotifiByQuery(String query) {
-        LOGGER.info("findNotificationByQuery()");
+        log.debug("findNotificationByQuery()");
         List<NotificationEntity> repositoryByQuery = notificationRepository.searchNotificationsByQuery(query);
         return notificationMapper.listModels(repositoryByQuery);
     }
 
     @Override
     public Page<Notification> findPageNotifications(int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("findPagesNotifications()");
+        log.debug("findPagesNotifications()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, size, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<NotificationEntity> notificationEntities = notificationRepository.findAll(pageable);
         return notificationMapper.entititesToModelsPage(notificationEntities);
     }
 
     @Override
     public List<Notification> findSortNotifications(String sortField, String sortDirection) {
-        LOGGER.info("findAllSorted()");
+        log.debug("findAllSorted()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         List<NotificationEntity> notificationEntities = notificationRepository.findAll(sort);
         return notificationMapper.listModels(notificationEntities);
@@ -91,18 +90,18 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Page<Notification> findNotificationPageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
-        LOGGER.info("findNotificationPageByQuery()");
+        log.debug("findNotificationPageByQuery()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<NotificationEntity> hardwareEntityPage = notificationRepository.findByQueryPagable(query, pageable);
         Page<Notification> notifications = notificationMapper.entititesToModelsPage(hardwareEntityPage);
-        LOGGER.info("findHardwarePageByQuery(...)");
+        log.debug("findHardwarePageByQuery(...)");
         return notifications;
     }
 
     @Override
     public void deleteAll() {
-        LOGGER.info("deleteAll()");
+        log.debug("deleteAll()");
         notificationRepository.deleteAll();
     }
 }

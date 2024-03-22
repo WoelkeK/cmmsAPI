@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,94 +20,97 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class HardwareServiceImpl implements HardwareService {
-
-    private static final Logger LOGGER = Logger.getLogger(HardwareServiceImpl.class.getName());
 
     private final HardwareRepository hardwareRepository;
     private final HardwareMapper hardwareMapper;
 
+    public HardwareServiceImpl(HardwareRepository hardwareRepository, HardwareMapper hardwareMapper) {
+        this.hardwareRepository = hardwareRepository;
+        this.hardwareMapper = hardwareMapper;
+    }
+
     public List<Hardware> listAll() {
-        LOGGER.info("listAll()");
+        log.debug("listAll()");
         List<HardwareEntity> hardwareEntities = hardwareRepository.findAll();
         List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
-        LOGGER.info("listAll(...)");
+        log.debug("listAll(...)");
         return hardwares;
     }
 
     public Page<Hardware> pagesHardware(int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("pagesHardware()");
+        log.debug("pagesHardware()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<HardwareEntity> hardwareEntities = hardwareRepository.findAll(pageable);
         Page<Hardware> hardwares = hardwareMapper.pageEntityToModels(hardwareEntities);
-        LOGGER.info("pagesHardware(...)");
+        log.debug("pagesHardware(...)");
         return hardwares;
     }
 
     @Override
     public List<Hardware> findAllSorted(String direction, String field) {
-        LOGGER.info("findAllSorted()");
+        log.debug("findAllSorted()");
         Sort sort = direction.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(field).ascending() : Sort.by(field).descending();
         List<HardwareEntity> hardwareEntities = hardwareRepository.findAll(sort);
         List<Hardware> hardwares = hardwareMapper.litsEntityToModels(hardwareEntities);
-        LOGGER.info("findAllSorted(...)");
+        log.debug("findAllSorted(...)");
         return hardwares;
     }
 
     @Override
     public Hardware create(Hardware hardware) {
-        LOGGER.info("createHardware() " + hardware.getId());
+        log.debug("createHardware() " + hardware.getId());
         String inventoryNo = hardware.getInventoryNo().toUpperCase();
         hardware.setInventoryNo(inventoryNo);
         HardwareEntity hardwareEntity = hardwareMapper.mapModelToEntity(hardware);
         HardwareEntity saveHardwareEntity = hardwareRepository.save(hardwareEntity);
         Hardware savedHardware = hardwareMapper.mapEntityToModel(saveHardwareEntity);
-        LOGGER.info("createHardware(...)" + savedHardware);
+        log.debug("createHardware(...)" + savedHardware);
         return savedHardware;
     }
 
     @Override
     public Hardware read(Long id) throws HardwareNotFoundException {
-        LOGGER.info("readHardware(" + id + ")");
+        log.debug("readHardware(" + id + ")");
         Optional<HardwareEntity> optionalHardwareEntity = hardwareRepository.findById(id);
         HardwareEntity hardwareEntity = optionalHardwareEntity.orElseThrow(
                 () -> new HardwareNotFoundException("Nie odnaleziono sprzętu o podanym id.")
         );
         Hardware hardware = hardwareMapper.mapEntityToModel(hardwareEntity);
-        LOGGER.info("readHardware(...) " + hardware);
+        log.debug("readHardware(...) " + hardware);
         return hardware;
     }
 
     @Override
     public Hardware update(Hardware hardware) throws HardwareNotFoundException {
-        LOGGER.info("mapUpdateHardware()" + hardware.getId());
+        log.debug("mapUpdateHardware()" + hardware.getId());
         HardwareEntity hardwareEntity = hardwareMapper.mapModelToEntity(hardware);
         hardwareEntity.setId(hardware.getId());
         HardwareEntity saveHardwareEntity = hardwareRepository.save(hardwareEntity);
         Hardware savedHardware = hardwareMapper.mapEntityToModel(saveHardwareEntity);
-        LOGGER.info("mapUpdateHardware(...)" + savedHardware);
+        log.debug("mapUpdateHardware(...)" + savedHardware);
         return savedHardware;
     }
 
     @Override
     public void delete(Long id) {
-        LOGGER.info("deleteHardware(" + id + ")");
+        log.debug("deleteHardware(" + id + ")");
         hardwareRepository.deleteById(id);
-        LOGGER.info("deleteHardware(...)");
+        log.debug("deleteHardware(...)");
     }
 
     @Override
     public void deleteAll() {
-        LOGGER.info("deleteAllHardware()");
+        log.debug("deleteAllHardware()");
         hardwareRepository.deleteAll();
-        LOGGER.info("deleteAllHardware(...)");
+        log.debug("deleteAllHardware(...)");
     }
 
     @Override
     public List<Hardware> findByIpAddress(String ipAddres) {
-        LOGGER.info("findByIpAddress");
+        log.debug("findByIpAddress");
         Optional<List<HardwareEntity>> byIpAddress = hardwareRepository.findByIpAddress(ipAddres);
         if (byIpAddress.isPresent()) {
             List<HardwareEntity> hardwareEntities = byIpAddress.get();
@@ -118,12 +122,12 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     public Page<Hardware> findHardwarePageByQuery(int pageNo, int pageSize, String sortField, String sortDir, String query) {
-        LOGGER.info("findHardwarePageByQuery()");
+        log.debug("findHardwarePageByQuery()");
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<HardwareEntity> hardwareEntityPage = hardwareRepository.findByQueryPagable(query, pageable);
         Page<Hardware> hardware = hardwareMapper.pageEntityToModels(hardwareEntityPage);
-        LOGGER.info("findHardwarePageByQuery(...)");
+        log.debug("findHardwarePageByQuery(...)");
         return hardware;
     }
 }

@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -26,9 +27,9 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping(value = "/employees")
 @SessionAttributes(names = {"employees", "departments"})
+@Slf4j
 public class WebEmployeeController {
 
-    private static final Logger LOGGER = Logger.getLogger(WebEmployeeController.class.getName());
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private ImportEmployee importEmployee;
@@ -74,7 +75,7 @@ public class WebEmployeeController {
 
     @GetMapping(value = "/list")
     public String listViewAll(ModelMap modelMap) {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         List<Employee> employees = employeeService.finadAllEmployees();
         modelMap.addAttribute("employees", employees);
         List<Department> departments = departmentService.findAllDepartments();
@@ -86,7 +87,7 @@ public class WebEmployeeController {
     public String listView(
             @RequestParam(name = "pageNo", defaultValue = "1") int page,
             Model model) throws IOException {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         return findPaginated(page, "name", "desc",model);
     }
 
@@ -97,7 +98,7 @@ public class WebEmployeeController {
             @RequestParam(name = "sortDir") String sortDir,
             Model model) throws IOException {
         int pageSize = 10;
-        LOGGER.info("findPage()");
+        log.debug("findPage()");
 
         Page<Employee> pageEmployees = employeeService.findPageinated(pageNo, pageSize, sortField, sortDir);
         List<Employee> employees = pageEmployees.getContent();
@@ -134,7 +135,7 @@ public class WebEmployeeController {
         String sortField="name";
         String sortDir="desc";
 
-        LOGGER.info("findPage()");
+        log.debug("findPage()");
         Page<Employee> employeePage = employeeService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Employee> employees = employeePage.getContent();
         model.addAttribute("currentPage", pageNo);
@@ -154,7 +155,7 @@ public class WebEmployeeController {
             @PathVariable(name = "id") Long id,
             @RequestParam(name = "pageNo") int pageNo,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("updateView()" + pageNo);
+        log.debug("updateView()" + pageNo);
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
         modelMap.addAttribute("pageNo", pageNo);
@@ -166,15 +167,14 @@ public class WebEmployeeController {
             @PathVariable(name = "id") Long id,
             @RequestParam(name = "pageNo") int pageNo,
             @ModelAttribute(name = "employee") Employee employee) throws EmployeeNotFoundException {
-        LOGGER.info("update()" + pageNo);
         Employee updatedEmployee = employeeService.updateEmployee(employee, id);
-        LOGGER.info("update(...)" + updatedEmployee);
+        log.debug("update(...)" + updatedEmployee);
         return "redirect:/employees?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
-        LOGGER.info("createView()");
+        log.debug("createView()");
         modelMap.addAttribute("employee", new Employee());
         return "create-employee";
     }
@@ -183,7 +183,7 @@ public class WebEmployeeController {
     public String create(
             String department,
             @ModelAttribute(name = "employee") Employee employee) {
-        LOGGER.info("create(" + employee + ")");
+        log.debug("create(" + employee + ")");
         employeeService.createEmployee(employee);
         return "redirect:/employees";
     }
@@ -192,7 +192,7 @@ public class WebEmployeeController {
     public String read(
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("read(" + id + ")");
+        log.debug("read(" + id + ")");
         Employee employee = employeeService.findEmployeeById(id);
         modelMap.addAttribute("employee", employee);
         return "read-employee";
@@ -202,7 +202,7 @@ public class WebEmployeeController {
     public String delete(
             @RequestParam(name = "pageNo") int pageNo,
             @PathVariable(name = "id") Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         employeeService.deleteEmployee(id);
         return "redirect:/employees?pageNo=" + pageNo;
     }
@@ -214,23 +214,23 @@ public class WebEmployeeController {
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-        LOGGER.info("importEmployees()");
+        log.debug("importEmployees()");
         if (file.isEmpty()) {
-            LOGGER.info("Please select file to upload");
+            log.debug("Please select file to upload");
             return "redirect:/employees";
         }
         List<Employee> employees = importEmployee.importExcelEmployeesData(file);
         employees.forEach((employee) -> {
             employeeService.createEmployee(employee);
         });
-        LOGGER.info("importEmployees(...) ");
+        log.debug("importEmployees(...) ");
         return "redirect:/employees";
     }
 
     @GetMapping(value = "/export")
     public void exportEmployees(@ModelAttribute(name = "employees") List<Employee> employees,
                                 HttpServletResponse response, Model model) throws Exception {
-        LOGGER.info("export()");
+        log.debug("export()");
         employees = employeeService.finadAllEmployees();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -241,7 +241,7 @@ public class WebEmployeeController {
         exportService.excelEmployeeModelGenerator(employees);
         exportService.generateExcelEmployeeFile(response);
         response.flushBuffer();
-        LOGGER.info("export(...)");
+        log.debug("export(...)");
     }
 
     @GetMapping("/search/query")
@@ -249,10 +249,9 @@ public class WebEmployeeController {
             @RequestParam(value = "query") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             Model model){
-        LOGGER.info("search()");
+       log.debug("findEmployeeByName()");
         int pagesize =10;
         Page<Employee> employeeByName = employeeService.findEmployeeByName(pageNo, pagesize, query);
-        LOGGER.info("findEmployeeByName()");
         model.addAttribute("employees", employeeByName);
         model.addAttribute("currentPage", pageNo);
         return "main-employees";
@@ -260,7 +259,7 @@ public class WebEmployeeController {
 
     @GetMapping("/deleteAll")
     public void deleteAll(){
-        LOGGER.info("deleteAll");
+        log.debug("deleteAll");
         employeeService.deleteAll();
     }
 }

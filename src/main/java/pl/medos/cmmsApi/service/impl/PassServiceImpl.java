@@ -19,16 +19,20 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class PassServiceImpl implements PassService {
 
-    private static final Logger LOGGER = Logger.getLogger(PassServiceImpl.class.getName());
     private final PassRepository passRepository;
     private final ModelMapper modelMapper;
 
+    public PassServiceImpl(PassRepository passRepository, ModelMapper modelMapper) {
+        this.passRepository = passRepository;
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public Page<Pass> findPagePasses(int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("findPagesPasses()");
+        log.debug("findPagesPasses()");
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
         Page<PassEntity> passEntities = passRepository.findAll(pageable);
@@ -37,13 +41,13 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public Pass createPass(Pass pass) {
-        LOGGER.info("createPass()");
+        log.debug("createPass()");
         return modelMapper.map(passRepository.save(modelMapper.map(pass, PassEntity.class)), Pass.class);
     }
 
     @Override
     public Pass findPassById(Long id) {
-        LOGGER.info("findPassById()");
+        log.debug("findPassById()");
         Optional<PassEntity> optionalPassEntity = passRepository.findById(id);
         PassEntity passEntity = optionalPassEntity.orElseThrow(EntityNotFoundException::new);
         return modelMapper.map(passEntity, Pass.class);
@@ -58,13 +62,13 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public void deletePass(Long id) {
-        LOGGER.info("detelePass()");
+        log.debug("detelePass()");
         passRepository.deleteById(id);
     }
 
     @Override
     public List<Pass> findPassByQuery(String query) {
-        LOGGER.info("findPassByQuery()");
+        log.debug("findPassByQuery()");
         List<PassEntity> passEntities = passRepository.searchPassesByQuery(query);
         return passEntities.stream().map(
                         passEntity -> modelMapper.map(passEntity, Pass.class))

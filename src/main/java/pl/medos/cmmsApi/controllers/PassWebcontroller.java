@@ -3,6 +3,7 @@ package pl.medos.cmmsApi.controllers;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -28,16 +29,20 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping("/przepustki")
 @SessionAttributes(names = {"images", "przepustki"})
-@RequiredArgsConstructor
+@Slf4j
 public class PassWebcontroller {
 
-    private static final Logger LOGGER = Logger.getLogger(PassWebcontroller.class.getName());
     private final PassService passService;
     private final ImageService imageService;
 
+    public PassWebcontroller(PassService passService, ImageService imageService) {
+        this.passService = passService;
+        this.imageService = imageService;
+    }
+
     @GetMapping("/read/{id}")
     public String findPassById(@PathVariable(name = "id") Long id, Model model) {
-        LOGGER.info("findPassById() " + id);
+        log.debug("findPassById() " + id);
         Pass passById = passService.findPassById(id);
         model.addAttribute("pass", passById);
         return "view-pass.html";
@@ -45,7 +50,7 @@ public class PassWebcontroller {
 
     @GetMapping("/update/{id}")
     public String updateView(@PathVariable(name = "id") Long id, Model model) {
-        LOGGER.info("update()");
+        log.debug("update()");
         Pass passById = passService.findPassById(id);
         model.addAttribute("pass",passById);
         return "update-pass.html";
@@ -53,7 +58,7 @@ public class PassWebcontroller {
 
     @PostMapping("/update")
     public String updatePass(@ModelAttribute(name = "pass") Pass pass, MultipartFile image) throws IOException {
-        LOGGER.info("updatePass()");
+        log.debug("updatePass()");
         passService.updatePass(pass, pass.getId());
         Pass processedPass = imageService.prepareImage(pass, image);
         passService.createPass(processedPass);
@@ -62,7 +67,7 @@ public class PassWebcontroller {
 
     @GetMapping
     public String listView(Model model){
-        LOGGER.info("listView()");
+        log.debug("listView()");
         return findPagesPasses(1,"name", "desc", model);
     }
 
@@ -71,7 +76,7 @@ public class PassWebcontroller {
                                          @RequestParam(name = "sortField") String sortField,
                                          @RequestParam(name = "sortDir") String sortDir,
                                          Model model) {
-        LOGGER.info("findPagesPasses()");
+        log.debug("findPagesPasses()");
         int size =10;
         Page<Pass> passes = passService.findPagePasses(pageNo, size, sortField, sortDir);
         List<Pass> passesList = passes.getContent();
@@ -92,7 +97,7 @@ public class PassWebcontroller {
 
     @GetMapping("/create")
     public String createView(Model model) {
-        LOGGER.info("createView");
+        log.debug("createView");
         model.addAttribute("pass", new Pass());
         return "create-pass.html";
     }
@@ -102,9 +107,8 @@ public class PassWebcontroller {
                                      BindingResult result,
                                      Model model,
                                      MultipartFile image) throws IOException {
-        LOGGER.info("createPass()");
+        log.debug("createPass()");
         if (result.hasErrors()) {
-            LOGGER.info("create: result has erorr()" +pass+ " "+ result.getFieldError());
             model.addAttribute("pass", pass);
             return "create-pass";
         }
@@ -115,7 +119,7 @@ public class PassWebcontroller {
 
     @GetMapping("delete/{id}")
     public String deletePass(@PathVariable Long id) {
-        LOGGER.info("deletePass()");
+        log.debug("deletePass()");
         passService.deletePass(id);
         return "redirect:/przepustki";
     }
@@ -130,7 +134,7 @@ public class PassWebcontroller {
 
     @GetMapping("/search/{query}")
     public String searchByQuery(@RequestParam(name = "query") String query, Model model) {
-        LOGGER.info("searchByQuery()");
+        log.debug("searchByQuery()");
         List<Pass> passesByName = passService.findPassByQuery(query);
         model.addAttribute("passes", passesByName);
         return "main-pass.html";

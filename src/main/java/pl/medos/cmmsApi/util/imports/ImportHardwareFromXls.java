@@ -2,6 +2,7 @@ package pl.medos.cmmsApi.util.imports;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.util.IOUtils;
@@ -25,9 +26,8 @@ import java.util.*;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class ImportHardwareFromXls implements ImportHardware {
-
-    private static final Logger LOGGER = Logger.getLogger(ImportHardwareFromXls.class.getName());
 
     private HardwareService hardwareService;
     private ModelMapper modelMapper;
@@ -46,7 +46,7 @@ public class ImportHardwareFromXls implements ImportHardware {
     @Override
     public List<Hardware> importHardware(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelHardwareData()");
+        log.debug("importExcelHardwareData()");
         List<JsonHardware> rawDataList = new ArrayList<>();
         InputStream file = new BufferedInputStream(fileName.getInputStream());
 
@@ -86,14 +86,13 @@ public class ImportHardwareFromXls implements ImportHardware {
             }
             JsonHardware rawData = modelMapper.map(rowDataMap, JsonHardware.class);
             rawDataList.add(rawData);
-
         }
         List<Hardware> hardwares = hardwareDataExcelConverter(rawDataList);
         return hardwares;
     }
 
     private List<Hardware> hardwareDataExcelConverter(List<JsonHardware> hardwares) {
-        LOGGER.info("hardwareDataExcelConverter()");
+        log.debug("hardwareDataExcelConverter()");
         List<Hardware> convertedHardwares =
                 hardwares.stream().map(m -> {
 
@@ -116,7 +115,6 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     hardware.setDescription(m.getDescription());
 
                                     List<Hardware> byIpAddress = hardwareService.findByIpAddress(m.getIpAddress());
-
                                     Hardware dbHardware = byIpAddress.stream().findFirst().orElse(new Hardware());
 
                                     if (dbHardware.getIpAddress() == null) {
@@ -135,7 +133,7 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     } else {
                                         LocalDate installDate = DateConverter.convertDate(m.getInstallDate());
                                         hardware.setInstallDate(installDate);
-                                        LOGGER.info(installDate.toString());
+                                        log.debug(installDate.toString());
                                     }
                                     if (m.getActivateDate() == null || m.getActivateDate().isEmpty()) {
                                         hardware.setActivateDate(null);
@@ -161,13 +159,13 @@ public class ImportHardwareFromXls implements ImportHardware {
                                     hardware.setJRead(convertXLSField(m.getJRead()));
                                     hardware.setJEdit(convertXLSField(m.getJRead()));
                                     hardware.setJDelete(convertXLSField(m.getJRead()));
-                                    LOGGER.info("Row create(...)");
+                                    log.debug("Row create(...)");
                                     return hardware;
                                 }
                         )
                         .toList();
 
-        LOGGER.info("hardwareDataExcelConverter(...)");
+       log.debug("hardwareDataExcelConverter(...)");
         return convertedHardwares;
     }
 

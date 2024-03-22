@@ -1,6 +1,7 @@
 package pl.medos.cmmsApi.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,8 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping(value = "/engineers")
 @SessionAttributes(names = {"engineers", "departments"})
+@Slf4j
 public class WebEngineerController {
-
-    private static final Logger LOGGER = Logger.getLogger(WebEngineerController.class.getName());
     private String fileName = "c:/XL/sheet6.xlsx";
     private EngineerService engineerService;
     private DepartmentService departmentService;
@@ -47,7 +47,7 @@ public class WebEngineerController {
 
     @GetMapping("/list")
     public String listView(ModelMap modelMap) throws IOException {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         List<Engineer> engineers = engineerService.finadAllEngineers();
         modelMap.addAttribute("engineers", engineers);
         List<Department> departments = departmentService.findAllDepartments();
@@ -60,7 +60,7 @@ public class WebEngineerController {
             @RequestParam(name = "pageNo", defaultValue = "1") int page,
             @RequestParam(name = "status", required = false) Boolean status,
             Model model) throws IOException {
-        LOGGER.info("listView() " + status);
+        log.debug("listView() " + status);
         return findPaginated(page, "name", "desc", model, status);
     }
 
@@ -71,12 +71,12 @@ public class WebEngineerController {
             @RequestParam(name = "sortDir") String sortDir,
             Model model, Boolean status) {
         int pageSize = 10;
-        LOGGER.info("findPage()" + pageNo + " " + sortField + " " + sortDir + status);
+        log.debug("findPage()" + pageNo + " " + sortField + " " + sortDir + status);
         Page<Engineer> engineerPages;
         if (status != null && status) {
             engineerPages = engineerService.findByActive(pageNo, pageSize, sortField, sortDir, status);
         } else {
-            LOGGER.info("All entities");
+            log.debug("All entities");
             engineerPages = engineerService.findPageinated(pageNo, pageSize, sortField, sortDir);
         }
         List<Engineer> engineers = engineerPages.getContent();
@@ -100,7 +100,7 @@ public class WebEngineerController {
         int pageNo = 1;
         String sortField = "name";
         String sortDir = "desc";
-        LOGGER.info("findPage()");
+        log.debug("findPage()");
         Page<Engineer> engineerPage = engineerService.findPageinatedQuery(pageNo, pageSize, sortField, sortDir, query);
         List<Engineer> engineers = engineerPage.getContent();
         model.addAttribute("currentPage", pageNo);
@@ -120,7 +120,7 @@ public class WebEngineerController {
             @PathVariable(name = "id") Long id,
             @RequestParam(name = "pageNo") int pageNo,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("updateView()");
+        log.debug("updateView()");
         Engineer engineer = engineerService.findEngineerById(id);
         modelMap.addAttribute("engineer", engineer);
         modelMap.addAttribute("pageNo", pageNo);
@@ -132,15 +132,15 @@ public class WebEngineerController {
             @PathVariable(name = "id") Long id,
             @RequestParam(name = "pageNo") int pageNo,
             @ModelAttribute(name = "engineer") Engineer engineer) throws EmployeeNotFoundException {
-        LOGGER.info("update()" + engineer);
+        log.debug("update()" + engineer);
         Engineer updatedEngineer = engineerService.updateEngineer(engineer, id);
-        LOGGER.info("update(...)" + updatedEngineer);
+        log.debug("update(...)" + updatedEngineer);
         return "redirect:/engineers?pageNo=" + pageNo;
     }
 
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
-        LOGGER.info("createView()");
+        log.debug("createView()");
         modelMap.addAttribute("engineer", new Engineer());
         return "create-engineer.html";
     }
@@ -149,7 +149,7 @@ public class WebEngineerController {
     public String create(
             String department,
             @ModelAttribute(name = "engineer") Engineer engineer) {
-        LOGGER.info("create(" + engineer + ")");
+        log.debug("create(" + engineer + ")");
         engineer.setIsActive(true);
         engineerService.createEngineer(engineer);
         return "redirect:/engineers";
@@ -168,7 +168,7 @@ public class WebEngineerController {
     public String delete(
             @RequestParam(name = "pageNo") int pageNo,
             @PathVariable(name = "id") Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         engineerService.deleteEngineer(id);
         return "redirect:/engineers";
     }
@@ -178,10 +178,9 @@ public class WebEngineerController {
             @RequestParam(value = "query") String query,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             Model model) {
-        LOGGER.info("search()");
+        log.debug("findEngineerByName()");
         int pagesize = 10;
         Page<Engineer> engineerByName = engineerService.findEngineerByName(pageNo, pagesize, query);
-        LOGGER.info("findEngineerByName()");
         model.addAttribute("engineers", engineerByName);
         model.addAttribute("currentPage", pageNo);
         return "main-engineer";
@@ -189,7 +188,7 @@ public class WebEngineerController {
 
     @GetMapping("/deleteAll")
     public void deleteAll() {
-        LOGGER.info("deleteAll");
+        log.debug("deleteAll");
         engineerService.deleteAll();
     }
 
@@ -200,9 +199,9 @@ public class WebEngineerController {
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-        LOGGER.info("importEngineers()");
+        log.debug("importEngineers()");
         if (file.isEmpty()) {
-            LOGGER.info("Please select file to upload");
+            log.debug("Please select file to upload");
             return "redirect:/engineers";
         }
         List<Employee> employees = importEmployee.importExcelEmployeesData(file);
@@ -210,13 +209,13 @@ public class WebEngineerController {
         engineers.forEach((engineer) -> {
             engineerService.createEngineer(engineer);
         });
-        LOGGER.info("importEmployees(...) ");
+        log.debug("importEmployees(...) ");
         return "redirect:/employees";
     }
 
     @GetMapping(value = "/export")
     public void exportEngineers(HttpServletResponse response) throws Exception {
-        LOGGER.info("export()");
+        log.debug("export()");
         List<Engineer>engineers = engineerService.finadAllEngineers();
         response.setContentType("application/octet-stream");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
@@ -228,6 +227,6 @@ public class WebEngineerController {
         exportService.excelEmployeeModelGenerator(employees);
         exportService.generateExcelEmployeeFile(response);
         response.flushBuffer();
-        LOGGER.info("export(...)");
+        log.debug("export(...)");
     }
 }

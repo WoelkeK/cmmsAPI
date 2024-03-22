@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,9 +16,9 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class CommandLineAppStartupRunner implements CommandLineRunner {
 
-    private static final Logger LOGGER = Logger.getLogger(CommandLineAppStartupRunner.class.getName());
     private ImageLoader imageLoader;
     private HardwareRepository hardwareRepository;
 
@@ -37,7 +38,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         ipList.stream().forEach(ipAddres -> {
             Optional<HardwareEntity> hardwareByIp = hardwareRepository.findHardwareByIp(ipAddres);
             if (!hardwareByIp.isPresent()) {
-                LOGGER.info("Creating admin account()");
+                log.debug("Creating admin account()");
                 HardwareEntity hardware = new HardwareEntity();
                 hardware.setIpAddress(ipAddres);
                 hardware.setName("AdminPC");
@@ -46,12 +47,12 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
                 Permission permission = Permission.ADMIN;
                 hardware.setPermission(permission);
                 HardwareEntity hardwareEntity = hardwareRepository.save(hardware);
-                LOGGER.info("Created: " + hardwareEntity.getIpAddress() + " / " + hardwareEntity.getPermission());
+                log.debug("Created: " + hardwareEntity.getIpAddress() + " / " + hardwareEntity.getPermission());
             } else {
-                LOGGER.info("Admin allready exist...");
+               log.debug("Admin allready exist...");
                 HardwareEntity hardwareEntity = hardwareByIp.orElseThrow();
                 if ((hardwareEntity.getPermission() == null)) {
-                    LOGGER.info("Add admin permission to existing profile.");
+                    log.debug("Add admin permission to existing profile.");
                     Permission permission = Permission.ADMIN;
                     hardwareEntity.setPermission(permission);
                     HardwareEntity accessEntity = hardwareRepository.save(hardwareEntity);

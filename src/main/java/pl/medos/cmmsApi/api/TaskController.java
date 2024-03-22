@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 @RestController
 @Tag(name = "Tasks")
 @RequestMapping("/api/tasks")
+@Slf4j
 public class TaskController {
 
-    private static final Logger LOGGER = Logger.getLogger(TaskController.class.getName());
     private TaskService taskService;
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -22,25 +22,25 @@ public class TaskController {
 
     @GetMapping("/list")
     public List<Task> getAllTasks() {
-        LOGGER.info("getAllTasks()");
+        log.debug("getAllTasks()");
         return taskService.getAllTasks();
     }
 
     @PostMapping("/add")
     public Task addTask(@RequestBody Task task) {
-        LOGGER.info("addTask()");
+        log.debug("addTask()");
         return taskService.addTask(task);
     }
 
     @PutMapping("/edit/{id}")
     public Task editTask(@RequestBody Task task, @PathVariable Long id) {
-        LOGGER.info("editTask()");
+       log.debug("editTask()");
         return taskService.editTask(task, id);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteTask(@PathVariable Long id) {
-        LOGGER.info("deleteTask()");
+        log.debug("deleteTask()");
         taskService.deleteTask(id);
     }
 }

@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.service.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -13,14 +14,13 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class EngineerMapper {
-
-    private static final Logger LOGGER = Logger.getLogger(EngineerMapper.class.getName());
 
     private EngineerEntity engineerEntity;
 
     public List<Engineer> listModels(List<EngineerEntity> engineerEntities ){
-        LOGGER.info("list()" + engineerEntities);
+        log.debug("list()" + engineerEntities);
 
         List<Engineer> engineerModels = engineerEntities.stream()
                 .map(this::entityToModel)
@@ -29,24 +29,24 @@ public class EngineerMapper {
     }
 
     public Engineer entityToModel(EngineerEntity engineerEntity) {
-        LOGGER.info("entityToModel" + engineerEntity);
+        log.debug("entityToModel" + engineerEntity);
         ModelMapper modelMapper = new ModelMapper();
         Engineer engineerModel= modelMapper.map(engineerEntity, Engineer.class);
         return engineerModel;
     }
 
     public EngineerEntity modelToEntity(Engineer engineer) {
-        LOGGER.info("modelToEntity()" + engineer);
+        log.debug("modelToEntity()" + engineer);
         ModelMapper modelMapper = new ModelMapper();
         EngineerEntity engineerEntity = modelMapper.map(engineer, EngineerEntity.class);
         return engineerEntity;
     }
 
     public Page<Engineer> mapPageEntitiestoModels(Page<EngineerEntity> engineerEntityPage) {
-        LOGGER.info("mapPageEntitiesToModels()");
+        log.debug("mapPageEntitiesToModels()");
         ModelMapper modelMapper = new ModelMapper();
         Page<Engineer> engineerPage = engineerEntityPage.map(EngineerEntity -> modelMapper.map(EngineerEntity, Engineer.class));
-        LOGGER.info("mapPageEntitiesToModels(...)");
+        log.debug("mapPageEntitiesToModels(...)");
         return engineerPage;
 
     }

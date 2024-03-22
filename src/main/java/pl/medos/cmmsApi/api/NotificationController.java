@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("api/notifications")
 @Tag(name = "AwizacjeAPI")
+@Slf4j
 public class NotificationController {
 
-    private static final Logger LOGGER = Logger.getLogger(NotificationController.class.getName());
     private final NotificationService notificationService;
     public NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
@@ -26,37 +26,37 @@ public class NotificationController {
 
     @PostMapping("/create")
     Notification createNotification(@RequestBody Notification notification) {
-        LOGGER.info("createNotification()");
+        log.debug("createNotification()");
         return notificationService.createNotification(notification);
     }
 
     @GetMapping("/findById")
     Notification findNotificationById(@RequestParam Long id) {
-        LOGGER.info("findNotificationById()");
+        log.debug("findNotificationById()");
         return notificationService.findNotificationById(id);
     }
 
     @PutMapping("/update")
     Notification updateNotification(@RequestBody Notification notification, Long id) {
-        LOGGER.info("updateNotification()");
+        log.debug("updateNotification()");
         return notificationService.updateNotification(notification, id);
     }
 
     @DeleteMapping("/delete")
     void deleteNotification(@RequestParam Long id) {
-        LOGGER.info("deleteNotification()");
+        log.debug("deleteNotification()");
         notificationService.deleteNotification(id);
     }
 
     @GetMapping("/getList")
     List<Notification> findAllNotifications() {
-        LOGGER.info("findallNotifications()");
+        log.debug("findallNotifications()");
         return notificationService.getAllNotifications();
     }
 
     @DeleteMapping("/deleteAll")
     void deleteAll(){
-        LOGGER.info("deleteall()");
+        log.debug("deleteall()");
         notificationService.deleteAll();
     }
 }

@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 @Slf4j
 public class JobServiceImpl implements JobService {
 
-    private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class.getName());
     private JobRepository jobRepository;
     private JobMapper jobMapper;
     private ImageService imageService;
@@ -40,65 +39,60 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<Job> findAllJobs() {
-        LOGGER.info("list()");
+        log.debug("list()");
         List<JobEntity> jobEntities = jobRepository.findAll();
-        LOGGER.info("show requestTimeEntity " + jobEntities);
         List<Job> jobModels = jobMapper.listModels(jobEntities);
-        LOGGER.info("listOutOfService(...)" + jobModels);
+        log.debug("listOutOfService(...)" + jobModels);
         return jobModels;
     }
 
     @Override
     public Page<Job> findJobPages(int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("findJobPages()" + pageNo + "/" + size);
+        log.debug("findJobPages()" + pageNo + "/" + size);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
-        LOGGER.info("Pageable() " + pageable.getPageNumber() + "/" + pageable.getPageSize());
         Page<JobEntity> jobPages = jobRepository.findAll(pageable);
-        LOGGER.info("findJobPages(repo)" + jobPages.getNumberOfElements());
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
-        LOGGER.info("findJobPages(...)" + jobs.getNumberOfElements());
+        log.debug("findJobPages(...)" + jobs.getNumberOfElements());
         return jobs;
     }
 
     @Override
     public Page<Job> findByStatusWithPagination(String query, int pageNo, int size, String sortField, String sortDirection) {
-        LOGGER.info("findJobPagesWithStatus()" + pageNo + "/" + size);
+        log.debug("findJobPagesWithStatus()" + pageNo + "/" + size);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.DESC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, size, sort);
-        LOGGER.info("Pageable() " + pageable.getPageNumber() + "/" + pageable.getPageSize());
         Page<JobEntity> jobPages = jobRepository.findByStatus(query, pageable);
-        LOGGER.info("findJobPagesWithStatus(repo)" + jobPages.getNumberOfElements());
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(jobPages);
-        LOGGER.info("findJobPagesWithStatus(...)" + jobs.getNumberOfElements());
+        log.debug("findJobPagesWithStatus(...)" + jobs.getNumberOfElements());
         return jobs;
     }
 
     @Override
     public Job createJob(Job job) {
-        LOGGER.info("create(" + job + ")");
+        log.debug("create(" + job + ")");
         job.setRequestDate(LocalDateTime.now());
         job.setOpen(true);
         JobEntity jobEntity = jobMapper.modelToEntity(job);
         JobEntity savedJobEntity = jobRepository.save(jobEntity);
         Job savedJobModel = jobMapper.entityToModel(savedJobEntity);
 
-        LOGGER.info("create(...)");
+        log.debug("create(...)");
         return savedJobModel;
     }
 
     @Override
     public Job findJobById(Long id) throws JobNotFoundException {
-        LOGGER.info("read()");
+        log.debug("read()");
         JobEntity jobEntity = getJobEntity(id);
         Job jobModel = jobMapper.entityToModel(jobEntity);
-        LOGGER.info("read(...)" + jobModel);
+        log.debug("read(...)" + jobModel);
         return jobModel;
     }
 
 
     public Job updateJob(Job job, Long id) throws JobNotFoundException {
-        LOGGER.info("update()" + job);
+        log.debug("update()" + job);
         Optional<JobEntity> optionalJobEntity = jobRepository.findById(id);
         JobEntity jobEntity = optionalJobEntity.orElseThrow(
                 () -> new JobNotFoundException("Brak zlecenia o podanym id " + id));
@@ -106,39 +100,39 @@ public class JobServiceImpl implements JobService {
         JobEntity editedJobEntity = jobMapper.modelToEntity(job);
         JobEntity updatedJobEntity = jobRepository.save(editedJobEntity);
         Job updatedJobModel = jobMapper.entityToModel(updatedJobEntity);
-        LOGGER.info("update(...) " + updatedJobModel);
+        log.debug("update(...) " + updatedJobModel);
         return updatedJobModel;
     }
 
     @Override
     public void deleteJob(Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         jobRepository.deleteById(id);
-        LOGGER.info("delete(...)");
+        log.debug("delete(...)");
     }
 
     private JobEntity getJobEntity(Long id) throws JobNotFoundException {
-        LOGGER.info("getJobEntity(" + id + ")");
+        log.debug("getJobEntity(" + id + ")");
         Optional<JobEntity> optionalJobEntity = jobRepository.findById(id);
         JobEntity jobEntity = optionalJobEntity.orElseThrow(
                 () -> new JobNotFoundException("Brak zlecenia o podanym id" + id));
-        LOGGER.info("update()" + jobEntity);
+        log.debug("update()" + jobEntity);
         return jobEntity;
     }
 
     @Override
     public Page<Job> findJobByQuery(int pageNo, int pagesize, String query) {
-        LOGGER.info("findJobByQuery()" + query);
+        log.debug("findJobByQuery()" + query);
         Pageable pageable = PageRequest.of(pageNo - 1, pagesize);
         Page<JobEntity> employeeEntities = jobRepository.searchEmployeeByQuery(pageable, query);
         Page<Job> jobs = jobMapper.entitiesJobToModelsPage(employeeEntities);
-        LOGGER.info("findJobByQuery(...)");
+        log.debug("findJobByQuery(...)");
         return jobs;
     }
 
     @Override
     public void deleteAllJobs() {
-        LOGGER.info("DeleteAllJobs");
+        log.debug("DeleteAllJobs");
         jobRepository.deleteAll();
 
     }

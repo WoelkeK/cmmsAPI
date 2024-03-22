@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class ImportNotificationDefault implements ImportNotification {
 
 
@@ -32,7 +33,7 @@ public class ImportNotificationDefault implements ImportNotification {
     @Override
     public List<Notification> importNotificationFromXLS(MultipartFile fileName) throws IOException {
 
-        LOGGER.info("importExcelNotificationData()");
+        log.debug("importExcelNotificationData()");
         List<NotificationJson> rawDataList = new ArrayList<>();
 
         InputStream file = new BufferedInputStream(fileName.getInputStream());
@@ -81,7 +82,7 @@ public class ImportNotificationDefault implements ImportNotification {
     }
 
     private List<Notification> notificationDataExcelConverter(List<NotificationJson> notifications) {
-        LOGGER.info("notificationDataExcelConverter()");
+        log.debug("notificationDataExcelConverter()");
 
         List<Notification> convertedNotifications =
                 notifications.stream().map(m -> {
@@ -108,7 +109,7 @@ public class ImportNotificationDefault implements ImportNotification {
                                 }
                         )
                         .toList();
-        LOGGER.info("notificationDataExcelConverter(...)");
+        log.debug("notificationDataExcelConverter(...)");
         return convertedNotifications;
     }
 }

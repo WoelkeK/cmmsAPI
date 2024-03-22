@@ -22,9 +22,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class CustomIPCheckFilter extends GenericFilterBean {
 
-    private static final Logger LOGGER = Logger.getLogger(CustomIPCheckFilter.class.getName());
+
     private final HardwareService hardwareService;
     public CustomIPCheckFilter(HardwareService hardwareService) {
         this.hardwareService = hardwareService;
@@ -39,7 +40,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
         if (remoteIP == null) {
             remoteIP = request.getRemoteAddr();
         }
-        LOGGER.info("IP Remote address: " + remoteIP);
+        log.debug("IP Remote address: " + remoteIP);
         String requestURI = request.getRequestURI();
 
         List<Hardware> byIpAddress = hardwareService.findByIpAddress(remoteIP);
@@ -49,20 +50,20 @@ public class CustomIPCheckFilter extends GenericFilterBean {
 
         req.setAttribute("isAdmin", false);
         if (ipAddressRole.getId() == null) {
-            LOGGER.info("No match found in the repository for IP: " + remoteIP);
+            log.debug("No match found in the repository for IP: " + remoteIP);
             req.setAttribute("isAdmin", false);
             req.setAttribute("noAccess", true);
         }else if(ipAddressRole.getPermission()==null) {
-            LOGGER.info("No permission sets in the repository for IP: " + remoteIP + " default: NO_ACCESS");
+           log.debug("No permission sets in the repository for IP: " + remoteIP + " default: NO_ACCESS");
             Permission permission = Permission.USER;
-            LOGGER.info("Permission " + permission.toString());
+            log.debug("Permission " + permission.toString());
             ipAddressRole.setPermission(permission);
             access = ipAddressRole.getPermission().toString().toUpperCase();
         }else {
-            LOGGER.info("start set from db");
+            log.debug("start set from db");
             access = ipAddressRole.getPermission().toString().toUpperCase();
         }
-        LOGGER.info("Dostęp: " + access);
+        log.debug("Dostęp: " + access);
             switch (access) {
 
                 case "ADMIN":
@@ -94,7 +95,7 @@ public class CustomIPCheckFilter extends GenericFilterBean {
                     req.setAttribute("noAccess", true);
             }
 
-        LOGGER.info("Send data to frontend " + access);
+        log.debug("Send data to frontend " + access);
         req.setAttribute("userIP", remoteIP);
         chain.doFilter(request, res);
     }

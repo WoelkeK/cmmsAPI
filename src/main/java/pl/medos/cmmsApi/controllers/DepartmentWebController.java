@@ -1,5 +1,6 @@
 package pl.medos.cmmsApi.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,8 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/departments")
+@Slf4j
 public class DepartmentWebController {
-
-    private static final Logger LOGGER = Logger.getLogger(DepartmentWebController.class.getName());
     private DepartmentService departmentService;
     private ImportDepartment importDepartment;
 
@@ -30,16 +30,16 @@ public class DepartmentWebController {
 
     @GetMapping(value = "/list")
     public String listViewAll(ModelMap modelMap) {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
-        LOGGER.info("listView(...)" + departments);
+        log.debug("listView(...)" + departments);
         return "list-department.html";
     }
 
     @GetMapping
     public String listView(Model model) throws IOException {
-        LOGGER.info("listView()");
+        log.debug("listView()");
         return findPageinated(1,"name", "desc", model);
     }
 
@@ -48,7 +48,7 @@ public class DepartmentWebController {
                                  @RequestParam(name = "sortField") String sortField,
                                  @RequestParam(name = "sortDir") String sortDir,
                                  Model model)  {
-        LOGGER.info("findPage()");
+        log.debug("findPage()");
         int pageSize=10;
         Page<Department> departmentPage = departmentService.findDepartmentPage(pageNo, pageSize, sortField, sortDir);
         List<Department> departments = departmentPage.getContent();
@@ -59,13 +59,13 @@ public class DepartmentWebController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("departments", departments);
-        LOGGER.info("listView(...)" + departments);
+        log.debug("listView(...)" + departments);
         return "main-department.html";
     }
 
     @GetMapping(value = "/create")
     public String createView(ModelMap modelMap) {
-        LOGGER.info("createView()");
+        log.debug("createView()");
         modelMap.addAttribute("department", new Department());
         List<Department> departments = departmentService.findAllDepartments();
         modelMap.addAttribute("departments", departments);
@@ -75,9 +75,9 @@ public class DepartmentWebController {
     @PostMapping(value = "/create")
     public String create(
             @ModelAttribute(name = "department") Department department) {
-        LOGGER.info("create(" + department + ")");
+        log.debug("create(" + department + ")");
         Department savedDepartment = departmentService.createDepartment(department);
-        LOGGER.info("create(...)" + savedDepartment);
+        log.debug("create(...)" + savedDepartment);
         return "redirect:/departments";
     }
 
@@ -85,7 +85,7 @@ public class DepartmentWebController {
     public String read(
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("read(" + id + ")");
+        log.debug("read(" + id + ")");
         Department department = departmentService.findDepartmentById(id);
         modelMap.addAttribute("department", department);
         return "read-department.html";
@@ -95,7 +95,7 @@ public class DepartmentWebController {
     public String updateView(
             @PathVariable(name = "id") Long id,
             ModelMap modelMap) throws Exception {
-        LOGGER.info("updateView()");
+        log.debug("updateView()");
         Department department = departmentService.findDepartmentById(id);
         modelMap.addAttribute("department", department);
         return "update-department";
@@ -104,16 +104,16 @@ public class DepartmentWebController {
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
                          @ModelAttribute(name = "department") Department department) throws DepartmentNotFoundException {
-        LOGGER.info("update()" + department);
+        log.debug("update()" + department);
         Department updatedDepartment = departmentService.updateDepartment(department, id);
-        LOGGER.info("update(...)" + updatedDepartment);
+        log.debug("update(...)" + updatedDepartment);
         return "redirect:/departments";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(
             @PathVariable(name = "id") Long id) {
-        LOGGER.info("delete()");
+        log.debug("delete()");
         departmentService.deleteDepartment(id);
         return "redirect:/departments";
     }
@@ -126,16 +126,16 @@ public class DepartmentWebController {
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
 
-        LOGGER.info("importDepartments()");
+        log.debug("importDepartments()");
         if(file.isEmpty()){
-            LOGGER.info("Please select file to upload");
+            log.debug("Please select file to upload");
             return "redirect:/departments";
         }
         List<Department> departments = importDepartment.importExcelDepartmentsData(file);
         departments.forEach((department) -> {
             departmentService.createDepartment(department);
         });
-        LOGGER.info("importDepartments(...) ");
+        log.debug("importDepartments(...) ");
         return "redirect:/departments";
     }
 }

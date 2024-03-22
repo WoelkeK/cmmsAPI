@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/engineers/")
+@Slf4j
 public class EngineerController {
 
-    private static final Logger LOGGER = Logger.getLogger(EngineerController.class.getName());
     private EngineerService engineerService;
     public EngineerController(EngineerService engineerService) {
         this.engineerService = engineerService;
@@ -22,33 +22,34 @@ public class EngineerController {
 
     @PostMapping("/create")
     public Engineer createEngineer(@RequestBody Engineer engineer) {
-        LOGGER.info("createEngineer()");
+       log.debug ("createEngineer()");
         return engineerService.createEngineer(engineer);
     }
 
     @GetMapping("/findById")
     public Engineer findEngineerById(@PathVariable Long id) throws EmployeeNotFoundException {
-        LOGGER.info("findEngineerById() " + id);
+        log.debug("findEngineerById() " + id);
         return engineerService.findEngineerById(id);
     }
 
     @PatchMapping("/update")
     public Engineer updateEngineer(@RequestBody Engineer engineer, @PathVariable Long id) throws EmployeeNotFoundException {
-        LOGGER.info("updateEngineer()" + id);
+       log.debug("updateEngineer()" + id);
         return engineerService.updateEngineer(engineer, id);
     }
 
     @DeleteMapping("/deleteAll")
     public ResponseEntity deleteAll() {
-        LOGGER.info("deleteAll()");
+        log.debug("deleteAll()");
         engineerService.deleteAll();
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity deleteById(@PathVariable Long id) {
-        LOGGER.info("deleteById(" +id + ")");
+        log.debug("deleteById(" +id + ")");
         engineerService.deleteEngineer(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
+
