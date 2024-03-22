@@ -1,5 +1,5 @@
 # CmmsAPI
-## Web application powered by java SpringBoot 3.1.2 , frontend thymeleaf engine, mysql database.
+## Web application powered by java SpringBoot 3.1.2 , frontend thymeleaf engine , javascript and Mysql database.
 ### This is a POC project.
 ### to build appliaction use maven and Java 17+
 
